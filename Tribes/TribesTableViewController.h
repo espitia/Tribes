@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TribesTableViewController.h
 //  Tribes
 //
 //  Created by German Espitia on 1/8/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface TribesTableViewController : UITableViewController
 
 @end
-
