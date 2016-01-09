@@ -9,7 +9,9 @@
 #import "TribesTableViewController.h"
 #import "Parse.h"
 
-@interface TribesTableViewController ()
+@interface TribesTableViewController () {
+    PFUser * currentUser;
+}
 
 @end
 
@@ -17,6 +19,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // set currentUser
+    currentUser = [PFUser currentUser];
+    
+    // log in / sign up user if non-existent
+    if (!currentUser) {
+        [self signUp];
+    } else {
+        NSLog(@"already signed in");
+    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -94,4 +106,20 @@
 }
 */
 
+#pragma mark - User login/signup
+
+-(void)signUp {
+    
+    // sign up user anonymously (no username/password)
+    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
+        if (error) {
+            NSLog(@"Anonymous login failed.");
+        } else {
+            NSLog(@"Anonymous user logged in.");
+            
+            //set user
+            currentUser = user;
+        }
+    }];
+}
 @end
