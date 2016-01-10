@@ -71,7 +71,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    // Cell to create Tribe
+    CGRect activityNameFrame = CGRectMake(15,
+                                          cell.frame.origin.y - 30,
+                                          cell.frame.size.width,
+                                          cell.frame.size.height);
+    UITextField * activityNameTextField = [[UITextField alloc] initWithFrame:activityNameFrame];
+    [activityNameTextField setFont:[UIFont systemFontOfSize:40]];
+    [cell.contentView addSubview:activityNameTextField];
+    
+    // Cells to join a Tribe
     
     return cell;
 }
