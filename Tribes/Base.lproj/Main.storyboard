@@ -64,11 +64,13 @@
                             <outlet property="delegate" destination="fft-A3-MET" id="pg5-Kl-VwB"/>
                         </connections>
                     </tableView>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1323.5" y="50.5"/>
+            <point key="canvasLocation" x="1415.5" y="50.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="icT-Oq-OGf">
