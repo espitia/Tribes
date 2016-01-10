@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Tribes-->
         <scene sceneID="YNw-0g-xML">
             <objects>
                 <tableViewController id="698-1V-LVa" customClass="TribesTableViewController" sceneMemberID="viewController">
@@ -28,24 +28,30 @@
                             <outlet property="delegate" destination="698-1V-LVa" id="MVN-bN-tZz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="dkw-iL-wFf"/>
+                    <navigationItem key="navigationItem" title="Tribes" id="dkw-iL-wFf">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="qgy-KA-oPa">
+                            <connections>
+                                <segue destination="fft-A3-MET" kind="show" identifier="AddTribe" id="nll-Z3-ghn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aiv-5d-Uau" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="878.5" y="50.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
             <objects>
-                <tableViewController id="fft-A3-MET" sceneMemberID="viewController">
+                <tableViewController id="fft-A3-MET" customClass="AddTribeTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="p02-zY-uVB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Dnb-Lz-0CS">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TribeCell" id="Dnb-Lz-0CS">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dnb-Lz-0CS" id="OjD-uJ-GCF">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>

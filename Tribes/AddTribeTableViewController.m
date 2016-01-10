@@ -1,36 +1,27 @@
 //
-//  TribesTableViewController.m
+//  AddTribeTableViewController.m
 //  Tribes
 //
-//  Created by German Espitia on 1/8/16.
+//  Created by German Espitia on 1/10/16.
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
-#import "TribesTableViewController.h"
-#import "Parse.h"
+#import "AddTribeTableViewController.h"
 
-@interface TribesTableViewController () {
-    PFUser * currentUser;
-}
+@interface AddTribeTableViewController ()
 
 @end
 
-@implementation TribesTableViewController
+@implementation AddTribeTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // set currentUser
-    currentUser = [PFUser currentUser];
+    // Uncomment the following line to preserve selection between presentations.
+    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // log in / sign up user if non-existent
-    if (!currentUser) {
-        [self signUp];
-    } else {
-        NSLog(@"already signed in");
-    }
-
-    
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -102,20 +93,4 @@
 }
 */
 
-#pragma mark - User login/signup
-
--(void)signUp {
-    
-    // sign up user anonymously (no username/password)
-    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-        if (error) {
-            NSLog(@"Anonymous login failed.");
-        } else {
-            NSLog(@"Anonymous user logged in.");
-            
-            //set user
-            currentUser = user;
-        }
-    }];
-}
 @end

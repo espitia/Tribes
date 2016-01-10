@@ -26,6 +26,7 @@
 		09F2BF881C405799008ABDF7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF871C405799008ABDF7 /* libz.tbd */; };
 		09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */; };
 		09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */; };
+		09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribesTableViewController.h; sourceTree = "<group>"; };
 		09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribesTableViewController.m; sourceTree = "<group>"; };
+		09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTribeTableViewController.h; sourceTree = "<group>"; };
+		09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTribeTableViewController.m; sourceTree = "<group>"; };
 		A309CDB5F419EAF7FFA3C780 /* Pods-Tribes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.release.xcconfig"; sourceTree = "<group>"; };
 		F69CD1EF3DA25D700DB49634 /* Pods-Tribes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -143,6 +146,8 @@
 				0917EC4E1C4037D600BE2697 /* Main.storyboard */,
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
+				09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */,
+				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
 				0917EC511C4037D600BE2697 /* Assets.xcassets */,
 				0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */,
 				0917EC561C4037D600BE2697 /* Info.plist */,
@@ -387,6 +392,7 @@
 			files = (
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
 				09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */,
+				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
