@@ -32,13 +32,41 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    
+    // different number of rows depending on if the user wants to create/join a tribe
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 2;
+            break;
+            
+        default:
+            return 1;
+            break;
+    }
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    switch (section) {
+        case 0:
+            return @"Create your own Tribe:";
+            break;
+        case 1:
+            return @"Join an already existing Tribe:";
+            break;
+        default:
+            return @"Join a Tribe";
+            break;
+    }
+    
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
