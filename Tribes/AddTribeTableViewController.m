@@ -6,12 +6,14 @@
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
+#import "TribesTableViewController.h"
 #import "AddTribeTableViewController.h"
 #import "Parse.h"
 
 @interface AddTribeTableViewController () {
     PFUser * currentUser;
     UITextField * tribeNameTextField;
+    PFObject * tribe;
 }
 
 @end
@@ -30,11 +32,6 @@
 
     // initialize textfield
     tribeNameTextField = [[UITextField alloc] init];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -106,7 +103,8 @@
 -(void)createTribe {
     
     // create a tribe
-    PFObject * tribe = [PFObject objectWithClassName:@"Tribe"];
+    tribe = [PFObject objectWithClassName:@"Tribe"];
+    NSLog(@"tribe: %@", tribe);
     [tribe setObject:tribeNameTextField.text forKey:@"name"];
     
     // add user to tribe relation
@@ -133,16 +131,26 @@
         
         // save activity [MUST BE SAVED AFTER TRIBE IS COMPLETED, ELSE -> ERROR (pfrelation)]
         [activity saveInBackground];
+        
+        // save user
+        [currentUser saveInBackground];
+        
+        // send tribe back to main viewcontroller
+        [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
     }];
     
-    // save user
-    [currentUser saveInBackground];
 
-    // pop to root
-    [self.navigationController popToRootViewControllerAnimated:true];
+
+
+
 }
 
-
-
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier  isEqual: @"unwindFromAddTribe"]) {
+        TribesTableViewController * vc = (TribesTableViewController *)segue.destinationViewController;
+        [vc.tribes addObject:tribe];
+        [vc.tableView reloadData];
+    }
+}
 
 @end

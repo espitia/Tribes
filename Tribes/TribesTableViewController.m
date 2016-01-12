@@ -11,7 +11,6 @@
 
 @interface TribesTableViewController () {
     PFUser * currentUser;
-    NSMutableArray * tribes;
 }
 
 @end
@@ -32,8 +31,8 @@
         [self loadTribes];
     }
 
-    // init instance variables needed
-    tribes = [[NSMutableArray alloc] init];
+    // init instance/public variables needed
+    _tribes = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,14 +47,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return tribes.count;
+    return _tribes.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-    PFObject * tribe = tribes[indexPath.row];
+    PFObject * tribe = _tribes[indexPath.row];
     cell.textLabel.text = tribe[@"name"];
     
     return cell;
@@ -81,6 +80,13 @@
     }];
 }
 
+#pragma mark - Segue handling
+
+-(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
+    
+    NSLog(@"worked!!");
+}
+
 #pragma mark - Helper methods
 
 -(void)loadTribes {
@@ -96,7 +102,7 @@
         
         // stick tribe objects in local tribes instance variable
         PFUser * user = objects[0];
-        [tribes addObjectsFromArray:user[@"tribes"]];
+        [_tribes addObjectsFromArray:user[@"tribes"]];
         [self.tableView reloadData];        
     }];
 }

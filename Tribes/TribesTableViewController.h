@@ -10,4 +10,6 @@
 
 @interface TribesTableViewController : UITableViewController
 
+@property (atomic, strong) NSMutableArray * tribes;
+
 @end
