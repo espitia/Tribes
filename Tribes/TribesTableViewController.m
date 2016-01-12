@@ -11,6 +11,7 @@
 
 @interface TribesTableViewController () {
     PFUser * currentUser;
+    NSMutableArray * tribes;
 }
 
 @end
@@ -27,10 +28,12 @@
     if (!currentUser) {
         [self signUp];
     } else {
-        NSLog(@"already signed in");
+        // load tribes
+        [self loadTribes];
     }
 
-    
+    // init instance variables needed
+    tribes = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,62 +48,21 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return tribes.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    PFObject * tribe = tribes[indexPath.row];
+    cell.textLabel.text = tribe[@"name"];
     
     return cell;
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark - User login/signup
 
@@ -116,6 +78,26 @@
             //set user
             currentUser = user;
         }
+    }];
+}
+
+#pragma mark - Helper methods
+
+-(void)loadTribes {
+    
+    // get user
+    PFQuery *userQuery = [PFUser query];
+    
+    // include tribe objects
+    [userQuery includeKey:@"tribes"];
+    
+    // fetch user
+    [userQuery findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError *error) {
+        
+        // stick tribe objects in local tribes instance variable
+        PFUser * user = objects[0];
+        [tribes addObjectsFromArray:user[@"tribes"]];
+        [self.tableView reloadData];        
     }];
 }
 @end
