@@ -27,13 +27,9 @@
     
     // set current user
     currentUser = [PFUser currentUser];
-    
-}
 
--(void)viewDidAppear:(BOOL)animated {
-    
-    // set keyboard to appear
-    [tribeNameTextField becomeFirstResponder];
+    // initialize textfield
+    tribeNameTextField = [[UITextField alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,16 +79,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-    // Cell to create Tribe
-    CGRect activityNameFrame = CGRectMake(15,
-                                          cell.frame.origin.y - 30,
-                                          cell.frame.size.width,
-                                          cell.frame.size.height);
-    tribeNameTextField = [[UITextField alloc] initWithFrame:activityNameFrame];
-    [tribeNameTextField setFont:[UIFont systemFontOfSize:40]];
-    [cell.contentView addSubview:tribeNameTextField];
+    // cell for creating a new tribe (first section and row)
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        
+        // add uitextfield for name fo tribe
+        CGRect activityNameFrame = CGRectMake(15,
+                                              cell.frame.origin.y - 30,
+                                              cell.frame.size.width,
+                                              cell.frame.size.height);
+        [tribeNameTextField setFrame:activityNameFrame];
+        tribeNameTextField.placeholder = @"e.g. Reading";
+        [tribeNameTextField setFont:[UIFont systemFontOfSize:40]];
+        [cell.contentView addSubview:tribeNameTextField];
+    }
     
+
+
     // Cells to join a Tribe
+    // XXXXXXX TO DO XXXXXXX
     
     return cell;
 }
@@ -102,11 +106,7 @@
 -(void)createTribe {
     
     // create a tribe
-    NSLog(@"%@", tribeNameTextField);
     PFObject * tribe = [PFObject objectWithClassName:@"Tribe"];
-    NSLog(@"tribename: %@", [tribeNameTextField text]);
-    NSString * xxx = tribeNameTextField.text;
-    NSLog(@"testing: %@", xxx);
     [tribe setObject:tribeNameTextField.text forKey:@"name"];
     
     // add user to tribe relation
@@ -141,6 +141,8 @@
     // pop to root
     [self.navigationController popToRootViewControllerAnimated:true];
 }
+
+
 
 
 @end
