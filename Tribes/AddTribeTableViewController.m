@@ -109,7 +109,7 @@
     [tribe setObject:tribeNameTextField.text forKey:@"name"];
     
     // add user to tribe relation
-    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"users"];
+    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"members"];
     [tribeRelationToUsers addObject:currentUser];
     
     // add tribe to user array
