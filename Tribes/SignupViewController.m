@@ -8,7 +8,7 @@
 
 #import "SignupViewController.h"
 #import <DigitsKit/DigitsKit.h>
-
+#import "Parse.h"
 
 @interface SignupViewController ()
 
@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,5 +36,37 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)signUp:(id)sender {
+    
+    NSLog(@"%@", [Digits sharedInstance].session);
+    
+    // sign up with phonenumber (digits by twitter Fabrics)
+    [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
+        
+        if (!error) {
+
+            // sign up anonymously (no user/pass w/ parse and add digits user id to parse user object
+            [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
+               
+                if (error) {
+                    // handle error
+                    NSLog(@"error signing up with Parse");
+                } else {
+                    
+                    // add id to digits account to parse user object
+                    user[@"digitsUserId"] = session.userID;
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (error) {
+                            // handle error
+                            NSLog(@"error saving digits user id to parse user object");
+                        } else {
+                            [self dismissViewControllerAnimated:true completion:nil];
+                        }
+                    }];
+                }
+            }];
+        }
+    }];
+}
 
 @end

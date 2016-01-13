@@ -8,6 +8,7 @@
 
 #import "TribesTableViewController.h"
 #import "Parse.h"
+#import "SignupViewController.h"
 
 @interface TribesTableViewController () {
     PFUser * currentUser;
@@ -23,13 +24,15 @@
     // set currentUser
     currentUser = [PFUser currentUser];
     
+    [self signUp];
+
     // log in / sign up user if non-existent
-    if (!currentUser) {
-        [self signUp];
-    } else {
-        // load tribes
-        [self loadTribes];
-    }
+//    if (!currentUser) {
+//        [self signUp];
+//    } else {
+//        // load tribes
+//        [self loadTribes];
+//    }
 
     // init instance/public variables needed
     _tribes = [[NSMutableArray alloc] init];
@@ -66,18 +69,10 @@
 #pragma mark - User login/signup
 
 -(void)signUp {
-    
-    // sign up user anonymously (no username/password)
-    [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-        if (error) {
-            NSLog(@"Anonymous login failed.");
-        } else {
-            NSLog(@"Anonymous user logged in.");
-            
-            //set user
-            currentUser = user;
-        }
-    }];
+
+//    [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
+    SignupViewController * signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
+    [self.navigationController presentViewController:signupVC animated:false completion:nil];
 }
 
 #pragma mark - Segue handling
