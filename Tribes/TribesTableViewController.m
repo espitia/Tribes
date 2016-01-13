@@ -25,16 +25,16 @@
     // set currentUser
     currentUser = [PFUser currentUser];
     
+    // init instance/public variables needed
+    _tribes = [[NSMutableArray alloc] init];
+    
     //  log in / sign up user if non-existent
     if (!currentUser) {
         [self signUp];
     } else {
-        // load tribes
         [self loadTribes];
     }
 
-    // init instance/public variables needed
-    _tribes = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -100,22 +100,13 @@
 
 -(void)loadTribes {
     
-    // get user
-    PFQuery *userQuery = [PFUser query];
+    NSArray * tribes = currentUser[@"tribes"];
     
-    // include tribe objects
-    [userQuery includeKey:@"tribes"];
-    
-    // fetch user
-    [userQuery findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError *error) {
-        
-        // stick tribe objects in local tribes instance variable
-        PFUser * user = objects[0];
-        NSLog(@"%@", _tribes);
-        [_tribes addObjectsFromArray:user[@"tribes"]];
-        NSLog(@"%@", _tribes);
-
+    for (PFObject * tribe in tribes) {
+        PFQuery * query = [PFQuery queryWithClassName:@"Tribe"];
+        [_tribes addObject:[query getObjectWithId:tribe.objectId]];
         [self.tableView reloadData];
-    }];
+    }
+
 }
 @end
