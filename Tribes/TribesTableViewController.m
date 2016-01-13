@@ -90,7 +90,7 @@
     if ([segue.identifier isEqualToString:@"TribeDetail"]) {
         
         // initiate tribedetailvc
-        TribeDetailTableViewController * tribeDetailVC = [[TribeDetailTableViewController alloc] init];
+        TribeDetailTableViewController * tribeDetailVC = (TribeDetailTableViewController *)segue.destinationViewController;
         // sender contains tribe tapped
         tribeDetailVC.tribe = sender;
     }
