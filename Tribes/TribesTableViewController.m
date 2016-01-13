@@ -83,8 +83,6 @@
 #pragma mark - Segue handling
 
 -(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
-    
-    NSLog(@"worked!!");
 }
 
 #pragma mark - Helper methods
@@ -102,8 +100,11 @@
         
         // stick tribe objects in local tribes instance variable
         PFUser * user = objects[0];
+        NSLog(@"%@", _tribes);
         [_tribes addObjectsFromArray:user[@"tribes"]];
-        [self.tableView reloadData];        
+        NSLog(@"%@", _tribes);
+
+        [self.tableView reloadData];
     }];
 }
 @end

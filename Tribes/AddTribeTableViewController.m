@@ -104,7 +104,8 @@
     
     // create a tribe
     tribe = [PFObject objectWithClassName:@"Tribe"];
-    NSLog(@"tribe: %@", tribe);
+    
+    // set name key
     [tribe setObject:tribeNameTextField.text forKey:@"name"];
     
     // add user to tribe relation
@@ -125,27 +126,27 @@
     
     // set tribe in activity
     [activity setObject:tribe forKey:@"tribe"];
+
     
     // save tribe
     [tribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        
-        // save activity [MUST BE SAVED AFTER TRIBE IS COMPLETED, ELSE -> ERROR (pfrelation)]
-        [activity saveInBackground];
-        
+
         // save user
-        [currentUser saveInBackground];
-        
-        // send tribe back to main viewcontroller
-        [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            
+            // send tribe back to main viewcontroller after neccessary saves (tribe and user objects)
+            [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+
+            // save activity
+            [activity saveInBackground];
+        }];
     }];
-    
-
-
-
 
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    // send back tribe object to mainVC
     if ([segue.identifier  isEqual: @"unwindFromAddTribe"]) {
         TribesTableViewController * vc = (TribesTableViewController *)segue.destinationViewController;
         [vc.tribes addObject:tribe];
