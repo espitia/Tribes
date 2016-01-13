@@ -16,6 +16,7 @@
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
 		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
+		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09F2BF781C40575D008ABDF7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF771C40575D008ABDF7 /* AudioToolbox.framework */; };
 		09F2BF7A1C405765008ABDF7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF791C405765008ABDF7 /* CFNetwork.framework */; };
 		09F2BF7C1C40576D008ABDF7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF7B1C40576D008ABDF7 /* CoreGraphics.framework */; };
@@ -65,6 +66,8 @@
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09C6584F1C469FEA008C4EC3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		09C658501C469FEA008C4EC3 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
+		09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeDetailTableViewController.h; sourceTree = "<group>"; };
+		09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeDetailTableViewController.m; sourceTree = "<group>"; };
 		09F2BF771C40575D008ABDF7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		09F2BF791C405765008ABDF7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		09F2BF7B1C40576D008ABDF7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -182,6 +185,15 @@
 			path = TribesUITests;
 			sourceTree = "<group>";
 		};
+		09C658521C46CD6B008C4EC3 /* Signup/onboard */ = {
+			isa = PBXGroup;
+			children = (
+				09C6584F1C469FEA008C4EC3 /* SignupViewController.h */,
+				09C658501C469FEA008C4EC3 /* SignupViewController.m */,
+			);
+			name = Signup/onboard;
+			sourceTree = "<group>";
+		};
 		09F2BF911C4316E4008ABDF7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,8 +201,9 @@
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
 				09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */,
 				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
-				09C6584F1C469FEA008C4EC3 /* SignupViewController.h */,
-				09C658501C469FEA008C4EC3 /* SignupViewController.m */,
+				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
+				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
+				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -419,6 +432,7 @@
 			files = (
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
 				09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */,
+				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
 				09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */,
