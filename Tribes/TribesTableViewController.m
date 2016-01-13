@@ -9,6 +9,7 @@
 #import "TribesTableViewController.h"
 #import "Parse.h"
 #import "SignupViewController.h"
+#import "TribeDetailTableViewController.h"
 
 @interface TribesTableViewController () {
     PFUser * currentUser;
@@ -64,7 +65,9 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"TribeDetail" sender:self];
+    
+    PFObject * tribeTapped = [_tribes objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"TribeDetail" sender:tribeTapped];
 }
 
 #pragma mark - User login/signup
@@ -79,6 +82,18 @@
 #pragma mark - Segue handling
 
 -(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    // show tribe
+    if ([segue.identifier isEqualToString:@"TribeDetail"]) {
+        
+        // initiate tribedetailvc
+        TribeDetailTableViewController * tribeDetailVC = [[TribeDetailTableViewController alloc] init];
+        // sender contains tribe tapped
+        tribeDetailVC.tribe = sender;
+    }
 }
 
 #pragma mark - Helper methods
