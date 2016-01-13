@@ -44,7 +44,6 @@
         <!--Signup View Controller-->
         <scene sceneID="y09-HY-4u5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CTF-iI-O4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="Signup" id="04z-H9-dJi" customClass="SignupViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tRg-Cx-Flg"/>
@@ -81,6 +80,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CTF-iI-O4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="900.5" y="373.5"/>
         </scene>
