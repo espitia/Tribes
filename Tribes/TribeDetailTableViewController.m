@@ -19,15 +19,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // load members of the tribe
-//    [self loadMembersOfTribe];
-    
     // init instance variables
     membersAndActivities = [[NSMutableArray alloc] init];
 
+    // load members and activities [this should be done in main table to cut down on idle time]
     membersAndActivities = [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
         [self.tableView reloadData];
     }];
+    
+    // right button to create Tribe
+    UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friends" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
+    [self.navigationItem setRightBarButtonItem:createTribeButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,6 +59,20 @@
     return cell;
 }
 
+#pragma mark - Helper methods
+
+-(void)addFriends {
+    
+    [self performSegueWithIdentifier:@"AddFriends" sender:nil];
+    
+//    // Objective-C
+//    DGTSession *userSession = [Digits sharedInstance].session;
+//    DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
+//    
+//    [contacts startContactsUploadWithCompletion:^(DGTContactsUploadResult *result, NSError *error) {
+//        // Inspect results and error objects to determine if upload succeeded.
+//    }];
+}
 
 
 

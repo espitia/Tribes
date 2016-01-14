@@ -18,6 +18,7 @@
 		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
+		09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */; };
 		09F2BF781C40575D008ABDF7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF771C40575D008ABDF7 /* AudioToolbox.framework */; };
 		09F2BF7A1C405765008ABDF7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF791C405765008ABDF7 /* CFNetwork.framework */; };
 		09F2BF7C1C40576D008ABDF7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF7B1C40576D008ABDF7 /* CoreGraphics.framework */; };
@@ -71,6 +72,8 @@
 		09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeDetailTableViewController.m; sourceTree = "<group>"; };
 		09C6585B1C47F188008C4EC3 /* Tribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tribe.h; sourceTree = "<group>"; };
 		09C6585C1C47F188008C4EC3 /* Tribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tribe.m; sourceTree = "<group>"; };
+		09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsTableViewController.h; sourceTree = "<group>"; };
+		09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsTableViewController.m; sourceTree = "<group>"; };
 		09F2BF771C40575D008ABDF7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		09F2BF791C405765008ABDF7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		09F2BF7B1C40576D008ABDF7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -207,6 +210,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		09C658621C483A64008C4EC3 /* Add friends */ = {
+			isa = PBXGroup;
+			children = (
+				09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */,
+				09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */,
+			);
+			name = "Add friends";
+			sourceTree = "<group>";
+		};
 		09F2BF911C4316E4008ABDF7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +228,7 @@
 				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
 				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
 				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
+				09C658621C483A64008C4EC3 /* Add friends */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
 			name = Controllers;
@@ -448,6 +461,7 @@
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
+				09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */,
 				09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
