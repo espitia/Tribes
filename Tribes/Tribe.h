@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "Parse.h"
 
-@interface TribeHandler : NSObject
+@interface Tribe : PFObject<PFSubclassing>
+
++(NSString *)parseClassName;
+
 
 -(id)initWithTribe:(PFObject *)tribe;
-
+-(void)loadTribe;
 
 @end

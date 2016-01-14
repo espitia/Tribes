@@ -6,11 +6,17 @@
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
-#import "TribeHandler.h"
+#import "Tribe.h"
+#import <Parse/PFObject+Subclass.h>
 
-@implementation TribeHandler {
+
+@implementation Tribe {
     PFObject * tribe;
     NSMutableArray * membersAndActivities;
+}
+
++ (NSString *)parseClassName {
+    return @"Tribe";
 }
 
 -(id)initWithTribe:(PFObject *)tribeObject {
@@ -22,7 +28,10 @@
     return self;
 }
 
-
+/**
+ * Loads tribe object from back end.
+ *
+ */
 -(void)loadTribe {
     PFQuery * query = [PFQuery queryWithClassName:@"Tribe"];
     tribe = [query getObjectWithId:tribe.objectId];
