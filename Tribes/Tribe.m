@@ -11,7 +11,6 @@
 
 
 @implementation Tribe {
-    PFObject * tribe;
     NSMutableArray * membersAndActivities;
 }
 
@@ -19,26 +18,10 @@
     return @"Tribe";
 }
 
--(id)initWithTribe:(PFObject *)tribeObject {
-    self = [super init];
-    if (self) {
-        tribe = tribeObject;
-        membersAndActivities = [[NSMutableArray alloc] init];
-    }
-    return self;
++ (void)load {
+    [self registerSubclass];
 }
 
-/**
- * Loads tribe object from back end.
- *
- */
--(void)loadTribe {
-    PFQuery * query = [PFQuery queryWithClassName:@"Tribe"];
-    tribe = [query getObjectWithId:tribe.objectId];
-    [query getObjectInBackgroundWithId:tribe.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        tribe = object;
-    }];
-}
 
 /**
  * Load members of a tribe with their corresponding activity
@@ -91,7 +74,7 @@
         // get activity object by matching createdBy key to user and tribe key equals to corresponding tribe
         PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
         [query whereKey:@"createdBy" equalTo:member];
-        [query whereKey:@"tribe" equalTo:tribe];
+        [query whereKey:@"tribe" equalTo:self];
         [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
             
             if (!error) {
@@ -114,7 +97,7 @@
     NSMutableArray * membersPlaceholderArray = [[NSMutableArray alloc] init];
     
     // get relation of tribe object to the members
-    PFRelation * membersOfTribeRelation = tribe[@"members"];
+    PFRelation * membersOfTribeRelation = self[@"members"];
     
     // query that relation for the objects (members)
     PFQuery * queryForMembersOfTribe = [membersOfTribeRelation query];
