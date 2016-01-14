@@ -10,6 +10,7 @@
 #import "Parse.h"
 #import "SignupViewController.h"
 #import "TribeDetailTableViewController.h"
+#import "Tribe.h"
 
 @interface TribesTableViewController () {
     PFUser * currentUser;
@@ -56,8 +57,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-    PFObject * tribe = _tribes[indexPath.row];
-    cell.textLabel.text = tribe[@"name"];
+    Tribe * tribe = [_tribes objectAtIndex:indexPath.row];
+    cell.textLabel.text = tribe.name;
     
     return cell;
 }
@@ -66,7 +67,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    PFObject * tribeTapped = [_tribes objectAtIndex:indexPath.row];
+    Tribe * tribeTapped = [_tribes objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"TribeDetail" sender:tribeTapped];
 }
 
@@ -102,10 +103,11 @@
     
     NSArray * tribes = currentUser[@"tribes"];
     
-    for (PFObject * tribe in tribes) {
-        PFQuery * query = [PFQuery queryWithClassName:@"Tribe"];
-        [_tribes addObject:[query getObjectWithId:tribe.objectId]];
-        [self.tableView reloadData];
+    for (Tribe * tribe in tribes) {
+        [tribe fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            [_tribes addObject:object];
+            [self.tableView reloadData];
+        }];
     }
     
 

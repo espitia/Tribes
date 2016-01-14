@@ -9,11 +9,12 @@
 #import "TribesTableViewController.h"
 #import "AddTribeTableViewController.h"
 #import "Parse.h"
+#import "Tribe.h"
 
 @interface AddTribeTableViewController () {
     PFUser * currentUser;
     UITextField * tribeNameTextField;
-    PFObject * tribe;
+    Tribe * tribe;
 }
 
 @end
@@ -103,7 +104,7 @@
 -(void)createTribe {
     
     // create a tribe
-    tribe = [PFObject objectWithClassName:@"Tribe"];
+    tribe = [Tribe object];
     
     // set name key
     [tribe setObject:tribeNameTextField.text forKey:@"name"];
