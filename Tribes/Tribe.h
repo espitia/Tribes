@@ -12,9 +12,9 @@
 @interface Tribe : PFObject<PFSubclassing>
 
 +(NSString *)parseClassName;
++(void)load;
 
-
--(id)initWithTribe:(PFObject *)tribe;
--(void)loadTribe;
+@property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) PFRelation * members;
 
 @end

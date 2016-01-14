@@ -14,6 +14,9 @@
     NSMutableArray * membersAndActivities;
 }
 
+@dynamic name;
+@dynamic members;
+
 + (NSString *)parseClassName {
     return @"Tribe";
 }
