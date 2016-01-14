@@ -11,5 +11,7 @@
 
 @interface TribeHandler : NSObject
 
+-(id)initWithTribe:(PFObject *)tribe;
+
 
 @end
