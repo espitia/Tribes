@@ -104,14 +104,17 @@
     NSArray * tribes = currentUser[@"tribes"];
     
     for (Tribe * tribe in tribes) {
+        
+        // load tribe objects
         [tribe fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
             [_tribes addObject:object];
             [self.tableView reloadData];
         }];
+
     }
     
+    
 
-//    [self loadMembersOfTribeWithActivities:_tribes[0]];
 }
 
 
