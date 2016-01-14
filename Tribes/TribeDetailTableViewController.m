@@ -9,7 +9,7 @@
 #import "TribeDetailTableViewController.h"
 
 @interface TribeDetailTableViewController () {
-    NSMutableArray * members;
+    NSMutableArray * membersAndActivities;
 }
 
 @end
@@ -20,10 +20,14 @@
     [super viewDidLoad];
     
     // load members of the tribe
-    [self loadMembersOfTribe];
+//    [self loadMembersOfTribe];
     
     // init instance variables
-    members = [[NSMutableArray alloc] init];
+    membersAndActivities = [[NSMutableArray alloc] init];
+
+    membersAndActivities = [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,45 +42,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return members.count;
+    return membersAndActivities.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
-    
-    PFUser * member = members[indexPath.row];
-    cell.textLabel.text = member.username;
+   
+    // dictionary with member (PFUser)and acitivty key (Activity object)
+    NSDictionary * member = membersAndActivities[indexPath.row];
+    cell.textLabel.text = member[@"member"][@"username"];
+    cell.detailTextLabel.text = member[@"activity"][@"objectId"];
     
     return cell;
 }
 
 
-#pragma mark - Helper methods
 
--(void)loadMembersOfTribe {
-    
-    // get relation of tribe object to the members
-    PFRelation * membersOfTribeRelation = _tribe[@"members"];
 
-    
-    // query that relation for the objects (members)
-    PFQuery * queryForMembersOfTribe = [membersOfTribeRelation query];
-    [queryForMembersOfTribe findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        if (!error) {
-            NSLog(@"MEMBERS: %@", objects);
-            // add user objects into members instance var
-            [members addObjectsFromArray:objects];
-            
-            // load activites for each user
-            
-            // reload table to see info
-            [self.tableView reloadData];
-        } else {
-            NSLog(@"error: %@", error);
-        }
-    }];
-    
-}
 
 @end
