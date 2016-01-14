@@ -10,9 +10,7 @@
 #import <Parse/PFObject+Subclass.h>
 
 
-@implementation Tribe {
-    NSMutableArray * membersAndActivities;
-}
+@implementation Tribe
 
 @dynamic name;
 @dynamic members;
@@ -33,9 +31,9 @@
  * @return A neat dictionary with 2 keys, "member" with a PFUser object and
  * "activity" with a PFObject of class type Activity
  */
--(NSMutableArray *)loadMembersOfTribeWithActivities {
+-(NSMutableArray *)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback {
     
-
+    NSMutableArray * membersAndActivities = [[NSMutableArray alloc] init];
     __block NSMutableArray * membersArray;
     __block NSMutableArray * activitiesArray;
     
@@ -57,6 +55,9 @@
                                                          @"activity":activity,
                                                          };
                     [membersAndActivities addObject:memberAndActivity];
+                    if (membersAndActivities.count == activitiesArray.count) {
+                        callback();
+                    }
                 }
             }
             

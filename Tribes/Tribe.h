@@ -14,7 +14,10 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+-(NSMutableArray *)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback;
+
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) PFRelation * members;
+
 
 @end
