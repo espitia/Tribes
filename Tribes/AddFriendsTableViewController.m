@@ -65,7 +65,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return matchedContacts.count;
 }
 
 
@@ -89,12 +89,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Friend" forIndexPath:indexPath];
     
-    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
+    if (matchedContacts.count == 0) {
+        return cell;
+    }
     
+    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
+
     switch (indexPath.section) {
         case 0:
             // matched users
-            cell.textLabel.text = user.objectId;
+            cell.textLabel.text = user[@"username"];
             break;
         case 1:
         
@@ -134,14 +138,17 @@
 -(void)lookUpMatches {
     
     
-    // Objective-C
+    // search for matches
     DGTSession *userSession = [Digits sharedInstance].session;
     DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
     
+    
     [contacts lookupContactMatchesWithCursor:nil completion:^(NSArray *matches, NSString *nextCursor, NSError *error) {
-        // matches is an Array of DGTUser objects.
-        // Use nextCursor in a follow-up call to this method to offset the results.
-        NSLog(@"%@", matches);
+        
+        if (error) { NSLog(@"error: %@", error); }
+
+        // remove duplicates
+        
         [self fetchMatchedUsers:matches];
     }];
 }
@@ -153,23 +160,16 @@
     // iterate through matched Digits Users and fetch the PFUser associated via digitUser.userId
     for (DGTUser * user in arrayOfMatchedDGTUsers) {
         
-        NSLog(@"user to find: %@", user);
-        
         // query
         PFQuery * query = [PFUser query];
         [query whereKey:@"digitsUserId" equalTo:user.userID];
         
         // add to data source
         [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            NSLog(@"obkdfsdf   :%@", objects);
+            [matchedContacts addObject:objects[0]];
+            [self.tableView reloadData];
         }];
-         
-         
-        [matchedContacts addObject:[query getFirstObject]];
-        NSLog(@"MATCHED CONTACTS: %@", matchedContacts);
-        
-        // reload table
-        [self.tableView reloadData];
+
     }
 }
 
