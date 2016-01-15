@@ -22,7 +22,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self askForUserPermissionOfAddressBook];
+    //init instance variables
+    matchedContacts = [[NSMutableArray alloc] init];
+}
+-(void)viewWillAppear:(BOOL)animated {
+
+    // check authorization access to address book status
+    switch ([DGTContacts contactsAccessAuthorizationStatus]) {
+        case 0:
+            NSLog(@"pending status");
+            [self askForUserPermissionOfAddressBook];
+
+            break;
+        case 1:
+            NSLog(@"denied status");
+            [self askForUserPermissionOfAddressBook];
+
+            break;
+        case 2:
+            [self lookUpMatches];
+            NSLog(@"accepted status");
+            break;
+            
+        default:
+            break;
+    }
+    
 
 }
 
