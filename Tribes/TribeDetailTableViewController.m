@@ -27,9 +27,8 @@
         [self.tableView reloadData];
     }];
     
-    // right button to create Tribe
-    UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friends" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
-    [self.navigationItem setRightBarButtonItem:createTribeButton];
+    // right button to Add friends
+    [self addRightButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -74,6 +73,10 @@
 //    }];
 }
 
+-(void)addRightButton {
+    UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friends" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
+    [self.navigationItem setRightBarButtonItem:createTribeButton];
+}
 
 
 
