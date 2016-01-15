@@ -7,8 +7,13 @@
 //
 
 #import "AddFriendsTableViewController.h"
+#import <DigitsKit/DigitsKit.h>
+#import "Parse.h"
 
-@interface AddFriendsTableViewController ()
+
+@interface AddFriendsTableViewController () {
+    NSMutableArray * matchedContacts;
+}
 
 @end
 
@@ -17,11 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self askForUserPermissionOfAddressBook];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -29,70 +31,121 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
     return 1;
+}
+
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    switch (section) {
+        case 0:
+            return @"Users already on Tribes:";
+            break;
+        case 1:
+            return @"Invite your friends to join!";
+            break;
+        default:
+            return @"";
+            break;
+    }
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Friend" forIndexPath:indexPath];
     
-    // Configure the cell...
+    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
+    
+    switch (indexPath.section) {
+        case 0:
+            // matched users
+            cell.textLabel.text = user.objectId;
+            break;
+        case 1:
+        
+            break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
 
+#pragma mark - Helper methods
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)askForUserPermissionOfAddressBook {
+    // ask for address book permission
+    DGTSession *userSession = [Digits sharedInstance].session;
+    DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
+    
+    [contacts startContactsUploadWithCompletion:^(DGTContactsUploadResult *result, NSError *error) {
+        if (!error) {
+            
+            if (result != nil) {
+                
+                // look for matches
+                [self lookUpMatches];
+            }
+            
+        } else {
+            
+            //analyze what the error is and handle it with alert views for now.
+            // more info on errors here: https://docs.fabric.io/ios/digits/find-friends.html#permissions-control-flow
+        }
+    }];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(void)lookUpMatches {
+    
+    
+    // Objective-C
+    DGTSession *userSession = [Digits sharedInstance].session;
+    DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
+    
+    [contacts lookupContactMatchesWithCursor:nil completion:^(NSArray *matches, NSString *nextCursor, NSError *error) {
+        // matches is an Array of DGTUser objects.
+        // Use nextCursor in a follow-up call to this method to offset the results.
+        NSLog(@"%@", matches);
+        [self fetchMatchedUsers:matches];
+    }];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+-(void)fetchMatchedUsers:(NSArray *)arrayOfMatchedDGTUsers {
+    
+
+
+    // iterate through matched Digits Users and fetch the PFUser associated via digitUser.userId
+    for (DGTUser * user in arrayOfMatchedDGTUsers) {
+        
+        NSLog(@"user to find: %@", user);
+        
+        // query
+        PFQuery * query = [PFUser query];
+        [query whereKey:@"digitsUserId" equalTo:user.userID];
+        
+        // add to data source
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            NSLog(@"obkdfsdf   :%@", objects);
+        }];
+         
+         
+        [matchedContacts addObject:[query getFirstObject]];
+        NSLog(@"MATCHED CONTACTS: %@", matchedContacts);
+        
+        // reload table
+        [self.tableView reloadData];
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
