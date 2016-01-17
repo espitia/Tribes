@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tribe.h"
 
 @interface AddFriendsTableViewController : UITableViewController
+
+@property (nonatomic, strong) Tribe * tribe;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "TribeDetailTableViewController.h"
+#import "AddFriendsTableViewController.h"
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
@@ -78,6 +79,14 @@
     [self.navigationItem setRightBarButtonItem:createTribeButton];
 }
 
+#pragma mark - Navigation
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier  isEqual: @"AddFriends"]) {
+        AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
+        vc.tribe = _tribe;
+    }
+}
 
 @end
