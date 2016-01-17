@@ -40,8 +40,8 @@
 
             break;
         case 2:
-            [self lookUpMatches];
             NSLog(@"accepted status");
+            [self askForUserPermissionOfAddressBook];
             break;
             
         default:
