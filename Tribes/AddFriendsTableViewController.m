@@ -191,7 +191,7 @@
         PFQuery * query = [PFUser query];
         [query whereKey:@"digitsUserId" equalTo:user.userID];
         
-        // add to data source
+        // fetch users by digitsID
         [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable user, NSError * _Nullable error) {
             
             // check if matchedContacts (w/ PFUsers) already has contact

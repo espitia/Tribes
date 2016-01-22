@@ -97,6 +97,11 @@
 
 #pragma mark - Helper methods
 
+/**
+ * Load current user to fetch if any new tribes were added,
+ * then fetch all tribes he/she is in.
+ *
+ */
 -(void)loadTribes {
     
     // update user in case other users added him/her to a tribe
