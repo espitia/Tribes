@@ -1,5 +1,5 @@
 //
-//  TribeHandler.m
+//  Tribe.m
 //  Tribes
 //
 //  Created by German Espitia on 1/14/16.

@@ -1,5 +1,5 @@
 //
-//  TribeHandler.h
+//  Tribe.h
 //  Tribes
 //
 //  Created by German Espitia on 1/14/16.
