@@ -23,8 +23,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     // set currentUser
     currentUser = [PFUser currentUser];
+
+    NSLog(@"%@", currentUser.objectId);
+
     
     // init instance/public variables needed
     _tribes = [[NSMutableArray alloc] init];
