@@ -39,33 +39,37 @@
     
     // get array of members
     [self getMembersFromTribewithBlock:^(NSArray *members) {
-        
+
         // asign members to array to later add to dictionary
         membersArray = [NSMutableArray arrayWithArray:members];
         
         // get activities for each member according to tribe passed
         [self getActivitiesOfMembers:membersArray withBlock:^(NSArray * activities) {
             activitiesArray = [NSMutableArray arrayWithArray:activities];
-            
-            for (PFUser * member in membersArray) {
-                for (PFObject * activity in activitiesArray) {
-                    
-                    NSDictionary * memberAndActivity = @{
-                                                         @"member":member,
-                                                         @"activity":activity,
-                                                         };
-                    [membersAndActivities addObject:memberAndActivity];
-                    if (membersAndActivities.count == activitiesArray.count) {
-                        callback();
-                    }
+
+            // iterate over both arrays (members and activity) to make a dictionary
+            for (int i = 0; i < [membersArray count]; i++ ) {
+                
+                PFUser * member = [membersArray objectAtIndex:i];
+                PFObject * activity = [activitiesArray objectAtIndex:i];
+
+                NSDictionary * memberAndActivity = @{
+                                                     @"member":member,
+                                                     @"activity":activity,
+                                                     };
+                
+                // add to 'master array'
+                [membersAndActivities addObject:memberAndActivity];
+                
+                if (membersAndActivities.count == activitiesArray.count) {
+                    callback();
                 }
             }
-            
             
         }];
         
     }];
-    
+
     return membersAndActivities;
 }
 -(void)getActivitiesOfMembers:(NSMutableArray *)members withBlock:(void(^)(NSArray * activites))callback {
