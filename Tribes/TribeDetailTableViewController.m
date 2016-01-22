@@ -54,9 +54,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
    
     // dictionary with member (PFUser)and acitivty key (Activity object)
-    NSDictionary * member = membersAndActivities[indexPath.row];
-    cell.textLabel.text = member[@"member"][@"username"];
-    cell.detailTextLabel.text = member[@"activity"][@"objectId"];
+    PFUser * member = membersAndActivities[indexPath.row][@"member"];
+    PFObject * activity = membersAndActivities[indexPath.row][@"activity"];
+
+    cell.textLabel.text = member[@"username"];
+    cell.detailTextLabel.text = activity.objectId;
     
     return cell;
 }
