@@ -215,12 +215,25 @@
         [query whereKey:@"digitsUserId" equalTo:user.userID];
         
         // add to data source
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            [matchedContacts addObject:objects[0]];
-            [self.tableView reloadData];
-        }];
+        [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable user, NSError * _Nullable error) {
+            
+            // check if matchedContacts (w/ PFUsers) already has contact
+            if (![self contactAlreadyExists:(PFUser *)user]) {
+                
+                // if not, add user to matchedContacts
+                [matchedContacts addObject:user];
+                [self.tableView reloadData];
+            }
 
+
+        }];
+        
     }
+}
+
+
+-(BOOL)contactAlreadyExists:(PFUser *)user {
+    return ([matchedContacts containsObject:user]) ? true : false;
 }
 
 @end
