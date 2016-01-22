@@ -131,15 +131,23 @@
     
     // save tribe
     [tribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-
+        
+        if (error) { NSLog(@"eror saving tribe: %@", error); }
+        
         // save user
         [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             
+            if (error) { NSLog(@"eror saving user: %@", error); }
+
             // send tribe back to main viewcontroller after neccessary saves (tribe and user objects)
             [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
 
             // save activity
-            [activity saveInBackground];
+            [activity saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (error) { NSLog(@"eror saving activity: %@", error); }
+
+            }];
         }];
     }];
 
