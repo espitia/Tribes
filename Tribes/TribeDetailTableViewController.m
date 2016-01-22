@@ -22,11 +22,6 @@
     
     // init instance variables
     membersAndActivities = [[NSMutableArray alloc] init];
-
-    // load members and activities [this should be done in main table to cut down on idle time]
-    membersAndActivities = [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-        [self.tableView reloadData];
-    }];
     
     // right button to Add friends
     [self addRightButton];
