@@ -27,8 +27,6 @@
     // set currentUser
     currentUser = [PFUser currentUser];
 
-    NSLog(@"%@", currentUser.objectId);
-
     
     // init instance/public variables needed
     _tribes = [[NSMutableArray alloc] init];
@@ -101,17 +99,35 @@
 
 -(void)loadTribes {
     
-    NSArray * tribes = currentUser[@"tribes"];
-    
-    for (Tribe * tribe in tribes) {
+    // update user in case other users added him/her to a tribe
+    [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
-        // load tribe objects
-        [tribe fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-            [_tribes addObject:object];
-            [self.tableView reloadData];
-        }];
+        if (error) {
+            NSLog(@"error loading user: %@", error);
+        } else {
+            // get freshly updated tribes
+            NSArray * tribes = currentUser[@"tribes"];
+            
+            for (Tribe * tribe in tribes) {
+                
+                // load tribe objects
+                [tribe fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    
+                    if (error) {
+                        NSLog(@"error loading tribes: %@", error);
+                    } else {
+                        [_tribes addObject:object];
+                        [self.tableView reloadData];
+                    }
+                    
+                }];
+                
+            }
 
-    }
+        }
+    }];
+    
+
     
     
 
