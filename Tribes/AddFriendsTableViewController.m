@@ -116,32 +116,17 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"selected");
-    
-    // show check
-    
+        
     // add user to tribe's members relation
     PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
+    
     PFRelation * memberRelationToTribe = [_tribe relationForKey:@"members"];
     [memberRelationToTribe addObject:user];
-    
-    // add tribe to user's tribe
-    [user addObject:_tribe forKey:@"tribes"];
 
-    // create activity
-    PFObject * activity = [PFObject objectWithClassName:@"Activity"];
-    
-    // add user to activity
-    [activity setObject:user forKey:@"createdBy"];
-    
-    // add activity to user
-    [user addObject:activity forKey:@"activities"];
-    
-    // set tribe in activity
-    [activity setObject:_tribe forKey:@"tribe"];
     
     // cloud code to add tribe and activity to user (then save user)
     [PFCloud callFunctionInBackground:@"addTribeAndActivityToUser"
-                       withParameters:@{@"tribeObjectID":@"7wKq3nu14E",
+                       withParameters:@{@"tribeObjectID":_tribe.objectId,
                                         @"userObjectID":user.objectId
                                         } block:^(id  _Nullable object, NSError * _Nullable error) {
                                             NSLog(@"object: %@", object);
@@ -150,14 +135,6 @@
     // save tribe
     [_tribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         
-        // save user
-        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            
-            // send back to tribe/allow to add more users
-            
-            // save activity
-            [activity saveInBackground];
-        }];
     }];
 }
 
