@@ -174,8 +174,7 @@
         
         if (error) { NSLog(@"error: %@", error); }
 
-        // remove duplicates
-        
+        // get matching PFUsers for corresponding digitsID key
         [self fetchMatchedUsers:matches];
     }];
 }

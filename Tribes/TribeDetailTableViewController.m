@@ -27,11 +27,9 @@
 -(void)viewDidAppear:(BOOL)animated {
     
     // load members and activities [this should be done in main table to cut down on idle time]
-    if (!_tribe.membersAndActivities) {
-        [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-            [self.tableView reloadData];
-        }];;
-    }
+    [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
+        [self.tableView reloadData];
+    }];;
 
 }
 
