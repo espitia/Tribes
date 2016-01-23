@@ -20,18 +20,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // init instance variables
-    membersAndActivities = [[NSMutableArray alloc] init];
-    
     // right button to Add friends
     [self addRightButton];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    
     // load members and activities [this should be done in main table to cut down on idle time]
-    membersAndActivities = [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-        [self.tableView reloadData];
-    }];
+    if (!_tribe.membersAndActivities) {
+        [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
+            [self.tableView reloadData];
+        }];;
+    }
+
 }
 
 #pragma mark - Table view data source
@@ -41,7 +42,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return membersAndActivities.count;
+    return _tribe.membersAndActivities.count;
 }
 
 
@@ -49,8 +50,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
    
     // dictionary with member (PFUser)and acitivty key (Activity object)
-    PFUser * member = membersAndActivities[indexPath.row][@"member"];
-    PFObject * activity = membersAndActivities[indexPath.row][@"activity"];
+    PFUser * member = _tribe.membersAndActivities[indexPath.row][@"member"];
+    PFObject * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
     cell.textLabel.text = member[@"username"];
     cell.detailTextLabel.text = activity.objectId;
