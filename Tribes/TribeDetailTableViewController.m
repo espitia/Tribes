@@ -63,13 +63,6 @@
     
     [self performSegueWithIdentifier:@"AddFriends" sender:nil];
     
-//    // Objective-C
-//    DGTSession *userSession = [Digits sharedInstance].session;
-//    DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
-//    
-//    [contacts startContactsUploadWithCompletion:^(DGTContactsUploadResult *result, NSError *error) {
-//        // Inspect results and error objects to determine if upload succeeded.
-//    }];
 }
 
 -(void)addRightButton {

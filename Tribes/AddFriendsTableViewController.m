@@ -123,19 +123,9 @@
     PFRelation * memberRelationToTribe = [_tribe relationForKey:@"members"];
     [memberRelationToTribe addObject:user];
 
-    
-    // cloud code to add tribe and activity to user (then save user)
-    [PFCloud callFunctionInBackground:@"addTribeAndActivityToUser"
-                       withParameters:@{@"tribeObjectID":_tribe.objectId,
-                                        @"userObjectID":user.objectId
-                                        } block:^(id  _Nullable object, NSError * _Nullable error) {
-                                            NSLog(@"object: %@", object);
-                                            [self.tableView reloadData];
-                                        }];
-    // save tribe
-    [_tribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        
     }];
+
+
 }
 
 #pragma mark - Helper methods
@@ -164,7 +154,6 @@
 
 -(void)lookUpMatches {
     
-    
     // search for matches
     DGTSession *userSession = [Digits sharedInstance].session;
     DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
@@ -181,8 +170,6 @@
 
 -(void)fetchMatchedUsers:(NSArray *)arrayOfMatchedDGTUsers {
     
-
-
     // iterate through matched Digits Users and fetch the PFUser associated via digitUser.userId
     for (DGTUser * user in arrayOfMatchedDGTUsers) {
         
@@ -195,22 +182,19 @@
             
             // check if matchedContacts (w/ PFUsers) already has contact
             if (![self contactAlreadyExists:(PFUser *)user]) {
-                
+            
                 if (![_tribe userAlreadyInTribe:(PFUser *)user]) {
                     // if not, add user to matchedContacts
                     [matchedContacts addObject:user];
                     [self.tableView reloadData];
                 }
-
             }
-
-
         }];
         
     }
 }
 
-
+// in case digits brings back two ids pointing to the same PFUser, thus, fethcing two PFUsers
 -(BOOL)contactAlreadyExists:(PFUser *)user {
     return ([matchedContacts containsObject:user]) ? true : false;
 }
