@@ -115,13 +115,26 @@
 #pragma mark - Table view delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected");
-        
+
+    // disable user interaction so user doesn't add friend twice
+    UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.userInteractionEnabled = false;
+    
+    // add loading spinner
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.frame = CGRectMake(0, 0, 24, 24);
+    cell.accessoryView = spinner;
+    [spinner startAnimating];
+    
     // add user to tribe's members relation
     PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
-    
-    PFRelation * memberRelationToTribe = [_tribe relationForKey:@"members"];
-    [memberRelationToTribe addObject:user];
+    [_tribe addUserToTribe:user withBlock:^(BOOL * success) {
+        if (success) {
+            NSLog(@"succesfully added user");
+        } else {
+            NSLog(@"failed to add user");
+        }
+        [spinner stopAnimating];
 
     }];
 
