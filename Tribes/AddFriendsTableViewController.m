@@ -126,17 +126,57 @@
     cell.accessoryView = spinner;
     [spinner startAnimating];
     
+    // weak self to not have any issues to present alert view
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    // alert controller
+    UIAlertController * __block alert;
+    UIAlertAction * __block defaultAction;
+    
+    // message to go in alert view
+    NSString * __block alertTitle = @"";
+    NSString * __block alertMessage = @"";
+    
     // add user to tribe's members relation
     PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
     [_tribe addUserToTribe:user withBlock:^(BOOL * success) {
+        
+        // successfully added friend
         if (success) {
+            
             NSLog(@"succesfully added user");
+            alertTitle = @"✅✅✅";
+            alertMessage = @"Successfully added friend.\nInviting friends: Major 🔑!";
+            
+             defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {
+                                                                      [self.navigationController popViewControllerAnimated:true];
+                                                                  }];
+        // failed to add friend
         } else {
             NSLog(@"failed to add user");
+            alertTitle = @"❌❌❌";
+            alertMessage = @"Something went wrong 😬.\n Try again.";
         }
+        
+        // stop animating spinner
         [spinner stopAnimating];
+        
+        // finish alert set up
+        alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                    message:alertMessage
+                                             preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        // add action (if success, pop to tribe VC)
+        [alert addAction:defaultAction];
+        
+        // present alert
+        [weakSelf presentViewController:alert animated:YES completion:nil];
 
     }];
+    
+
 
 
 }
