@@ -13,7 +13,9 @@
 @implementation Tribe
 
 @dynamic name;
-@dynamic members;
+@synthesize membersAndActivities;
+
+
 
 + (NSString *)parseClassName {
     return @"Tribe";
@@ -31,9 +33,9 @@
  * @return A neat dictionary with 2 keys, "member" with a PFUser object and
  * "activity" with a PFObject of class type Activity
  */
--(NSMutableArray *)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback {
+-(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback {
     
-    NSMutableArray * membersAndActivities = [[NSMutableArray alloc] init];
+    self.membersAndActivities = [[NSMutableArray alloc] init];
     __block NSMutableArray * membersArray;
     __block NSMutableArray * activitiesArray;
     
@@ -59,9 +61,9 @@
                                                      };
                 
                 // add to 'master array'
-                [membersAndActivities addObject:memberAndActivity];
+                [self.membersAndActivities addObject:memberAndActivity];
                 
-                if (membersAndActivities.count == activitiesArray.count) {
+                if (self.membersAndActivities.count == activitiesArray.count) {
                     callback();
                 }
             }
@@ -69,8 +71,6 @@
         }];
         
     }];
-
-    return membersAndActivities;
 }
 -(void)getActivitiesOfMembers:(NSMutableArray *)members withBlock:(void(^)(NSArray * activites))callback {
     
