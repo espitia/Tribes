@@ -27,10 +27,48 @@
     [self registerSubclass];
 }
 
+#pragma mark - Handling users in Tribe
+
+/**
+ * Adds a user to tribe's member relation. Then it calls PFCloud code to add tribe, create activity objet and add activity to user.
+ *
+ * @param User to be added to tribe
+ * @return A BOOl value of true or false to let you know if everything went smoothly.
+ */
+-(void)addUserToTribe:(PFUser *)user withBlock:(void (^)(BOOL * success))callback {
+    
+    // add user to member relation
+    PFRelation * memberRelationToTribe = [self relationForKey:@"members"];
+    [memberRelationToTribe addObject:user];
+    
+    // save tribe
+    [self saveInBackground];
+    
+    __block BOOL success;
+    
+    // cloud code to add tribe and activity to user (then save user)
+    [PFCloud callFunctionInBackground:@"addTribeAndActivityToUser"
+                       withParameters:@{@"tribeObjectID":self.objectId,
+                                        @"userObjectID":user.objectId
+                                        } block:^(id  _Nullable object, NSError * _Nullable error) {
+
+                                            if (error) {
+                                                success = true;
+                                                callback(&success);
+                                            } else {
+                                                success = false;
+                                                callback(&success);
+                                            }
+                                        }];
+
+}
+
 -(BOOL)userAlreadyInTribe:(PFUser *)user {
     return ([self.members containsObject:user]) ? true : false;
 }
 
+
+#pragma mark - Loading users and activities
 /**
  * Load members of a tribe with their corresponding activity
  *
