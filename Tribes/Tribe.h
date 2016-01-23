@@ -15,6 +15,7 @@
 +(void)load;
 
 -(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback;
+-(BOOL)userAlreadyInTribe:(PFUser *)user;
 
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;

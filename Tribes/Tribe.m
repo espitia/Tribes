@@ -27,6 +27,9 @@
     [self registerSubclass];
 }
 
+-(BOOL)userAlreadyInTribe:(PFUser *)user {
+    return ([self.members containsObject:user]) ? true : false;
+}
 
 /**
  * Load members of a tribe with their corresponding activity
