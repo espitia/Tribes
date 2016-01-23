@@ -14,6 +14,8 @@
 
 @dynamic name;
 @synthesize membersAndActivities;
+@synthesize members;
+@synthesize activities;
 
 
 
@@ -30,30 +32,29 @@
  * Load members of a tribe with their corresponding activity
  *
  * @param tribe from which you want to retrieve members and activities
- * @return A neat dictionary with 2 keys, "member" with a PFUser object and
+ * @return A neat array of dictionaries with 2 keys, "member" with a PFUser object and
  * "activity" with a PFObject of class type Activity
  */
 -(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback {
     
     self.membersAndActivities = [[NSMutableArray alloc] init];
-    __block NSMutableArray * membersArray;
-    __block NSMutableArray * activitiesArray;
     
     // get array of members
-    [self getMembersFromTribewithBlock:^(NSArray *members) {
-
-        // asign members to array to later add to dictionary
-        membersArray = [NSMutableArray arrayWithArray:members];
+    [self getMembersFromTribewithBlock:^(NSArray * tribeMembers) {
+        
+        // asign members property and use to later add to dictionary
+        self.members = [NSMutableArray arrayWithArray:tribeMembers];
         
         // get activities for each member according to tribe passed
-        [self getActivitiesOfMembers:membersArray withBlock:^(NSArray * activities) {
-            activitiesArray = [NSMutableArray arrayWithArray:activities];
+        [self getActivitiesOfMembers:self.members withBlock:^(NSArray * memberActivities) {
+            
+            self.activities = [NSMutableArray arrayWithArray:memberActivities];
 
             // iterate over both arrays (members and activity) to make a dictionary
-            for (int i = 0; i < [membersArray count]; i++ ) {
+            for (int i = 0; i < [self.members count]; i++ ) {
                 
-                PFUser * member = [membersArray objectAtIndex:i];
-                PFObject * activity = [activitiesArray objectAtIndex:i];
+                PFUser * member = [self.members objectAtIndex:i];
+                PFObject * activity = [self.activities objectAtIndex:i];
 
                 NSDictionary * memberAndActivity = @{
                                                      @"member":member,
@@ -63,7 +64,7 @@
                 // add to 'master array'
                 [self.membersAndActivities addObject:memberAndActivity];
                 
-                if (self.membersAndActivities.count == activitiesArray.count) {
+                if (self.membersAndActivities.count == self.activities.count) {
                     callback();
                 }
             }
@@ -72,12 +73,12 @@
         
     }];
 }
--(void)getActivitiesOfMembers:(NSMutableArray *)members withBlock:(void(^)(NSArray * activites))callback {
+-(void)getActivitiesOfMembers:(NSMutableArray *)tribeMembers withBlock:(void(^)(NSArray * activites))callback {
     
-    NSMutableArray * activities = [[NSMutableArray alloc] init];
+    NSMutableArray * memberActivities = [[NSMutableArray alloc] init];
     
     // get activity where createdBy = member and tribe.objID = tribe.objID
-    for (PFUser * member in members) {
+    for (PFUser * member in tribeMembers) {
         
         // get activity object by matching createdBy key to user and tribe key equals to corresponding tribe
         PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
@@ -86,14 +87,14 @@
         [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
             
             if (!error) {
-                [activities addObject:object];
+                [memberActivities addObject:object];
             } else {
-                NSLog(@"error: %@", error);
+                NSLog(@"error loading activity objects: %@", error);
             }
             
             // return activities when each member has an activity
-            if (activities.count == members.count) {
-                callback(activities);
+            if (memberActivities.count == members.count) {
+                callback(memberActivities);
             }
         }];
     }
@@ -119,7 +120,7 @@
             // send it back
             callback(membersPlaceholderArray);
         } else {
-            NSLog(@"error: %@", error);
+            NSLog(@"error loading member objects: %@", error);
         }
     }];
     
