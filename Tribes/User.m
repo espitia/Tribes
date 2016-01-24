@@ -38,30 +38,20 @@
             NSLog(@"error loading user: %@", error);
         } else {
             
-            // placeholder array to add fetched tribes
-            NSMutableArray * loadedTribesPlaceholder = [[NSMutableArray alloc] init];
-            
+            // counter to make sure we load all user's tribes
+            int __block counter = 0;
+
             // iterate through each tribe
             for (Tribe * tribe in self.tribes) {
-            
-                // load tribe objects
-                [tribe fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                
+                
+                [tribe loadTribeWithMembersAndActivitiesWithBlock:^{
+                    counter++;
                     
-                    if (error) {
-                        NSLog(@"error loading tribes: %@", error);
-                    } else {
-                        
-                        // add to placeholder array
-                        [loadedTribesPlaceholder addObject:object];
-                        
-                        // when all tribes have been loaded
-                        if (loadedTribesPlaceholder.count == self.tribes.count) {
-                            
-                            // replae old array of pointers for real tribes
-                            self.tribes = loadedTribesPlaceholder;
-                            self.loadedInitialTribes = TRUE;
-                            callback();
-                        }
+                    // makes sure all tribes have been loaded before callback()
+                    if (counter == self.tribes.count) {
+                        self.loadedInitialTribes = TRUE;
+                        callback();
                     }
                 }];
             }
