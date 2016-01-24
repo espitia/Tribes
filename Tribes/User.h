@@ -13,4 +13,9 @@
 
 +(void)load;
 
+-(void)loadTribesWithBlock:(void(^)(void))callback;
+
+
+@property (nonatomic, strong) NSArray * tribes;
+
 @end
