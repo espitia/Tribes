@@ -143,6 +143,7 @@
 #pragma mark - Segue handling
 
 -(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
+    [self.tableView reloadData];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

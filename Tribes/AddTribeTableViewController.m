@@ -159,7 +159,6 @@
     if ([segue.identifier  isEqual: @"unwindFromAddTribe"]) {
         TribesTableViewController * vc = (TribesTableViewController *)segue.destinationViewController;
         [vc.tribes addObject:tribe];
-        [vc.tableView reloadData];
     }
 }
 
