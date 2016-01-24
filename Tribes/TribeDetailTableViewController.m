@@ -52,7 +52,9 @@
     PFObject * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
     cell.textLabel.text = member[@"username"];
-    cell.detailTextLabel.text = activity.objectId;
+    
+    NSString * completions = [NSString stringWithFormat:@"%d🔥", [activity[@"completions"] intValue]];
+    cell.detailTextLabel.text = completions;
     
     return cell;
 }
