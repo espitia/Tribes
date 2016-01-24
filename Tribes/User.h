@@ -17,5 +17,6 @@
 
 
 @property (nonatomic, strong) NSArray * tribes;
+@property BOOL loadedInitialTribes;
 
 @end

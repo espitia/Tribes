@@ -12,9 +12,10 @@
 #import "TribeDetailTableViewController.h"
 #import "Tribe.h"
 #import "MCSwipeTableViewCell.h"
+#import "User.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
-    PFUser * currentUser;
+    User * currentUser;
 }
 
 @end
@@ -26,20 +27,18 @@
     
     
     // set currentUser
-    currentUser = [PFUser currentUser];
-    
-    // init instance/public variables needed
-    _tribes = [[NSMutableArray alloc] init];
+    currentUser = [User currentUser];
     
     // register table view cell
     [self.tableView registerClass:[MCSwipeTableViewCell class] forCellReuseIdentifier:@"TribeCell"];
 
-    
     //  log in / sign up user if non-existent
     if (!currentUser) {
         [self signUp];
     } else {
-        [self loadTribes];
+        [currentUser loadTribesWithBlock:^{
+            [self.tableView reloadData];
+        }];
     }
 
 }
@@ -52,7 +51,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _tribes.count;
+    return currentUser.tribes.count;
 }
 
 
@@ -83,8 +82,12 @@
 
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    Tribe * tribe = [_tribes objectAtIndex:indexPath.row];
-
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.row];
+    
+    // makes sure tribe objects have been loaded 
+    if (!currentUser.loadedInitialTribes)
+        return;
+    
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
     
@@ -108,7 +111,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self performSegueWithIdentifier:@"TribeDetail" sender:[_tribes objectAtIndex:indexPath.row]];
+    [self performSegueWithIdentifier:@"TribeDetail" sender:[currentUser.tribes objectAtIndex:indexPath.row]];
 }
 
 #pragma mark - MCSwipeTableViewCellDelegate
@@ -116,17 +119,17 @@
 
 // When the user starts swiping the cell this method is called
 - (void)swipeTableViewCellDidStartSwiping:(MCSwipeTableViewCell *)cell {
-    // NSLog(@"Did start swiping the cell!");
+//     NSLog(@"Did start swiping the cell!");
 }
 
 // When the user ends swiping the cell this method is called
 - (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell {
-    // NSLog(@"Did end swiping the cell!");
+//     NSLog(@"Did end swiping the cell!");
 }
 
 // When the user is dragging, this method is called and return the dragged percentage from the border
 - (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didSwipeWithPercentage:(CGFloat)percentage {
-    // NSLog(@"Did swipe with percentage : %f", percentage);
+//     NSLog(@"Did swipe with percentage : %f", percentage);
 }
 #pragma mark - User login/signup
 
@@ -156,41 +159,7 @@
 
 #pragma mark - Helper methods
 
-/**
- * Load current user to fetch if any new tribes were added,
- * then fetch all tribes he/she is in.
- *
- */
--(void)loadTribes {
-    
-    // update user in case other users added him/her to a tribe
-    [currentUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        if (error) {
-            NSLog(@"error loading user: %@", error);
-        } else {
-            // get freshly updated tribes
-            NSArray * tribes = currentUser[@"tribes"];
-            
-            for (Tribe * tribe in tribes) {
-                
-                // load tribe objects
-                [tribe fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                    
-                    if (error) {
-                        NSLog(@"error loading tribes: %@", error);
-                    } else {
-                        [_tribes addObject:object];
-                        [self.tableView reloadData];
-                    }
-                    
-                }];
-                
-            }
 
-        }
-    }];
-}
 
 - (UIView *)viewWithImageName:(NSString *)imageName {
     UIImage *image = [UIImage imageNamed:imageName];

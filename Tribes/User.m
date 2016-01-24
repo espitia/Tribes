@@ -13,6 +13,7 @@
 @implementation User
 
 @dynamic tribes;
+@synthesize loadedInitialTribes;
 
 #pragma mark - Parse required methods
 
@@ -58,6 +59,7 @@
                             
                             // replae old array of pointers for real tribes
                             self.tribes = loadedTribesPlaceholder;
+                            self.loadedInitialTribes = TRUE;
                             callback();
                         }
                     }

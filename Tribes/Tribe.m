@@ -17,7 +17,7 @@
 @synthesize members;
 @synthesize activities;
 
-
+#pragma mark - Parse required methods
 
 + (NSString *)parseClassName {
     return @"Tribe";
