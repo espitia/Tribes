@@ -8,6 +8,8 @@ target 'Tribes' do
 	pod 'Fabric'
 	pod 'Digits'
 	pod 'TwitterCore'
+	pod 'MCSwipeTableViewCell', '~> 2.1.4'
+
 end
 
 target 'TribesTests' do
