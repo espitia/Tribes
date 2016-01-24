@@ -69,12 +69,22 @@
 
 
 #pragma mark - Loading users and activities
+
 /**
- * Load members of a tribe with their corresponding activity
+ * Loads Tribe first and then get members of a tribe with their corresponding activity
  *
- * @param tribe from which you want to retrieve members and activities
- * @return A neat array of dictionaries with 2 keys, "member" with a PFUser object and
- * "activity" with a PFObject of class type Activity
+ */
+-(void)loadTribeWithMembersAndActivitiesWithBlock:(void(^)(void))callback {
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [self loadMembersOfTribeWithActivitiesWithBlock:^{
+            callback();
+        }];
+    }];
+}
+
+/**
+ * Loads members of a tribe with their corresponding activity
+ *
  */
 -(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback {
     
@@ -145,15 +155,16 @@
     
     // array to hold members
     NSMutableArray * membersPlaceholderArray = [[NSMutableArray alloc] init];
-    
+
     // get relation of tribe object to the members
     PFRelation * membersOfTribeRelation = self[@"members"];
-    
+
     // query that relation for the objects (members)
     PFQuery * queryForMembersOfTribe = [membersOfTribeRelation query];
     
     // get member objects
     [queryForMembersOfTribe findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+      
         if (!error) {
             
             // add user objects into members var
