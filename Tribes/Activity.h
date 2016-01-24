@@ -14,5 +14,9 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+@property (nonatomic, strong) NSMutableArray * completionDates;
+
+-(void)completeForToday;
+-(BOOL)completedForDay;
 
 @end
