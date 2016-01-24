@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCSwipeTableViewCell.h"
 
-@interface TribesTableViewController : UITableViewController
+@interface TribesTableViewController : UITableViewController 
 
 @property (atomic, strong) NSMutableArray * tribes;
 
