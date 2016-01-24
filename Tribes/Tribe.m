@@ -7,6 +7,7 @@
 //
 
 #import "Tribe.h"
+#import "Activity.h"
 #import <Parse/PFObject+Subclass.h>
 
 
@@ -98,28 +99,30 @@
         
         // get activities for each member according to tribe passed
         [self getActivitiesOfMembers:self.members withBlock:^(NSArray * memberActivities) {
-            
+
             self.activities = [NSMutableArray arrayWithArray:memberActivities];
-
-            // iterate over both arrays (members and activity) to make a dictionary
-            for (int i = 0; i < [self.members count]; i++ ) {
-                
-                PFUser * member = [self.members objectAtIndex:i];
-                PFObject * activity = [self.activities objectAtIndex:i];
-
-                NSDictionary * memberAndActivity = @{
-                                                     @"member":member,
-                                                     @"activity":activity,
-                                                     };
-                
-                // add to 'master array'
-                [self.membersAndActivities addObject:memberAndActivity];
-                
-                if (self.membersAndActivities.count == self.activities.count) {
-                    callback();
+            
+            // iterate over members and activities to match them correctly
+            for (PFUser * member in members) {
+                for (Activity * activity in self.activities) {
+                    if (activity[@"createdBy"] == member) {
+                        
+                        // if matched, make dictionary
+                        NSDictionary * memberAndActivity = @{
+                                                             @"member":member,
+                                                             @"activity":activity,
+                                                             };
+                        
+                        // add to 'master array'
+                        [self.membersAndActivities addObject:memberAndActivity];
+        
+                        if (self.membersAndActivities.count == self.activities.count) {
+                            callback();
+                        }
+                        
+                    }
                 }
             }
-            
         }];
         
     }];
