@@ -15,6 +15,7 @@
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
+		0993B5151C550F910008B7E5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5141C550F910008B7E5 /* User.m */; };
 		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
@@ -66,6 +67,8 @@
 		0917EC661C4037D600BE2697 /* TribesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TribesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC6A1C4037D600BE2697 /* TribesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TribesUITests.m; sourceTree = "<group>"; };
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0993B5131C550F910008B7E5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		0993B5141C550F910008B7E5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		09C6584F1C469FEA008C4EC3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		09C658501C469FEA008C4EC3 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeDetailTableViewController.h; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 			children = (
 				09C6585B1C47F188008C4EC3 /* Tribe.h */,
 				09C6585C1C47F188008C4EC3 /* Tribe.m */,
+				0993B5131C550F910008B7E5 /* User.h */,
+				0993B5141C550F910008B7E5 /* User.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 			files = (
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
 				09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */,
+				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
