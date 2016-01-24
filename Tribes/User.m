@@ -14,6 +14,7 @@
 @implementation User
 
 @dynamic tribes;
+@dynamic activities;
 @synthesize loadedInitialTribes;
 
 #pragma mark - Parse required methods

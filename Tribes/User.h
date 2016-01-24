@@ -20,6 +20,7 @@
 -(Activity *)activityForTribe:(Tribe *)tribe;
 
 @property (nonatomic, strong) NSArray * tribes;
+@property (nonatomic, strong) NSArray * activities;
 @property BOOL loadedInitialTribes;
 
 @end
