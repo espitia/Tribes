@@ -13,6 +13,7 @@
 #import "Tribe.h"
 #import "MCSwipeTableViewCell.h"
 #import "User.h"
+#import "Activity.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
@@ -83,10 +84,30 @@
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.row];
+    Activity * activity = [currentUser activityForTribe:tribe];
     
-    // makes sure tribe objects have been loaded 
+    // makes sure tribe objects have been loaded
     if (!currentUser.loadedInitialTribes)
         return;
+    
+    if ([activity completedForDay]) {
+        [self configureCellForCompletedTribeActivity:cell withTribe:tribe];
+    } else {
+        [self configureCellForUncompleteTribeActivity:cell withTribe:tribe];
+    }
+    
+}
+
+- (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
+   
+    
+    NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
+    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:tribe.name attributes:attributes];
+    
+    cell.textLabel.attributedText = attributedString;
+}
+
+- (void)configureCellForUncompleteTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
     
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
@@ -100,11 +121,9 @@
     [cell.detailTextLabel setText:@"German D 🔑"];
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        NSLog(@"Did swipe \"Checkmark\" cell");
+        
+        [currentUser completeActivityForTribe:tribe];
     }];
-    
-    
-    
 }
 
 #pragma mark - Table view delegate
