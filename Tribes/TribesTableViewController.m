@@ -90,6 +90,10 @@
     if (!currentUser.loadedInitialTribes)
         return;
     
+    // cell modifications that go for both complete/uncomplete tribes
+    [self configureCellForAllTribes:cell withTribe:tribe];
+    
+    // cell modifications depending on completion/uncompleted
     if ([activity completedForDay]) {
         [self configureCellForCompletedTribeActivity:cell withTribe:tribe];
     } else {
@@ -98,6 +102,10 @@
     
 }
 
+- (void)configureCellForAllTribes:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
+    [cell.textLabel setText:tribe[@"name"]];
+    [cell.detailTextLabel setText:@"German D 🔑"];
+}
 - (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
    
     
@@ -116,9 +124,6 @@
     [cell setDefaultColor:[UIColor lightGrayColor]];
     
     [cell setDelegate:self];
-    
-    [cell.textLabel setText:tribe[@"name"]];
-    [cell.detailTextLabel setText:@"German D 🔑"];
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
