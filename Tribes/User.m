@@ -8,6 +8,7 @@
 
 #import "User.h"
 #import "Tribe.h"
+#import "Activity.h"
 #import <Parse/PFObject+Subclass.h>
 
 @implementation User
@@ -58,6 +59,25 @@
         }
     }];
 
+}
+
+-(void)completeActivityForTribe:(Tribe *)tribe {
+
+    //find activity for tribe inside user
+    for (Activity * activityToComplete in tribe.activities) {
+        if (activityToComplete[@"createdBy"] == self) {
+            [activityToComplete completeForToday];
+        }
+    }
+
+}
+-(Activity *)activityForTribe:(Tribe *)tribe {
+    for (Activity * activity in tribe.activities) {
+        if (activity[@"createdBy"] == self) {
+            return activity;
+        }
+    }
+    return nil;
 }
 
 @end

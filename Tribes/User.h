@@ -8,13 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "Tribe.h"
+#import "Activity.h"
 
 @interface User : PFUser <PFSubclassing>
 
 +(void)load;
 
 -(void)loadTribesWithBlock:(void(^)(void))callback;
-
+-(void)completeActivityForTribe:(Tribe *)tribe;
+-(Activity *)activityForTribe:(Tribe *)tribe;
 
 @property (nonatomic, strong) NSArray * tribes;
 @property BOOL loadedInitialTribes;
