@@ -141,7 +141,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:@"TribeDetail" sender:[currentUser.tribes objectAtIndex:indexPath.row]];
 }
 
