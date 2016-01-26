@@ -62,6 +62,7 @@
 
 }
 
+#pragma mark - Handling tribes
 -(void)completeActivityForTribe:(Tribe *)tribe {
 
     //find activity for tribe inside user
@@ -81,4 +82,53 @@
     return nil;
 }
 
+-(void)addTribeWithName:(NSString *)name {
+    
+    // create a tribe
+    Tribe * tribe = [Tribe object];
+    
+    // set name key
+    [tribe setObject:name forKey:@"name"];
+    
+    // add user to tribe relation
+    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"members"];
+    [tribeRelationToUsers addObject:self];
+    
+    // add tribe to user array
+    [self addObject:tribe forKey:@"tribes"];
+    
+    // create activity
+    Activity * activity = [Activity object];
+    
+    // add user to activity
+    [activity setObject:self forKey:@"createdBy"];
+    
+    // add activity to user
+    [self addObject:activity forKey:@"activities"];
+    
+    // set tribe in activity
+    [activity setObject:tribe forKey:@"tribe"];
+    
+    // for first time user adding a tribe
+    self.loadedInitialTribes = true;
+    
+    // save tribe
+    [tribe saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
+        
+        if (error) { NSLog(@"eror saving tribe: %@", error); }
+        
+        // save user
+        [self saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
+            
+            if (error) { NSLog(@"eror saving user: %@", error); }
+            
+            // save activity
+            [activity saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (error) { NSLog(@"eror saving activity: %@", error); } 
+                
+            }];
+        }];
+    }];
+}
 @end

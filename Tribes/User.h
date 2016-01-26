@@ -18,8 +18,9 @@
 -(void)loadTribesWithBlock:(void(^)(void))callback;
 -(void)completeActivityForTribe:(Tribe *)tribe;
 -(Activity *)activityForTribe:(Tribe *)tribe;
+-(void)addTribeWithName:(NSString *)name;
 
-@property (nonatomic, strong) NSArray * tribes;
+@property (nonatomic, strong) NSMutableArray * tribes;
 @property (nonatomic, strong) NSArray * activities;
 @property BOOL loadedInitialTribes;
 
