@@ -44,6 +44,12 @@
 
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    
+    // security check
+    if (!currentUser)
+        currentUser = [User currentUser];
+}
 
 #pragma mark - Table view data source
 
@@ -104,7 +110,7 @@
 
 - (void)configureCellForAllTribes:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
     [cell.textLabel setText:tribe[@"name"]];
-    [cell.detailTextLabel setText:@"German D 🔑"];
+    [cell.detailTextLabel setText:@"German has the 🔑"];
 }
 - (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
    
@@ -127,7 +133,8 @@
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
 
-//        [currentUser completeActivityForTribe:tribe];
+        [currentUser completeActivityForTribe:tribe];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
 }
 
