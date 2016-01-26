@@ -11,6 +11,6 @@
 
 @interface TribesTableViewController : UITableViewController 
 
-@property (atomic, strong) NSMutableArray * tribes;
+//@property (atomic, strong) NSMutableArray * tribes;
 
 @end
