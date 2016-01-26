@@ -10,9 +10,10 @@
 #import "AddTribeTableViewController.h"
 #import "Parse.h"
 #import "Tribe.h"
+#import "User.h"
 
 @interface AddTribeTableViewController () {
-    PFUser * currentUser;
+    User * currentUser;
     UITextField * tribeNameTextField;
     Tribe * tribe;
 }
@@ -29,7 +30,7 @@
     [self.navigationItem setRightBarButtonItem:createTribeButton];
     
     // set current user
-    currentUser = [PFUser currentUser];
+    currentUser = [User currentUser];
 
     // initialize textfield
     tribeNameTextField = [[UITextField alloc] init];
@@ -103,63 +104,14 @@
 
 -(void)createTribe {
     
-    // create a tribe
-    tribe = [Tribe object];
-    
-    // set name key
-    [tribe setObject:tribeNameTextField.text forKey:@"name"];
-    
-    // add user to tribe relation
-    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"members"];
-    [tribeRelationToUsers addObject:currentUser];
-    
-    // add tribe to user array
-    [currentUser addObject:tribe forKey:@"tribes"];
-    
-    // create activity
-    PFObject * activity = [PFObject objectWithClassName:@"Activity"];
-
-    // add user to activity
-    [activity setObject:currentUser forKey:@"createdBy"];
-
-    // add activity to user
-    [currentUser addObject:activity forKey:@"activities"];
-    
-    // set tribe in activity
-    [activity setObject:tribe forKey:@"tribe"];
-
-    
-    // save tribe
-    [tribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+    if (currentUser) {
         
-        if (error) { NSLog(@"eror saving tribe: %@", error); }
+        [currentUser addTribeWithName:tribeNameTextField.text];
         
-        // save user
-        [currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            
-            if (error) { NSLog(@"eror saving user: %@", error); }
-
-            // send tribe back to main viewcontroller after neccessary saves (tribe and user objects)
-            [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
-
-            // save activity
-            [activity saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                
-                if (error) { NSLog(@"eror saving activity: %@", error); }
-
-            }];
-        }];
-    }];
-
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    // send back tribe object to mainVC
-    if ([segue.identifier  isEqual: @"unwindFromAddTribe"]) {
-        TribesTableViewController * vc = (TribesTableViewController *)segue.destinationViewController;
-        [vc.tribes addObject:tribe];
+        // send tribe back to main viewcontroller
+        [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
     }
 }
+
 
 @end

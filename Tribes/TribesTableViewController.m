@@ -97,7 +97,7 @@
     if ([activity completedForDay]) {
         [self configureCellForCompletedTribeActivity:cell withTribe:tribe];
     } else {
-        [self configureCellForUncompleteTribeActivity:cell withTribe:tribe];
+        [self configureCellForUncompleteTribeActivity:cell withTribe:tribe atIndexPath:indexPath];
     }
     
 }
@@ -115,7 +115,7 @@
     cell.textLabel.attributedText = attributedString;
 }
 
-- (void)configureCellForUncompleteTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
+- (void)configureCellForUncompleteTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe atIndexPath:(NSIndexPath *)indexPath {
     
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
@@ -125,9 +125,9 @@
     
     [cell setDelegate:self];
     
-    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeExit state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        
-        [currentUser completeActivityForTribe:tribe];
+    [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+
+//        [currentUser completeActivityForTribe:tribe];
     }];
 }
 
@@ -167,6 +167,8 @@
 #pragma mark - Segue handling
 
 -(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
+    
+    // reload tableview after added new tribe
     [self.tableView reloadData];
 }
 
