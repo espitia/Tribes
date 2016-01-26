@@ -68,6 +68,13 @@
     return ([self.members containsObject:user]) ? true : false;
 }
 
+-(void)sortMembersAndActivitiesByActivityCompletions {
+
+    NSArray * sortedArrayByActivityCompletions = [[NSArray alloc] init];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"activity.completions"  ascending:NO];
+    sortedArrayByActivityCompletions = [self.membersAndActivities sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    self.membersAndActivities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
+}
 
 #pragma mark - Loading users and activities
 
@@ -117,6 +124,7 @@
                         [self.membersAndActivities addObject:memberAndActivity];
         
                         if (self.membersAndActivities.count == self.activities.count) {
+                            [self sortMembersAndActivitiesByActivityCompletions];
                             callback();
                         }
                         
