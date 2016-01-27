@@ -32,14 +32,7 @@
     }
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    
-    // load members and activities [this should be done in main table to cut down on idle time]
-    [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-        [self.tableView reloadData];
-    }];;
 
-}
 
 #pragma mark - Table view data source
 
