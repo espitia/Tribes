@@ -54,10 +54,10 @@
                                         } block:^(id  _Nullable object, NSError * _Nullable error) {
 
                                             if (error) {
-                                                success = true;
+                                                success = false;
                                                 callback(&success);
                                             } else {
-                                                success = false;
+                                                success = true;
                                                 callback(&success);
                                             }
                                         }];
