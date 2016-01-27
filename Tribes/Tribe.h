@@ -19,6 +19,7 @@
 -(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback;
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
+-(void)updateTribeLeader;
 
 
 @property (nonatomic, strong) NSString * name;
