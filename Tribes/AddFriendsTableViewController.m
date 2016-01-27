@@ -181,7 +181,7 @@
 
 }
 
-#pragma mark - Helper methods
+#pragma mark - Contacts handling
 
 -(void)askForUserPermissionOfAddressBook {
     // ask for address book permission
