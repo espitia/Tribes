@@ -19,6 +19,8 @@
 -(void)completeActivityForTribe:(Tribe *)tribe;
 -(Activity *)activityForTribe:(Tribe *)tribe;
 -(void)addTribeWithName:(NSString *)name;
+-(void)sendPushToMember:(User *)member ForTribe:(Tribe *)tribe withBlock:(void (^)(BOOL * success))callback;
+
 
 @property (nonatomic, strong) NSMutableArray * tribes;
 @property (nonatomic, strong) NSArray * activities;

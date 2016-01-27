@@ -63,6 +63,43 @@
 }
 
 #pragma mark - Handling tribes
+
+/**
+ * Send push to a member in a tribe.
+ 
+ @param member Member to send push to.
+ @param tribe Tribe to which members belong to.
+ */
+-(void)sendPushToMember:(User *)member ForTribe:(Tribe *)tribe withBlock:(void (^)(BOOL * success))callback {
+    
+    // don't send push to yourself (user sending push to itself)
+//    if (self == member) {
+//        return;
+//    }
+    
+    __block BOOL success;
+
+    // cloud code to send push
+    [PFCloud callFunctionInBackground:@"sendPush"
+                       withParameters:@{@"userObjectID":member.objectId,
+                                        @"fromUsername":self[@"username"],
+                                        @"tribeName":tribe[@"name"]}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                    
+                                    if (error) {
+                                        NSLog(@"error:\n %@", error);
+                                        success = false;
+                                        callback(&success);
+                                    } else {
+                                        NSLog(@"success:\n%@", object);
+                                        success = true;
+                                        callback(&success);
+                                    }
+                                    
+                                }];
+}
+
+
 -(void)completeActivityForTribe:(Tribe *)tribe {
 
     //find activity for tribe inside user
