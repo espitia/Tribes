@@ -24,6 +24,9 @@
     // right button to Add friends
     [self addRightButton];
     
+    // set title
+    self.navigationItem.title = _tribe[@"name"];
+    
     // make sure members and activites load
     if (![_tribe membersAndActivitesAreLoaded]) {
         [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
@@ -50,11 +53,19 @@
    
     // dictionary with member (PFUser)and acitivty key (Activity object)
     PFUser * member = _tribe.membersAndActivities[indexPath.row][@"member"];
-    PFObject * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
+    Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
     cell.textLabel.text = member[@"username"];
     
-    NSString * completions = [NSString stringWithFormat:@"%d🔥", [activity[@"completions"] intValue]];
+    NSString * completions;
+    
+    // format detail string depending if user completed activity or not
+    if ([activity completedForDay]) {
+        completions = [NSString stringWithFormat:@"🦁%d🔥", [activity[@"completions"] intValue]];
+    } else {
+        completions = [NSString stringWithFormat:@"🐑%d🔥", [activity[@"completions"] intValue]];
+    }
+    
     cell.detailTextLabel.text = completions;
     
     return cell;
