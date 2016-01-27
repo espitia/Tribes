@@ -189,4 +189,8 @@
     
 }
 
+-(BOOL)membersAndActivitesAreLoaded {
+    return (self.membersAndActivities == 0 || !self.membersAndActivities) ? false : true;
+}
+
 @end

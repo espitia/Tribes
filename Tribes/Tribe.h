@@ -14,6 +14,7 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+-(BOOL)membersAndActivitesAreLoaded;
 -(void)loadTribeWithMembersAndActivitiesWithBlock:(void(^)(void))callback;
 -(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback;
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
