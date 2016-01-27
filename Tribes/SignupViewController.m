@@ -44,6 +44,11 @@
                     NSLog(@"error signing up with Parse");
                 } else {
                     
+                    // save installation for pushes
+                    PFInstallation *installation = [PFInstallation currentInstallation];
+                    installation[@"user"] = [PFUser currentUser];
+                    [installation saveInBackground];
+                    
                     // add id to digits account to parse user object
                     user[@"digitsUserId"] = session.userID;
                     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {

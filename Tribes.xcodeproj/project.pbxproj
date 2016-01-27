@@ -351,6 +351,11 @@
 					0917EC411C4037D600BE2697 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = K93NF4PY9Z;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					0917EC5A1C4037D600BE2697 = {
 						CreatedOnToolsVersion = 7.2;
