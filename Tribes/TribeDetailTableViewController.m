@@ -22,6 +22,13 @@
     
     // right button to Add friends
     [self addRightButton];
+    
+    // make sure members and activites load
+    if (![_tribe membersAndActivitesAreLoaded]) {
+        [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
+            [self.tableView reloadData];
+        }];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -57,6 +64,25 @@
     cell.detailTextLabel.text = completions;
     
     return cell;
+}
+
+#pragma mark - Table view delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (![_tribe membersAndActivitesAreLoaded]) {
+        // alert user that member and activites are not loaded
+        return;
+    }
+
+    User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
+    User * currentUser = [User currentUser];
+
+    // send push to tapped on member
+    [currentUser sendPushToMember:member ForTribe:_tribe withBlock:^(BOOL *success) {
+        [self showAlert];
+    }];
+    
 }
 
 #pragma mark - Helper methods
