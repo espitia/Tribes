@@ -84,10 +84,11 @@
     User * currentUser = [User currentUser];
 
     // send push to tapped on member
-    [currentUser sendPushToMember:member ForTribe:_tribe withBlock:^(BOOL *success) {
-        [self showAlert];
+    [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
+        if (success) {
+            [self showAlert];
+        }
     }];
-    
 }
 
 #pragma mark - Helper methods
