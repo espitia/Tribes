@@ -26,13 +26,12 @@
     
     // set title
     self.navigationItem.title = _tribe[@"name"];
-    
-    // make sure members and activites load
-    if (![_tribe membersAndActivitesAreLoaded]) {
-        [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-            [self.tableView reloadData];
-        }];
-    }
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 
