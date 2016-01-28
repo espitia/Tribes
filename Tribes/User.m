@@ -162,30 +162,21 @@
 
 -(void)addTribeWithName:(NSString *)name {
     
-    // create a tribe
+    // create a tribe/ setname /add user to relation of members
     Tribe * tribe = [Tribe object];
-    
-    // set name key
     [tribe setObject:name forKey:@"name"];
-    
-    // add user to tribe relation
-    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"members"];
+    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"members"];     // add user to tribe relation
     [tribeRelationToUsers addObject:self];
     
-    // add tribe to user array
-    [self addObject:tribe forKey:@"tribes"];
     
-    // create activity
+    // create activity/ set tribe/createdBy for respective keys
     Activity * activity = [Activity object];
-    
-    // add user to activity
+    [activity setObject:tribe forKey:@"tribe"];
     [activity setObject:self forKey:@"createdBy"];
     
-    // add activity to user
+    // add tribe/activities to user arrays
+    [self addObject:tribe forKey:@"tribes"];
     [self addObject:activity forKey:@"activities"];
-    
-    // set tribe in activity
-    [activity setObject:tribe forKey:@"tribe"];
     
     // for first time user adding a tribe
     self.loadedInitialTribes = true;
@@ -194,6 +185,7 @@
     [tribe saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
         
         if (error) { NSLog(@"eror saving tribe: %@", error); }
+
         
         // save user
         [self saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
