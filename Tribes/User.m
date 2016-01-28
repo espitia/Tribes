@@ -94,6 +94,49 @@
                                 }];
 }
 
+-(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback {
+    
+    // don't send push to yourself (user sending push to itself)
+    if (self == member) {
+        return;
+    }
+    
+    // if member completed activity already, don't send
+    if ([[member activityForTribe:tribe] completedForDay]) {
+        return;
+    }
+    
+    // message to send
+    NSString * msg =  [NSString stringWithFormat:@"%@: breh, %@",self[@"username"],tribe[@"name"]];
+    
+    [self sendPushToMember:member withMessage:msg withBlock:^(BOOL *success) {
+        if (success) {
+            callback(true);
+            NSLog(@"sent motivation to %@", member[@"username"]);
+        } else {
+            callback(false);
+            NSLog(@"failed to send motivation to %@", member[@"username"]);
+        }
+    }];
+    
+}
+-(void)notifyOfCompletionToMembersInTribe:(Tribe *)tribe {
+
+    // message to send
+    NSString * msg =  [NSString stringWithFormat:@"%@ just completed %@.\n🦁🦁🦁!",self[@"username"],tribe[@"name"]];
+    
+    for (User * member in tribe.members) {
+        [self sendPushToMember:self withMessage:msg withBlock:^(BOOL *success) {
+            if (success) {
+                NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
+            } else {
+                NSLog(@"failed to send completion push for %@ to %@",self[@"username"],member[@"username"]);
+            }
+        }];
+    }
+}
+
+#pragma mark - Handling tribes
 
 -(void)completeActivityForTribe:(Tribe *)tribe {
 
@@ -103,6 +146,9 @@
             [activityToComplete completeForToday];
         }
     }
+    
+    // send push to rest of tribe to notify of completion
+    [self notifyOfCompletionToMembersInTribe:tribe];
 
 }
 -(Activity *)activityForTribe:(Tribe *)tribe {
