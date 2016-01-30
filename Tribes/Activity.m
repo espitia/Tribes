@@ -13,6 +13,7 @@
 @implementation Activity
 
 @dynamic completionDates;
+@dynamic weekCompletions;
 
 #pragma mark - Parse required methods
 
@@ -26,6 +27,30 @@
 
 
 #pragma mark - Completions
+
+-(int)weekCompletions {
+
+    // get startOfWeek to hold the first day of the week, according to locale (monday vs. sunday)
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDate *now = [NSDate date];
+    NSDate *startOfTheWeek;
+    NSTimeInterval interval;
+    [cal rangeOfUnit:NSCalendarUnitWeekOfYear
+           startDate:&startOfTheWeek
+            interval:&interval
+             forDate:now];
+    
+    int counter = 0;
+    
+    // count how many days are in this week
+    for (NSDate * date in self.completionDates) {
+        if ([self date:date isBetweenDate:startOfTheWeek andDate:[NSDate date]]) {
+            counter++;
+        }
+
+    }
+    return counter;
+}
 
 -(void)completeForToday {
     [self addObject:[NSDate date] forKey:@"completionDates"];
@@ -64,5 +89,16 @@
  */
 -(void)updateCompletions {
     self[@"completions"] = [NSNumber numberWithInteger:self.completionDates.count];
+}
+
+-(BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
+{
+    if ([date compare:beginDate] == NSOrderedAscending)
+        return NO;
+    
+    if ([date compare:endDate] == NSOrderedDescending)
+        return NO;
+    
+    return YES;
 }
 @end

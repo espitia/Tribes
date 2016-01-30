@@ -15,6 +15,7 @@
 +(void)load;
 
 @property (nonatomic, strong) NSMutableArray * completionDates;
+@property int weekCompletions;
 
 -(void)completeForToday;
 -(BOOL)completedForDay;
