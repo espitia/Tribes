@@ -113,7 +113,9 @@
 }
 - (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
    
-    [cell.detailTextLabel setText:@"✅🦁"];
+    // set detail text depending on whether all tribe members completed their activity
+    NSString * detailText = ([tribe allMembersCompletedActivity]) ? @"✅🦁" : @"✅🐑" ;
+    [cell.detailTextLabel setText:detailText];
     
     NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
     NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:tribe.name attributes:attributes];
@@ -123,8 +125,10 @@
 
 - (void)configureCellForUncompleteTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe atIndexPath:(NSIndexPath *)indexPath {
     
-    [cell.detailTextLabel setText:@"❌🐑"];
-
+    // set detail text depending on whether all tribe members completed their activity
+    NSString * detailText = @"❌🐑" ;
+    [cell.detailTextLabel setText:detailText];
+    
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
     
