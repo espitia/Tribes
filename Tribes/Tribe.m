@@ -212,4 +212,13 @@
     return (self.membersAndActivities.count == 0 || !self.membersAndActivities) ? false : true;
 }
 
+-(BOOL)allMembersCompletedActivity {
+    for (Activity * activity in self.activities) {
+        if (![activity completedForDay]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 @end
