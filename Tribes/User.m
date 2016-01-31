@@ -126,13 +126,15 @@
     NSString * msg =  [NSString stringWithFormat:@"%@ just completed %@.\n🦁🦁🦁!",self[@"username"],tribe[@"name"]];
     
     for (User * member in tribe.members) {
-        [self sendPushToMember:self withMessage:msg withBlock:^(BOOL *success) {
-            if (success) {
-                NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
-            } else {
-                NSLog(@"failed to send completion push for %@ to %@",self[@"username"],member[@"username"]);
-            }
-        }];
+        if (member != self) {
+            [self sendPushToMember:self withMessage:msg withBlock:^(BOOL *success) {
+                if (success) {
+                    NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
+                } else {
+                    NSLog(@"failed to send completion push for %@ to %@",self[@"username"],member[@"username"]);
+                }
+            }];
+        }
     }
 }
 
