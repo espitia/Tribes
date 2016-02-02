@@ -113,10 +113,11 @@
 
 -(BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
 {
-    if ([date compare:beginDate] == NSOrderedAscending)
+    NSDate * dateToCheck = [self getDateFromObject:date];
+    if ([dateToCheck compare:beginDate] == NSOrderedAscending)
         return NO;
     
-    if ([date compare:endDate] == NSOrderedDescending)
+    if ([dateToCheck compare:endDate] == NSOrderedDescending)
         return NO;
     
     return YES;
