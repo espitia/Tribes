@@ -17,6 +17,7 @@
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
+    UIRefreshControl * refreshControl;
 }
 
 @end
@@ -32,6 +33,9 @@
     
     // register table view cell
     [self.tableView registerClass:[MCSwipeTableViewCell class] forCellReuseIdentifier:@"TribeCell"];
+    
+    // add pull to refresh control
+    [self addPullToRefresh];
 
     //  log in / sign up user if non-existent
     if (!currentUser) {
@@ -208,7 +212,20 @@
     return imageView;
 }
 
+#pragma mark - Refresh data
 
+-(void)addPullToRefresh {
+    // add refresh control
+    refreshControl = [[UIRefreshControl alloc]init];
+    [self.tableView addSubview:refreshControl];
+    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+-(void)refreshTable {
+    [currentUser loadTribesWithBlock:^{
+        [refreshControl endRefreshing];
+        [self.tableView reloadData];
+    }];
+}
 
 @end
 

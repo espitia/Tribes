@@ -13,6 +13,7 @@
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
     BOOL weeklyCompletions;
+    UIRefreshControl * refreshControl;
 }
 
 @end
@@ -27,6 +28,9 @@
     
     // add segment control for weekly or all-time completions
     [self addSegmentControl];
+    
+    // add pull to refresh control
+    [self addPullToRefresh];
     
     // set title
     self.navigationItem.title = _tribe[@"name"];
@@ -198,5 +202,20 @@
         default:
             break;
     }
+}
+
+#pragma mark - Refresh data
+
+-(void)addPullToRefresh {
+    // add refresh control
+    refreshControl = [[UIRefreshControl alloc]init];
+    [self.tableView addSubview:refreshControl];
+    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+}
+-(void)refreshTable {
+    [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
+        [refreshControl endRefreshing];
+        [self.tableView reloadData];
+    }];
 }
 @end
