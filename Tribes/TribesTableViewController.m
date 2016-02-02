@@ -95,8 +95,6 @@
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.row];
     Activity * activity = [currentUser activityForTribe:tribe];
-    [currentUser completeActivityForTribe:tribe];
-
     
     // cell modifications that go for both complete/uncomplete tribes
     [self configureCellForAllTribes:cell withTribe:tribe];
