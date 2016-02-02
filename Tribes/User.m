@@ -127,7 +127,7 @@
     
     for (User * member in tribe.members) {
         if (member != self) {
-            [self sendPushToMember:self withMessage:msg withBlock:^(BOOL *success) {
+            [self sendPushToMember:member withMessage:msg withBlock:^(BOOL *success) {
                 if (success) {
                     NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
                 } else {
