@@ -12,6 +12,7 @@
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
+    BOOL weeklyCompletions;
 }
 
 @end
@@ -23,6 +24,9 @@
     
     // right button to Add friends
     [self addRightButton];
+    
+    // add segment control for weekly or all-time completions
+    [self addSegmentControl];
     
     // set title
     self.navigationItem.title = _tribe[@"name"];
@@ -147,5 +151,44 @@
     
     // present alert
     [weakSelf presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Segement control
+
+-(void)addSegmentControl {
+    
+    // default stats to show -> weekly
+    weeklyCompletions = true;
+    
+    // create and add segement control
+    UISegmentedControl * segmentedControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Week", @"All-time", nil]];
+    [segmentedControl setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50)];
+    [segmentedControl addTarget:self action:@selector(segmentedControlHasChangedValue:) forControlEvents:UIControlEventValueChanged];
+    self.tableView.tableHeaderView = segmentedControl;
+    
+    // set default stats to show
+    [segmentedControl setSelectedSegmentIndex:0];
+}
+
+-(void)segmentedControlHasChangedValue:(id)sender {
+    
+    UISegmentedControl *segmentedControl = (UISegmentedControl *) sender;
+    NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
+    
+    
+    switch (selectedSegment) {
+        case 0:
+            weeklyCompletions = true;
+            [self.tableView reloadData];
+            break;
+        case 1:
+            weeklyCompletions = false;
+            [self.tableView reloadData];
+
+            break;
+            
+        default:
+            break;
+    }
 }
 @end
