@@ -61,7 +61,15 @@
     cell.textLabel.text = member[@"username"];
     
     NSString * completionsString;
-    int completions = [activity[@"completions"] intValue];
+    int completions;
+    
+    if (weeklyCompletions) {
+        [_tribe sortMembersAndActivitiesByWeeklyActivityCompletions];
+        completions = activity.weekCompletions;
+    } else {
+        [_tribe sortMembersAndActivitiesByTotalActivityCompletions];
+        completions = [activity[@"completions"] intValue];
+    }
     
     // format detail string depending if user completed activity or not
     if ([activity completedForDay]) {
