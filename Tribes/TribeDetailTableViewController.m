@@ -56,16 +56,17 @@
 
     cell.textLabel.text = member[@"username"];
     
-    NSString * completions;
+    NSString * completionsString;
+    int completions = [activity[@"completions"] intValue];
     
     // format detail string depending if user completed activity or not
     if ([activity completedForDay]) {
-        completions = [NSString stringWithFormat:@"🦁%d🔥", [activity[@"completions"] intValue]];
+        completionsString = [NSString stringWithFormat:@"🦁%d🔥", completions];
     } else {
-        completions = [NSString stringWithFormat:@"🐑%d🔥", [activity[@"completions"] intValue]];
+        completionsString = [NSString stringWithFormat:@"🐑%d🔥", completions];
     }
     
-    cell.detailTextLabel.text = completions;
+    cell.detailTextLabel.text = completionsString;
     
     return cell;
 }
