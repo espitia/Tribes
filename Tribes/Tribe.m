@@ -237,6 +237,8 @@
     
 }
 
+#pragma mark - Checking statuses of membs/activities
+
 -(BOOL)membersAndActivitesAreLoaded {
     return (self.membersAndActivities.count == 0 || !self.membersAndActivities) ? false : true;
 }
