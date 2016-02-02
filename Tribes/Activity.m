@@ -32,6 +32,7 @@
 
     // get startOfWeek to hold the first day of the week, according to locale (monday vs. sunday)
     NSCalendar *cal = [NSCalendar currentCalendar];
+    [cal setFirstWeekday:2];
     NSDate *now = [NSDate date];
     NSDate *startOfTheWeek;
     NSTimeInterval interval;
@@ -47,8 +48,8 @@
         if ([self date:date isBetweenDate:startOfTheWeek andDate:[NSDate date]]) {
             counter++;
         }
-
     }
+
     return counter;
 }
 
