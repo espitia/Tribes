@@ -21,6 +21,8 @@
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 -(void)updateTribeLeader;
+-(void)sortMembersAndActivitiesByTotalActivityCompletions;
+-(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
 
 
 @property (nonatomic, strong) NSString * name;
