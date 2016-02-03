@@ -111,7 +111,8 @@
     
     // cloud code to send push
     [PFCloud callFunctionInBackground:@"sendPush"
-                       withParameters:@{@"userObjectID":member.objectId,
+                       withParameters:@{@"receiverId":member.objectId,
+                                        @"senderId":self.objectId,
                                         @"msg":msg,
                                         @"category":category}
                                 block:^(id  _Nullable object, NSError * _Nullable error) {

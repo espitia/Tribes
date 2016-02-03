@@ -127,7 +127,7 @@
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
     
     User * currentUser = [User currentUser];
-    NSString * objectIdOfUserToReplyTo = userInfo[@"replyToObjectId"];
+    NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
     __block NSString * message;
     
     PFQuery * queryForUserToReplyTo = [PFUser query];
