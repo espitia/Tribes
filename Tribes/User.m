@@ -144,7 +144,7 @@
     // message to send
     NSString * msg =  [NSString stringWithFormat:@"%@: breh, %@",self[@"username"],tribe[@"name"]];
     
-    [self sendPushToMember:member withMessage:msg withBlock:^(BOOL *success) {
+    [self sendPushToMember:member withMessage:msg andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
         if (success) {
             callback(true);
             NSLog(@"sent motivation to %@", member[@"username"]);
@@ -153,7 +153,6 @@
             NSLog(@"failed to send motivation to %@", member[@"username"]);
         }
     }];
-    
 }
 -(void)notifyOfCompletionToMembersInTribe:(Tribe *)tribe {
 
@@ -161,8 +160,9 @@
     NSString * msg =  [NSString stringWithFormat:@"%@ just completed %@.\n🦁🦁🦁!",self[@"username"],tribe[@"name"]];
     
     for (User * member in tribe.members) {
-        if (member != self) {
-            [self sendPushToMember:member withMessage:msg withBlock:^(BOOL *success) {
+        if (member == self) {
+            
+            [self sendPushToMember:member withMessage:msg andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
                 if (success) {
                     NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
                 } else {
