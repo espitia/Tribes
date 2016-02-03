@@ -135,16 +135,18 @@
         
         if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
             message = [NSString stringWithFormat:@"%@: 👌", currentUser[@"username"]];
-            [currentUser sendPushToMember:(User *)object withMessage:message withBlock:^(BOOL *success) {
-                completionHandler();
-            }];
+            
         } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
             message = [NSString stringWithFormat:@"%@: 🖕", currentUser[@"username"]];
-            [currentUser sendPushToMember:(User *)object withMessage:message withBlock:^(BOOL *success) {
-                completionHandler();
-            }];
+            
+        } else if ([identifier isEqualToString:@"APPLAUD"]) {
+            message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
+            
         }
         
+        [currentUser sendPushToMember:(User *)object withMessage:message andCategory:nil withBlock:^(BOOL *success) {
+            completionHandler();
+        }];
     }];
 
 
