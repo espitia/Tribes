@@ -93,6 +93,41 @@
                                     
                                 }];
 }
+/**
+ * Send push to a member in a tribe with category for push notification replys.
+ 
+ @param member Member to send push to.
+ @param msg message to send member
+ @param category the category of reply actions that will be available to the recepient of the push: "MOTIVATION_REPLY", "COMPLETION_REPLY". !!! LEAVE EMPTY STRING IN ORDER TO NOT HAVE ANY REPLY OPTIONS"
+ */
+-(void)sendPushToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback {
+    
+    __block BOOL success;
+    
+    // security check: if category is anything but the accepeted categories, default to no categories
+    if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) || ([category isEqualToString:@"MOTIVATION_REPLY"]))) {
+        category = @"";
+    }
+    
+    // cloud code to send push
+    [PFCloud callFunctionInBackground:@"sendPush"
+                       withParameters:@{@"userObjectID":member.objectId,
+                                        @"msg":msg,
+                                        @"category":category}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                    
+                                    if (error) {
+                                        NSLog(@"error:\n %@", error);
+                                        success = false;
+                                        callback(&success);
+                                    } else {
+                                        NSLog(@"success:\n%@", object);
+                                        success = true;
+                                        callback(&success);
+                                    }
+                                    
+                                }];
+}
 
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback {
     
