@@ -20,7 +20,7 @@
 -(Activity *)activityForTribe:(Tribe *)tribe;
 -(void)addTribeWithName:(NSString *)name;
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback;
-
+-(void)sendPushToMember:(User *)member withMessage:(NSString *)msg withBlock:(void (^)(BOOL * success))callback;
 
 @property (nonatomic, strong) NSMutableArray * tribes;
 @property (nonatomic, strong) NSArray * activities;

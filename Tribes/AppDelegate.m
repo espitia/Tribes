@@ -10,6 +10,7 @@
 #import "Parse.h"
 #import <Fabric/Fabric.h>
 #import <DigitsKit/DigitsKit.h>
+#import "User.h"
 
 
 @interface AppDelegate ()
@@ -33,16 +34,11 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     // initialize Fabric:Digits
-    [Fabric with:@[[Digits class]]];
-    
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                    UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
-    [application registerUserNotificationSettings:settings];
-    [application registerForRemoteNotifications];
+//    [Fabric with:@[[Digits class]]];
 
+    // create actions
+    [self setUpNotifications:application];
+    
     return YES;
 }
 
@@ -79,5 +75,67 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+-(void)setUpNotifications:(UIApplication *)application {
+    
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    
+    // ACTION 1
+    UIMutableUserNotificationAction * acknowledgeAction = [[UIMutableUserNotificationAction alloc] init];
+    acknowledgeAction.identifier = @"ACKNOWLEDGE";
+    acknowledgeAction.title = @"👌";
+    acknowledgeAction.activationMode = UIUserNotificationActivationModeBackground;
+    acknowledgeAction.destructive = NO;
+    acknowledgeAction.authenticationRequired = NO;
+    
+    // ACTION 2
+    UIMutableUserNotificationAction * notDoingItAction = [[UIMutableUserNotificationAction alloc] init];
+    notDoingItAction.identifier = @"NOT_DOING_IT";
+    notDoingItAction.title = @"🖕";
+    notDoingItAction.activationMode = UIUserNotificationActivationModeBackground;
+    notDoingItAction.destructive = NO;
+    notDoingItAction.authenticationRequired = NO;
+    
+    // CATEGORY
+    UIMutableUserNotificationCategory * defaultReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    defaultReplyCategory.identifier = @"DEFAULT_REPLY";
+    [defaultReplyCategory setActions:@[notDoingItAction, acknowledgeAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet * categories = [NSSet setWithObject:defaultReplyCategory];
+    UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
+    
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+    
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
+    
+    User * currentUser = [User currentUser];
+    NSString * objectIdOfUserToReplyTo = userInfo[@"replyToObjectId"];
+    __block NSString * message;
+    
+    PFQuery * queryForUserToReplyTo = [PFUser query];
+    [queryForUserToReplyTo getObjectInBackgroundWithId:objectIdOfUserToReplyTo block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
+            message = [NSString stringWithFormat:@"%@: 👌", currentUser[@"username"]];
+            [currentUser sendPushToMember:(User *)object withMessage:message withBlock:^(BOOL *success) {
+                completionHandler();
+            }];
+        } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
+            message = [NSString stringWithFormat:@"%@: 🖕", currentUser[@"username"]];
+            [currentUser sendPushToMember:(User *)object withMessage:message withBlock:^(BOOL *success) {
+                completionHandler();
+            }];
+        }
+        
+    }];
+
+
+}
+
 
 @end
