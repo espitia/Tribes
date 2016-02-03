@@ -161,7 +161,7 @@
     NSString * msg =  [NSString stringWithFormat:@"%@ just completed %@.\n🦁🦁🦁!",self[@"username"],tribe[@"name"]];
     
     for (User * member in tribe.members) {
-        if (member == self) {
+        if (member != self) {
             
             [self sendPushToMember:member withMessage:msg andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
                 if (success) {
