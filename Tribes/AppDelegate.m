@@ -34,7 +34,7 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     // initialize Fabric:Digits
-//    [Fabric with:@[[Digits class]]];
+    [Fabric with:@[[Digits class]]];
 
     // create actions
     [self setUpNotifications:application];
