@@ -98,14 +98,27 @@
     notDoingItAction.destructive = NO;
     notDoingItAction.authenticationRequired = NO;
     
-    // CATEGORY
-    UIMutableUserNotificationCategory * defaultReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
-    defaultReplyCategory.identifier = @"DEFAULT_REPLY";
-    [defaultReplyCategory setActions:@[notDoingItAction, acknowledgeAction] forContext:UIUserNotificationActionContextDefault];
+    // ACTION 3
+    UIMutableUserNotificationAction * applaudAction = [[UIMutableUserNotificationAction alloc] init];
+    applaudAction.identifier = @"APPLAUD";
+    applaudAction.title = @"👏";
+    applaudAction.activationMode = UIUserNotificationActivationModeBackground;
+    applaudAction.destructive = NO;
+    applaudAction.authenticationRequired = NO;
     
-    NSSet * categories = [NSSet setWithObject:defaultReplyCategory];
+    // CATEGORY 1 (ACTION 1 AND ACTION 2)
+    UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
+    [motivationReplyCategory setActions:@[notDoingItAction, acknowledgeAction] forContext:UIUserNotificationActionContextDefault];
+
+    // CATEGORY 2 (ACTION 3)
+    UIMutableUserNotificationCategory * completionReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    completionReplyCategory.identifier = @"COMPLETION_REPLY";
+    [completionReplyCategory setActions:@[applaudAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory]];
     UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
-    
+
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
