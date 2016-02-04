@@ -65,35 +65,6 @@
 #pragma mark - Push notifications
 
 /**
- * Send push to a member in a tribe.
- 
- @param member Member to send push to.
- @param msg message to send member
- */
-
--(void)sendPushToMember:(User *)member withMessage:(NSString *)msg withBlock:(void (^)(BOOL * success))callback {
-    
-    __block BOOL success;
-    
-    // cloud code to send push
-    [PFCloud callFunctionInBackground:@"sendPush"
-                       withParameters:@{@"userObjectID":member.objectId,
-                                        @"msg":msg}
-                                block:^(id  _Nullable object, NSError * _Nullable error) {
-                                    
-                                    if (error) {
-                                        NSLog(@"error:\n %@", error);
-                                        success = false;
-                                        callback(&success);
-                                    } else {
-                                        NSLog(@"success:\n%@", object);
-                                        success = true;
-                                        callback(&success);
-                                    }
-                                    
-                                }];
-}
-/**
  * Send push to a member in a tribe with category for push notification replys.
  
  @param member Member to send push to.
