@@ -23,7 +23,7 @@
 -(void)updateTribeLeader;
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
-
+-(void)sendTribe100PercentCompletedPush;
 
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
