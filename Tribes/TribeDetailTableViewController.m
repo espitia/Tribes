@@ -131,7 +131,8 @@
 }
 
 
--(void)showAlert {
+-(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
+    
     // weak self to not have any issues to present alert view
     __unsafe_unretained typeof(self) weakSelf = self;
     
@@ -140,12 +141,8 @@
     UIAlertAction * __block defaultAction;
     
     // message to go in alert view
-    NSString * __block alertTitle = @"";
-    NSString * __block alertMessage = @"";
-    
-
-    alertTitle = @"✅✅✅";
-    alertMessage = @"Successfully sent motivation.\n Liooon! 🦁";
+    NSString * __block alertTitle = title;
+    NSString * __block alertMessage = message;
     
     defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                            handler:^(UIAlertAction * action) {
