@@ -91,6 +91,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    // deselect cell
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (![_tribe membersAndActivitesAreLoaded]) {
         // alert user that member and activites are not loaded
         return;
@@ -98,13 +101,24 @@
 
     User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
     User * currentUser = [User currentUser];
+    
+    // if member already completed activity
+    if ([[member activityForTribe:_tribe] completedForDay]) {
+        
+        // let user know
+        NSString * message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
+        [self showAlertWithTitle:@"🖐🖐🖐" andMessage:message];
+        
+    } else {
+        
+        // send push to tapped on member
+        [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
+            if (success) {
+                [self showAlertWithTitle:@"✅✅✅" andMessage:@"Successfully sent motivation.\n Liooon! 🦁"];
+            }
+        }];
+    }
 
-    // send push to tapped on member
-    [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
-        if (success) {
-            [self showAlert];
-        }
-    }];
 }
 
 #pragma mark - Helper methods
