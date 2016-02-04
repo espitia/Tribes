@@ -100,8 +100,8 @@
  @param msg message to send member
  @param category the category of reply actions that will be available to the recepient of the push: "MOTIVATION_REPLY", "COMPLETION_REPLY". !!! LEAVE EMPTY STRING IN ORDER TO NOT HAVE ANY REPLY OPTIONS"
  */
--(void)sendPushToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback {
-    
+-(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback {
+
     __block BOOL success;
     
     // security check: if category is anything but the accepeted categories, default to no categories
@@ -145,7 +145,7 @@
     // message to send
     NSString * msg =  [NSString stringWithFormat:@"%@: breh, %@",self[@"username"],tribe[@"name"]];
     
-    [self sendPushToMember:member withMessage:msg andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
+    [self sendPushFromMemberToMember:member withMessage:msg andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
         if (success) {
             callback(true);
             NSLog(@"sent motivation to %@", member[@"username"]);
@@ -163,7 +163,7 @@
     for (User * member in tribe.members) {
         if (member != self) {
             
-            [self sendPushToMember:member withMessage:msg andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
+            [self sendPushFromMemberToMember:member withMessage:msg andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
                 if (success) {
                     NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
                 } else {
