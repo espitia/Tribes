@@ -144,9 +144,10 @@
             
         }
         
-        [currentUser sendPushToMember:(User *)object withMessage:message andCategory:nil withBlock:^(BOOL *success) {
+        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:nil withBlock:^(BOOL *success) {
             completionHandler();
         }];
+
     }];
 
 
