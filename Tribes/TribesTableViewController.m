@@ -36,12 +36,13 @@
     
     // add pull to refresh control
     [self addPullToRefresh];
-
+    
     //  log in / sign up user if non-existent
     if (!currentUser) {
         [self signUp];
     } else {
         [currentUser loadTribesWithBlock:^{
+            self.navigationItem.title = [currentUser lvlAndXpDescription];
             [self.tableView reloadData];
         }];
     }
