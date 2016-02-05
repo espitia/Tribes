@@ -59,10 +59,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
    
     // dictionary with member (PFUser)and acitivty key (Activity object)
-    PFUser * member = _tribe.membersAndActivities[indexPath.row][@"member"];
+    User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
     Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
-    cell.textLabel.text = member[@"username"];
+    NSString * titleLabel = [NSString stringWithFormat:@"lvl %d - %@", member.lvl, member[@"username"]];
+    cell.textLabel.text = titleLabel;
     
     NSString * completionsString;
     int completions;
