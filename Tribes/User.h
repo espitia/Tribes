@@ -36,10 +36,11 @@ extern int RECEIVED_APPLAUSE_XP;
 // dealing with xp and levels
 -(void)addXp:(int)xpToAdd;
 -(void)addReceivedApplauseXp;
--(NSString *)lvlAndXpDescription;
 
 @property (nonatomic, strong) NSMutableArray * tribes;
 @property (nonatomic, strong) NSArray * activities;
+@property int lvl;
+@property int xp;
 @property BOOL loadedInitialTribes;
 
 

@@ -18,6 +18,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 @dynamic tribes;
 @dynamic activities;
+@dynamic lvl;
+@dynamic xp;
 @synthesize loadedInitialTribes;
 
 #pragma mark - Parse required methods
@@ -239,13 +241,14 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [self addXp:XP_FOR_RECEIVED_APPLAUSE];
 }
 
--(NSString *)lvlAndXpDescription {
-    
+-(int)lvl {
     int xp = [self[@"xp"] intValue];
     int level = xp/100;
-    
-    NSString * title = [NSString stringWithFormat:@"lvl %d - %dxp", level, xp];
-    return title;
+    return level;
+}
+-(int)xp {
+    int xp = [self[@"xp"] intValue];
+    return xp;
 }
 
 
