@@ -154,6 +154,10 @@
     
     // send push to rest of tribe to notify of completion
     [self notifyOfCompletionToMembersInTribe:tribe];
+    
+    // send 100% tribe completed push
+    if ([tribe allMembersCompletedActivity])
+        [tribe sendTribe100PercentCompletedPush];
 
 }
 -(Activity *)activityForTribe:(Tribe *)tribe {
