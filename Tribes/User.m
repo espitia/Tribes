@@ -13,6 +13,9 @@
 
 @implementation User
 
+int XP_FOR_COMPLETED_HABIT = 100;
+int XP_FOR_RECEIVED_APPLAUSE = 10;
+
 @dynamic tribes;
 @dynamic activities;
 @synthesize loadedInitialTribes;
@@ -152,12 +155,17 @@
     // complete activity for today
     [[self activityForTribe:tribe] completeForToday];
     
+    // add xp for completion
+    [self addXp:XP_FOR_COMPLETED_HABIT];
+
     // send push to rest of tribe to notify of completion
     [self notifyOfCompletionToMembersInTribe:tribe];
     
     // send 100% tribe completed push
     if ([tribe allMembersCompletedActivity])
         [tribe sendTribe100PercentCompletedPush];
+    
+    
 
 }
 -(Activity *)activityForTribe:(Tribe *)tribe {
@@ -210,4 +218,45 @@
         }];
     }];
 }
+
+
+#pragma mark - Levels and XP
+
+-(void)addXp:(int)xpToAdd {
+
+    // get user xp
+    NSNumber * userXp = self[@"xp"];
+
+    // add new xp
+    int userXpInt = [userXp intValue];
+    int newXpTotal = userXpInt + xpToAdd;
+
+    // save user xp
+    self[@"xp"] = [NSNumber numberWithInt:newXpTotal];
+    [self save];
+}
+-(void)addReceivedApplauseXp {
+    [self addXp:XP_FOR_RECEIVED_APPLAUSE];
+}
+
+-(NSString *)lvlAndXpDescription {
+    
+    int xp = [self[@"xp"] intValue];
+    int level = xp/100;
+    
+    NSString * title = [NSString stringWithFormat:@"lvl %d - %dxp", level, xp];
+    return title;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 @end
