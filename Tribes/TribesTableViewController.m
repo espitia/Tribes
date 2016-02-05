@@ -42,7 +42,7 @@
         [self signUp];
     } else {
         [currentUser loadTribesWithBlock:^{
-            self.navigationItem.title = [currentUser lvlAndXpDescription];
+            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
             [self.tableView reloadData];
         }];
     }
