@@ -149,12 +149,8 @@
 
 -(void)completeActivityForTribe:(Tribe *)tribe {
 
-    //find activity for tribe inside user
-    for (Activity * activityToComplete in tribe.activities) {
-        if (activityToComplete[@"createdBy"] == self) {
-            [activityToComplete completeForToday];
-        }
-    }
+    // complete activity for today
+    [[self activityForTribe:tribe] completeForToday];
     
     // send push to rest of tribe to notify of completion
     [self notifyOfCompletionToMembersInTribe:tribe];
