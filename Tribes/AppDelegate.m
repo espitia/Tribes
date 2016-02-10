@@ -140,14 +140,13 @@
             message = [NSString stringWithFormat:@"%@: 🖕", currentUser[@"username"]];
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
-            message = [NSString stringWithFormat:@"%@: 👏 (+10xp)", currentUser[@"username"]];
-            User * userWhoReceivedApplause = (User *)object;
-            [userWhoReceivedApplause addReceivedApplauseXp];
+            message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
+//            User * userWhoReceivedApplause = (User *)object;
+//            [userWhoReceivedApplause addReceivedApplauseXp];
         }
         
-        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:nil withBlock:^(BOOL *success) {
-            completionHandler();
-        }];
+        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:nil];
+        completionHandler();
 
     }];
 
