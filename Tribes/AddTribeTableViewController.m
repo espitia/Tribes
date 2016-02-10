@@ -107,8 +107,7 @@
     
     // disable button to not allow duplicates
     createTribeButton.enabled = false;
-    
-    if (!(tribeNameTextField.text = @"")) {
+    if (![tribeNameTextField.text isEqualToString:@""]) {
         
         if (currentUser) {
             
