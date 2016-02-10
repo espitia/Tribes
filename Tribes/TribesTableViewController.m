@@ -28,8 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     // set currentUser
     currentUser = [User currentUser];
     
@@ -44,9 +43,10 @@
         [self signUp];
     } else {
         [currentUser loadTribesWithBlock:^{
-            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
+            //            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
+            self.navigationItem.title = @"Tribes";
             [self.tableView reloadData];
-            
+
             // add and update progress bar
             [self addProgressBar];
         }];
@@ -59,6 +59,7 @@
     // security check
     if (!currentUser)
         currentUser = [User currentUser];
+    
 }
 
 #pragma mark - Table view data source
@@ -151,7 +152,7 @@
 
         [currentUser completeActivityForTribe:tribe];
         [self updateProgressBar];
-        [self showAlertWithTitle:@"🔑🔑🔑" andMessage:@"+ 100xp"];
+//        [self showAlertWithTitle:@"🔑🔑🔑" andMessage:@"+ 100xp"];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
 }

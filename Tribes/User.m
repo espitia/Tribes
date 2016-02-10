@@ -164,7 +164,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [[self activityForTribe:tribe] completeForToday];
     
     // add xp for completion
-    [self addXp:XP_FOR_COMPLETED_HABIT];
+//    [self addXp:XP_FOR_COMPLETED_HABIT];
 
     // send push to rest of tribe to notify of completion
     [self notifyOfCompletionToMembersInTribe:tribe];

@@ -62,7 +62,8 @@
     User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
     Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
-    NSString * titleLabel = [NSString stringWithFormat:@"lvl %d - %@", member.lvl, member[@"username"]];
+    //    NSString * titleLabel = [NSString stringWithFormat:@"%@ - lvl %d",member[@"username"],  member.lvl];
+    NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
     cell.textLabel.text = titleLabel;
     
     NSString * completionsString;
