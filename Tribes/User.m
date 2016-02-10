@@ -248,9 +248,14 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 
 -(int)lvl {
-    int xp = [self[@"xp"] intValue];
-    int level = xp/100;
-    return level;
+    double xp = [self[@"xp"] doubleValue];
+    for (double level = 99; level > 0; level--) {
+        double levelAc = ((1.0/8.0 * level) * (level - 1.0)) + (75.0 * ( ((pow(2.0,(level - 1.0)/7.0)- 1.0) / (1.0 - pow(2.0, -1.0/7.0)))));
+        if (xp >= levelAc) {
+            return level;
+        }
+    }
+    return 0;
 }
 -(int)xp {
     int xp = [self[@"xp"] intValue];
