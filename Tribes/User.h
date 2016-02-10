@@ -28,10 +28,10 @@ extern int RECEIVED_APPLAUSE_XP;
 -(void)completeActivityForTribe:(Tribe *)tribe;
 -(Activity *)activityForTribe:(Tribe *)tribe;
 
-// delaing with pushes
+// dealing with pushes
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback;
 -(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback;
-
+-(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category;
 
 // dealing with xp and levels
 -(void)addXp:(int)xpToAdd;
@@ -42,7 +42,5 @@ extern int RECEIVED_APPLAUSE_XP;
 @property int lvl;
 @property int xp;
 @property BOOL loadedInitialTribes;
-
-
 
 @end
