@@ -31,25 +31,6 @@
 
 #pragma mark - Handling users in Tribe
 
--(void)updateTribeLeader {
-
-    // security check
-    if (!self.objectId) {
-        self.objectId = [self objectForKey:@"objectId"];
-    }
-    // cloud code to add tribe and activity to user (then save user)
-    [PFCloud callFunctionInBackground:@"updateLeader"
-                       withParameters:@{@"tribeObjectID":self.objectId}
-                                block:^(id  _Nullable object, NSError * _Nullable error) {
-                                            
-                                            if (error) {
-                                                NSLog(@"error:\n %@", error);
-                                            } else {
-                                                NSLog(@"success:\n%@", object);
-                                            }
-                                        }];
-}
-
 /**
  * Adds a user to tribe's member relation. Then it calls PFCloud code to add tribe, create activity objet and add activity to user.
  *

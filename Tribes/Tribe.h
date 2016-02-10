@@ -20,7 +20,6 @@
 -(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback;
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
--(void)updateTribeLeader;
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
 -(void)sendTribe100PercentCompletedPush;
