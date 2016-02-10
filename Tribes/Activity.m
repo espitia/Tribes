@@ -56,7 +56,7 @@
 -(void)completeForToday {
     [self addObject:[NSDate date] forKey:@"completionDates"];
     [self updateCompletions];
-    [self saveInBackground];
+    [self saveEventually];
 }
 
 -(BOOL)completedForDay {
