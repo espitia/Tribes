@@ -16,6 +16,7 @@
     User * currentUser;
     UITextField * tribeNameTextField;
     Tribe * tribe;
+    UIBarButtonItem * createTribeButton;
 }
 
 @end
@@ -26,7 +27,7 @@
     [super viewDidLoad];
     
     // right button to create Tribe
-    UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createTribe)];
+    createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createTribe)];
     [self.navigationItem setRightBarButtonItem:createTribeButton];
     
     // set current user
@@ -104,12 +105,17 @@
 
 -(void)createTribe {
     
+    createTribeButton.enabled = false;
+    
     if (currentUser) {
         
         [currentUser addTribeWithName:tribeNameTextField.text];
         
         // send tribe back to main viewcontroller
         [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+    } else {
+        NSLog(@"error adding tribe, currentUser = nil.");
+        createTribeButton.enabled = true;
     }
 }
 
