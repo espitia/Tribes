@@ -140,7 +140,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 -(void)notifyOfCompletionToMembersInTribe:(Tribe *)tribe {
 
     // message to send
-    NSString * msg =  [NSString stringWithFormat:@"%@ just completed %@.\n🦁🦁🦁!",self[@"username"],tribe[@"name"]];
+    NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"username"],tribe[@"name"]];
     
     for (User * member in tribe.members) {
         if (member != self) {
