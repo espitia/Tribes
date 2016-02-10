@@ -106,6 +106,12 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                                 }];
 }
 
+-(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category {
+    [self sendPushFromMemberToMember:member withMessage:msg andCategory:category withBlock:^(BOOL *success) {
+        
+    }];
+}
+
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback {
     
     // don't send push to yourself (user sending push to itself)
