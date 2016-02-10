@@ -105,19 +105,57 @@
 
 -(void)createTribe {
     
+    // disable button to not allow duplicates
     createTribeButton.enabled = false;
     
-    if (currentUser) {
+    if (!(tribeNameTextField.text = @"")) {
         
-        [currentUser addTribeWithName:tribeNameTextField.text];
-        
-        // send tribe back to main viewcontroller
-        [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+        if (currentUser) {
+            
+            [currentUser addTribeWithName:tribeNameTextField.text];
+            
+            // send tribe back to main viewcontroller
+            [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+        } else {
+            NSLog(@"error adding tribe, currentUser = nil.");
+            createTribeButton.enabled = true;
+        }
     } else {
-        NSLog(@"error adding tribe, currentUser = nil.");
+        [self showAlertWithTitle:@"❌❌❌" andMessage:@"Make sure your Tribe has a name!"];
         createTribeButton.enabled = true;
     }
+
 }
 
+-(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
+    
+    // weak self to not have any issues to present alert view
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    // alert controller
+    UIAlertController * __block alert;
+    UIAlertAction * __block defaultAction;
+    
+    // message to go in alert view
+    NSString * __block alertTitle = title;
+    NSString * __block alertMessage = message;
+    
+    defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                           handler:^(UIAlertAction * action) {
+                                               
+                                           }];
+    
+    // finish alert set up
+    alert = [UIAlertController alertControllerWithTitle:alertTitle
+                                                message:alertMessage
+                                         preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    // add action (if success, pop to tribe VC)
+    [alert addAction:defaultAction];
+    
+    // present alert
+    [weakSelf presentViewController:alert animated:YES completion:nil];
+}
 
 @end
