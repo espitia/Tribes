@@ -9,6 +9,7 @@ target 'Tribes' do
 	pod 'Digits'
 	pod 'TwitterCore'
 	pod 'MCSwipeTableViewCell', '~> 2.1.4'
+    pod 'YLProgressBar', '~> 3.8.0'
 
 end
 
