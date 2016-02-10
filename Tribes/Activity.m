@@ -60,9 +60,9 @@
 }
 
 -(BOOL)completedForDay {
-    
+
     //check if completion dates array exists
-    if (self.completionDates) {
+    if (self.completionDates && self.completionDates.count > 0) {
         // if it does, check if last date added was today (thus completed for day)
         return ([self isToday:[self.completionDates lastObject]]) ? true : false;
     }
