@@ -123,7 +123,28 @@
 }
 
 - (void)configureCellForAllTribes:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
+    
+    // set name of tribe
     [cell.textLabel setText:tribe[@"name"]];
+    
+    // Setting the default inactive state color to the tableView background color
+    [cell setDefaultColor:[UIColor lightGrayColor]];
+    
+    // set delegate
+    [cell setDelegate:self];
+    
+    UIView *crossView = [self viewWithImageName:@"cross"];
+    UIColor *redColor = [UIColor colorWithRed:232.0 / 255.0 green:61.0 / 255.0 blue:14.0 / 255.0 alpha:1.0];
+
+    [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
+        
+        [self showAlertWithTitle:@"❌❌❌" andMessage:@"Are you sure you want to leave the Tribe?" andActionTitle:@"CONFIRM" andActionBlock:^{
+            [currentUser removeFromTribe:tribe];
+            [self updateProgressBar];
+            [self.tableView reloadData];
+        }];
+    }];
+
 }
 - (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
    
@@ -145,11 +166,6 @@
     
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
-    
-    // Setting the default inactive state color to the tableView background color
-    [cell setDefaultColor:[UIColor lightGrayColor]];
-    
-    [cell setDelegate:self];
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
 
@@ -241,7 +257,7 @@
 
 #pragma mark - Alerts
 
--(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
+-(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message andActionTitle:(NSString*)actionTitle andActionBlock:(void (^)(void))block {
     
     // weak self to not have any issues to present alert view
     __unsafe_unretained typeof(self) weakSelf = self;
@@ -249,15 +265,17 @@
     // alert controller
     UIAlertController * __block alert;
     UIAlertAction * __block defaultAction;
+    UIAlertAction * __block secondAction;
     
     // message to go in alert view
     NSString * __block alertTitle = title;
     NSString * __block alertMessage = message;
     
-    defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+    defaultAction = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleDefault
                                            handler:^(UIAlertAction * action) {
                                                
                                            }];
+
     
     // finish alert set up
     alert = [UIAlertController alertControllerWithTitle:alertTitle
@@ -267,6 +285,15 @@
     
     // add action (if success, pop to tribe VC)
     [alert addAction:defaultAction];
+    
+    if (actionTitle && block) {
+        secondAction = [UIAlertAction actionWithTitle:actionTitle style:UIAlertActionStyleDefault
+                                              handler:^(UIAlertAction * action) {
+                                                  block();
+                                              }];
+        [alert addAction:secondAction];
+        
+    }
     
     // present alert
     [weakSelf presentViewController:alert animated:YES completion:nil];
