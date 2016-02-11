@@ -74,14 +74,14 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
  
  @param member Member to send push to.
  @param msg message to send member
- @param category the category of reply actions that will be available to the recepient of the push: "MOTIVATION_REPLY", "COMPLETION_REPLY". !!! LEAVE EMPTY STRING IN ORDER TO NOT HAVE ANY REPLY OPTIONS"
+ @param category the category of reply actions that will be available to the recepient of the push: "MOTIVATION_REPLY", "COMPLETION_REPLY". 
  */
 -(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback {
 
     __block BOOL success;
     
     // security check: if category is anything but the accepeted categories, default to no categories
-    if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) || ([category isEqualToString:@"MOTIVATION_REPLY"]))) {
+    if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) || ([category isEqualToString:@"MOTIVATION_REPLY"]) || ([category isEqualToString:@"WATCHING_YOU_REPLY"]))) {
         category = @"";
     }
     

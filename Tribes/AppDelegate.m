@@ -106,6 +106,14 @@
     applaudAction.destructive = NO;
     applaudAction.authenticationRequired = NO;
     
+    // ACTION 4
+    UIMutableUserNotificationAction * watchingYouAction = [[UIMutableUserNotificationAction alloc] init];
+    watchingYouAction.identifier = @"WATCHING_YOU";
+    watchingYouAction.title = @"☝️👀";
+    watchingYouAction.activationMode = UIUserNotificationActivationModeBackground;
+    watchingYouAction.destructive = NO;
+    watchingYouAction.authenticationRequired = NO;
+    
     // CATEGORY 1 (ACTION 1 AND ACTION 2)
     UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
@@ -116,7 +124,12 @@
     completionReplyCategory.identifier = @"COMPLETION_REPLY";
     [completionReplyCategory setActions:@[applaudAction] forContext:UIUserNotificationActionContextDefault];
     
-    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory]];
+    // CATEGORY 3 (ACTION 4)
+    UIMutableUserNotificationCategory * watchingYouReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    completionReplyCategory.identifier = @"WATCHING_YOU_REPLY";
+    [completionReplyCategory setActions:@[watchingYouAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory]];
     UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
 
     [application registerUserNotificationSettings:settings];
@@ -129,12 +142,14 @@
     User * currentUser = [User currentUser];
     NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
     __block NSString * message;
+    __block NSString * category;
     
     PFQuery * queryForUserToReplyTo = [PFUser query];
     [queryForUserToReplyTo getObjectInBackgroundWithId:objectIdOfUserToReplyTo block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
         if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
             message = [NSString stringWithFormat:@"%@: 👌", currentUser[@"username"]];
+            category = @"WATCHING_YOU_REPLY";
             
         } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
             message = [NSString stringWithFormat:@"%@: 🖕", currentUser[@"username"]];
@@ -143,9 +158,11 @@
             message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
 //            User * userWhoReceivedApplause = (User *)object;
 //            [userWhoReceivedApplause addReceivedApplauseXp];
+        } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
+            message = [NSString stringWithFormat:@"%@: ☝️👀", currentUser[@"username"]];
         }
-        
-        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:nil];
+
+        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
         completionHandler();
 
     }];
