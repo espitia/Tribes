@@ -24,6 +24,9 @@ extern int RECEIVED_APPLAUSE_XP;
 //adding user to tribe
 -(void)addTribeWithName:(NSString *)name;
 
+//removing user from tribe
+-(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;
+
 // handling activities
 -(void)completeActivityForTribe:(Tribe *)tribe;
 -(Activity *)activityForTribe:(Tribe *)tribe;
@@ -38,7 +41,7 @@ extern int RECEIVED_APPLAUSE_XP;
 -(void)addReceivedApplauseXp;
 
 @property (nonatomic, strong) NSMutableArray * tribes;
-@property (nonatomic, strong) NSArray * activities;
+@property (nonatomic, strong) NSMutableArray * activities;
 @property int lvl;
 @property int xp;
 @property BOOL loadedInitialTribes;

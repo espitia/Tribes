@@ -173,9 +173,12 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     if ([tribe allMembersCompletedActivity])
         [tribe sendTribe100PercentCompletedPush];
     
-    
-
 }
+
+/**
+ * Gets activity FROM the tribe.activites array. This is NOT the same as User.activites.
+ *
+ */
 -(Activity *)activityForTribe:(Tribe *)tribe {
     for (Activity * activity in tribe.activities) {
         if (activity[@"createdBy"] == self) {
@@ -227,6 +230,31 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }];
 }
 
+-(void)removeFromTribe:(Tribe *)tribeToRemoveFrom {
+    
+    // remove tribe from user
+    [self removeObject:tribeToRemoveFrom forKey:@"tribes"];
+    
+    // find activity for tribe IN user
+    Activity * activityToRemove;
+    for (Activity * activity in self.activities) {
+        if (activity[@"createdBy"] == self) {
+            activityToRemove = activity;
+        }
+    }
+    
+    // remove activity from user
+    [self removeObject:activityToRemove forKey:@"activities"];
+    
+    // remove user from tribe relation "members"
+    PFRelation * relation = [tribeToRemoveFrom relationForKey:@"members"];
+    [relation removeObject:self];
+    
+    // save changes
+    [self saveInBackground];
+    [tribeToRemoveFrom saveInBackground];
+
+}
 
 #pragma mark - Levels and XP
 
