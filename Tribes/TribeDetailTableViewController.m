@@ -58,6 +58,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
    
+    (weeklyCompletions) ? [_tribe sortMembersAndActivitiesByWeeklyActivityCompletions] : [_tribe sortMembersAndActivitiesByTotalActivityCompletions];
+    
     // dictionary with member (PFUser)and acitivty key (Activity object)
     User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
     Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
@@ -67,15 +69,7 @@
     cell.textLabel.text = titleLabel;
     
     NSString * completionsString;
-    int completions;
-    
-    if (weeklyCompletions) {
-        [_tribe sortMembersAndActivitiesByWeeklyActivityCompletions];
-        completions = activity.weekCompletions;
-    } else {
-        [_tribe sortMembersAndActivitiesByTotalActivityCompletions];
-        completions = [activity[@"completions"] intValue];
-    }
+    int completions = (weeklyCompletions) ? activity.weekCompletions : [activity[@"completions"] intValue];
     
     // format detail string depending if user completed activity or not
     if ([activity completedForDay]) {
