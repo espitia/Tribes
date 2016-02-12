@@ -181,6 +181,8 @@
     
     // create and add segement control
     UISegmentedControl * segmentedControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Week", @"All-time", nil]];
+    segmentedControl.layer.borderColor = [UIColor whiteColor].CGColor;
+    segmentedControl.layer.borderWidth = 1.0;
     [segmentedControl setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50)];
     [segmentedControl addTarget:self action:@selector(segmentedControlHasChangedValue:) forControlEvents:UIControlEventValueChanged];
     self.tableView.tableHeaderView = segmentedControl;
