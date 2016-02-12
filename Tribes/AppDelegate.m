@@ -109,7 +109,7 @@
     // ACTION 4
     UIMutableUserNotificationAction * watchingYouAction = [[UIMutableUserNotificationAction alloc] init];
     watchingYouAction.identifier = @"WATCHING_YOU";
-    watchingYouAction.title = @"☝️👀";
+    watchingYouAction.title = @"👀";
     watchingYouAction.activationMode = UIUserNotificationActivationModeBackground;
     watchingYouAction.destructive = NO;
     watchingYouAction.authenticationRequired = NO;
@@ -159,7 +159,7 @@
 //            User * userWhoReceivedApplause = (User *)object;
 //            [userWhoReceivedApplause addReceivedApplauseXp];
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
-            message = [NSString stringWithFormat:@"%@: ☝️👀", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"username"]];
         }
 
         [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
