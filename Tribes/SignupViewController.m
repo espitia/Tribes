@@ -11,10 +11,9 @@
 #import "Parse.h"
 
 @interface SignupViewController () {
-    
-    __weak IBOutlet UITextField *username;
-    __weak IBOutlet UITextField *password;
-    __weak IBOutlet UITextField *confirmPassword;
+    IBOutlet UITextField *username;
+    IBOutlet UITextField *password;
+    IBOutlet UITextField *confirmPassword;
 }
 
 @end
