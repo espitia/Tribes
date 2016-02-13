@@ -27,6 +27,9 @@
     confirmPassword.secureTextEntry = TRUE;
 
 }
+-(void)viewDidAppear:(BOOL)animated {
+    [username becomeFirstResponder];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
