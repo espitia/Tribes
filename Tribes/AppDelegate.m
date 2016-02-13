@@ -126,8 +126,8 @@
     
     // CATEGORY 3 (ACTION 4)
     UIMutableUserNotificationCategory * watchingYouReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
-    completionReplyCategory.identifier = @"WATCHING_YOU_REPLY";
-    [completionReplyCategory setActions:@[watchingYouAction] forContext:UIUserNotificationActionContextDefault];
+    watchingYouReplyCategory.identifier = @"WATCHING_YOU_REPLY";
+    [watchingYouReplyCategory setActions:@[watchingYouAction] forContext:UIUserNotificationActionContextDefault];
     
     NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory]];
     UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
@@ -138,7 +138,7 @@
 }
 
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
-    
+    NSLog(@"IDENTIFIER: %@", identifier);
     User * currentUser = [User currentUser];
     NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
     __block NSString * message;
