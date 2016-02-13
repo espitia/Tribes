@@ -10,7 +10,12 @@
 #import <DigitsKit/DigitsKit.h>
 #import "Parse.h"
 
-@interface SignupViewController ()
+@interface SignupViewController () {
+    
+    __weak IBOutlet UITextField *username;
+    __weak IBOutlet UITextField *password;
+    __weak IBOutlet UITextField *confirmPassword;
+}
 
 @end
 
