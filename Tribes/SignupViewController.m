@@ -22,8 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
+    password.secureTextEntry = TRUE;
+    confirmPassword.secureTextEntry = TRUE;
+
 }
 
 - (void)didReceiveMemoryWarning {
