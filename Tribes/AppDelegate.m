@@ -39,6 +39,9 @@
     // create actions
     [self setUpNotifications:application];
     
+    // ui changes
+    [self colorNavBar];
+    
     return YES;
 }
 
@@ -75,6 +78,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Notificaitons
 
 -(void)setUpNotifications:(UIApplication *)application {
     
@@ -169,6 +174,13 @@
 
 
 }
+#pragma mark - Util
 
+-(void)colorNavBar {
+    [[UINavigationBar appearance] setBarTintColor: [UIColor orangeColor]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+}
 
 @end
