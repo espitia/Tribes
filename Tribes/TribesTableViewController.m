@@ -252,6 +252,7 @@
     [currentUser loadTribesWithBlock:^{
         [refreshControl endRefreshing];
         [self.tableView reloadData];
+        [self updateProgressBar];
     }];
 }
 
