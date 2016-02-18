@@ -125,42 +125,69 @@
     [weakSelf presentViewController:alert animated:YES completion:nil];
 }
 
+-(BOOL)isUsernameValid:(NSString *)usernameToCheck {
+    
+    __block BOOL valid;
+    
+    PFQuery * query = [PFUser query];
+    [query whereKey:@"username" equalTo:usernameToCheck];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (!error) {
+            if (objects.count > 0) {
+                valid = false;
+            } else {
+                valid = true;
+            }
+        }
+    }];
+    
+    return valid;
+}
+
 #pragma mark - Sign Up User
 
 - (IBAction)signUp:(id)sender {
     
-    // sign up with phonenumber (digits by twitter Fabrics)
-    [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
+//    if ([self isUsernameValid:username.text] && [self isValidPassword:password.text] && [self isValidPassword:confirmPassword.text]) {
+        if (true) {
         
-        if (!error) {
+        [self performSegueWithIdentifier:@"PhoneVerification" sender:nil];
+        
+        // sign up with phonenumber (digits by twitter Fabrics)
+//        [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
+//            
+//            if (!error) {
+//                
+//                // sign up anonymously (no user/pass w/ parse and add digits user id to parse user object
+//                [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
+//                    
+//                    if (error) {
+//                        // handle error
+//                        NSLog(@"error signing up with Parse");
+//                    } else {
+//                        
+//                        // save installation for pushes
+//                        PFInstallation *installation = [PFInstallation currentInstallation];
+//                        installation[@"user"] = [PFUser currentUser];
+//                        [installation saveInBackground];
+//                        
+//                        // add id to digits account to parse user object
+//                        user[@"digitsUserId"] = session.userID;
+//                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//                            if (error) {
+//                                // handle error
+//                                NSLog(@"error saving digits user id to parse user object");
+//                            } else {
+//                                [self dismissViewControllerAnimated:true completion:nil];
+//                            }
+//                        }];
+//                    }
+//                }];
+//            }
+//        }];
+    }
+    
 
-            // sign up anonymously (no user/pass w/ parse and add digits user id to parse user object
-            [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-               
-                if (error) {
-                    // handle error
-                    NSLog(@"error signing up with Parse");
-                } else {
-                    
-                    // save installation for pushes
-                    PFInstallation *installation = [PFInstallation currentInstallation];
-                    installation[@"user"] = [PFUser currentUser];
-                    [installation saveInBackground];
-                    
-                    // add id to digits account to parse user object
-                    user[@"digitsUserId"] = session.userID;
-                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (error) {
-                            // handle error
-                            NSLog(@"error saving digits user id to parse user object");
-                        } else {
-                            [self dismissViewControllerAnimated:true completion:nil];
-                        }
-                    }];
-                }
-            }];
-        }
-    }];
 }
 
 @end
