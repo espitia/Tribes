@@ -172,7 +172,7 @@
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
 
         [currentUser completeActivityForTribe:tribe];
-        [self makeItRainConfettiForTime:1.0];
+        [self makeItRainConfetti];
         [self updateProgressBar];
 //        [self showAlertWithTitle:@"🔑🔑🔑" andMessage:@"+ 100xp"];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -341,12 +341,13 @@
         }
     }
     float totalProgress = (completionProgress * completions) * .01 ;
+
     [progressBar setProgress:totalProgress animated:YES];
 }
 
 #pragma mark - Confetti
 
--(void)makeItRainConfettiForTime:(float)time {
+-(void)makeItRainConfetti {
     
     // if confetti has not been initialized
     if (!confettiView) {
