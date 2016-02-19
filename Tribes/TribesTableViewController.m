@@ -235,13 +235,23 @@
 #pragma mark - Helper methods
 
 
-
+// helper method for setting images under swipeable cells
 - (UIView *)viewWithImageName:(NSString *)imageName {
     UIImage *image = [UIImage imageNamed:imageName];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.contentMode = UIViewContentModeCenter;
     return imageView;
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    // add offset to progress bar frame so it doesn't move
+    CGRect frame = progressBar.frame;
+    frame.origin.y = scrollView.contentOffset.y + 64;
+    [progressBar setFrame:frame];
+    [self.view bringSubviewToFront:progressBar];
+}
+
 
 #pragma mark - Refresh data
 
@@ -302,6 +312,8 @@
     // present alert
     [weakSelf presentViewController:alert animated:YES completion:nil];
 }
+
+#pragma mark - Progress Bar
 
 -(void)addProgressBar {
     
