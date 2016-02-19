@@ -13,7 +13,7 @@ typedef enum {
     Triangle,
     Star,
     Diamond,
-    Custom,
+    CustomImg
     
 } ConfettiType;
 

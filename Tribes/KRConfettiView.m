@@ -69,7 +69,7 @@
         case Diamond:
             fileName = @"diamond";
             break;
-        case Custom:
+        case CustomImg:
             return customImage;
         default:
             break;
