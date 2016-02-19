@@ -344,16 +344,6 @@
     [progressBar setProgress:totalProgress animated:YES];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    // add offset to progress bar frame so it doesn't move
-    CGRect frame = progressBar.frame;
-    frame.origin.y = scrollView.contentOffset.y + 64;
-    [progressBar setFrame:frame];
-    [self.view bringSubviewToFront:progressBar];
-}
-
-
 #pragma mark - Confetti
 
 -(void)makeItRainConfettiForTime:(float)time {
