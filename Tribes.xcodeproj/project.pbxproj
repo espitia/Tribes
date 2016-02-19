@@ -211,6 +211,17 @@
 			name = "Extra functionality";
 			sourceTree = "<group>";
 		};
+		09688B291C77CE9A001B7752 /* Tribe */ = {
+			isa = PBXGroup;
+			children = (
+				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
+				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
+				0993B5191C55385D0008B7E5 /* Create a Tribe */,
+				09C658621C483A64008C4EC3 /* Add friends */,
+			);
+			name = Tribe;
+			sourceTree = "<group>";
+		};
 		0993B5191C55385D0008B7E5 /* Create a Tribe */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,10 +267,7 @@
 			children = (
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
-				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
-				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
-				0993B5191C55385D0008B7E5 /* Create a Tribe */,
-				09C658621C483A64008C4EC3 /* Add friends */,
+				09688B291C77CE9A001B7752 /* Tribe */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
 			name = Controllers;

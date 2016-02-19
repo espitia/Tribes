@@ -7,10 +7,28 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Tribe Detail Table View Controller-->
+        <!--Tribe Nav Controller-->
+        <scene sceneID="dsn-xH-fsS">
+            <objects>
+                <navigationController title="Tribe Nav Controller" id="k2w-H5-NDm" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Tribe" id="FGy-qj-234"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0M2-Wj-jK3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="0NR-7X-qsU" kind="relationship" relationship="rootViewController" id="2Nw-QU-T6x"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gi9-E7-t2x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2063.5" y="-972.5"/>
+        </scene>
+        <!--Tribe-->
         <scene sceneID="DDP-SF-Tgx">
             <objects>
-                <tableViewController id="0NR-7X-qsU" customClass="TribeDetailTableViewController" sceneMemberID="viewController">
+                <tableViewController title="Tribe" id="0NR-7X-qsU" customClass="TribeDetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="OSu-gk-9T3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,7 +64,9 @@
                             <outlet property="delegate" destination="0NR-7X-qsU" id="BFs-0q-wKb"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Item" id="YlP-gd-aHT"/>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="loO-s8-2r0"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -55,7 +75,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TfD-TI-SVS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1399.5" y="-421.5"/>
+            <point key="canvasLocation" x="2607.5" y="-977.5"/>
         </scene>
         <!--Add Friends Table View Controller-->
         <scene sceneID="Fjp-5f-yNX">
@@ -83,7 +103,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9y-Qg-ReQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1895.5" y="-421.5"/>
+            <point key="canvasLocation" x="3139.5" y="-977.5"/>
         </scene>
         <!--Tribes-->
         <scene sceneID="YNw-0g-xML">
@@ -117,7 +137,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="0NR-7X-qsU" kind="show" identifier="TribeDetail" id="I3z-aN-Hq9"/>
+                        <segue destination="kAD-re-YDQ" kind="presentation" identifier="showTribeTabBar" id="XfP-bh-QS1"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aiv-5d-Uau" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -147,7 +167,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H0Z-hS-tn0">
-                                <rect key="frame" x="0.0" y="334" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="335" width="375" height="60"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="H0Z-hS-tn0" secondAttribute="height" multiplier="67:12" id="1U9-bz-Z8t"/>
@@ -170,7 +190,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iXB-Kf-ejk">
-                                <rect key="frame" x="20" y="189" width="335" height="60"/>
+                                <rect key="frame" x="20" y="190" width="335" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -222,7 +242,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CTF-iI-O4R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="900.5" y="373.5"/>
+            <point key="canvasLocation" x="405.5" y="337.5"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="C8K-hw-NAM">
+            <objects>
+                <tabBarController id="kAD-re-YDQ" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="9xV-WW-a56"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="55a-gf-GY1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="k2w-H5-NDm" kind="relationship" relationship="viewControllers" id="zmX-HN-AAe"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FAj-b2-GmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1455.5" y="-398.5"/>
         </scene>
         <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
@@ -256,7 +295,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1399.5" y="-1213.5"/>
+            <point key="canvasLocation" x="1455.5" y="-1213.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="icT-Oq-OGf">
