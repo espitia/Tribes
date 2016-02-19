@@ -172,6 +172,7 @@
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
 
         [currentUser completeActivityForTribe:tribe];
+        [self makeItRainConfettiForTime:1.0];
         [self updateProgressBar];
 //        [self showAlertWithTitle:@"🔑🔑🔑" andMessage:@"+ 100xp"];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -369,7 +370,7 @@
         //confettiView.type = Custom;
     }
 
-    [NSTimer scheduledTimerWithTimeInterval:0.7f
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
                                      target:self
                                    selector: @selector(stopConfetti)
                                    userInfo:nil
