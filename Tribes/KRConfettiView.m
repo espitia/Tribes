@@ -109,5 +109,9 @@
     // Drawing code
 }
 
+// allow touches on KRConfetti view to bypass itself and go on to next view in hiearchy
+-(BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    return false;
+}
 
 @end
