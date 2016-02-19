@@ -183,7 +183,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"TribeDetail" sender:[currentUser.tribes objectAtIndex:indexPath.row]];
+    [self performSegueWithIdentifier:@"showTribeTabBar" sender:[currentUser.tribes objectAtIndex:indexPath.row]];
 }
 
 #pragma mark - MCSwipeTableViewCellDelegate
@@ -223,10 +223,15 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     // show tribe
-    if ([segue.identifier isEqualToString:@"TribeDetail"]) {
+    if ([segue.identifier isEqualToString:@"showTribeTabBar"]) {
         
-        // initiate tribedetailvc
-        TribeDetailTableViewController * tribeDetailVC = (TribeDetailTableViewController *)segue.destinationViewController;
+        // initiate tab bar controller
+        UITabBarController * tabBarController = (UITabBarController *)segue.destinationViewController;
+        
+        // get nav controller for first item (tribe detailVC) and set tribe
+        UINavigationController * navController = tabBarController.viewControllers[0];
+        TribeDetailTableViewController * tribeDetailVC = (TribeDetailTableViewController *)navController.topViewController;
+
         // sender contains tribe tapped
         tribeDetailVC.tribe = sender;
     }
