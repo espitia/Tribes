@@ -10,7 +10,7 @@ target 'Tribes' do
 	pod 'TwitterCore'
 	pod 'MCSwipeTableViewCell', '~> 2.1.4'
     pod 'YLProgressBar', '~> 3.8.0'
-
+    pod 'SCLAlertView-Objective-C'
 end
 
 target 'TribesTests' do
