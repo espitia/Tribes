@@ -11,7 +11,7 @@
         <scene sceneID="dsn-xH-fsS">
             <objects>
                 <navigationController title="Tribe Nav Controller" id="k2w-H5-NDm" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Tribe" id="FGy-qj-234"/>
+                    <tabBarItem key="tabBarItem" title="Tribe" image="tab-bar-tribe-icon" id="FGy-qj-234"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0M2-Wj-jK3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -257,11 +257,59 @@
                     </tabBar>
                     <connections>
                         <segue destination="k2w-H5-NDm" kind="relationship" relationship="viewControllers" id="zmX-HN-AAe"/>
+                        <segue destination="9cL-7S-pdM" kind="relationship" relationship="viewControllers" id="x6C-0e-XQV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FAj-b2-GmZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1455.5" y="-398.5"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="rpg-pg-Nrd">
+            <objects>
+                <navigationController id="9cL-7S-pdM" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" image="tab-bar-settings-icon" id="l0v-Pj-U5F"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="iEn-57-Nnw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="aJe-k2-wfZ" kind="relationship" relationship="rootViewController" id="PAj-Da-XnS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vyM-H9-c0x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2063.5" y="17.5"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="5RT-va-Add">
+            <objects>
+                <tableViewController id="aJe-k2-wfZ" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="i6V-82-W3I">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="X4a-ej-sII">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X4a-ej-sII" id="XEH-o1-DZm">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="aJe-k2-wfZ" id="jAb-tV-ogk"/>
+                            <outlet property="delegate" destination="aJe-k2-wfZ" id="eqH-F1-W12"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="3gQ-vi-Ek5"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KmJ-5j-hgh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2607.5" y="17.5"/>
         </scene>
         <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
@@ -316,4 +364,8 @@
             <point key="canvasLocation" x="405.5" y="-421.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tab-bar-settings-icon" width="25" height="25"/>
+        <image name="tab-bar-tribe-icon" width="25" height="25"/>
+    </resources>
 </document>
