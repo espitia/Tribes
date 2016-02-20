@@ -34,11 +34,8 @@
     // set currentUser
     currentUser = [User currentUser];
     
-    // register table view cell
-    [self.tableView registerClass:[MCSwipeTableViewCell class] forCellReuseIdentifier:@"TribeCell"];
-    
-    // add pull to refresh control
-    [self addPullToRefresh];
+    // set up
+    [self setUp];
     
     //  log in / sign up user if non-existent
     if (!currentUser) {
@@ -239,6 +236,20 @@
 
 #pragma mark - Helper methods
 
+-(void)setUp {
+    // register table view cell
+    [self.tableView registerClass:[MCSwipeTableViewCell class] forCellReuseIdentifier:@"TribeCell"];
+    
+    // add pull to refresh control
+    [self addPullToRefresh];
+    
+    // add notifier for when app comes into foreground
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleEnteredForeground) name:UIApplicationDidBecomeActiveNotification object: nil];
+}
+
+-(void)handleEnteredForeground {
+    [self refreshTable];
+}
 
 // helper method for setting images under swipeable cells
 - (UIView *)viewWithImageName:(NSString *)imageName {
