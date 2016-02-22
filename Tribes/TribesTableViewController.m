@@ -271,6 +271,10 @@
     [self.view bringSubviewToFront:progressBar];
 }
 
+-(void)setAllActivitiesCompletedSignifier {
+    self.navigationItem.title = @"🔥🦁 Tribes 🦁🔥";
+}
+
 #pragma mark - Method to play sound
 
 - (void)playSound:(NSString *)fileName :(NSString *)ext {
@@ -372,6 +376,11 @@
     }
     float totalProgress = (completionProgress * completions) * .01 ;
 
+    // // add signifier of a true 🦁 when all activities are complete
+    if (totalProgress == 1.0)
+        [self setAllActivitiesCompletedSignifier];
+    
+    // set progress 
     [progressBar setProgress:totalProgress animated:YES];
 }
 
