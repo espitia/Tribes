@@ -273,7 +273,9 @@
 -(BOOL)allMembersCompletedActivity {
     for (Activity * activity in self.activities) {
         if (![activity completedForDay]) {
-            return false;
+            if (!activity.hibernation) {
+                return false;
+            }
         }
     }
     return true;
