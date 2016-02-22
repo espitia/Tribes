@@ -130,12 +130,25 @@
 
 -(NSString *)formatCompletionsStringForActivity:(Activity *)activity andCompletions:(int)completions {
     
+    if (activity.hibernation)
+        return @"🐻";
+    
     NSString * completionsString;
     BOOL streak;
     BOOL completedForDay;
+    BOOL dueTime;
     
     completedForDay = ([activity completedForDay]) ? true : false;
     streak = ([activity onStreak]) ? true : false;
+    dueTime = ([activity dueTime] ? true : false);
+    
+    // add 🕑
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"h:mm a"];
+    [formatter setTimeZone:[NSTimeZone localTimeZone]];
+    NSString * stringFromDate = [formatter stringFromDate:activity.dueTime];
+    NSString * dueTimeString = [NSString stringWithFormat:@"🕑%@ ", stringFromDate];
+    completionsString = (dueTime) ? dueTimeString : @"";
     
     // add 🦁 or 🐑 to signify completed for day
     NSString * lionOrSheep = (completedForDay) ? @"🦁" : @"🐑";
