@@ -112,6 +112,15 @@
     applaudAction.authenticationRequired = NO;
     
     // ACTION 4
+    UIMutableUserNotificationAction * textReplyAction = [[UIMutableUserNotificationAction alloc] init];
+    textReplyAction.identifier = @"TEXT_REPLY";
+    textReplyAction.title = @"💬";
+    textReplyAction.activationMode = UIUserNotificationActivationModeBackground;
+    textReplyAction.destructive = NO;
+    textReplyAction.authenticationRequired = NO;
+    textReplyAction.behavior = UIUserNotificationActionBehaviorTextInput;
+    
+    // ACTION 5
     UIMutableUserNotificationAction * watchingYouAction = [[UIMutableUserNotificationAction alloc] init];
     watchingYouAction.identifier = @"WATCHING_YOU";
     watchingYouAction.title = @"👀";
@@ -127,9 +136,9 @@
     // CATEGORY 2 (ACTION 3)
     UIMutableUserNotificationCategory * completionReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     completionReplyCategory.identifier = @"COMPLETION_REPLY";
-    [completionReplyCategory setActions:@[applaudAction] forContext:UIUserNotificationActionContextDefault];
+    [completionReplyCategory setActions:@[textReplyAction, applaudAction] forContext:UIUserNotificationActionContextDefault];
     
-    // CATEGORY 3 (ACTION 4)
+    // CATEGORY 3 (ACTION 5)
     UIMutableUserNotificationCategory * watchingYouReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     watchingYouReplyCategory.identifier = @"WATCHING_YOU_REPLY";
     [watchingYouReplyCategory setActions:@[watchingYouAction] forContext:UIUserNotificationActionContextDefault];
@@ -165,8 +174,10 @@
             //            [userWhoReceivedApplause addReceivedApplauseXp];
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
             message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"username"]];
-        }
-
+        } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
+            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"username"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];}
+        
+        
         [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
         completionHandler();
         
