@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Activity.h"
 
 @interface SettingsTableViewController : UITableViewController
+
+@property (nonatomic, strong) Activity * activity;
 
 @end

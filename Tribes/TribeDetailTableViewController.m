@@ -9,6 +9,7 @@
 #import "TribeDetailTableViewController.h"
 #import "AddFriendsTableViewController.h"
 #import "User.h"
+#import "SettingsTableViewController.h"
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
@@ -155,6 +156,9 @@
     if ([segue.identifier  isEqual: @"AddFriends"]) {
         AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
         vc.tribe = _tribe;
+    } else if ([segue.identifier  isEqual:@"showSettings"]) {
+        SettingsTableViewController * vc = (SettingsTableViewController *)segue.destinationViewController;
+        vc.activity = sender;
     }
 }
 
