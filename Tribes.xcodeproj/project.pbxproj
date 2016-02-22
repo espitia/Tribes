@@ -15,6 +15,7 @@
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
 		09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B231C768C2D001B7752 /* KRConfettiView.m */; };
+		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
 		0993B5151C550F910008B7E5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5141C550F910008B7E5 /* User.m */; };
 		0993B5181C5537940008B7E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5171C5537940008B7E5 /* Activity.m */; };
@@ -71,6 +72,7 @@
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09688B221C768C2D001B7752 /* KRConfettiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRConfettiView.h; sourceTree = "<group>"; };
 		09688B231C768C2D001B7752 /* KRConfettiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRConfettiView.m; sourceTree = "<group>"; };
+		09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "completion-sound.mp3"; sourceTree = "<group>"; };
 		0993B5131C550F910008B7E5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		0993B5141C550F910008B7E5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		0993B5161C5537940008B7E5 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				0917EC481C4037D600BE2697 /* AppDelegate.h */,
 				0917EC491C4037D600BE2697 /* AppDelegate.m */,
 				0917EC4E1C4037D600BE2697 /* Main.storyboard */,
+				09688B2F1C7AB8FE001B7752 /* Audio */,
 				09688B251C768C42001B7752 /* Extra functionality */,
 				09C6585E1C47F18C008C4EC3 /* Models */,
 				09F2BF911C4316E4008ABDF7 /* Controllers */,
@@ -220,6 +223,14 @@
 				09C658621C483A64008C4EC3 /* Add friends */,
 			);
 			name = Tribe;
+			sourceTree = "<group>";
+		};
+		09688B2F1C7AB8FE001B7752 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */,
+			);
+			name = Audio;
 			sourceTree = "<group>";
 		};
 		0993B5191C55385D0008B7E5 /* Create a Tribe */ = {
@@ -415,6 +426,7 @@
 			files = (
 				0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */,
 				0917EC521C4037D600BE2697 /* Assets.xcassets in Resources */,
+				09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */,
 				0917EC501C4037D600BE2697 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
