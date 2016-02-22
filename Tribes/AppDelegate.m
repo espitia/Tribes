@@ -187,7 +187,8 @@
 #pragma mark - Util
 
 -(void)colorNavBar {
-    [[UINavigationBar appearance] setBarTintColor: [UIColor orangeColor]];
+    UIColor * baseColor = [UIColor colorWithRed:255.0f/255.0f green:177.0f/255.0f blue:0.0f/255.0f alpha:1.0];
+    [[UINavigationBar appearance] setBarTintColor: baseColor];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearance] setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
