@@ -16,6 +16,7 @@
 #import "Activity.h"
 #import "KRConfettiView.h"
 #import "YLProgressBar.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
@@ -268,6 +269,17 @@
     [self.view bringSubviewToFront:progressBar];
 }
 
+#pragma mark - Method to play sound
+
+- (void)playSound:(NSString *)fileName :(NSString *)ext {
+    SystemSoundID audioEffect;
+    NSString *path = [[NSBundle mainBundle] pathForResource : fileName ofType :ext];
+    if ([[NSFileManager defaultManager] fileExistsAtPath : path]) {
+        NSURL *pathURL = [NSURL fileURLWithPath: path];
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef) pathURL, &audioEffect);
+        AudioServicesPlaySystemSound(audioEffect);
+    }
+}
 
 #pragma mark - Refresh data
 
