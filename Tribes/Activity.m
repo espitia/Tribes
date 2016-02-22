@@ -13,6 +13,8 @@
 @implementation Activity
 
 @dynamic completionDates;
+@dynamic hibernation;
+@dynamic dueTime;
 @dynamic weekCompletions;
 @dynamic onStreak;
 
