@@ -14,6 +14,7 @@
 
 @dynamic completionDates;
 @dynamic weekCompletions;
+@dynamic onStreak;
 
 #pragma mark - Parse required methods
 
@@ -53,11 +54,61 @@
     return counter;
 }
 
+-(BOOL)onStreak {
+
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    [cal setFirstWeekday:2];
+    NSDate *today = [NSDate date];
+    NSDate *yesterday = [today dateByAddingTimeInterval: -86400.0];
+    NSDate *startOfTheWeek;
+    NSTimeInterval interval;
+    [cal rangeOfUnit:NSCalendarUnitWeekOfYear
+           startDate:&startOfTheWeek
+            interval:&interval
+             forDate:today];
+    
+    int daysBetweenStartOfWeekAndYesterday;
+    NSDate * referenceDateToUse;
+    
+    // if the date where the activity was created is earlier than the start of the week, use that as reference date to give new tribe members a change at a streak
+    referenceDateToUse = ([self.createdAt timeIntervalSinceDate:startOfTheWeek] > 0) ? self.createdAt : startOfTheWeek;
+    
+    // get dates to count from reference date to yesterday
+    daysBetweenStartOfWeekAndYesterday = (int)[self daysBetweenDate:referenceDateToUse andDate:yesterday];
+
+    // check that activity has a completion for each day from reference date (e.g. start of week until yest) to validate streak
+    for (int i = 0; i < daysBetweenStartOfWeekAndYesterday;) {
+        for (NSDate * date in self.completionDates) {
+            // if date was complete, goes to check next day until we hit yesterday (by adding 1 day at a time)
+            if ([cal isDate:date inSameDayAsDate:[NSDate dateWithTimeInterval:(86400.0 * i) sinceDate:referenceDateToUse]]) {
+                i++;
+                if (i == daysBetweenStartOfWeekAndYesterday) {
+                    return true;
+                } 
+            }
+        }
+        return false;
+    }
+    return false;
+}
+
+
+#pragma mark - Action methods
+
 -(void)completeForToday {
     [self addObject:[NSDate date] forKey:@"completionDates"];
     [self updateCompletions];
     [self saveEventually];
 }
+
+/**
+ * Update completions by counting total dates in completion dates
+ */
+-(void)updateCompletions {
+    self[@"completions"] = [NSNumber numberWithInteger:self.completionDates.count];
+}
+
+#pragma mark - State
 
 -(BOOL)completedForDay {
 
@@ -88,6 +139,9 @@
     
     return ([today isEqualToDate:dateToCheck]) ? true : false;
 }
+
+#pragma mark - Util methods
+
 /**
  * When editing NSDate objects in Parse, for some reason, it will sometimes return that NSDate as a string and crash the whole app. This method checks to make sure that if it is a string, we turn it into an NSDate object for proper handling.
  * @param Object date to be checked
@@ -104,12 +158,7 @@
     }
     return nil;
 }
-/**
- * Update completions by counting total dates in completion dates
- */
--(void)updateCompletions {
-    self[@"completions"] = [NSNumber numberWithInteger:self.completionDates.count];
-}
+
 
 -(BOOL)date:(NSDate*)date isBetweenDate:(NSDate*)beginDate andDate:(NSDate*)endDate
 {
@@ -121,5 +170,23 @@
         return NO;
     
     return YES;
+}
+
+-(NSInteger)daysBetweenDate:(NSDate*)fromDateTime andDate:(NSDate*)toDateTime
+{
+    NSDate *fromDate;
+    NSDate *toDate;
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&fromDate
+                 interval:NULL forDate:fromDateTime];
+    [calendar rangeOfUnit:NSCalendarUnitDay startDate:&toDate
+                 interval:NULL forDate:toDateTime];
+    
+    NSDateComponents *difference = [calendar components:NSCalendarUnitDay
+                                               fromDate:fromDate toDate:toDate options:0];
+    
+    return [difference day];
 }
 @end
