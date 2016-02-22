@@ -175,7 +175,8 @@
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
             message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"username"]];
         } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
-            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"username"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];}
+            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"username"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
+        }
         
         
         [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
