@@ -8,7 +8,10 @@
 
 #import "SettingsTableViewController.h"
 
-@interface SettingsTableViewController ()
+@interface SettingsTableViewController () {
+    BOOL editingDueTime;
+    UIDatePicker * timePicker;
+}
 
 @end
 
@@ -16,83 +19,138 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.title = @"Settings 🔧";
+    editingDueTime = _activity.dueTime;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return 4;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+    if (indexPath.row == 2 && editingDueTime) { // this is my picker cell
+        return 219;
+    }
+    return self.tableView.rowHeight;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    switch (indexPath.row) {
+        case 0:
+            [self formatHibernationCell:cell];
+            break;
+        case 1:
+            [self formatTimeSwitchCell:cell];
+            break;
+        case 2:
+            [self formatTimePickerCell:cell];
+            break;
+            
+        default:
+            break;
+    }
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - Table View Delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // deselect cell
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+#pragma mark - Formatting cells
+
+-(void)formatHibernationCell:(UITableViewCell *)cell {
+    cell.textLabel.text = @"🐻 Hibernation";
+
+    UISwitch * hibernationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = hibernationSwitch;
+    
+    hibernationSwitch.on = (_activity.hibernation) ? true : false;
+
+    [hibernationSwitch addTarget:self action:@selector(handleHibernationSwitch:) forControlEvents:UIControlEventValueChanged];
+    
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+-(void)formatTimeSwitchCell:(UITableViewCell *)cell {
+    cell.textLabel.text = @"🕐 Due time";
+    
+    UISwitch * dueTimeSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = dueTimeSwitch;
+    
+    dueTimeSwitch.on = (_activity.dueTime) ? true : false;
+    
+    [dueTimeSwitch addTarget:self action:@selector(handleDueTimeSwitch:) forControlEvents:UIControlEventValueChanged];
+
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+-(void)formatTimePickerCell:(UITableViewCell *)cell {
+
+    if (!editingDueTime)
+        return;
+    
+    if (!timePicker) {
+        timePicker = [[UIDatePicker alloc] initWithFrame:cell.contentView.frame];
+        timePicker.datePickerMode = UIDatePickerModeTime;
+        [cell.contentView addSubview:timePicker];
+        [timePicker addTarget:self action:@selector(timeChanged:) forControlEvents:UIControlEventValueChanged];
+        if (_activity.dueTime) {
+            timePicker.date = _activity.dueTime;
+        } else {
+            _activity.dueTime = timePicker.date;
+            [_activity saveInBackground];
+        }
+    }
 }
-*/
 
-/*
-#pragma mark - Navigation
+#pragma mark - Handle actions
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)handleHibernationSwitch:(UISwitch *)sender {
+    
+    UISwitch* switchControl = sender;
+    
+    _activity.hibernation = (switchControl.on) ? true : false;
+    [_activity saveInBackground];
 }
-*/
 
+-(void)handleDueTimeSwitch:(UISwitch *)sender {
+    
+    UISwitch* switchControl = sender;
+    
+    _activity.dueTime = (switchControl.on) ? timePicker.date : nil;
+    [_activity saveInBackground];
+    
+    editingDueTime = !editingDueTime;
+    
+    [UIView animateWithDuration:.4 animations:^{
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+    }];
+}
+
+-(void)timeChanged:(UIDatePicker *)sender {
+    _activity.dueTime = sender.date;
+    [_activity saveInBackground];
+}
+-(void)updateTribeData {
+    NSUInteger tribeVC = self.navigationController.viewControllers.count;
+    tribeVC -= 2;
+    UITableViewController * vc = [self.navigationController.viewControllers objectAtIndex:tribeVC];
+    [vc.tableView reloadData];
+}
 @end
