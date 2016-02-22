@@ -68,15 +68,8 @@
     NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
     cell.textLabel.text = titleLabel;
     
-    NSString * completionsString;
     int completions = (weeklyCompletions) ? activity.weekCompletions : [activity[@"completions"] intValue];
-    
-    // format detail string depending if user completed activity or not
-    if ([activity completedForDay]) {
-        completionsString = [NSString stringWithFormat:@"🦁%d🔥", completions];
-    } else {
-        completionsString = [NSString stringWithFormat:@"🐑%d🔥", completions];
-    }
+    NSString * completionsString = [self formatCompletionsStringForActivity:activity andCompletions:completions];
     
     cell.detailTextLabel.text = completionsString;
     
@@ -115,6 +108,30 @@
         }];
     }
 
+}
+
+#pragma mark - Format completion string
+
+-(NSString *)formatCompletionsStringForActivity:(Activity *)activity andCompletions:(int)completions {
+    
+    NSString * completionsString;
+    BOOL streak;
+    BOOL completedForDay;
+    
+    completedForDay = ([activity completedForDay]) ? true : false;
+    streak = ([activity onStreak]) ? true : false;
+    
+    // add 🦁 or 🐑 to signify completed for day
+    completionsString = (completedForDay) ? @"🦁" : @"🐑";
+    
+    // add completion number
+    completionsString = [completionsString stringByAppendingString:[NSString stringWithFormat:@"%d", completions]];
+    
+    // add 🔥 to signify whether user is on a streak or not
+    if (streak) {
+        completionsString = [completionsString stringByAppendingString:[NSString stringWithFormat:@"🔥"]];
+    }
+    return completionsString;
 }
 
 #pragma mark - Helper methods
