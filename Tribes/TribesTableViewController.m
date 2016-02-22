@@ -172,6 +172,7 @@
         [currentUser completeActivityForTribe:tribe];
         [self makeItRainConfetti];
         [self updateProgressBar];
+        [self playSound:@"completion-sound" :@".mp3"];
 //        [self showAlertWithTitle:@"🔑🔑🔑" andMessage:@"+ 100xp"];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
