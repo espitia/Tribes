@@ -238,6 +238,11 @@
 
 #pragma mark - Helper methods
 
+/**
+ * - registers table view cell
+ * - adds pull to refresh control
+ * - adds notification to handle entered foreground
+ */
 -(void)setUp {
     // register table view cell
     [self.tableView registerClass:[MCSwipeTableViewCell class] forCellReuseIdentifier:@"TribeCell"];
