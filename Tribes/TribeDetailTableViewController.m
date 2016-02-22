@@ -25,7 +25,6 @@
     
     // right button to Add friends
     [self addRightButton];
-    [self addLeftButton];
     
     // add segment control for weekly or all-time completions
     [self addSegmentControl];
@@ -131,14 +130,6 @@
     [self.navigationItem setRightBarButtonItem:createTribeButton];
 }
 
--(void)addLeftButton {
-    UIBarButtonItem * closeTribeTabBar = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
-    [self.navigationItem setLeftBarButtonItem:closeTribeTabBar];
-}
-
--(void)close {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
 
 #pragma mark - Navigation
 
