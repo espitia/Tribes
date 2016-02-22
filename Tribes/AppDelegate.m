@@ -142,8 +142,8 @@
     
 }
 
--(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
-    NSLog(@"IDENTIFIER: %@", identifier);
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
+    
     User * currentUser = [User currentUser];
     NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
     __block NSString * message;
@@ -161,18 +161,16 @@
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
             message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
-//            User * userWhoReceivedApplause = (User *)object;
-//            [userWhoReceivedApplause addReceivedApplauseXp];
+            //            User * userWhoReceivedApplause = (User *)object;
+            //            [userWhoReceivedApplause addReceivedApplauseXp];
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
             message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"username"]];
         }
 
         [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
         completionHandler();
-
+        
     }];
-
-
 }
 #pragma mark - Util
 
