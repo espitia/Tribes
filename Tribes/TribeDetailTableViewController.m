@@ -91,16 +91,31 @@
 
     User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
     User * currentUser = [User currentUser];
-    
-    // if member already completed activity
-    if ([[member activityForTribe:_tribe] completedForDay]) {
+    Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
+
+    // if selected own member cell -> show settings
+    if (member == currentUser) {
+        
+        [self performSegueWithIdentifier:@"showSettings" sender:activity];
+        
+    } else if (activity.hibernation) {
+        
+        // let user know
+        NSString * message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
+        [self showAlertWithTitle:@"🐻🐻🐻" andMessage:message];
+        
+    } else if ([[member activityForTribe:_tribe] completedForDay]) {
         
         // let user know
         NSString * message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
         [self showAlertWithTitle:@"🖐🖐🖐" andMessage:message];
+    
+    } else if (activity.dueTime && [[NSDate date] compare:activity.dueTime] == NSOrderedAscending) {
+        // let user know
+        NSString * message = [NSString stringWithFormat:@"%@ said it will get done later!\n Give time and watch the\n grasshopper grow 🐛", member[@"username"]];
+        [self showAlertWithTitle:@"🕑🕑🕑" andMessage:message];
         
     } else {
-        
         // send push to tapped on member
         [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
             if (success) {
@@ -123,7 +138,8 @@
     streak = ([activity onStreak]) ? true : false;
     
     // add 🦁 or 🐑 to signify completed for day
-    completionsString = (completedForDay) ? @"🦁" : @"🐑";
+    NSString * lionOrSheep = (completedForDay) ? @"🦁" : @"🐑";
+    completionsString = [completionsString stringByAppendingString:lionOrSheep];
     
     // add completion number
     completionsString = [completionsString stringByAppendingString:[NSString stringWithFormat:@"%d", completions]];
