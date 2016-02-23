@@ -71,8 +71,16 @@
     NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
     cell.textLabel.text = titleLabel;
     
-    int completions = (weeklyCompletions) ? activity.weekCompletions : [activity[@"completions"] intValue];
-    NSString * completionsString = [self formatCompletionsStringForActivity:activity andCompletions:completions];
+    int completions;
+    NSString * completionsString;
+    
+    if (weeklyCompletions) {
+        completions = activity.weekCompletions;
+        completionsString = [self formatCompletionsStringForActivity:activity andCompletions:completions];
+    } else {
+        completions = [activity[@"completions"] intValue];
+        completionsString = [NSString stringWithFormat:@"%d", completions];
+    }
     
     cell.detailTextLabel.text = completionsString;
     
