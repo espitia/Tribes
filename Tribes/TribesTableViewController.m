@@ -281,6 +281,9 @@
 -(void)setAllActivitiesCompletedSignifier {
     self.navigationItem.title = @"🔥🦁 Tribes 🦁🔥";
 }
+-(void)removeAllActivitiesCompletedSignifier {
+    self.navigationItem.title = @"Tribes";
+}
 
 #pragma mark - Method to play sound
 
@@ -342,9 +345,11 @@
     float totalProgress = (completionProgress * completions) * .01 ;
     
     // // add signifier of a true 🦁 when all activities are complete
-    if (totalProgress == 1.0)
+    if (totalProgress == 1.0) {
         [self setAllActivitiesCompletedSignifier];
-    
+    } else {
+        [self removeAllActivitiesCompletedSignifier];
+    }
     // set progress 
     [progressBar setProgress:totalProgress animated:YES];
 }
