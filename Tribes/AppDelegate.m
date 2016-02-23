@@ -131,7 +131,7 @@
     // CATEGORY 1 (ACTION 1 AND ACTION 2)
     UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
-    [motivationReplyCategory setActions:@[notDoingItAction, acknowledgeAction] forContext:UIUserNotificationActionContextDefault];
+    [motivationReplyCategory setActions:@[textReplyAction, notDoingItAction] forContext:UIUserNotificationActionContextDefault];
 
     // CATEGORY 2 (ACTION 3)
     UIMutableUserNotificationCategory * completionReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
