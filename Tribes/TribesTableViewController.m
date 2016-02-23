@@ -17,6 +17,7 @@
 #import "KRConfettiView.h"
 #import "YLProgressBar.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "SCLAlertView.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
@@ -138,11 +139,14 @@
 
     [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
         
-        [self showAlertWithTitle:@"❌❌❌" andMessage:@"Are you sure you want to leave the Tribe?" andActionTitle:@"CONFIRM" andActionBlock:^{
+        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert addButton:@"CONFIRM" actionBlock:^(void) {
             [currentUser removeFromTribe:tribe];
             [self updateProgressBar];
             [self.tableView reloadData];
         }];
+        [alert showError:@"❌" subTitle:@"Are you sure you want to leave\nthe Tribe?" closeButtonTitle:@"NEVER MIND" duration:0.0];
+
     }];
 
 }
@@ -303,49 +307,6 @@
     }];
 }
 
-#pragma mark - Alerts
-
--(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message andActionTitle:(NSString*)actionTitle andActionBlock:(void (^)(void))block {
-    
-    // weak self to not have any issues to present alert view
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    // alert controller
-    UIAlertController * __block alert;
-    UIAlertAction * __block defaultAction;
-    UIAlertAction * __block secondAction;
-    
-    // message to go in alert view
-    NSString * __block alertTitle = title;
-    NSString * __block alertMessage = message;
-    
-    defaultAction = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleDefault
-                                           handler:^(UIAlertAction * action) {
-                                               
-                                           }];
-
-    
-    // finish alert set up
-    alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                message:alertMessage
-                                         preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    // add action (if success, pop to tribe VC)
-    [alert addAction:defaultAction];
-    
-    if (actionTitle && block) {
-        secondAction = [UIAlertAction actionWithTitle:actionTitle style:UIAlertActionStyleDefault
-                                              handler:^(UIAlertAction * action) {
-                                                  block();
-                                              }];
-        [alert addAction:secondAction];
-        
-    }
-    
-    // present alert
-    [weakSelf presentViewController:alert animated:YES completion:nil];
-}
 
 #pragma mark - Progress Bar
 
