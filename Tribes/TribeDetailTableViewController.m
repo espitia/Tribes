@@ -99,12 +99,17 @@
         return;
     }
 
+    // init necessary variables
     User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
     User * currentUser = [User currentUser];
     Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
+    // init alert vars
     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
     NSString * message;
+
+    // init date to compare if (now) is before due time; if !dueTime -> set to nil
+    NSDate * dueDateTimeOnly = (activity.dueTime) ? [self removeDayMonthAndYearFrom:activity.dueTime] : nil;
     
     // if selected own member cell -> show settings
     if (member == currentUser) {
@@ -124,11 +129,11 @@
         [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
 
     
-    } else if (activity.dueTime && [[NSDate date] compare:activity.dueTime] == NSOrderedAscending) {
+    } else if (activity.dueTime && [[NSDate date] compare:dueDateTimeOnly] == NSOrderedAscending) {
+        
         // let user know
         message = [NSString stringWithFormat:@"%@ said it will get done later!\n Give time and watch the\n grasshopper grow 🐛", member[@"username"]];
         [alert showInfo:@"🕑" subTitle:message closeButtonTitle:@"OK" duration:0.0];
-
         
     } else {
         // send push to tapped on member
@@ -193,6 +198,22 @@
 -(void)addRightButton {
     UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friends" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
     [self.navigationItem setRightBarButtonItem:createTribeButton];
+}
+
+-(NSDate *)removeDayMonthAndYearFrom:(NSDate *)date {
+    
+    unsigned int flags = NSCalendarUnitHour | NSCalendarUnitMinute;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components = [calendar components:flags fromDate:date];
+    
+    NSDate * now = [NSDate date];
+    NSDateComponents * compsForToday = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:now];
+    components.year = compsForToday.year;
+    components.month = compsForToday.month;
+    components.day = compsForToday.day;
+    
+    NSDate* dueDateTimeOnly = [calendar dateFromComponents:components];
+    return dueDateTimeOnly;
 }
 
 
