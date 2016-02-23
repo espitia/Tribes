@@ -10,6 +10,8 @@
 #import "AddFriendsTableViewController.h"
 #import "User.h"
 #import "SettingsTableViewController.h"
+#import "SCLAlertView.h"
+
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
@@ -93,6 +95,9 @@
     User * currentUser = [User currentUser];
     Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    NSString * message;
+    
     // if selected own member cell -> show settings
     if (member == currentUser) {
         
@@ -101,25 +106,28 @@
     } else if (activity.hibernation) {
         
         // let user know
-        NSString * message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
-        [self showAlertWithTitle:@"🐻🐻🐻" andMessage:message];
+        message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
+        [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
         
     } else if ([[member activityForTribe:_tribe] completedForDay]) {
         
         // let user know
-        NSString * message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
-        [self showAlertWithTitle:@"🖐🖐🖐" andMessage:message];
+        message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
+        [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+
     
     } else if (activity.dueTime && [[NSDate date] compare:activity.dueTime] == NSOrderedAscending) {
         // let user know
-        NSString * message = [NSString stringWithFormat:@"%@ said it will get done later!\n Give time and watch the\n grasshopper grow 🐛", member[@"username"]];
-        [self showAlertWithTitle:@"🕑🕑🕑" andMessage:message];
+        message = [NSString stringWithFormat:@"%@ said it will get done later!\n Give time and watch the\n grasshopper grow 🐛", member[@"username"]];
+        [alert showInfo:@"🕑" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+
         
     } else {
         // send push to tapped on member
         [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
             if (success) {
-                [self showAlertWithTitle:@"✅✅✅" andMessage:@"Successfully sent motivation.\n Liooon! 🦁"];
+                NSString * message = @"Successfully sent motivation.\n Liooon! 🦁";
+                [alert showSuccess:@"📲" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             }
         }];
     }
@@ -191,37 +199,6 @@
     }
 }
 
-
--(void)showAlertWithTitle:(NSString *)title andMessage:(NSString *)message {
-    
-    // weak self to not have any issues to present alert view
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    // alert controller
-    UIAlertController * __block alert;
-    UIAlertAction * __block defaultAction;
-    
-    // message to go in alert view
-    NSString * __block alertTitle = title;
-    NSString * __block alertMessage = message;
-    
-    defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                           handler:^(UIAlertAction * action) {
-                                               
-                                           }];
-
-    // finish alert set up
-    alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                message:alertMessage
-                                         preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    // add action (if success, pop to tribe VC)
-    [alert addAction:defaultAction];
-    
-    // present alert
-    [weakSelf presentViewController:alert animated:YES completion:nil];
-}
 
 #pragma mark - Segement control
 
