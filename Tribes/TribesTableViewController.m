@@ -332,14 +332,15 @@
     
     float numberOfTribes = (float)currentUser.tribes.count;
     float completionProgress = 100.0/numberOfTribes;
-    float completions;
+    float completions = 0;
     for (Activity * activity in currentUser.activities) {
         if ([activity completedForDay]) {
             completions++;
         }
     }
-    float totalProgress = (completionProgress * completions) * .01 ;
 
+    float totalProgress = (completionProgress * completions) * .01 ;
+    
     // // add signifier of a true 🦁 when all activities are complete
     if (totalProgress == 1.0)
         [self setAllActivitiesCompletedSignifier];
