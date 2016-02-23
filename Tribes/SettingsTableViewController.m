@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Settings 🔧";
-    editingDueTime = _activity.dueTime;
+    editingDueTime = (_activity.dueTime) ? true : false;
 }
 
 
