@@ -126,8 +126,10 @@
         // send push to tapped on member
         [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
             if (success) {
-                NSString * message = @"Successfully sent motivation.\n Liooon! 🦁";
+                NSString * message = @"Successfully sent motivation 🔑\n Liooon! 🦁";
                 [alert showSuccess:@"📲" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+            } else {
+                [alert showError:@"❌" subTitle:@"Seems like there was a problem sending the motivation 😔 Try again!" closeButtonTitle:@"OK" duration:0.0];
             }
         }];
     }
