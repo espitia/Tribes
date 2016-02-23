@@ -7,6 +7,7 @@
 //
 
 #import "SettingsTableViewController.h"
+#import "SCLAlertView.h"
 
 @interface SettingsTableViewController () {
     BOOL editingDueTime;
@@ -68,6 +69,22 @@
     
     // deselect cell
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    // show alert explainers
+    
+    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
+    
+    switch (indexPath.row) {
+        case 0:
+            [alert showInfo:@"🐻 Hibernation" subTitle:@"When you hibernate, you are taking a rest for the day. Other Tribe members won't send you motivation so you can relax 😎" closeButtonTitle:@"OK" duration:0.0];
+            break;
+        case 1:
+            [alert showInfo:@"🕐 Due Time" subTitle:@"Setting a due time for your tribe tells other tribe members that you will do your activity after said time. Until then, you won't receive any motivation." closeButtonTitle:@"OK" duration:0.0];            break;
+            
+        default:
+            break;
+    }
     
     
 }
