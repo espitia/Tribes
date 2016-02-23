@@ -34,28 +34,31 @@
     [super viewDidLoad];
 
     // set currentUser
-    currentUser = [User currentUser];
-    
-    // set up
-    [self setUp];
-    
-    //  log in / sign up user if non-existent
-    if (!currentUser) {
-        [self signUp];
-    } else {
-        
-        self.navigationItem.title = @"Loading Tribes..";
-        
-        [currentUser loadTribesWithBlock:^{
-            //            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
-            self.navigationItem.title = @"Tribes";
-            [self.tableView reloadData];
-
-            // add and update progress bar
-            [self addProgressBar];
-        }];
-    }
-
+    [[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        currentUser = (User *)object;
+        //  log in / sign up user if non-existent
+        if (!currentUser) {
+            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+            NSString * msg = [NSString stringWithFormat:@"%@", currentUser];
+            [alert showError:@"Error msg" subTitle:msg closeButtonTitle:@"OK" duration:0.0];
+            [self signUp];
+        } else {
+            
+            //set up
+            [self setUp];
+            
+            self.navigationItem.title = @"Loading Tribes..";
+            
+            [currentUser loadTribesWithBlock:^{
+                //            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
+                self.navigationItem.title = @"Tribes";
+                [self.tableView reloadData];
+                
+                // add and update progress bar
+                [self addProgressBar];
+            }];
+        }
+    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
