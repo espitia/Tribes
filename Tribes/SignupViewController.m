@@ -60,7 +60,7 @@
     validation = [[SignUpValidation alloc] init];
 }
 -(void)viewDidAppear:(BOOL)animated {
-    [username becomeFirstResponder];
+    [email becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
