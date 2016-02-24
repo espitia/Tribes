@@ -9,11 +9,21 @@
 #import "SignupViewController.h"
 #import <DigitsKit/DigitsKit.h>
 #import "Parse.h"
+#import "SCLAlertView.h"
+#import "SignUpValidation.h"
 
 @interface SignupViewController () {
     IBOutlet UITextField *username;
     IBOutlet UITextField *password;
-    IBOutlet UITextField *confirmPassword;
+    IBOutlet UITextField *email;
+    UIButton * signUpButton;
+    NSString * completeUsername;
+    BOOL usernameValid;
+    BOOL emailValid;
+    BOOL passwordValid;
+    BOOL buttonShowing;
+    SignUpValidation * validation;
+    CGRect keyboardFrame;
 }
 
 @end
@@ -23,9 +33,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden = false;
+    self.navigationItem.title = @"Sign Up";
+    
     password.secureTextEntry = TRUE;
-    confirmPassword.secureTextEntry = TRUE;
-
+    
+    email.rightViewMode = UITextFieldViewModeAlways;
+    username.rightViewMode = UITextFieldViewModeAlways;
+    password.rightViewMode = UITextFieldViewModeAlways;
+    
+    email.rightView.userInteractionEnabled = true;
+    username.rightView.userInteractionEnabled = true;
+    password.rightView.userInteractionEnabled = true;
+    
+    // add notifier for when app comes into foreground
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    
+    //add sign up button
+    signUpButton = [[UIButton alloc] init];
+    signUpButton.backgroundColor = [UIColor orangeColor];
+    [signUpButton setTitle:@"Sign up" forState:UIControlStateNormal];
+    [signUpButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [signUpButton addTarget:self action:@selector(signUpUser) forControlEvents:UIControlEventTouchUpInside];
+//    signUpButton.hidden = true;
+    
+    validation = [[SignUpValidation alloc] init];
 }
 -(void)viewDidAppear:(BOOL)animated {
     [username becomeFirstResponder];
