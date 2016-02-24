@@ -178,48 +178,140 @@
 
 #pragma mark - Sign Up User
 
-- (IBAction)signUp:(id)sender {
+- (void)signUpUser {
     
-//    if ([self isUsernameValid:username.text] && [self isValidPassword:password.text] && [self isValidPassword:confirmPassword.text]) {
-        if (true) {
-        
-        [self performSegueWithIdentifier:@"PhoneVerification" sender:nil];
+    if (usernameValid && emailValid && passwordValid) {
         
         // sign up with phonenumber (digits by twitter Fabrics)
-//        [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
-//            
-//            if (!error) {
-//                
-//                // sign up anonymously (no user/pass w/ parse and add digits user id to parse user object
-//                [PFAnonymousUtils logInWithBlock:^(PFUser *user, NSError *error) {
-//                    
-//                    if (error) {
-//                        // handle error
-//                        NSLog(@"error signing up with Parse");
-//                    } else {
-//                        
-//                        // save installation for pushes
-//                        PFInstallation *installation = [PFInstallation currentInstallation];
-//                        installation[@"user"] = [PFUser currentUser];
-//                        [installation saveInBackground];
-//                        
-//                        // add id to digits account to parse user object
-//                        user[@"digitsUserId"] = session.userID;
-//                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-//                            if (error) {
-//                                // handle error
-//                                NSLog(@"error saving digits user id to parse user object");
-//                            } else {
-//                                [self dismissViewControllerAnimated:true completion:nil];
-//                            }
-//                        }];
-//                    }
-//                }];
-//            }
-//        }];
+        [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
+            
+            if (!error) {
+                
+                PFUser * user = [PFUser user];
+                user.username = username.text;
+                user.password = password.text;
+                user.email = email.text;
+                
+                [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                    if (error) {
+                        
+                        //handle error
+                        NSLog(@"error signing up with Parse");
+                        
+                    } else {
+                        
+                        // save installation for pushes
+                        PFInstallation *installation = [PFInstallation currentInstallation];
+                        installation[@"user"] = [PFUser currentUser];
+                        [installation saveInBackground];
+                        
+                        // add id to digits account to parse user object
+                        user[@"digitsUserId"] = session.userID;
+                        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                            if (error) {
+                                // handle error
+                                NSLog(@"error saving digits user id to parse user object");
+                            } else {
+                                [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
+                                    NSLog(@"we ouchea");
+                                }];
+                            }
+                        }];
+
+                    }
+                }];
+            }
+        }];
+    } else {
+        if (!emailValid) {
+            [self showEmailErrorMessage];
+        } else if (!usernameValid) {
+            [self showUsernameErrorMessage];
+        } else if (!passwordValid) {
+            [self showPasswordErrorMessage];
+        }
     }
-    
 
 }
 
+#pragma mark - Error messages
+
+-(void)showEmailErrorMessage {
+
+    [self.view endEditing:true];
+
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:@"OK" actionBlock:^{
+        [email becomeFirstResponder];
+    }];
+    [alert showError:@"Email ❌" subTitle:@"Seems like there is something wrong with your email. Try again! 🙃" closeButtonTitle:nil duration:0.0];
+}
+-(void)showUsernameErrorMessage {
+    
+    [self.view endEditing:true];
+
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:@"OK" actionBlock:^{
+        [username becomeFirstResponder];
+    }];
+    [alert showError:@"Username ❌" subTitle:@"Seems like your username is already taken. Try again! 🙃" closeButtonTitle:nil duration:0.0];
+}
+-(void)showPasswordErrorMessage {
+
+    [self resignFirstResponder];
+
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:@"OK" actionBlock:^{
+        [password becomeFirstResponder];
+    }];
+    [alert showError:@"Password ❌" subTitle:@"Seems like your password is invalid. Make sure it is at least 8 characters long and include 1 letter and 1 number! 🙃" closeButtonTitle:nil duration:0.0];
+}
+
+#pragma mark - Notifications
+
+-(void)keyboardDidShow:(id)sender {
+    NSDictionary * userInfo = [sender userInfo];
+    keyboardFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+}
+
+#pragma mark - Sign Up Button
+
+-(void)slideInSignUpButton {
+
+    if (!buttonShowing) {
+        buttonShowing = true;
+        [signUpButton setFrame:CGRectMake(-self.view.frame.size.width, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            [signUpButton setFrame:CGRectMake(0, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
+            [self.view addSubview:signUpButton];
+        }];
+    }
+
+}
+
+-(void)slideOutSignUpButton {
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        buttonShowing = false;
+        [signUpButton setFrame:CGRectMake(-self.view.frame.size.width, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
+    }];
+    
+}
+
+#pragma mark - Util
+-(void)isReadyToSignUp {
+    if (emailValid && usernameValid && passwordValid) {
+        // show sign up button
+        [self slideInSignUpButton];
+    } else {
+        [self slideOutSignUpButton];
+    }
+}
+
+-(void)setSignifierForTextField:(UITextField *)textField withImage:(UIImage *)image {
+    UIImageView * imgView = [[UIImageView alloc] initWithImage:image];
+    imgView.userInteractionEnabled = true;
+    textField.rightView = imgView;
+}
 @end
