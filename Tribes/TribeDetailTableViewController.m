@@ -110,9 +110,6 @@
     // init alert vars
     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
     NSString * message;
-
-    // init date to compare if (now) is before due time; if !dueTime -> set to nil
-    NSDate * dueDateTimeOnly = (activity.dueTime) ? [self removeDayMonthAndYearFrom:activity.dueTime] : nil;
     
     // if selected own member cell -> show settings
     if (member == currentUser) {
@@ -132,12 +129,6 @@
         [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
 
     
-    } else if (activity.dueTime && [[NSDate date] compare:dueDateTimeOnly] == NSOrderedAscending) {
-        
-        // let user know
-        message = [NSString stringWithFormat:@"%@ said it will get done later!\n Give time and watch the\n grasshopper grow 🐛", member[@"username"]];
-        [alert showInfo:@"🕑" subTitle:message closeButtonTitle:@"OK" duration:0.0];
-        
     } else {
         // send push to tapped on member
         [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
@@ -162,20 +153,10 @@
     NSString * completionsString;
     BOOL streak;
     BOOL completedForDay;
-    BOOL dueTime;
     
     completedForDay = ([activity completedForDay]) ? true : false;
     streak = ([activity onStreak]) ? true : false;
-    dueTime = ([activity dueTime] ? true : false);
-    
-    // add 🕑
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"h:mm a"];
-    [formatter setTimeZone:[NSTimeZone localTimeZone]];
-    NSString * stringFromDate = [formatter stringFromDate:activity.dueTime];
-    NSString * dueTimeString = [NSString stringWithFormat:@"🕑%@ ", stringFromDate];
-    completionsString = (dueTime) ? dueTimeString : @"";
-    
+        
     // add 🦁 or 🐑 to signify completed for day
     NSString * lionOrSheep = (completedForDay) ? @"🦁" : @"🐑";
     completionsString = [completionsString stringByAppendingString:lionOrSheep];
@@ -190,6 +171,36 @@
     return completionsString;
 }
 
+-(NSString *)addStreakSignifierWithCompletionsToCompletionString:(NSString *)completionString withCompletions:(int)completions {
+    
+    NSString * signifier;
+    
+    switch (completions) {
+        case 1:
+        case 2:
+            signifier = @"🕯";
+            break;
+        case 3:
+        case 4:
+            signifier = @"🔥";
+            break;
+        case 5:
+        case 6:
+            signifier = @"🚀";
+            break;
+        case 7:
+            signifier = @"🏆";
+            break;
+            
+        default:
+            signifier = @"";
+            break;
+    }
+    
+    NSString * completedString = [completionString stringByAppendingString:signifier];
+    return completedString;
+}
+
 #pragma mark - Helper methods
 
 -(void)addFriends {
@@ -201,22 +212,6 @@
 -(void)addRightButton {
     UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friends" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
     [self.navigationItem setRightBarButtonItem:createTribeButton];
-}
-
--(NSDate *)removeDayMonthAndYearFrom:(NSDate *)date {
-    
-    unsigned int flags = NSCalendarUnitHour | NSCalendarUnitMinute;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDateComponents* components = [calendar components:flags fromDate:date];
-    
-    NSDate * now = [NSDate date];
-    NSDateComponents * compsForToday = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:now];
-    components.year = compsForToday.year;
-    components.month = compsForToday.month;
-    components.day = compsForToday.day;
-    
-    NSDate* dueDateTimeOnly = [calendar dateFromComponents:components];
-    return dueDateTimeOnly;
 }
 
 
