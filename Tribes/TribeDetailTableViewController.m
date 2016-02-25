@@ -55,10 +55,6 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     
-    // reset motivation control
-    motivationPushControl = 0;
-    firstPush = true;
-    
     // reload table
     [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
         [self.tableView reloadData];
