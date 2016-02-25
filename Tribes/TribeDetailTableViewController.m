@@ -294,6 +294,23 @@
 }
 
 
+-(UIImage *)imageFromText:(NSString *)text
+{
+    UIFont *font = [UIFont systemFontOfSize:20.0];
+    CGSize size = [text sizeWithAttributes:
+                   @{NSFontAttributeName:
+                         [UIFont systemFontOfSize:20.0f]}];
+    if (&UIGraphicsBeginImageContextWithOptions != NULL) {
+        UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
+    }
+    [text drawAtPoint:CGPointMake(0.0, 0.0) withAttributes:[NSDictionary dictionaryWithObject:font
+                                                                                       forKey:NSFontAttributeName]];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 #pragma mark - Navigation
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
