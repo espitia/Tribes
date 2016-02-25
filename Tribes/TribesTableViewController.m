@@ -319,10 +319,12 @@
 -(void)addProgressBar {
     
     // set up progr
-    progressBar = [[YLProgressBar alloc] initWithFrame:CGRectMake(0,0,self.tableView.frame.size.width,5)];
+    progressBar = [[YLProgressBar alloc] initWithFrame:CGRectMake(0,0,self.tableView.frame.size.width,10)];
     progressBar.type                = YLProgressBarTypeFlat;
     progressBar.trackTintColor      = [UIColor clearColor];
-    progressBar.progressTintColor   = [UIColor greenColor];
+    progressBar.progressTintColor   = [UIColor colorWithRed:105.0/255.0 green:203.0/255.0 blue:149.0/255.0 alpha:1.0];
+    progressBar.trackTintColor      = [UIColor lightGrayColor];
+    progressBar.indicatorTextLabel.text  = @"";
     progressBar.hideGloss           = YES;
     progressBar.hideStripes         = YES;
     progressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
