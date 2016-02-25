@@ -131,12 +131,12 @@
     // CATEGORY 1 (ACTION 1 AND ACTION 2)
     UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
-    [motivationReplyCategory setActions:@[textReplyAction, notDoingItAction] forContext:UIUserNotificationActionContextDefault];
+    [motivationReplyCategory setActions:@[notDoingItAction, acknowledgeAction] forContext:UIUserNotificationActionContextDefault];
 
     // CATEGORY 2 (ACTION 3)
     UIMutableUserNotificationCategory * completionReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     completionReplyCategory.identifier = @"COMPLETION_REPLY";
-    [completionReplyCategory setActions:@[textReplyAction, applaudAction] forContext:UIUserNotificationActionContextDefault];
+    [completionReplyCategory setActions:@[applaudAction] forContext:UIUserNotificationActionContextDefault];
     
     // CATEGORY 3 (ACTION 5)
     UIMutableUserNotificationCategory * watchingYouReplyCategory = [[UIMutableUserNotificationCategory alloc] init];

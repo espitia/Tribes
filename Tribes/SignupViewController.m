@@ -197,7 +197,9 @@
                                 NSLog(@"error saving digits user id to parse user object");
                             } else {
                                 [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
-                                    NSLog(@"we ouchea");
+                                    [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                        
+                                    }];
                                 }];
                             }
                         }];

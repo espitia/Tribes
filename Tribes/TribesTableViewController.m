@@ -34,31 +34,29 @@
     [super viewDidLoad];
 
     // set currentUser
-    [[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        currentUser = (User *)object;
-        //  log in / sign up user if non-existent
-        if (!currentUser) {
-            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-            NSString * msg = [NSString stringWithFormat:@"%@", currentUser];
-            [alert showError:@"Error msg" subTitle:msg closeButtonTitle:@"OK" duration:0.0];
-            [self signUp];
-        } else {
+    currentUser = [User currentUser];
+    
+//    [self signUp];
+
+    //  log in / sign up user if non-existent
+    if (!currentUser) {
+        [self signUp];
+    } else {
+        
+        //set up
+        [self setUp];
+        
+        self.navigationItem.title = @"Loading Tribes..";
+        
+        [currentUser loadTribesWithBlock:^{
+            //            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
+            self.navigationItem.title = @"Tribes";
+            [self.tableView reloadData];
             
-            //set up
-            [self setUp];
-            
-            self.navigationItem.title = @"Loading Tribes..";
-            
-            [currentUser loadTribesWithBlock:^{
-                //            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
-                self.navigationItem.title = @"Tribes";
-                [self.tableView reloadData];
-                
-                // add and update progress bar
-                [self addProgressBar];
-            }];
-        }
-    }];
+            // add and update progress bar
+            [self addProgressBar];
+        }];
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -214,8 +212,10 @@
 -(void)signUp {
 
 //    [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
-    SignupViewController * signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
-    [self.navigationController presentViewController:signupVC animated:false completion:nil];
+//    SignupViewController * signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
+//    [self.navigationController presentViewController:signupVC animated:false completion:nil];
+    UINavigationController * SignUpLoginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpLoginViewController"];
+    [self.navigationController presentViewController:SignUpLoginViewController animated:YES completion:nil];
 }
 
 #pragma mark - Segue handling

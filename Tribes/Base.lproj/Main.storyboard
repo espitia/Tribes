@@ -226,7 +226,6 @@
         <!--Navigation Controller-->
         <scene sceneID="xnw-GA-vlw">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YSV-2F-rih" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="SignUpLoginViewController" id="Eg1-55-IzA" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hyk-d1-9eh">
@@ -237,6 +236,7 @@
                         <segue destination="9jy-fd-g2l" kind="relationship" relationship="rootViewController" id="bYF-YN-ZkV"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YSV-2F-rih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="11.5" y="797.5"/>
         </scene>
