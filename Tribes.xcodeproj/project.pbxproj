@@ -22,6 +22,7 @@
 		0993B5181C5537940008B7E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5171C5537940008B7E5 /* Activity.m */; };
 		099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */; };
 		099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760551C7E1E8B008E88A7 /* SignUpValidation.m */; };
+		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
 		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
@@ -86,6 +87,8 @@
 		099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpOrLoginViewController.m; sourceTree = "<group>"; };
 		099760541C7E1E8B008E88A7 /* SignUpValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpValidation.h; sourceTree = "<group>"; };
 		099760551C7E1E8B008E88A7 /* SignUpValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpValidation.m; sourceTree = "<group>"; };
+		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
+		09BDD94E1C7E929000061567 /* HYBubbleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBubbleButton.m; sourceTree = "<group>"; };
 		09C6584F1C469FEA008C4EC3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		09C658501C469FEA008C4EC3 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeDetailTableViewController.h; sourceTree = "<group>"; };
@@ -219,6 +222,7 @@
 			children = (
 				09688B221C768C2D001B7752 /* KRConfettiView.h */,
 				09688B231C768C2D001B7752 /* KRConfettiView.m */,
+				09BDD94C1C7E929000061567 /* HYBubbleButton */,
 			);
 			name = "Extra functionality";
 			sourceTree = "<group>";
@@ -259,6 +263,15 @@
 				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
 			);
 			name = "Create a Tribe";
+			sourceTree = "<group>";
+		};
+		09BDD94C1C7E929000061567 /* HYBubbleButton */ = {
+			isa = PBXGroup;
+			children = (
+				09BDD94D1C7E929000061567 /* HYBubbleButton.h */,
+				09BDD94E1C7E929000061567 /* HYBubbleButton.m */,
+			);
+			path = HYBubbleButton;
 			sourceTree = "<group>";
 		};
 		09C658521C46CD6B008C4EC3 /* Signup/onboard */ = {
@@ -541,6 +554,7 @@
 				09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */,
 				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
+				09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */,
 				0993B5181C5537940008B7E5 /* Activity.m in Sources */,
 				099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */,
 				09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */,
