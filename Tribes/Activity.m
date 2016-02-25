@@ -14,9 +14,7 @@
 
 @dynamic completionDates;
 @dynamic hibernation;
-@dynamic dueTime;
 @dynamic weekCompletions;
-@dynamic onStreak;
 
 #pragma mark - Parse required methods
 
@@ -55,45 +53,6 @@
 
     return counter;
 }
-
--(BOOL)onStreak {
-
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    [cal setFirstWeekday:2];
-    NSDate *today = [NSDate date];
-    NSDate *startOfTheWeek;
-    NSTimeInterval interval;
-    [cal rangeOfUnit:NSCalendarUnitWeekOfYear
-           startDate:&startOfTheWeek
-            interval:&interval
-             forDate:today];
-    
-    int daysBetweenStartOfWeekAndToday = 0;
-    NSDate * referenceDateToUse;
-    
-    // if the date where the activity was created is earlier than the start of the week, use that as reference date to give new tribe members a change at a streak
-    referenceDateToUse = ([self.createdAt timeIntervalSinceDate:startOfTheWeek] > 0) ? self.createdAt : startOfTheWeek;
-    
-    // get dates to count from reference date to yesterday
-    daysBetweenStartOfWeekAndToday = (int)[self daysBetweenDate:referenceDateToUse andDate:today];
-    daysBetweenStartOfWeekAndToday++; // add 1 to include today
-    
-    // check that activity has a completion for each day from reference date (e.g. start of week until yest) to validate streak
-    for (int i = 0; i < daysBetweenStartOfWeekAndToday;) {
-        for (NSDate * date in self.completionDates) {
-            // if date was complete, goes to check next day until we hit yesterday (by adding 1 day at a time)
-            if ([cal isDate:date inSameDayAsDate:[NSDate dateWithTimeInterval:(86400.0 * i) sinceDate:referenceDateToUse]]) {
-                i++;
-                if (i == daysBetweenStartOfWeekAndToday) {
-                    return true;
-                } 
-            }
-        }
-        return false;
-    }
-    return false;
-}
-
 
 #pragma mark - Action methods
 

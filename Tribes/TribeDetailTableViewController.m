@@ -150,24 +150,18 @@
     if (activity.hibernation)
         return @"🐻";
     
-    NSString * completionsString;
-    BOOL streak;
-    BOOL completedForDay;
-    
-    completedForDay = ([activity completedForDay]) ? true : false;
-    streak = ([activity onStreak]) ? true : false;
-        
+    NSString * completionsString = @"";
+    BOOL completedForDay = ([activity completedForDay]) ? true : false;
+
     // add 🦁 or 🐑 to signify completed for day
-    NSString * lionOrSheep = (completedForDay) ? @"🦁" : @"🐑";
-    completionsString = [completionsString stringByAppendingString:lionOrSheep];
+    completionsString = (completedForDay) ? @"🦁" : @"🐑";
     
     // add completion number
     completionsString = [completionsString stringByAppendingString:[NSString stringWithFormat:@"%d", completions]];
     
-    // add 🔥 to signify whether user is on a streak or not
-    if (streak) {
-        completionsString = [completionsString stringByAppendingString:[NSString stringWithFormat:@"🔥"]];
-    }
+    // add completions signifier 🕯,🔥,🚀,🏆
+    completionsString = [self addStreakSignifierWithCompletionsToCompletionString:completionsString withCompletions:completions];
+
     return completionsString;
 }
 
