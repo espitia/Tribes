@@ -11,12 +11,18 @@
 #import "User.h"
 #import "SettingsTableViewController.h"
 #import "SCLAlertView.h"
+#import "HYBubbleButton.h"
 
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
     BOOL weeklyCompletions;
     UIRefreshControl * refreshControl;
+    // ** motivation pushes vars **//
+    HYBubbleButton * bubbleGenerator;
+    int motivationPushControl;
+    BOOL firstPush;
+    User * currentUserBeingSentMotivation;
 }
 
 @end
@@ -37,9 +43,23 @@
     
     // set title
     self.navigationItem.title = _tribe[@"name"];
+
+    // tap to handle cell selection (motivation, hibernation, settings, etc)
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
+    [self.tableView addGestureRecognizer:tap];
+    
+    // first push
+    firstPush = true;
+
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+    
+    // reset motivation control
+    motivationPushControl = 0;
+    firstPush = true;
+    
+    // reload table
     [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
         [self.tableView reloadData];
     }];
@@ -95,53 +115,118 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // deselect cell
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (![_tribe membersAndActivitesAreLoaded]) {
-        // alert user that member and activites are not loaded
-        return;
-    }
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    // init necessary variables
-    User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
-    User * currentUser = [User currentUser];
-    Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
 
-    // init alert vars
-    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-    NSString * message;
-    
-    // if selected own member cell -> show settings
-    if (member == currentUser) {
-        
-        [self performSegueWithIdentifier:@"showSettings" sender:activity];
-        
-    } else if (activity.hibernation) {
-        
-        // let user know
-        message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
-        [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
-        
-    } else if ([[member activityForTribe:_tribe] completedForDay]) {
-        
-        // let user know
-        message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
-        [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+}
 
-    
-    } else {
-        // send push to tapped on member
-        [currentUser sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
-            if (success) {
-                NSString * message = @"Successfully sent motivation 🔑\n Liooon! 🦁";
-                [alert showSuccess:@"📲" subTitle:message closeButtonTitle:@"OK" duration:0.0];
-            } else {
-                [alert showError:@"❌" subTitle:@"Seems like there was a problem sending the motivation 😔 Try again!" closeButtonTitle:@"OK" duration:0.0];
-            }
-        }];
+#pragma mark - Touches on cell
+
+- (void)tableTapped:(UITapGestureRecognizer *)tap
+{
+    CGPoint location = [tap locationInView:self.tableView];
+    NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint:location];
+    [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
+
+    if (indexPath) {
+
+        
+        if (![_tribe membersAndActivitesAreLoaded]) {
+            // alert user that member and activites are not loaded
+            return;
+        }
+        
+        // init necessary variables
+        User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
+        User * currentUser = [User currentUser];
+        Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
+        
+        // init alert vars
+        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+        NSString * message;
+        
+        // if selected own member cell -> show settings
+        if (member == currentUser) {
+            
+            [self performSegueWithIdentifier:@"showSettings" sender:activity];
+            
+        } else if (activity.hibernation) {
+            
+            // let user know
+            message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
+            [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+            
+        } else if ([[member activityForTribe:_tribe] completedForDay]) {
+            
+            // let user know
+            message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
+            [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+            
+            
+        } else {
+            [self showBubbleEffectAndSendPushWithLocation:location toUser:member];
+        }
     }
 
 }
+
+-(void)showBubbleEffectAndSendPushWithLocation:(CGPoint)location toUser:(User *)member {
+    
+    // makes sure that if user switches user being sent motivation, we reset (1st and 7th push does send)
+    if (!currentUserBeingSentMotivation || currentUserBeingSentMotivation != member) {
+        currentUserBeingSentMotivation = member;
+        motivationPushControl = 0;
+        firstPush = true;
+    }
+    
+    // initialize bubble generator
+    bubbleGenerator = [[HYBubbleButton alloc] initWithFrame:CGRectMake(location.x, location.y, 0, 0) maxLeft:150 maxRight:150 maxHeight:300];
+    bubbleGenerator.backgroundColor = [UIColor clearColor];
+    bubbleGenerator.maxLeft = 300;
+    bubbleGenerator.maxRight = 300;
+    bubbleGenerator.maxHeight = 600;
+    bubbleGenerator.duration = 8;
+    [self.view addSubview:bubbleGenerator];
+    
+    int TAPS_TO_SEND_PUSH = 6;
+    
+    
+    // send push if first or re-starting round
+    if ((motivationPushControl == 0 && firstPush) || motivationPushControl == TAPS_TO_SEND_PUSH) {
+        
+        // send push with lion
+        UIImage * lion = [self imageFromText:@"🦁"];
+        bubbleGenerator.images = @[lion];
+        
+        [[User currentUser] sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
+            if (success) {
+                
+            } else {
+                SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                [alert showError:@"❌" subTitle:@"Seems like there was a problem sending the motivation 😔 Try again!" closeButtonTitle:@"OK" duration:0.0];
+            }
+        }];
+        
+        if (motivationPushControl == TAPS_TO_SEND_PUSH) {
+            motivationPushControl = 0;
+            firstPush = false;
+        } else {
+            motivationPushControl++;
+        }
+        
+    } else {
+        // send stars
+        UIImage * key = [self imageFromText:@"⭐️"];
+        bubbleGenerator.images = @[key];
+        motivationPushControl++;
+    }
+
+    [bubbleGenerator generateBubbleInRandom];
+    
+}
+
+
 
 #pragma mark - Format completion string
 
