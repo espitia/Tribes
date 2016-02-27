@@ -98,7 +98,7 @@
     // ACTION 2
     UIMutableUserNotificationAction * notDoingItAction = [[UIMutableUserNotificationAction alloc] init];
     notDoingItAction.identifier = @"NOT_DOING_IT";
-    notDoingItAction.title = @"🖕";
+    notDoingItAction.title = @"🖐";
     notDoingItAction.activationMode = UIUserNotificationActivationModeBackground;
     notDoingItAction.destructive = NO;
     notDoingItAction.authenticationRequired = NO;
@@ -179,7 +179,7 @@
             category = @"WATCHING_YOU_REPLY";
             
         } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
-            message = [NSString stringWithFormat:@"%@: 🖕", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: 🖐", currentUser[@"username"]];
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
             message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
