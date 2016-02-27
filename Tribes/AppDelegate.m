@@ -128,6 +128,14 @@
     watchingYouAction.destructive = NO;
     watchingYouAction.authenticationRequired = NO;
     
+    // ACTION 6
+    UIMutableUserNotificationAction * thankYouForApplauseAction = [[UIMutableUserNotificationAction alloc] init];
+    thankYouForApplauseAction.identifier = @"THANK_YOU_FOR_APPLAUSE";
+    thankYouForApplauseAction.title = @"✊";
+    thankYouForApplauseAction.activationMode = UIUserNotificationActivationModeBackground;
+    thankYouForApplauseAction.destructive = NO;
+    thankYouForApplauseAction.authenticationRequired = NO;
+    
     // CATEGORY 1 (ACTION 1 AND ACTION 2)
     UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
@@ -143,7 +151,12 @@
     watchingYouReplyCategory.identifier = @"WATCHING_YOU_REPLY";
     [watchingYouReplyCategory setActions:@[watchingYouAction] forContext:UIUserNotificationActionContextDefault];
     
-    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory]];
+    // CATEGORY 4 (ACTION 6)
+    UIMutableUserNotificationCategory * thankYouForApplauseReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    thankYouForApplauseReplyCategory.identifier = @"THANK_YOU_FOR_APPLAUSE_REPLY";
+    [thankYouForApplauseReplyCategory setActions:@[thankYouForApplauseAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory, thankYouForApplauseReplyCategory]];
     UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
 
     [application registerUserNotificationSettings:settings];
@@ -170,10 +183,14 @@
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
             message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
+            category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
             //            User * userWhoReceivedApplause = (User *)object;
             //            [userWhoReceivedApplause addReceivedApplauseXp];
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
             message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"username"]];
+        } else if ([identifier isEqualToString:@"THANK_YOU_FOR_APPLAUSE"]) {
+            message = [NSString stringWithFormat:@"%@: ✊", currentUser[@"username"]];
+            
         } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
             message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"username"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
         }

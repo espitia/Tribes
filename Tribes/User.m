@@ -81,7 +81,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     __block BOOL success;
     
     // security check: if category is anything but the accepeted categories, default to no categories
-    if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) || ([category isEqualToString:@"MOTIVATION_REPLY"]) || ([category isEqualToString:@"WATCHING_YOU_REPLY"]))) {
+    if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) ||
+          ([category isEqualToString:@"MOTIVATION_REPLY"]) ||
+          ([category isEqualToString:@"WATCHING_YOU_REPLY"]) ||
+          ([category isEqualToString:@"THANK_YOU_FOR_APPLAUSE_REPLY"]))) {
         category = @"";
     }
     
