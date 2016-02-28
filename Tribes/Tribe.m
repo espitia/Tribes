@@ -272,8 +272,10 @@
 
 -(BOOL)allMembersCompletedActivity {
     for (Activity * activity in self.activities) {
-        if (![activity completedForDay] ||activity.hibernation) {
+        if (![activity completedForDay]) {
+            if (!activity.hibernation) {
                 return false;
+            }
         }
     }
     return true;

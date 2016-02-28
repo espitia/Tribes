@@ -129,6 +129,10 @@
     // set name of tribe
     [cell.textLabel setText:tribe[@"name"]];
     
+    // set detail text depending on whether all tribe members completed their activity
+    NSString * detailText = ([tribe allMembersCompletedActivity]) ? @"🦁" : @"🐑" ;
+    [cell.detailTextLabel setText:detailText];
+    
     // Setting the default inactive state color to the tableView background color
     [cell setDefaultColor:[UIColor lightGrayColor]];
     
@@ -154,7 +158,8 @@
 - (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
    
     // set detail text depending on whether all tribe members completed their activity
-    NSString * detailText = ([tribe allMembersCompletedActivity]) ? @"✅🦁" : @"✅🐑" ;
+    NSString * check = @"✅";
+    NSString * detailText = [check stringByAppendingString:cell.detailTextLabel.text];
     [cell.detailTextLabel setText:detailText];
     
     NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
@@ -164,9 +169,10 @@
 }
 
 - (void)configureCellForUncompleteTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe atIndexPath:(NSIndexPath *)indexPath {
-    
+
     // set detail text depending on whether all tribe members completed their activity
-    NSString * detailText = @"❌🐑" ;
+    NSString * notCompleteX = @"❌";
+    NSString * detailText = [notCompleteX stringByAppendingString:cell.detailTextLabel.text];
     [cell.detailTextLabel setText:detailText];
     
     UIView *checkView = [self viewWithImageName:@"check"];
