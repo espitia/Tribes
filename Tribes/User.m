@@ -29,6 +29,40 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 
 
+#pragma mark - Create Tribe 
+
+-(void)createNewTribeWithName:(NSString *)name {
+
+    Tribe * newTribe = [[Tribe alloc] init];
+    newTribe[@"name"] = name;
+    
+    PFRelation * members = [newTribe relationForKey:@"members"];
+    [members addObject:self];
+    
+    [newTribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        
+        if (!error) {
+            
+            PFRelation * tribes = [self relationForKey:@"tribess"];
+            [tribes addObject:newTribe];
+
+        } else {
+            NSLog(@"error saving new tribe");
+        }
+        
+        
+        [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (!error) {
+                NSLog(@"saved user");
+            } else {
+                NSLog(@"error");
+            }
+        }];
+        
+    }];
+}
+
+
 #pragma mark - Loading Tribes
 
 /**

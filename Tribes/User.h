@@ -17,6 +17,9 @@ extern int COMPLETED_HABIT_XP;
 extern int RECEIVED_APPLAUSE_XP;
 
 
+// create a tribe
+-(void)createNewTribeWithName:(NSString *)name;
+
 // loading methods
 +(void)load;
 -(void)loadTribesWithBlock:(void(^)(void))callback;
