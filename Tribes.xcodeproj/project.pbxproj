@@ -217,11 +217,19 @@
 			path = TribesUITests;
 			sourceTree = "<group>";
 		};
-		09688B251C768C42001B7752 /* Extra functionality */ = {
+		091BFD731C85E005005D15AE /* KRConfettiView */ = {
 			isa = PBXGroup;
 			children = (
 				09688B221C768C2D001B7752 /* KRConfettiView.h */,
 				09688B231C768C2D001B7752 /* KRConfettiView.m */,
+			);
+			name = KRConfettiView;
+			sourceTree = "<group>";
+		};
+		09688B251C768C42001B7752 /* Extra functionality */ = {
+			isa = PBXGroup;
+			children = (
+				091BFD731C85E005005D15AE /* KRConfettiView */,
 				09BDD94C1C7E929000061567 /* HYBubbleButton */,
 			);
 			name = "Extra functionality";
