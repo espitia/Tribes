@@ -11,6 +11,7 @@
 #import "SignupViewController.h"
 #import "TribeDetailTableViewController.h"
 #import "Tribe.h"
+#import "Habit.h"
 #import "MCSwipeTableViewCell.h"
 #import "User.h"
 #import "Activity.h"
@@ -77,6 +78,15 @@
     return currentUser.tribes.count;
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    // makes sure tribe objects have been loaded
+    if (!currentUser.loadedInitialTribes)
+        return 0;
+
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    return [tribe[@"habits"] count];
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -102,6 +112,15 @@
 }
 
 #pragma mark - UITableViewDataSource
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // makes sure tribe objects have been loaded
+    if (!currentUser.loadedInitialTribes)
+        return nil;
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    return tribe.name;
+}
 
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
