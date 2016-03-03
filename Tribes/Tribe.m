@@ -29,6 +29,138 @@
     [self registerSubclass];
 }
 
+
+#pragma mark - Loading methods
+
+-(void)loadTribeWithMembersAndHabitsWithBlock:(void(^)(void))callback {
+    
+    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if (error) {
+            NSLog(@"error fetching tribe from local storage.\n will try to fetch from network.");
+            
+            [self updateTribeWithBlock:^{
+                [self loadHabitsWithBlock:^ {
+                    [self loadMembersWithBlock:^{
+                        [self loadMemberActivitiesWithBlock:^{
+                            [self addTribeMembersToHabits];
+                            callback();
+                        }];
+                    }];
+                }];
+            }];
+            
+        } else {
+
+            [self loadHabitsWithBlock:^ {
+                [self loadMembersWithBlock:^ {
+                    [self loadMemberActivitiesWithBlock:^{
+                        [self addTribeMembersToHabits];
+                        callback();
+                    }];
+                }];
+            }];
+        }
+    }];
+    
+}
+
+-(void)addTribeMembersToHabits {
+    for (Habit * habit in self[@"habits"]) {
+        habit.members = [NSMutableArray arrayWithArray:self.tribeMembers];
+    }
+}
+
+-(void)loadMemberActivitiesWithBlock:(void(^)(void))callback  {
+    
+    __block int counter = 0;
+    for (User * member in tribeMembers) {
+        [member loadActivitiesWithBlock:^{
+            counter++;
+            if (counter == [tribeMembers count]) {
+                callback();
+            }
+        }];
+    }
+    
+}
+
+-(void)loadHabitsWithBlock:(void(^)(void))callback  {
+    __block int counter = 0;
+    for (Habit * habit in self[@"habits"]) {
+        [habit loadWithBlock:^{
+            counter++;
+            if (counter == [self[@"habits"] count]) {
+                callback();
+            }
+        }];
+    }
+    
+}
+
+-(void)loadMembersWithBlock:(void(^)(void))callback {
+
+    PFRelation * relation = [self relationForKey:@"members"];
+    PFQuery * query = [relation query];
+    [query fromLocalDatastore];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (error || !objects || objects.count == 0) {
+            [self updateMembersWithBlock:^{
+                tribeMembers = [NSMutableArray arrayWithArray:objects];;
+                callback();
+            }];
+        } else {
+            tribeMembers = [NSMutableArray arrayWithArray:objects];
+            callback();
+        }
+    }];
+}
+
+-(void)addTribeMembersToHabits:(NSArray *)membersToAdd {
+    for (Habit * habit in self[@"habits"]) {
+        habit.members = [NSMutableArray arrayWithArray:membersToAdd];
+    }
+}
+
+-(void)updateMembersWithBlock:(void(^)(void))callback {
+    
+    PFRelation * relation = [self relationForKey:@"members"];
+    PFQuery * query = [relation query];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (error) {
+            NSLog(@"error updating members");
+            
+        } else {
+            NSLog(@"updated members from local storage.");
+            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                callback();
+            }];
+        }
+        
+    }];    
+}
+
+-(void)updateTribeWithBlock:(void(^)(void))callback {
+    
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if (error) {
+            NSLog(@"error updating tribe from network.");
+        } else {
+            NSLog(@"successfuly updated tribe object from network.");
+            
+            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                callback();
+            }];
+        }
+    }];
+    
+}
+
+
 #pragma mark - Handling users in Tribe
 
 /**
