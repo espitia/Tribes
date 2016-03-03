@@ -14,6 +14,8 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+-(void)loadWithBlock:(void(^)(void))callback;
+
 @property (nonatomic, strong) NSMutableArray * completionDates;
 @property int weekCompletions;
 @property BOOL hibernation;

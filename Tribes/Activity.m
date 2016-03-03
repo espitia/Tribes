@@ -26,6 +26,29 @@
     [self registerSubclass];
 }
 
+#pragma mark - Loading/updating methods
+
+-(void)loadWithBlock:(void(^)(void))callback {
+    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (error) {
+            //fetch from local and pin
+            [self updateActivityWithBlock:^{
+                callback();
+            }];
+        } else {
+            callback();
+        }
+    }];
+}
+
+-(void)updateActivityWithBlock:(void(^)(void))callback {
+    
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            callback();
+        }];
+    }];
+}
 
 #pragma mark - Completions
 
