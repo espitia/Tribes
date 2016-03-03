@@ -208,7 +208,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"showTribe" sender:[currentUser.tribes objectAtIndex:indexPath.row]];
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
+    [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
 }
 
 #pragma mark - MCSwipeTableViewCellDelegate
@@ -250,13 +252,13 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     // show tribe
-    if ([segue.identifier isEqualToString:@"showTribe"]) {
+    if ([segue.identifier isEqualToString:@"showTribeHabit"]) {
         
         // get tribe VC to set the tribe
         TribeDetailTableViewController * tribeDetailVC = segue.destinationViewController;
         
         // sender contains tribe tapped
-        tribeDetailVC.tribe = sender;
+        tribeDetailVC.habit = sender;
     }
 }
 
