@@ -16,13 +16,16 @@
 extern int COMPLETED_HABIT_XP;
 extern int RECEIVED_APPLAUSE_XP;
 
+// required parse method
++(void)load;
+
 
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name;
 
 // loading methods
-+(void)load;
 -(void)loadTribesWithBlock:(void(^)(void))callback;
+-(void)loadActivitiesWithBlock:(void(^)(void))callback;
 
 //adding user to tribe
 -(void)addTribeWithName:(NSString *)name;
