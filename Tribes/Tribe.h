@@ -16,8 +16,6 @@
 
 -(BOOL)membersAndActivitesAreLoaded;
 -(BOOL)allMembersCompletedActivity;
--(void)loadTribeWithMembersAndActivitiesWithBlock:(void(^)(void))callback;
--(void)loadMembersOfTribeWithActivitiesWithBlock:(void(^)(void))callback;
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
