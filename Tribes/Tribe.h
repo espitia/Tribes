@@ -14,12 +14,20 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+//loading
+-(void)loadTribeWithMembersAndHabitsWithBlock:(void(^)(void))callback;
+
+// handling users
 -(BOOL)membersAndActivitesAreLoaded;
 -(BOOL)allMembersCompletedActivity;
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
+
+//sorting
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
+
+//push
 -(void)sendTribe100PercentCompletedPush;
 
 @property (nonatomic, strong) NSString * name;
