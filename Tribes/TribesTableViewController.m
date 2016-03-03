@@ -278,6 +278,9 @@
     
     // add notifier for when app comes into foreground
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleEnteredForeground) name:UIApplicationDidBecomeActiveNotification object: nil];
+    
+    // set table section height (tribe height)
+    self.tableView.sectionHeaderHeight = 100;
 }
 
 -(void)handleEnteredForeground {
