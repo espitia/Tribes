@@ -16,7 +16,11 @@
 
 -(void)loadWithBlock:(void(^)(void))callback;
 
+-(void)sortMembersAndActivitiesByTotalActivityCompletions;
+-(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
+
 @property (nonatomic, strong) NSMutableArray * members;
+@property (nonatomic, strong) NSMutableArray * membersAndActivities;
 
 @end
 
