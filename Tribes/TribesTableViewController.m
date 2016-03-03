@@ -124,11 +124,11 @@
     if (!currentUser.loadedInitialTribes)
         return;
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.row];
-    Activity * activity = [currentUser activityForTribe:tribe];
-    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
+
     // cell modifications that go for both complete/uncomplete tribes
-    [self configureCellForAllTribes:cell withTribe:tribe];
+    [self configureCellForAllTribes:cell withHabit:habit];
     
     // cell modifications depending on completion/uncompleted
     if ([activity completedForDay]) {
@@ -139,10 +139,10 @@
     
 }
 
-- (void)configureCellForAllTribes:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
+- (void)configureCellForAllTribes:(MCSwipeTableViewCell *)cell withHabit:(Habit *)habit  {
     
     // set name of tribe
-    [cell.textLabel setText:tribe[@"name"]];
+    [cell.textLabel setText:habit[@"name"]];
     
     // set detail text depending on whether all tribe members completed their activity
     NSString * detailText = ([tribe allMembersCompletedActivity]) ? @"🦁" : @"🐑" ;
