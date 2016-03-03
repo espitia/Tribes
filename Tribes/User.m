@@ -62,43 +62,47 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }];
 }
 
+#pragma mark - Loading methods 
 
-#pragma mark - Loading Tribes
-
-/**
-* Loads current tribe objects from current user. Before doing so, it also fetches current user to make sure we have the latest info on which tribes user is in.
- *
- */
-
--(void)loadTribesWithBlock:(void(^)(void))callback {
+-(void)loadTribesWithBlock:(void (^)(void))callback {
     
-    // update user in case other users added him/her to a tribe
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        if (error) {
-            NSLog(@"error loading user: %@", error);
-        } else {
-            
-            // counter to make sure we load all user's tribes
-            int __block counter = 0;
-
-            // iterate through each tribe
-            for (Tribe * tribe in self.tribes) {
-                
-                
-                [tribe loadTribeWithMembersAndActivitiesWithBlock:^{
-                    counter++;
-                    
-                    // makes sure all tribes have been loaded before callback()
-                    if (counter == self.tribes.count) {
-                        self.loadedInitialTribes = TRUE;
-                        callback();
-                    }
-                }];
+    __block int counter = 0;
+    for (Tribe * tribe in self.tribes) {
+        NSLog(@"%@", tribe);
+        [tribe loadTribeWithMembersAndHabitsWithBlock:^{
+            counter++;
+            if (counter == self.tribes.count) {
+                self.loadedInitialTribes = true;
+                callback();
             }
-        }
-    }];
+        }];
+    }
+    
+}
 
+#pragma mark - methods to load/update tribe members
+
+-(void)loadActivitiesWithBlock:(void(^)(void))callback {
+    
+    __block int counter = 0;
+    for (Activity * activity in self[@"activities"]) {
+        counter++;
+        [activity loadWithBlock:^{
+            if (counter == [self[@"activities"] count]) {
+                callback();
+            }
+        }];
+    }
+
+}
+
+-(void)updateMemberWithBlock:(void(^)(void))callback {
+    
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            callback();
+        }];
+    }];
 }
 
 #pragma mark - Push notifications
@@ -179,7 +183,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     // message to send
     NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"username"],tribe[@"name"]];
     
-    for (User * member in tribe.members) {
+    for (User * member in tribe.tribeMembers) {
         if (member != self) {
             
             [self sendPushFromMemberToMember:member withMessage:msg andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
