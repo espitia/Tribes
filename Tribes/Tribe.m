@@ -199,7 +199,7 @@
 }
 
 -(BOOL)userAlreadyInTribe:(PFUser *)user {
-    return ([self.members containsObject:user]) ? true : false;
+    return ([self.tribeMembers containsObject:user]) ? true : false;
 }
 
 #pragma mark - Push notifications to Tribe members
@@ -210,7 +210,7 @@
 }
 
 -(void)sendPushToAllMembersWithMessage:(NSString *)message andCategory:(NSString *)category {
-    for (User * user in self.members) {
+    for (User * user in self.tribeMembers) {
         [self sendPushToMember:user WithMessage:message andCategory:category];
     }
 }
