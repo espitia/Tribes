@@ -24,8 +24,8 @@
 
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
-@property (nonatomic, strong) NSMutableArray * members;
-@property (nonatomic, strong) NSMutableArray * activities;
+@property (nonatomic, strong) NSMutableArray * tribeMembers;
+@property (nonatomic, strong) NSMutableArray * habits;
 
 
 
