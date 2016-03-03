@@ -9,6 +9,7 @@
 #import "Tribe.h"
 #import "Activity.h"
 #import "User.h"
+#import "Habit.h"
 #import <Parse/PFObject+Subclass.h>
 
 
@@ -16,8 +17,8 @@
 
 @dynamic name;
 @synthesize membersAndActivities;
-@synthesize members;
-@synthesize activities;
+@synthesize tribeMembers;
+@synthesize habits;
 
 #pragma mark - Parse required methods
 
