@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Parse.h"
-#import "Tribe.h"
+#import "Habit.h"
 
 @interface TribeDetailTableViewController : UITableViewController
 
-@property (atomic, strong) Tribe * tribe;
+@property (atomic, strong) Habit * habit;
 
 @end
