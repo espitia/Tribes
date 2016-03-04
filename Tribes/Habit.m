@@ -166,6 +166,21 @@
 
 #pragma mark - State
 
+
+-(BOOL)allMembersCompletedActivity {
+    for (int i = 0; i < self.members.count; i++) {
+        Activity * activity = [self.members[0] activityForHabit:self];
+        NSLog(@"%@",activity);
+        if (![activity completedForDay]) {
+            if (!activity.hibernation) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
 -(BOOL)completedForDay {
     
     //check if completion dates array exists
