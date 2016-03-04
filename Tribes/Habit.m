@@ -120,6 +120,56 @@
     self.membersAndActivities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
 }
 
+#pragma mark - State
 
+-(BOOL)completedForDay {
+    
+    //check if completion dates array exists
+    if (self.completionDates && self.completionDates.count > 0) {
+        // if it does, check if last date added was today (thus completed for day)
+        return ([self isToday:[self.completionDates lastObject]]) ? true : false;
+    }
+    
+    // if it doesn't exist, it is a new tribe activity
+    return false;
+}
+/**
+ * Check if date is today
+ * @param Date to be checked
+ * @return BOOL with whether or not date is today
+ */
+-(BOOL)isToday:(NSDate *)date {
+    
+    // make sure date is an nsdate object and not a string
+    NSDate * dateToUse = [self getDateFromObject:date];
+    
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
+    NSDate *today = [cal dateFromComponents:components];
+    components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:dateToUse];
+    NSDate * dateToCheck = [cal dateFromComponents:components];
+    
+    return ([today isEqualToDate:dateToCheck]) ? true : false;
+}
+
+
+#pragma mark - Util methods
+
+/**
+ * When editing NSDate objects in Parse, for some reason, it will sometimes return that NSDate as a string and crash the whole app. This method checks to make sure that if it is a string, we turn it into an NSDate object for proper handling.
+ * @param Object date to be checked
+ * @return Date NSDate object :)
+ */
+- (NSDate*) getDateFromObject:(id) object{
+    if ([object isKindOfClass:[NSDate class]]) {
+        return (NSDate*)object;
+    } else if ([object isKindOfClass:NSString.class]){
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.zzzZ"];
+        NSDate *date = [dateFormatter dateFromString:object];
+        return date;
+    }
+    return nil;
+}
 
 @end

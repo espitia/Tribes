@@ -19,8 +19,12 @@
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
 
+-(BOOL)completedForDay;
+
 @property (nonatomic, strong) NSMutableArray * members;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
+@property (nonatomic, strong) NSMutableArray * completionDates;
+
 
 @end
 
