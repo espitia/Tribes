@@ -145,7 +145,7 @@
     [cell.textLabel setText:habit[@"name"]];
     
     // set detail text depending on whether all tribe members completed their activity
-    NSString * detailText = ([tribe allMembersCompletedActivity]) ? @"🦁" : @"🐑" ;
+    NSString * detailText = ([habit allMembersCompletedActivity]) ? @"🦁" : @"🐑" ;
     [cell.detailTextLabel setText:detailText];
 
 
