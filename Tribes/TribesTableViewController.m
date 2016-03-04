@@ -147,27 +147,7 @@
     // set detail text depending on whether all tribe members completed their activity
     NSString * detailText = ([tribe allMembersCompletedActivity]) ? @"🦁" : @"🐑" ;
     [cell.detailTextLabel setText:detailText];
-    
-    // Setting the default inactive state color to the tableView background color
-    [cell setDefaultColor:[UIColor lightGrayColor]];
-    
-    // set delegate
-    [cell setDelegate:self];
-    
-    UIView *crossView = [self viewWithImageName:@"cross"];
-    UIColor *redColor = [UIColor colorWithRed:232.0 / 255.0 green:61.0 / 255.0 blue:14.0 / 255.0 alpha:1.0];
 
-    [cell setSwipeGestureWithView:crossView color:redColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState3 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
-        
-        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert addButton:@"CONFIRM" actionBlock:^(void) {
-            [currentUser removeFromTribe:tribe];
-            [self updateProgressBar];
-            [self.tableView reloadData];
-        }];
-        [alert showError:@"❌" subTitle:@"Are you sure you want to leave\nthe Tribe?" closeButtonTitle:@"NEVER MIND" duration:0.0];
-
-    }];
 
 }
 - (void)configureCellForCompletedTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit  {
