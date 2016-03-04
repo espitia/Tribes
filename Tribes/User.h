@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 #import "Tribe.h"
+#import "Habit.h"
 #import "Activity.h"
 
 @interface User : PFUser <PFSubclassing>
@@ -33,9 +34,13 @@ extern int RECEIVED_APPLAUSE_XP;
 //removing user from tribe
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;
 
+// handling activities w/ habits
+-(Activity *)activityForHabit:(Habit *)habit;
+
+
 // handling activities
--(void)completeActivityForTribe:(Tribe *)tribe;
--(Activity *)activityForTribe:(Tribe *)tribe;
+-(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe;
+
 
 // dealing with pushes
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback;

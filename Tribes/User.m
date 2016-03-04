@@ -197,32 +197,29 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
 }
 
-#pragma mark - Handling tribes
+#pragma mark - Handling tribes/habits
 
--(void)completeActivityForTribe:(Tribe *)tribe {
+
+-(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe {
 
     // complete activity for today
-    [[self activityForTribe:tribe] completeForToday];
-    
-    // add xp for completion
-//    [self addXp:XP_FOR_COMPLETED_HABIT];
+    [[self activityForHabit:habit] completeForToday];
 
     // send push to rest of tribe to notify of completion
     [self notifyOfCompletionToMembersInTribe:tribe];
-    
+
     // send 100% tribe completed push
-    if ([tribe allMembersCompletedActivity])
-        [tribe sendTribe100PercentCompletedPush];
-    
+    if ([habit allMembersCompletedActivity])
+        [habit sendTribe100PercentCompletedPush];
+
 }
 
-/**
- * Gets activity FROM the tribe.activites array. This is NOT the same as User.activites.
- *
- */
--(Activity *)activityForTribe:(Tribe *)tribe {
-    for (Activity * activity in tribe.activities) {
-        if (activity[@"createdBy"] == self) {
+
+
+-(Activity *)activityForHabit:(Habit *)habit {
+    
+    for (Activity * activity in self.activities) {
+        if (activity[@"habit"] == habit) {
             return activity;
         }
     }
