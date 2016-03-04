@@ -22,6 +22,8 @@
 -(BOOL)completedForDay;
 -(BOOL)allMembersCompletedActivity;
 
+-(void)sendTribe100PercentCompletedPush;
+
 @property (nonatomic, strong) NSMutableArray * members;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
 @property (nonatomic, strong) NSMutableArray * completionDates;
