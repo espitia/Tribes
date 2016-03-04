@@ -20,6 +20,7 @@
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
 
 -(BOOL)completedForDay;
+-(BOOL)allMembersCompletedActivity;
 
 @property (nonatomic, strong) NSMutableArray * members;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
