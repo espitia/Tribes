@@ -153,6 +153,9 @@
         } else {
             NSLog(@"successfuly updated tribe object from network.");
             
+            
+
+            
             [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 callback();
             }];
@@ -201,89 +204,6 @@
 -(BOOL)userAlreadyInTribe:(PFUser *)user {
     return ([self.tribeMembers containsObject:user]) ? true : false;
 }
-
-#pragma mark - Push notifications to Tribe members
-
--(void)sendTribe100PercentCompletedPush {
-    NSString * message = [NSString stringWithFormat:@"%@ 💯 - All tribe members completed the activity ✊", self[@"name"]];
-    [self sendPushToAllMembersWithMessage:message andCategory:nil];
-}
-
--(void)sendPushToAllMembersWithMessage:(NSString *)message andCategory:(NSString *)category {
-    for (User * user in self.tribeMembers) {
-        [self sendPushToMember:user WithMessage:message andCategory:category];
-    }
-}
-
-/**
- * Send push to a member in tribe with category for push notification replys.
- 
- @param member Member to send push to.
- @param msg message to send member
- @param category the category of reply actions that will be available to the recepient of the push: "MOTIVATION_REPLY", "COMPLETION_REPLY". !!! LEAVE EMPTY STRING IN ORDER TO NOT HAVE ANY REPLY OPTIONS"
- */
-
--(void)sendPushToMember:(User *)member WithMessage:(NSString *)message andCategory:(NSString *)category {
-    
-    // security check: if category is anything but the accepeted categories, default to no categories
-    if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) || ([category isEqualToString:@"MOTIVATION_REPLY"]))) {
-        category = @"";
-    }
-    
-    // cloud code to send push
-    [PFCloud callFunctionInBackground:@"sendPush"
-                       withParameters:@{@"receiverId":member.objectId,
-                                        @"msg":message,
-                                        @"category":category}
-                                block:^(id  _Nullable object, NSError * _Nullable error) {
-                                    
-                                    if (error) {
-                                        NSLog(@"error:\n %@", error);
-                                    } else {
-                                        NSLog(@"success:\n%@", object);
-
-                                    }
-                                    
-                                }];
-}
-
-#pragma mark - Sorting members by activity
-/**
- * Sorts members and activities array by total completions.
- */
--(void)sortMembersAndActivitiesByTotalActivityCompletions {
-    [self sortMembersAndActivitiesBy:@"total"];
-}
-/**
- * Sorts members and activities array by weekly completions.
- */
--(void)sortMembersAndActivitiesByWeeklyActivityCompletions {
-    [self sortMembersAndActivitiesBy:@"weekly"];
-}
-
-/**
- * Sorts members and activities array by indicated time frame.
- *
- * @param timeFrame time frame to sort by, use key "total" or "weekly"
- */
--(void)sortMembersAndActivitiesBy:(NSString *)timeFrame {
-    
-    NSString * sortByKey;
-    
-    if ([timeFrame isEqualToString:@"total"]) {
-        sortByKey = @"activity.completions";
-    } else if ([timeFrame isEqualToString:@"weekly"]) {
-        sortByKey = @"activity.weekCompletions";
-    } else {
-        sortByKey = @"activity.completions"; // default to catch any errors
-    }
-        
-    NSArray * sortedArrayByActivityCompletions = [[NSArray alloc] init];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:sortByKey  ascending:NO];
-    sortedArrayByActivityCompletions = [self.membersAndActivities sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
-    self.membersAndActivities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
-}
-
 
 #pragma mark - Checking statuses of membs/activities
 
