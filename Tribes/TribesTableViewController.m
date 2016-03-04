@@ -126,15 +126,15 @@
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
     Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
-
+    
     // cell modifications that go for both complete/uncomplete tribes
     [self configureCellForAllTribes:cell withHabit:habit];
     
     // cell modifications depending on completion/uncompleted
-    if ([activity completedForDay]) {
-        [self configureCellForCompletedTribeActivity:cell withTribe:tribe];
+    if ([habit completedForDay]) {
+        [self configureCellForCompletedTribeHabit:cell withTribe:tribe andHabit:habit];
     } else {
-        [self configureCellForUncompleteTribeActivity:cell withTribe:tribe atIndexPath:indexPath];
+        [self configureCellForUncompleteTribeHabit:cell withTribe:tribe andHabit:habit atIndexPath:indexPath];
     }
     
 }
@@ -170,7 +170,7 @@
     }];
 
 }
-- (void)configureCellForCompletedTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe  {
+- (void)configureCellForCompletedTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit  {
    
     // set detail text depending on whether all tribe members completed their activity
     NSString * check = @"✅";
@@ -183,7 +183,7 @@
     cell.textLabel.attributedText = attributedString;
 }
 
-- (void)configureCellForUncompleteTribeActivity:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCellForUncompleteTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit atIndexPath:(NSIndexPath *)indexPath {
 
     // set detail text depending on whether all tribe members completed their activity
     NSString * notCompleteX = @"❌";
@@ -195,11 +195,10 @@
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
 
-        [currentUser completeActivityForTribe:tribe];
+        [currentUser completeActivityForHabit:habit inTribe:tribe];
         [self makeItRainConfetti];
         [self updateProgressBar];
         [self playSound:@"completion-sound" :@".mp3"];
-//        [self showAlertWithTitle:@"🔑🔑🔑" andMessage:@"+ 100xp"];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
 }
