@@ -37,7 +37,7 @@
     
     [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
-        if (error) {
+        if (error || !object) {
             NSLog(@"error fetching tribe from local storage.\n will try to fetch from network.");
             
             [self updateTribeWithBlock:^{
