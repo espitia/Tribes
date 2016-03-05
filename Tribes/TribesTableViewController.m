@@ -212,9 +212,6 @@
 
 -(void)signUp {
 
-//    [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
-//    SignupViewController * signupVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Signup"];
-//    [self.navigationController presentViewController:signupVC animated:false completion:nil];
     UINavigationController * SignUpLoginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpLoginViewController"];
     [self.navigationController presentViewController:SignUpLoginViewController animated:YES completion:nil];
 }
