@@ -42,7 +42,7 @@
     [self addPullToRefresh];
     
     // set title
-    self.navigationItem.title = _tribe[@"name"];
+    self.navigationItem.title = _habit[@"name"];
 
     // tap to handle cell selection (motivation, hibernation, settings, etc)
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tableTapped:)];
@@ -70,7 +70,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _tribe.membersAndActivities.count;
+    return _habit.members.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -80,12 +80,12 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
    
-    (weeklyCompletions) ? [_tribe sortMembersAndActivitiesByWeeklyActivityCompletions] : [_tribe sortMembersAndActivitiesByTotalActivityCompletions];
-    
-    // dictionary with member (PFUser)and acitivty key (Activity object)
-    User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
-    Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
+    (weeklyCompletions) ? [_habit sortMembersAndActivitiesByWeeklyActivityCompletions] : [_habit sortMembersAndActivitiesByTotalActivityCompletions];
 
+    // dictionary with member (PFUser)and acitivty key (Activity object)
+    User * member = _habit.membersAndActivities[indexPath.row][@"member"];
+    Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
+    
     //    NSString * titleLabel = [NSString stringWithFormat:@"%@ - lvl %d",member[@"username"],  member.lvl];
     NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
     cell.textLabel.text = titleLabel;
@@ -134,9 +134,9 @@
         }
         
         // init necessary variables
-        User * member = _tribe.membersAndActivities[indexPath.row][@"member"];
+        User * member = _habit.membersAndActivities[indexPath.row][@"member"];
         User * currentUser = [User currentUser];
-        Activity * activity = _tribe.membersAndActivities[indexPath.row][@"activity"];
+        Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
         
         // init alert vars
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
@@ -153,7 +153,7 @@
             message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
             [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             
-        } else if ([[member activityForTribe:_tribe] completedForDay]) {
+        } else if ([[member activityForHabit:_habit] completedForDay]) {
             
             // let user know
             message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
@@ -195,7 +195,7 @@
         UIImage * lion = [self imageFromText:@"🦁"];
         bubbleGenerator.images = @[lion];
         
-        [[User currentUser] sendMotivationToMember:member inTribe:_tribe withBlock:^(BOOL success) {
+        [[User currentUser] sendMotivationToMember:member inTribe:_habit[@"tribe"] withBlock:^(BOOL success) {
             if (success) {
                 
             } else {
@@ -313,7 +313,7 @@
     
     if ([segue.identifier  isEqual: @"AddFriends"]) {
         AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
-        vc.tribe = _tribe;
+//        vc.tribe = _tribe;
     } else if ([segue.identifier  isEqual:@"showSettings"]) {
         SettingsTableViewController * vc = (SettingsTableViewController *)segue.destinationViewController;
         vc.activity = sender;
@@ -370,10 +370,19 @@
     [self.tableView addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 }
+
+
 -(void)refreshTable {
-    [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-        [refreshControl endRefreshing];
-        [self.tableView reloadData];
+    
+    Tribe * tribe = _habit[@"tribe"];
+    [tribe updateMembersWithBlock:^{
+        [tribe updateMemberActivitiesWithBlock:^{
+            [refreshControl endRefreshing];
+            [self.tableView reloadData];
+        }];
     }];
+    
+
+    
 }
 @end
