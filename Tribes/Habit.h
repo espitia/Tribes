@@ -15,6 +15,7 @@
 +(void)load;
 
 -(void)loadWithBlock:(void(^)(void))callback;
+-(void)updateHabitWithBlock:(void(^)(void))callback;
 
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
