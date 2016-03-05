@@ -50,7 +50,6 @@
         self.navigationItem.title = @"Loading Tribes..";
         
         [currentUser loadTribesWithBlock:^{
-            //            self.navigationItem.title = [NSString stringWithFormat:@"lvl %d - %dxp", currentUser.lvl, currentUser.xp];
             self.navigationItem.title = @"Tribes";
             [self.tableView reloadData];
             
