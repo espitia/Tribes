@@ -12,6 +12,7 @@
 @implementation Habit
 
 @synthesize members;
+@synthesize completionDates;
 @synthesize membersAndActivities;
 
 #pragma mark - Parse required methods
