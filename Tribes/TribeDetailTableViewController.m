@@ -188,7 +188,8 @@
         UIImage * lion = [self imageFromText:@"🦁"];
         bubbleGenerator.images = @[lion];
         
-        [[User currentUser] sendMotivationToMember:member inTribe:_habit[@"tribe"] withBlock:^(BOOL success) {
+        
+        [[User currentUser] sendMotivationToMember:member inTribe:_habit[@"tribe"] forHabit:_habit withBlock:^(BOOL success) {
             if (success) {
                 
             } else {
