@@ -97,7 +97,7 @@
     UISwitch* switchControl = sender;
     
     _activity.hibernation = (switchControl.on) ? true : false;
-    [_activity saveInBackground];
+    [_activity saveEventually];
 }
 
 
