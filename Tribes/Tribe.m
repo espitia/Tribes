@@ -133,6 +133,9 @@
     
 }
 
+#pragma mark - Members loading and updating
+
+
 -(void)loadMembersWithBlock:(void(^)(void))callback {
 
     PFRelation * relation = [self relationForKey:@"members"];
