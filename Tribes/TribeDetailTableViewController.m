@@ -121,10 +121,10 @@
     if (indexPath) {
 
         
-        if (![_tribe membersAndActivitesAreLoaded]) {
-            // alert user that member and activites are not loaded
-            return;
-        }
+//        if (![_habit membersAndActivitesAreLoaded]) {
+//            // alert user that member and activites are not loaded
+//            return;
+//        }
         
         // init necessary variables
         User * member = _habit.membersAndActivities[indexPath.row][@"member"];
