@@ -145,7 +145,6 @@
         
         if (error || !objects || objects.count == 0) {
             [self updateMembersWithBlock:^{
-                tribeMembers = [NSMutableArray arrayWithArray:objects];;
                 callback();
             }];
         } else {
@@ -166,7 +165,8 @@
             NSLog(@"error updating members");
             
         } else {
-            NSLog(@"updated members from local storage.");
+            NSLog(@"updated members from network.");
+            tribeMembers = [NSMutableArray arrayWithArray:objects];
             [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
                 callback();
             }];
