@@ -29,7 +29,7 @@
 -(void)loadWithBlock:(void(^)(void))callback {
     
     [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        if (error) {
+        if (error || !object) {
             //fetch from local and pin
             [self updateHabitWithBlock:^{
                 callback();
