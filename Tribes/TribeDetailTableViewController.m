@@ -53,13 +53,6 @@
 
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    
-    // reload table
-    [_tribe loadMembersOfTribeWithActivitiesWithBlock:^{
-        [self.tableView reloadData];
-    }];
-}
 
 
 
