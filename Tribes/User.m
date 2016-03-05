@@ -68,7 +68,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     __block int counter = 0;
     for (Tribe * tribe in self.tribes) {
-        NSLog(@"%@", tribe);
         [tribe loadTribeWithMembersAndHabitsWithBlock:^{
             counter++;
             if (counter == self.tribes.count) {
@@ -83,7 +82,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 #pragma mark - methods to load/update tribe members
 
 -(void)loadActivitiesWithBlock:(void(^)(void))callback {
-    
     __block int counter = 0;
     for (Activity * activity in self[@"activities"]) {
         counter++;
@@ -94,6 +92,18 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }];
     }
 
+}
+-(void)updateActivitiesWithBlock:(void(^)(void))callback {
+    __block int counter = 0;
+    for (Activity * activity in self[@"activities"]) {
+        counter++;
+        [activity updateActivityWithBlock:^{
+            if (counter == [self[@"activities"] count]) {
+                callback();
+            }
+        }];
+    }
+    
 }
 
 -(void)updateMemberWithBlock:(void(^)(void))callback {
@@ -219,6 +229,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 -(Activity *)activityForHabit:(Habit *)habit {
     
     for (Activity * activity in self.activities) {
+        NSLog(@"self.activites: %@", self.activities);
         if (activity[@"habit"] == habit) {
             return activity;
         }

@@ -27,6 +27,7 @@ extern int RECEIVED_APPLAUSE_XP;
 // loading methods
 -(void)loadTribesWithBlock:(void(^)(void))callback;
 -(void)loadActivitiesWithBlock:(void(^)(void))callback;
+-(void)updateActivitiesWithBlock:(void(^)(void))callback;
 
 //adding user to tribe
 -(void)addTribeWithName:(NSString *)name;
