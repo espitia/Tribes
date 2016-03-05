@@ -44,7 +44,7 @@ extern int RECEIVED_APPLAUSE_XP;
 
 
 // dealing with pushes
--(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback;
+-(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe forHabit:(Habit *)habit withBlock:(void (^)(BOOL))callback;
 -(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback;
 -(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category;
 

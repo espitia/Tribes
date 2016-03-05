@@ -163,7 +163,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }];
 }
 
--(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe withBlock:(void (^)(BOOL))callback {
+-(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe forHabit:(Habit *)habit withBlock:(void (^)(BOOL))callback {
     
     // don't send push to yourself (user sending push to itself)
     if (self == member) {
@@ -229,7 +229,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 -(Activity *)activityForHabit:(Habit *)habit {
     
     for (Activity * activity in self.activities) {
-        NSLog(@"self.activites: %@", self.activities);
         if (activity[@"habit"] == habit) {
             return activity;
         }
