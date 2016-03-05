@@ -102,7 +102,7 @@
     NSMutableArray * holderArray = [NSMutableArray array];
     
     for (User * member in members) {
-        NSLog(@"%@",member);
+
         Activity * activity = [member activityForHabit:self];
         
         // make dictionary
@@ -169,8 +169,7 @@
 
 -(BOOL)allMembersCompletedActivity {
     for (int i = 0; i < self.members.count; i++) {
-        Activity * activity = [self.members[0] activityForHabit:self];
-        NSLog(@"%@",activity);
+        Activity * activity = [self.members[i] activityForHabit:self];
         if (![activity completedForDay]) {
             if (!activity.hibernation) {
                 return false;
