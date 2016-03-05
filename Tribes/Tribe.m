@@ -85,6 +85,40 @@
     }
     
 }
+-(void)updateMemberActivitiesWithBlock:(void(^)(void))callback  {
+    __block int counter = 0;
+    for (User * member in tribeMembers) {
+        [member updateActivitiesWithBlock:^{
+            counter++;
+            if (counter == [tribeMembers count]) {
+                NSLog(@"yoo: %@", tribeMembers[0][@"activities"]);
+                
+                callback();
+            }
+        }];
+    }
+    
+}
+
+-(void)updateTribeWithBlock:(void(^)(void))callback {
+    
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if (error) {
+            NSLog(@"error updating tribe from network.");
+        } else {
+            NSLog(@"successfuly updated tribe object from network.");
+            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                callback();
+            }];
+        }
+    }];
+    
+}
+
+
+
+#pragma mark - Habits loading and updating
 
 -(void)loadHabitsWithBlock:(void(^)(void))callback  {
     __block int counter = 0;
@@ -118,12 +152,6 @@
     }];
 }
 
--(void)addTribeMembersToHabits:(NSArray *)membersToAdd {
-    for (Habit * habit in self[@"habits"]) {
-        habit.members = [NSMutableArray arrayWithArray:membersToAdd];
-    }
-}
-
 -(void)updateMembersWithBlock:(void(^)(void))callback {
     
     PFRelation * relation = [self relationForKey:@"members"];
@@ -144,24 +172,10 @@
     }];    
 }
 
--(void)updateTribeWithBlock:(void(^)(void))callback {
-    
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        if (error) {
-            NSLog(@"error updating tribe from network.");
-        } else {
-            NSLog(@"successfuly updated tribe object from network.");
-            
-            
-
-            
-            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                callback();
-            }];
-        }
-    }];
-    
+-(void)addTribeMembersToHabits:(NSArray *)membersToAdd {
+    for (Habit * habit in self[@"habits"]) {
+        habit.members = [NSMutableArray arrayWithArray:membersToAdd];
+    }
 }
 
 
