@@ -32,9 +32,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // right button to Add friends
-    [self addRightButton];
-    
     // add segment control for weekly or all-time completions
     [self addSegmentControl];
     
@@ -271,17 +268,6 @@
 }
 
 #pragma mark - Helper methods
-
--(void)addFriends {
-    
-    [self performSegueWithIdentifier:@"AddFriends" sender:nil];
-    
-}
-
--(void)addRightButton {
-    UIBarButtonItem * createTribeButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Friends" style:UIBarButtonItemStylePlain target:self action:@selector(addFriends)];
-    [self.navigationItem setRightBarButtonItem:createTribeButton];
-}
 
 
 -(UIImage *)imageFromText:(NSString *)text
