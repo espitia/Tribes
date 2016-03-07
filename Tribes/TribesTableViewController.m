@@ -185,19 +185,21 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
+    // create view for section header (tribe)
     UIView * headerView = [[UIView alloc] init];
     [headerView setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
     [headerView setBackgroundColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0]];
 
+    // add tap recognizer to be able to show user members/habits section
     if (!headerView.gestureRecognizers) {
         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTap:)];
         [headerView addGestureRecognizer:tap];
     }
 
-    
-    UILabel * label = [[UILabel alloc] init];
-    [label setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 34)];
-    [label setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
+    // set title for tribe
+    UILabel * titleLabel = [[UILabel alloc] init];
+    [titleLabel setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 38)];
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
     [label setText:tribe[@"name"]];
