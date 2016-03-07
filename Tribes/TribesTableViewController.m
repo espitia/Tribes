@@ -344,7 +344,8 @@
     [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
 }
 -(void)refreshTable {
-    [currentUser loadTribesWithBlock:^{
+    
+    [currentUser updateTribesWithBlock:^{
         [refreshControl endRefreshing];
         [self.tableView reloadData];
         [self updateProgressBar];
