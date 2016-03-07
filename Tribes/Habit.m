@@ -183,10 +183,13 @@
 
 -(BOOL)completedForDay {
     
+    // get activity obj that olds all data for user
+    Activity * activity = [[User currentUser] activityForHabit:self];
+
     //check if completion dates array exists
-    if (self.completionDates && self.completionDates.count > 0) {
+    if (activity.completionDates && activity.completionDates.count > 0) {
         // if it does, check if last date added was today (thus completed for day)
-        return ([self isToday:[self.completionDates lastObject]]) ? true : false;
+        return ([self isToday:[activity.completionDates lastObject]]) ? true : false;
     }
     
     // if it doesn't exist, it is a new tribe activity
