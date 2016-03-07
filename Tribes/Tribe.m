@@ -241,6 +241,16 @@
     return (self.membersAndActivities.count == 0 || !self.membersAndActivities) ? false : true;
 }
 
+#pragma mark - State of Tribe
+
+-(BOOL)allHabitsAreCompleted {
+    for (Habit * habit in self[@"habits"]) {
+        if (!habit.allMembersCompletedActivity) {
+            return false;
+        }
+    }
+    return true;
+}
 
 
 @end
