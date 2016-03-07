@@ -85,19 +85,33 @@
     }
     
 }
+
+#pragma mark - Update methods
+
 -(void)updateMemberActivitiesWithBlock:(void(^)(void))callback  {
     __block int counter = 0;
     for (User * member in tribeMembers) {
         [member updateActivitiesWithBlock:^{
             counter++;
             if (counter == [tribeMembers count]) {
-                NSLog(@"yoo: %@", tribeMembers[0][@"activities"]);
-                
+                NSLog(@"successfuly updated all member activites object from network.");
                 callback();
             }
         }];
     }
     
+}
+
+-(void)updateHabitsWithBlock:(void(^)(void))callback {
+    __block int counter = 0;
+    for (Habit * habit in self[@"habits"]) {
+        counter++;
+        [habit updateHabitWithBlock:^{
+            if (counter == [self[@"habits"] count]) {
+                callback();
+            }
+        }];
+    }
 }
 
 -(void)updateTribeWithBlock:(void(^)(void))callback {
@@ -165,7 +179,7 @@
             NSLog(@"error updating members");
             
         } else {
-            NSLog(@"updated members from network.");
+            NSLog(@"successfuly members for tribe from network.");
             tribeMembers = [NSMutableArray arrayWithArray:objects];
             [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
                 callback();

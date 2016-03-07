@@ -18,6 +18,8 @@
 -(void)loadTribeWithMembersAndHabitsWithBlock:(void(^)(void))callback;
 -(void)updateMembersWithBlock:(void(^)(void))callback;
 -(void)updateMemberActivitiesWithBlock:(void(^)(void))callback;
+-(void)updateTribeWithBlock:(void(^)(void))callback;
+-(void)updateHabitsWithBlock:(void(^)(void))callback;
 
 // handling users
 -(BOOL)membersAndActivitesAreLoaded;
