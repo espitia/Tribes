@@ -202,9 +202,22 @@
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
-    [label setText:tribe[@"name"]];
+    [titleLabel setText:tribe[@"name"]];
     
-    [headerView addSubview:label];
+    // create label for 🦁 or 🐑
+    UILabel * lionOrSheepTribe = [[UILabel alloc] init];
+    [lionOrSheepTribe setFrame:CGRectMake(337, 35, 40, 40)];
+    [lionOrSheepTribe setText:@"🦁"];
+    // check if al members completed all habits to set
+    for (Habit * habit in tribe.habits) {
+        if (!habit.allMembersCompletedActivity) {
+            [lionOrSheepTribe setText:@"🐑"];
+        }
+    }
+    
+    // add labels to header view
+    [headerView addSubview:lionOrSheepTribe];
+    [headerView addSubview:titleLabel];
 
     return headerView;
 }
