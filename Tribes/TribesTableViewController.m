@@ -208,12 +208,9 @@
     UILabel * lionOrSheepTribe = [[UILabel alloc] init];
     [lionOrSheepTribe setFrame:CGRectMake(337, 35, 40, 40)];
     [lionOrSheepTribe setText:@"🦁"];
+    
     // check if al members completed all habits to set
-    for (Habit * habit in tribe.habits) {
-        if (!habit.allMembersCompletedActivity) {
-            [lionOrSheepTribe setText:@"🐑"];
-        }
-    }
+    lionOrSheepTribe.text = ([tribe allHabitsAreCompleted]) ? @"🦁" : @"🐑" ;
     
     // add labels to header view
     [headerView addSubview:lionOrSheepTribe];
