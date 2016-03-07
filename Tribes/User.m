@@ -236,47 +236,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     return nil;
 }
 
--(void)addTribeWithName:(NSString *)name {
-    
-    // create a tribe/ setname /add user to relation of members
-    Tribe * tribe = [Tribe object];
-    [tribe setObject:name forKey:@"name"];
-    PFRelation * tribeRelationToUsers = [tribe relationForKey:@"members"];     // add user to tribe relation
-    [tribeRelationToUsers addObject:self];
-    
-    
-    // create activity/ set tribe/createdBy for respective keys
-    Activity * activity = [Activity object];
-    [activity setObject:tribe forKey:@"tribe"];
-    [activity setObject:self forKey:@"createdBy"];
-    
-    // add tribe/activities to user arrays
-    [self addObject:tribe forKey:@"tribes"];
-    [self addObject:activity forKey:@"activities"];
-    
-    // for first time user adding a tribe
-    self.loadedInitialTribes = true;
-    
-    // save tribe
-    [tribe saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
-        
-        if (error) { NSLog(@"eror saving tribe: %@", error); }
 
-        
-        // save user
-        [self saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
-            
-            if (error) { NSLog(@"eror saving user: %@", error); }
-            
-            // save activity
-            [activity saveEventually:^(BOOL succeeded, NSError * _Nullable error) {
-                
-                if (error) { NSLog(@"eror saving activity: %@", error); } 
-                
-            }];
-        }];
-    }];
-}
 
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom {
     

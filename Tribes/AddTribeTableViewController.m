@@ -112,7 +112,7 @@
         
         if (currentUser) {
             
-            [currentUser addTribeWithName:tribeNameTextField.text];
+            [currentUser createNewTribeWithName:tribeNameTextField.text];
             
             // send tribe back to main viewcontroller
             [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
