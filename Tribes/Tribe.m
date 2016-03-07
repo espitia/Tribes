@@ -196,9 +196,6 @@
     PFRelation * memberRelationToTribe = [self relationForKey:@"members"];
     [memberRelationToTribe addObject:user];
     
-    // save tribe
-    [self saveInBackground];
-    
     __block BOOL success;
     
     // cloud code to add tribe and activity to user (then save user)
@@ -212,6 +209,8 @@
                                                 callback(&success);
                                             } else {
                                                 success = true;
+                                                // save tribe
+                                                [self saveInBackground];
                                                 callback(&success);
                                             }
                                         }];
