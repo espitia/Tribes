@@ -108,15 +108,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    // makes sure tribe objects have been loaded
-    if (!currentUser.loadedInitialTribes)
-        return nil;
-    
-    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
-    return tribe.name;
-}
-
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     // makes sure tribe objects have been loaded
@@ -191,6 +182,34 @@
     [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    UIView * headerView = [[UIView alloc] init];
+    [headerView setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
+    [headerView setBackgroundColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0]];
+
+    if (!headerView.gestureRecognizers) {
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTap:)];
+        [headerView addGestureRecognizer:tap];
+    }
+
+    
+    UILabel * label = [[UILabel alloc] init];
+    [label setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 34)];
+    [label setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    [label setText:tribe[@"name"]];
+    
+    [headerView addSubview:label];
+
+    return headerView;
+}
+
+-(void)sectionHeaderTap:(id)section {
+    NSLog(@"%@", section);
+    
+}
 #pragma mark - MCSwipeTableViewCellDelegate
 
 
