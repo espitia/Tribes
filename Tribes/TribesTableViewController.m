@@ -147,8 +147,9 @@
     NSString * detailText = [check stringByAppendingString:cell.detailTextLabel.text];
     [cell.detailTextLabel setText:detailText];
     
+    // cross out habit if user compelted
     NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
-    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:tribe.name attributes:attributes];
+    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:habit[@"name"] attributes:attributes];
     
     cell.textLabel.attributedText = attributedString;
 }
