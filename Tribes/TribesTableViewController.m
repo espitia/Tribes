@@ -55,6 +55,11 @@
             
             // add and update progress bar
             [self addProgressBar];
+            
+            [currentUser updateTribesWithBlock:^{
+                [self.tableView reloadData];
+
+            }];
         }];
     }
 }
