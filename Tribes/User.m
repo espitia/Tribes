@@ -62,7 +62,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }];
 }
 
-#pragma mark - Loading methods 
+#pragma mark - Main Loading/Updating methods
 
 -(void)loadTribesWithBlock:(void (^)(void))callback {
     
@@ -78,6 +78,26 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
     
 }
+
+-(void)updateTribesWithBlock:(void(^)(void))callback {
+    __block int tribeCounter = 0;
+    for (Tribe * tribe in self.tribes) {
+        [tribe updateTribeWithBlock:^{
+            [tribe updateHabitsWithBlock:^{
+                [tribe updateMembersWithBlock:^{
+                    [tribe updateMemberActivitiesWithBlock:^{
+                        tribeCounter++;
+                        if (tribeCounter == self.tribes.count) {
+                            callback();
+                        }
+                    }];
+                }];
+            }];
+        }];
+    }
+}
+
+
 
 #pragma mark - methods to load/update tribe members
 
@@ -99,6 +119,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         counter++;
         [activity updateActivityWithBlock:^{
             if (counter == [self[@"activities"] count]) {
+                NSLog(@"successfuly member activities object from network.");
                 callback();
             }
         }];
@@ -114,6 +135,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }];
     }];
 }
+
+
 
 #pragma mark - Push notifications
 
