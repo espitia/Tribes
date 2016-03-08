@@ -16,6 +16,7 @@
 @implementation Tribe
 
 @dynamic name;
+@dynamic habits;
 @synthesize membersAndActivities;
 @synthesize tribeMembers;
 @synthesize habits;
