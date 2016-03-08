@@ -88,16 +88,16 @@
             </objects>
             <point key="canvasLocation" x="2029.5" y="-421.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Add Habit Table View Controller-->
         <scene sceneID="faN-0w-D3q">
             <objects>
-                <tableViewController id="hi5-vx-tv4" sceneMemberID="viewController">
+                <tableViewController id="hi5-vx-tv4" customClass="AddHabitTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Q6l-il-uLW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="LiR-mP-Zcv">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HabitCell" id="LiR-mP-Zcv">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LiR-mP-Zcv" id="qDo-V3-8hm">

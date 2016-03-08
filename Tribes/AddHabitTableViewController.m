@@ -7,92 +7,99 @@
 //
 
 #import "AddHabitTableViewController.h"
+#import "User.h"
+#import "SCLAlertView.h"
 
-@interface AddHabitTableViewController ()
+@interface AddHabitTableViewController () {
+    User * currentUser;
+    UITextField * habitNameTextField;
+    Tribe * tribe;
+    UIBarButtonItem * createHabitButton;
+}
 
 @end
 
 @implementation AddHabitTableViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // right button to create Tribe
+    createHabitButton = [[UIBarButtonItem alloc] initWithTitle:@"Create" style:UIBarButtonItemStylePlain target:self action:@selector(createTribe)];
+    [self.navigationItem setRightBarButtonItem:createHabitButton];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // set current user
+    currentUser = [User currentUser];
+    
+    // initialize textfield
+    habitNameTextField = [[UITextField alloc] init];
+    
+    self.tableView.rowHeight = 100;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidAppear:(BOOL)animated {
+    [habitNameTextField becomeFirstResponder];
 }
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return 1;
 }
 
-/*
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"Add Habits to your Tribe:";
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HabitCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    
+    // add uitextfield for name fo tribe
+    CGRect activityNameFrame = CGRectMake(15,
+                                          cell.frame.origin.y - 30,
+                                          cell.frame.size.width,
+                                          cell.frame.size.height);
+    [habitNameTextField setFrame:activityNameFrame];
+    habitNameTextField.placeholder = @"e.g. Read 📚";
+    [habitNameTextField setFont:[UIFont systemFontOfSize:40]];
+    [cell.contentView addSubview:habitNameTextField];
+    
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma mark - Stuff
+
+-(void)createTribe {
+    
+    // disable button to not allow duplicates
+    createHabitButton.enabled = false;
+    if (![habitNameTextField.text isEqualToString:@""]) {
+        
+        if (currentUser) {
+            
+            // create method to add habit
+            
+        } else {
+            NSLog(@"error creating habit, currentUser = nil.");
+            createHabitButton.enabled = true;
+        }
+    } else {
+        
+        [habitNameTextField resignFirstResponder];
+        
+        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert addButton:@"OK" actionBlock:^{
+            [habitNameTextField becomeFirstResponder];
+            createHabitButton.enabled = true;
+        }];
+        [alert showError:@"❌" subTitle:@"Make sure your Habit has a name" closeButtonTitle:nil duration:0.0];
+    }
+    
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
