@@ -44,12 +44,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         if (!error) {
             NSLog(@"successfully saved new tribe");
                     
-            if (!self.tribes) {
-                [self addObject:newTribe forKey:@"tribes"];
-            }
-
             [self addObject:newTribe forKey:@"tribes"];
-            
+        
             [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (!error) {
                     NSLog(@"successfully saved user with new tribe");
