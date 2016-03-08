@@ -10,6 +10,7 @@
 #import "Parse.h"
 #import "SignupViewController.h"
 #import "TribeDetailTableViewController.h"
+#import "TribeMenuTableViewController.h"
 #import "Tribe.h"
 #import "Habit.h"
 #import "MCSwipeTableViewCell.h"
@@ -224,8 +225,17 @@
     return headerView;
 }
 
--(void)sectionHeaderTap:(id)section {
-    [self performSegueWithIdentifier:@"TribeMenu" sender:nil];
+-(void)sectionHeaderTap:(UITapGestureRecognizer *)tap {
+    
+    // get tribe that was tapped on to send to tribe menu vc control
+    for (UILabel * label in tap.view.subviews) {
+        for (Tribe * tribe in currentUser.tribes) {
+            if ([label.text isEqualToString:tribe.name]) {
+                [self performSegueWithIdentifier:@"TribeMenu" sender:tribe];
+            }
+        }
+    }
+    
 }
 #pragma mark - MCSwipeTableViewCellDelegate
 
@@ -268,8 +278,15 @@
         // get tribe VC to set the tribe
         TribeDetailTableViewController * tribeDetailVC = segue.destinationViewController;
         
-        // sender contains tribe tapped
+        // sender contains habit tapped
         tribeDetailVC.habit = sender;
+    } else if ([segue.identifier isEqualToString:@"TribeMenu"]) {
+        
+        // get tribe menu vc to set tribe
+        TribeMenuTableViewController * tribeMenuVC = segue.destinationViewController;
+        // sender contrains tribe tapped
+        tribeMenuVC.tribe = sender;
+        
     }
 }
 
