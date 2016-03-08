@@ -225,8 +225,7 @@
 }
 
 -(void)sectionHeaderTap:(id)section {
-    NSLog(@"%@", section);
-    
+    [self performSegueWithIdentifier:@"TribeMenu" sender:nil];
 }
 #pragma mark - MCSwipeTableViewCellDelegate
 
