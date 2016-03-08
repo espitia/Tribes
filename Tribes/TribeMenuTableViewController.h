@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tribe.h"
 
 @interface TribeMenuTableViewController : UITableViewController
+
+@property (atomic, strong) Tribe * tribe;
 
 @end
