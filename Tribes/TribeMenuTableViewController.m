@@ -7,8 +7,12 @@
 //
 
 #import "TribeMenuTableViewController.h"
+#import "User.h"
+#import "Habit.h"
 
-@interface TribeMenuTableViewController ()
+@interface TribeMenuTableViewController () {
+    BOOL showMembers;
+}
 
 @end
 
@@ -17,23 +21,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    // set initial selection of what to show
+    showMembers = true;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // add segemnet control to switch between membs and habits
+    [self addSegmentControl];
+    
+    // set title of vc to tribe name
+    self.navigationItem.title = _tribe[@"name"];
+    
+    // right button to add member/habit
+    UIBarButtonItem * addMemberOrHabitButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addMemberOrHabit)];
+    [self.navigationItem setRightBarButtonItem:addMemberOrHabitButton];
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -49,50 +56,60 @@
     
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+
+#pragma mark - Segement control
+
+-(void)addSegmentControl {
+    
+    // default stats to show -> weekly
+    showMembers = true;
+    
+    // create and add segement control
+    UISegmentedControl * segmentedControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Members", @"Habits", nil]];
+    segmentedControl.layer.borderColor = [UIColor whiteColor].CGColor;
+    segmentedControl.layer.borderWidth = 1.0;
+    [segmentedControl setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50)];
+    [segmentedControl addTarget:self action:@selector(segmentedControlHasChangedValue:) forControlEvents:UIControlEventValueChanged];
+    self.tableView.tableHeaderView = segmentedControl;
+    
+    // set default stats to show
+    [segmentedControl setSelectedSegmentIndex:0];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(void)segmentedControlHasChangedValue:(id)sender {
+    
+    UISegmentedControl *segmentedControl = (UISegmentedControl *) sender;
+    NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
+    
+    
+    switch (selectedSegment) {
+        case 0:
+            showMembers = true;
+            [self.tableView reloadData];
+            break;
+        case 1:
+            showMembers = false;
+            [self.tableView reloadData];
+            
+            break;
+            
+        default:
+            break;
+    }
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+#pragma mark - Adding Members and Habits
+
+-(void)addMemberOrHabit {
+    
+    
+    if (showMembers) {
+        [self performSegueWithIdentifier:@"AddFriends" sender:nil];
+    } else {
+        [self performSegueWithIdentifier:@"AddHabit" sender:nil];
+    }
+
+    
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end
