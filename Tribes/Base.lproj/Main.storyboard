@@ -57,7 +57,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TfD-TI-SVS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1455.5" y="-397.5"/>
+            <point key="canvasLocation" x="1595.5" y="-421.5"/>
         </scene>
         <!--Settings Table View Controller-->
         <scene sceneID="WQm-fL-sCu">
@@ -89,15 +89,44 @@
             <point key="canvasLocation" x="2029.5" y="-421.5"/>
         </scene>
         <!--Table View Controller-->
+        <scene sceneID="faN-0w-D3q">
+            <objects>
+                <tableViewController id="hi5-vx-tv4" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Q6l-il-uLW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="LiR-mP-Zcv">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LiR-mP-Zcv" id="qDo-V3-8hm">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hi5-vx-tv4" id="x5G-wu-pZX"/>
+                            <outlet property="delegate" destination="hi5-vx-tv4" id="xIq-fA-3fh"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7nN-go-qfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2163.5" y="-1264.5"/>
+        </scene>
+        <!--Tribe Menu Table View Controller-->
         <scene sceneID="E8S-YX-4ss">
             <objects>
-                <tableViewController id="EcN-nQ-Wco" sceneMemberID="viewController">
+                <tableViewController id="EcN-nQ-Wco" customClass="TribeMenuTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="RZl-j1-4WP">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="RKZ-Cz-Bu7">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellID" id="RKZ-Cz-Bu7">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RKZ-Cz-Bu7" id="7ho-pU-5Bw">
@@ -113,12 +142,13 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="lR1-8P-usc" kind="show" id="rfw-0A-3XM"/>
+                        <segue destination="lR1-8P-usc" kind="show" identifier="AddFriends" id="rfw-0A-3XM"/>
+                        <segue destination="hi5-vx-tv4" kind="show" identifier="AddHabit" id="77X-W5-1tJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2BQ-bk-lFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1495.5" y="-1272.5"/>
+            <point key="canvasLocation" x="1595.5" y="-1264.5"/>
         </scene>
         <!--Add Friends Table View Controller-->
         <scene sceneID="Fjp-5f-yNX">
@@ -143,10 +173,14 @@
                             <outlet property="delegate" destination="lR1-8P-usc" id="sUU-yW-PuZ"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="4kT-l5-F7g"/>
+                    </toolbarItems>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9y-Qg-ReQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2013.5" y="-2013.5"/>
+            <point key="canvasLocation" x="2209.5" y="-2065.5"/>
         </scene>
         <!--Tribes-->
         <scene sceneID="YNw-0g-xML">
@@ -401,7 +435,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1455.5" y="-2013.5"/>
+            <point key="canvasLocation" x="1595.5" y="-2065.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="icT-Oq-OGf">

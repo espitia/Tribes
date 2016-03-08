@@ -19,6 +19,7 @@
 		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
 		09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* SettingsTableViewController.m */; };
 		09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */; };
+		09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
 		0993B5151C550F910008B7E5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5141C550F910008B7E5 /* User.m */; };
 		0993B5181C5537940008B7E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5171C5537940008B7E5 /* Activity.m */; };
@@ -85,6 +86,8 @@
 		09688B311C7B7D92001B7752 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeMenuTableViewController.h; sourceTree = "<group>"; };
 		09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeMenuTableViewController.m; sourceTree = "<group>"; };
+		09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHabitTableViewController.h; sourceTree = "<group>"; };
+		09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddHabitTableViewController.m; sourceTree = "<group>"; };
 		0993B5131C550F910008B7E5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		0993B5141C550F910008B7E5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		0993B5161C5537940008B7E5 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
@@ -273,9 +276,19 @@
 			children = (
 				09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */,
 				09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */,
+				09850B231C8F8E0300FE9609 /* Add Habit */,
 				09C658621C483A64008C4EC3 /* Add friends */,
 			);
 			name = "Tribe Menu";
+			sourceTree = "<group>";
+		};
+		09850B231C8F8E0300FE9609 /* Add Habit */ = {
+			isa = PBXGroup;
+			children = (
+				09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */,
+				09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */,
+			);
+			name = "Add Habit";
 			sourceTree = "<group>";
 		};
 		0993B5191C55385D0008B7E5 /* Create a Tribe */ = {
@@ -575,6 +588,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
 				09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
