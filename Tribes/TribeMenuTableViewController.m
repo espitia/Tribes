@@ -44,15 +44,27 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    // rows depend on what is being shown (members/habits)
+    return (showMembers) ? _tribe.tribeMembers.count : _tribe.habits.count;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID" forIndexPath:indexPath];
     
-    // Configure the cell...
+    User * member;
+    Habit * habit;
+    
+    if (showMembers) {
+        member = [_tribe.tribeMembers objectAtIndex:indexPath.row];
+    } else {
+        habit = [_tribe.habits objectAtIndex:indexPath.row];
+    }
+    
+    cell.textLabel.text = (showMembers) ? member[@"username"] : habit[@"name"];
     
     return cell;
 }
