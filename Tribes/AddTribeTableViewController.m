@@ -41,63 +41,31 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    // different number of rows depending on if the user wants to create/join a tribe
-    switch (section) {
-        case 0:
-            return 1;
-            break;
-        case 1:
-            return 2;
-            break;
-            
-        default:
-            return 1;
-            break;
-    }
+    return 1;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    
-    switch (section) {
-        case 0:
-            return @"Create your own Tribe:";
-            break;
-        case 1:
-            return @"Join an already existing Tribe:";
-            break;
-        default:
-            return @"Join a Tribe";
-            break;
-    }
-    
+    return @"Create your own Tribe:";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-    // cell for creating a new tribe (first section and row)
-    if (indexPath.section == 0 && indexPath.row == 0) {
         
-        // add uitextfield for name fo tribe
-        CGRect activityNameFrame = CGRectMake(15,
-                                              cell.frame.origin.y - 30,
-                                              cell.frame.size.width,
-                                              cell.frame.size.height);
-        [tribeNameTextField setFrame:activityNameFrame];
-        tribeNameTextField.placeholder = @"e.g. Reading";
-        [tribeNameTextField setFont:[UIFont systemFontOfSize:40]];
-        [cell.contentView addSubview:tribeNameTextField];
-    }
-    
+    // add uitextfield for name fo tribe
+    CGRect activityNameFrame = CGRectMake(15,
+                                          cell.frame.origin.y - 30,
+                                          cell.frame.size.width,
+                                          cell.frame.size.height);
+    [tribeNameTextField setFrame:activityNameFrame];
+    tribeNameTextField.placeholder = @"e.g. The Squad 😎";
+    [tribeNameTextField setFont:[UIFont systemFontOfSize:40]];
+    [cell.contentView addSubview:tribeNameTextField];
 
-
-    // Cells to join a Tribe
-    // XXXXXXX TO DO XXXXXXX
     
     return cell;
 }
