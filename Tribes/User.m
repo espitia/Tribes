@@ -67,6 +67,13 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 -(void)loadTribesWithBlock:(void (^)(void))callback {
     
     __block int counter = 0;
+    
+    if (!self.tribes) {
+        [self updateTribesWithBlock:^{
+            callback();
+        }];
+    }
+    
     for (Tribe * tribe in self.tribes) {
         [tribe loadTribeWithMembersAndHabitsWithBlock:^{
             counter++;
@@ -80,6 +87,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 
 -(void)updateTribesWithBlock:(void(^)(void))callback {
+    
+    if (!self.tribes)
+        callback();
+    
     __block int tribeCounter = 0;
     for (Tribe * tribe in self.tribes) {
         [tribe updateTribeWithBlock:^{
@@ -103,6 +114,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 -(void)loadActivitiesWithBlock:(void(^)(void))callback {
     __block int counter = 0;
+    
+    if (!self[@"activities"])
+        callback();
+    
     for (Activity * activity in self[@"activities"]) {
         counter++;
         [activity loadWithBlock:^{
@@ -115,6 +130,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 -(void)updateActivitiesWithBlock:(void(^)(void))callback {
     __block int counter = 0;
+    
+    if (!self[@"activities"])
+        callback();
+    
     for (Activity * activity in self[@"activities"]) {
         counter++;
         [activity updateActivityWithBlock:^{

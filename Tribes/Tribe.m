@@ -105,6 +105,10 @@
 
 -(void)updateHabitsWithBlock:(void(^)(void))callback {
     __block int counter = 0;
+    
+    if (!self.habits)
+        callback();
+    
     for (Habit * habit in self[@"habits"]) {
         counter++;
         [habit updateHabitWithBlock:^{
@@ -137,6 +141,10 @@
 
 -(void)loadHabitsWithBlock:(void(^)(void))callback  {
     __block int counter = 0;
+    
+    if (!self.habits)
+        callback();
+    
     for (Habit * habit in self[@"habits"]) {
         [habit loadWithBlock:^{
             counter++;
