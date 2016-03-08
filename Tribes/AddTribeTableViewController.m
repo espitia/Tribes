@@ -83,10 +83,26 @@
         
         if (currentUser) {
             
-            [currentUser createNewTribeWithName:tribeNameTextField.text];
-            
-            // send tribe back to main viewcontroller
-            [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+            // create the tribe
+            [currentUser createNewTribeWithName:tribeNameTextField.text withBlock:^(BOOL success) {
+                
+                
+                if (success) {
+                    // send tribe back to main viewcontroller
+                    [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
+                } else {
+                    [tribeNameTextField resignFirstResponder];
+                    
+                    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                    [alert addButton:@"OK" actionBlock:^{
+                        [tribeNameTextField becomeFirstResponder];
+                        createTribeButton.enabled = true;
+                    }];
+                    [alert showError:@"❌" subTitle:@"There was an error creating your Tribe. Please try again." closeButtonTitle:nil duration:0.0];
+                }
+
+            }];
+
         } else {
             NSLog(@"error adding tribe, currentUser = nil.");
             createTribeButton.enabled = true;
