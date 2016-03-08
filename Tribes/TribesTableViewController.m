@@ -191,6 +191,9 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
+    if (!currentUser.loadedInitialTribes)
+        return nil;
+    
     // create view for section header (tribe)
     UIView * headerView = [[UIView alloc] init];
     [headerView setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
@@ -208,7 +211,7 @@
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
-    [titleLabel setText:tribe[@"name"]];
+    [titleLabel setText:tribe.name];
     
     // create label for 🦁 or 🐑
     UILabel * lionOrSheepTribe = [[UILabel alloc] init];
