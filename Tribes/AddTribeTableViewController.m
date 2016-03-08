@@ -38,6 +38,9 @@
     tribeNameTextField = [[UITextField alloc] init];
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [tribeNameTextField becomeFirstResponder];
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -89,9 +92,15 @@
             createTribeButton.enabled = true;
         }
     } else {
+        
+        [tribeNameTextField resignFirstResponder];
+        
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-        [alert showError:@"❌" subTitle:@"Make sure your Tribe has a name" closeButtonTitle:@"OK" duration:0.0];
-        createTribeButton.enabled = true;
+        [alert addButton:@"OK" actionBlock:^{
+            [tribeNameTextField becomeFirstResponder];
+            createTribeButton.enabled = true;
+        }];
+        [alert showError:@"❌" subTitle:@"Make sure your Tribe has a name" closeButtonTitle:nil duration:0.0];
     }
 
 }
