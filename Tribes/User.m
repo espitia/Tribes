@@ -31,7 +31,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 #pragma mark - Create Tribe 
 
--(void)createNewTribeWithName:(NSString *)name {
+-(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback {
 
     Tribe * newTribe = [[Tribe alloc] init];
     newTribe[@"name"] = name;
@@ -42,22 +42,29 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [newTribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         
         if (!error) {
-            
-            PFRelation * tribes = [self relationForKey:@"tribess"];
-            [tribes addObject:newTribe];
+            NSLog(@"successfully saved new tribe");
+                    
+            if (!self.tribes) {
+                [self addObject:newTribe forKey:@"tribes"];
+            }
 
+            [self addObject:newTribe forKey:@"tribes"];
+            
+            [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (!error) {
+                    NSLog(@"successfully saved user with new tribe");
+                    [newTribe pinInBackground];
+                    callback(true);
+                } else {
+                    NSLog(@"error saving user with new tribe");
+                    callback(false);
+                }
+            }];
+            
         } else {
             NSLog(@"error saving new tribe");
+            callback(false);
         }
-        
-        
-        [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            if (!error) {
-                NSLog(@"saved user");
-            } else {
-                NSLog(@"error");
-            }
-        }];
         
     }];
 }
