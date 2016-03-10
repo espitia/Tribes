@@ -205,11 +205,6 @@
     }];    
 }
 
--(void)addTribeMembersToHabits:(NSArray *)membersToAdd {
-    for (Habit * habit in self[@"habits"]) {
-        habit.members = [NSMutableArray arrayWithArray:membersToAdd];
-    }
-}
 
 
 #pragma mark - Handling users in Tribe
