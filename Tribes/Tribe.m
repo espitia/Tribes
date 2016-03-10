@@ -126,6 +126,7 @@
         
         if (error) {
             NSLog(@"error updating tribe from network.");
+            callback();
         } else {
             NSLog(@"successfuly updated tribe object from network.");
             [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
