@@ -46,10 +46,7 @@
     [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         NSLog(@"successfuly updated habit object from network.");
         [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            // pair members with their activities as soon as habit is updated
-            [self pairMembersAndActivitiesWithBlock:^{
-                callback();
-            }];
+            callback();
         }];
     }];
 }
