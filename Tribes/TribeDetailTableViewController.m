@@ -76,7 +76,6 @@
     User * member = _habit.membersAndActivities[indexPath.row][@"member"];
     Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
     
-    //    NSString * titleLabel = [NSString stringWithFormat:@"%@ - lvl %d",member[@"username"],  member.lvl];
     NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
     cell.textLabel.text = titleLabel;
     
@@ -182,7 +181,7 @@
     if ((motivationPushControl == 0 && firstPush) || motivationPushControl == TAPS_TO_SEND_PUSH) {
         
         // send push with lion
-        UIImage * lion = [self imageFromText:@"🦁"];
+        UIImage * lion = [self imageFromText:@"💣"];
         bubbleGenerator.images = @[lion];
         
         
@@ -204,7 +203,7 @@
         
     } else {
         // send stars
-        UIImage * key = [self imageFromText:@"⭐️"];
+        UIImage * key = [self imageFromText:@"⚡️"];
         bubbleGenerator.images = @[key];
         motivationPushControl++;
     }
