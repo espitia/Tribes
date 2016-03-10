@@ -85,9 +85,53 @@
         return 0;
 
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    
     return [tribe[@"habits"] count];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView
+heightForHeaderInSection:(NSInteger)section {
+    return 100;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    if (!currentUser.loadedInitialTribes)
+        return nil;
+    
+    // create view for section header (tribe)
+    UIView * headerView = [[UIView alloc] init];
+    [headerView setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
+    [headerView setBackgroundColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0]];
+    
+    // add tap recognizer to be able to show user members/habits section
+    if (!headerView.gestureRecognizers) {
+        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTap:)];
+        [headerView addGestureRecognizer:tap];
+    }
+    
+    // set title for tribe
+    UILabel * titleLabel = [[UILabel alloc] init];
+    [titleLabel setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 38)];
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    [titleLabel setText:tribe.name];
+    
+    // create label for 🦁 or 🐑
+    UILabel * lionOrSheepTribe = [[UILabel alloc] init];
+    [lionOrSheepTribe setFrame:CGRectMake(337, 35, 40, 40)];
+    [lionOrSheepTribe setText:@"🦁"];
+    
+    // check if al members completed all habits to set
+    lionOrSheepTribe.text = ([tribe allHabitsAreCompleted]) ? @"🦁" : @"🐑" ;
+    
+    // add labels to header view
+    [headerView addSubview:lionOrSheepTribe];
+    [headerView addSubview:titleLabel];
+    
+    return headerView;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -112,7 +156,7 @@
     return cell;
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - Configure Cell
 
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -122,6 +166,7 @@
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
     Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
+
     
     // cell modifications that go for both complete/uncomplete tribes
     [self configureCellForAllTribes:cell withHabit:habit];
@@ -187,45 +232,6 @@
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
     Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
     [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    if (!currentUser.loadedInitialTribes)
-        return nil;
-    
-    // create view for section header (tribe)
-    UIView * headerView = [[UIView alloc] init];
-    [headerView setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 100)];
-    [headerView setBackgroundColor:[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1.0]];
-
-    // add tap recognizer to be able to show user members/habits section
-    if (!headerView.gestureRecognizers) {
-        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sectionHeaderTap:)];
-        [headerView addGestureRecognizer:tap];
-    }
-
-    // set title for tribe
-    UILabel * titleLabel = [[UILabel alloc] init];
-    [titleLabel setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 38)];
-    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
-    
-    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
-    [titleLabel setText:tribe.name];
-    
-    // create label for 🦁 or 🐑
-    UILabel * lionOrSheepTribe = [[UILabel alloc] init];
-    [lionOrSheepTribe setFrame:CGRectMake(337, 35, 40, 40)];
-    [lionOrSheepTribe setText:@"🦁"];
-    
-    // check if al members completed all habits to set
-    lionOrSheepTribe.text = ([tribe allHabitsAreCompleted]) ? @"🦁" : @"🐑" ;
-    
-    // add labels to header view
-    [headerView addSubview:lionOrSheepTribe];
-    [headerView addSubview:titleLabel];
-
-    return headerView;
 }
 
 -(void)sectionHeaderTap:(UITapGestureRecognizer *)tap {
