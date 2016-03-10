@@ -96,6 +96,7 @@
             counter++;
             if (counter == [tribeMembers count]) {
                 NSLog(@"successfuly updated all member activites object from network.");
+                [self addTribeMembersToHabits];
                 callback();
             }
         }];
