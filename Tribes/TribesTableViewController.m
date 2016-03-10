@@ -246,23 +246,7 @@ heightForHeaderInSection:(NSInteger)section {
     }
     
 }
-#pragma mark - MCSwipeTableViewCellDelegate
 
-
-// When the user starts swiping the cell this method is called
-- (void)swipeTableViewCellDidStartSwiping:(MCSwipeTableViewCell *)cell {
-//     NSLog(@"Did start swiping the cell!");
-}
-
-// When the user ends swiping the cell this method is called
-- (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell {
-//     NSLog(@"Did end swiping the cell!");
-}
-
-// When the user is dragging, this method is called and return the dragged percentage from the border
-- (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didSwipeWithPercentage:(CGFloat)percentage {
-//     NSLog(@"Did swipe with percentage : %f", percentage);
-}
 #pragma mark - User login/signup
 
 -(void)signUp {
