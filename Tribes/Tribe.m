@@ -127,8 +127,15 @@
             NSLog(@"error updating tribe from network.");
         } else {
             NSLog(@"successfuly updated tribe object from network.");
-            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                callback();
+            [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                [self updateHabitsWithBlock:^{
+                    [self updateMembersWithBlock:^{
+                        [self updateMemberActivitiesWithBlock:^{
+                            callback();
+                        }];
+                    }];
+                }];
             }];
         }
     }];
@@ -259,6 +266,30 @@
         }
     }
     return true;
+}
+
+-(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(BOOL * success))callback {
+    
+
+    __block BOOL success;
+    
+    // cloud code to add habit and create activites for each user in tribe
+    [PFCloud callFunctionInBackground:@"addActivitiesToUsersOfTribe"
+                       withParameters:@{@"tribeObjectID":self.objectId,
+                                        @"newHabitName":name}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                            
+                                            if (error) {
+                                                success = false;
+                                                callback(&success);
+                                            } else {
+                                                success = true;
+                                                // save tribe
+                                                [self saveInBackground];
+                                                callback(&success);
+                                            }
+                                        }];
+    
 }
 
 

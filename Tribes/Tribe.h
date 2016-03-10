@@ -24,10 +24,15 @@
 // handling users
 -(BOOL)membersAndActivitesAreLoaded;
 -(BOOL)userAlreadyInTribe:(PFUser *)user;
--(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 
 // state of tirbe
 -(BOOL)allHabitsAreCompleted;
+
+// adding to the tribe
+-(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
+-(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(BOOL * success))callback;
+
+
 
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
