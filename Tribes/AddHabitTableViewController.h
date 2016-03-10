@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tribe.h"
 
 @interface AddHabitTableViewController : UITableViewController
+
+@property (nonatomic) Tribe * tribe;
 
 @end
