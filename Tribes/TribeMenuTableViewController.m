@@ -39,18 +39,48 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 70;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID" forIndexPath:indexPath];
+    
+    NSString * title;
+    switch (indexPath.row) {
+        case 0:
+            title = @"Members 👫";
+            break;
+        case 1:
+            title = @"Habits 🏋";
+            break;
+            
+        default:
+            break;
+    }
 
+    cell.textLabel.text = title;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
 
+#pragma mark - UITableViewDelegate
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+            
+            
+        case 0:
+            [self performSegueWithIdentifier:@"AddFriends" sender:_tribe];
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"AddHabit" sender:_tribe];
+            break;
+            
+        default:
+            break;
+    }
+}
 
 
 #pragma mark - Segue navigation
