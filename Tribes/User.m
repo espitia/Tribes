@@ -75,39 +75,33 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         [self updateTribesWithBlock:^{
             callback();
         }];
-    }
-    
-    for (Tribe * tribe in self.tribes) {
-        [tribe loadTribeWithMembersAndHabitsWithBlock:^{
-            counter++;
-            if (counter == self.tribes.count) {
-                self.loadedInitialTribes = true;
-                callback();
-            }
-        }];
+    } else {
+        for (Tribe * tribe in self.tribes) {
+            [tribe loadTribeWithMembersAndHabitsWithBlock:^{
+                counter++;
+                if (counter == self.tribes.count) {
+                    self.loadedInitialTribes = true;
+                    callback();
+                }
+            }];
+        }
     }
     
 }
 
 -(void)updateTribesWithBlock:(void(^)(void))callback {
     
-    if (!self.tribes)
+    if (!self.tribes) {
         callback();
-    
-    __block int tribeCounter = 0;
-    for (Tribe * tribe in self.tribes) {
-        [tribe updateTribeWithBlock:^{
-            [tribe updateHabitsWithBlock:^{
-                [tribe updateMembersWithBlock:^{
-                    [tribe updateMemberActivitiesWithBlock:^{
-                        tribeCounter++;
-                        if (tribeCounter == self.tribes.count) {
-                            callback();
-                        }
-                    }];
-                }];
+    } else {
+        __block int tribeCounter = 0;
+        for (Tribe * tribe in self.tribes) {
+            [tribe updateTribeWithBlock:^{
+                if (tribeCounter == self.tribes.count) {
+                    callback();
+                }
             }];
-        }];
+        }
     }
 }
 
