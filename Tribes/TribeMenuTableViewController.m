@@ -7,12 +7,12 @@
 //
 
 #import "TribeMenuTableViewController.h"
+#import "AddFriendsTableViewController.h"
+#import "AddHabitTableViewController.h"
 #import "User.h"
 #import "Habit.h"
 
-@interface TribeMenuTableViewController () {
-    BOOL showMembers;
-}
+@interface TribeMenuTableViewController ()
 
 @end
 
@@ -21,18 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // set initial selection of what to show
-    showMembers = true;
-    
-    // add segemnet control to switch between membs and habits
-    [self addSegmentControl];
-    
     // set title of vc to tribe name
     self.navigationItem.title = _tribe[@"name"];
-    
-    // right button to add member/habit
-    UIBarButtonItem * addMemberOrHabitButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addMemberOrHabit)];
-    [self.navigationItem setRightBarButtonItem:addMemberOrHabitButton];
 
 }
 
@@ -45,83 +35,46 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // rows depend on what is being shown (members/habits)
-    return (showMembers) ? _tribe.tribeMembers.count : _tribe.habits.count;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70;
+    return 100;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellID" forIndexPath:indexPath];
-    
-    User * member;
-    Habit * habit;
-    
-    if (showMembers) {
-        member = [_tribe.tribeMembers objectAtIndex:indexPath.row];
-    } else {
-        habit = [_tribe.habits objectAtIndex:indexPath.row];
-    }
-    
-    cell.textLabel.text = (showMembers) ? member[@"username"] : habit[@"name"];
+
     
     return cell;
 }
 
 
-#pragma mark - Segement control
 
--(void)addSegmentControl {
-    
-    // default stats to show -> weekly
-    showMembers = true;
-    
-    // create and add segement control
-    UISegmentedControl * segmentedControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"Members", @"Habits", nil]];
-    segmentedControl.layer.borderColor = [UIColor whiteColor].CGColor;
-    segmentedControl.layer.borderWidth = 1.0;
-    [segmentedControl setFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 50)];
-    [segmentedControl addTarget:self action:@selector(segmentedControlHasChangedValue:) forControlEvents:UIControlEventValueChanged];
-    self.tableView.tableHeaderView = segmentedControl;
-    
-    // set default stats to show
-    [segmentedControl setSelectedSegmentIndex:0];
-}
 
--(void)segmentedControlHasChangedValue:(id)sender {
+
+#pragma mark - Segue navigation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    UISegmentedControl *segmentedControl = (UISegmentedControl *) sender;
-    NSInteger selectedSegment = segmentedControl.selectedSegmentIndex;
-    
-    
-    switch (selectedSegment) {
-        case 0:
-            showMembers = true;
-            [self.tableView reloadData];
-            break;
-        case 1:
-            showMembers = false;
-            [self.tableView reloadData];
-            
-            break;
-            
-        default:
-            break;
+    // show tribe
+    if ([segue.identifier isEqualToString:@"AddFriends"]) {
+        
+        // get tribe VC to set the tribe
+        AddFriendsTableViewController * addFriendsVC = segue.destinationViewController;
+        
+        // sender contains habit tapped
+        addFriendsVC.tribe = sender;
+        
+    } else if ([segue.identifier isEqualToString:@"AddHabit"]) {
+        
+        
+        // get tribe VC to set the tribe
+        AddHabitTableViewController * addHabitVC = segue.destinationViewController;
+        
+        // sender contains habit tapped
+        addHabitVC.tribe = sender;
+        
     }
-}
-
-#pragma mark - Adding Members and Habits
-
--(void)addMemberOrHabit {
-    
-    
-    if (showMembers) {
-        [self performSegueWithIdentifier:@"AddFriends" sender:nil];
-    } else {
-        [self performSegueWithIdentifier:@"AddHabit" sender:nil];
-    }
-
-    
 }
 @end
