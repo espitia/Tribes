@@ -69,13 +69,15 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 -(void)loadTribesWithBlock:(void (^)(void))callback {
     
-    __block int counter = 0;
     
     if (!self.tribes) {
         [self updateTribesWithBlock:^{
             callback();
         }];
     } else {
+        
+        __block int counter = 0;
+
         for (Tribe * tribe in self.tribes) {
             [tribe loadTribeWithMembersAndHabitsWithBlock:^{
                 counter++;
@@ -97,6 +99,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         __block int tribeCounter = 0;
         for (Tribe * tribe in self.tribes) {
             [tribe updateTribeWithBlock:^{
+                tribeCounter++;
                 if (tribeCounter == self.tribes.count) {
                     callback();
                 }
