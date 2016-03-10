@@ -13,7 +13,6 @@
 @interface AddHabitTableViewController () {
     User * currentUser;
     UITextField * habitNameTextField;
-    Tribe * tribe;
     UIBarButtonItem * createHabitButton;
 }
 
@@ -79,14 +78,17 @@
     createHabitButton.enabled = false;
     if (![habitNameTextField.text isEqualToString:@""]) {
         
-        if (currentUser) {
-            
-            // create method to add habit
-            
-        } else {
-            NSLog(@"error creating habit, currentUser = nil.");
-            createHabitButton.enabled = true;
-        }
+
+        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+        [alert showWaiting:@"Creating habit..." subTitle:@"🔧🔧🔧" closeButtonTitle:nil duration:0.0];
+        [_tribe addHabitToTribeWithName:habitNameTextField.text andBlock:^(BOOL *success) {
+            [_tribe updateTribeWithBlock:^{
+                [alert hideView];
+                [self.navigationController popViewControllerAnimated:true];
+            }];
+        }];
+        
+        
     } else {
         
         [habitNameTextField resignFirstResponder];
