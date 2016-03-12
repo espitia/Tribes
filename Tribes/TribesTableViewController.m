@@ -386,6 +386,10 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(void)updateProgressBar {
     
+    // makes sure tribe objects have been loaded
+    if (!currentUser.loadedInitialTribes)
+        return;
+    
     float numberOfTribes = (float)currentUser.tribes.count;
     float completionProgress = 100.0/numberOfTribes;
     float completions = 0;
