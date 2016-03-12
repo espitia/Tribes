@@ -42,14 +42,7 @@
             NSLog(@"error fetching tribe from local storage.\n will try to fetch from network.");
             
             [self updateTribeWithBlock:^{
-                [self loadHabitsWithBlock:^ {
-                    [self loadMembersWithBlock:^{
-                        [self loadMemberActivitiesWithBlock:^{
-                            [self addTribeMembersToHabits];
-                            callback();
-                        }];
-                    }];
-                }];
+                callback();
             }];
             
         } else {
