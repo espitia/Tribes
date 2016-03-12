@@ -115,7 +115,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nN-go-qfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2163.5" y="-1264.5"/>
+            <point key="canvasLocation" x="2483.5" y="-1264.5"/>
         </scene>
         <!--Tribe Menu Table View Controller-->
         <scene sceneID="E8S-YX-4ss">
@@ -173,9 +173,7 @@
                             <outlet property="delegate" destination="lR1-8P-usc" id="sUU-yW-PuZ"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Item" id="4kT-l5-F7g"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9y-Qg-ReQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
