@@ -378,6 +378,7 @@ heightForHeaderInSection:(NSInteger)section {
     progressBar.hideGloss           = YES;
     progressBar.hideStripes         = YES;
     progressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
+    [progressBar setProgress:0.0];
     [self.tableView addSubview:progressBar];
     
     [self updateProgressBar];
