@@ -51,6 +51,16 @@
     }];
 }
 
+-(void)updateHabitWithBlock:(void(^)(void))callback {
+    
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        NSLog(@"successfuly updated habit object from network.");
+        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            callback();
+        }];
+    }];
+}
+
 #pragma mark - Completions
 
 -(int)weekCompletions {
@@ -96,7 +106,7 @@
 #pragma mark - State
 
 -(BOOL)completedForDay {
-
+        
     //check if completion dates array exists
     if (self.completionDates && self.completionDates.count > 0) {
         // if it does, check if last date added was today (thus completed for day)
