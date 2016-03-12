@@ -197,8 +197,17 @@
                                 NSLog(@"error saving digits user id to parse user object");
                             } else {
                                 [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
-                                    [self.navigationController dismissViewControllerAnimated:true completion:^{
-                                        
+                                    
+                                    [PFUser becomeInBackground:user.sessionToken block:^(PFUser *user, NSError *error) {
+                                        if (error) {
+                                            // The token could not be validated.
+                                        } else {
+                                            // The current user is now set to user.
+                                            [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                                
+                                            }];
+
+                                        }
                                     }];
                                 }];
                             }
