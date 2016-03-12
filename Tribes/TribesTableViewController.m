@@ -260,7 +260,9 @@ heightForHeaderInSection:(NSInteger)section {
 -(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
     
     // reload tableview after added new tribe
-    [self.tableView reloadData];
+    [currentUser loadTribesWithBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
