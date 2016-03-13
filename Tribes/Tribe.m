@@ -58,6 +58,9 @@
 
 -(void)loadMemberActivitiesWithBlock:(void(^)(void))callback  {
     
+    if (!self.tribeMembers)
+        callback();
+    
     __block int counter = 0;
     for (User * member in tribeMembers) {
         [member loadActivitiesWithBlock:^{
@@ -125,6 +128,9 @@
 
 
 -(void)loadMembersWithBlock:(void(^)(void))callback {
+    
+    if (![self relationForKey:@"members"])
+        callback();
 
     PFRelation * relation = [self relationForKey:@"members"];
     PFQuery * query = [relation query];
