@@ -54,11 +54,6 @@
             self.navigationItem.title = @"Tribes";
             [self.tableView reloadData];
             [self setUp];
-            
-            [currentUser updateTribesWithBlock:^{
-                [self.tableView reloadData];
-
-            }];
         }];
     }
 }
@@ -313,7 +308,9 @@ heightForHeaderInSection:(NSInteger)section {
     [self addProgressBar];
 }
 -(void)handleEnteredForeground {
-    [self refreshTable];
+    [currentUser updateTribesMembersAndActivities:^{
+        [self.tableView reloadData];
+    }];
 }
 
 // helper method for setting images under swipeable cells
