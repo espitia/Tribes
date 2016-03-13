@@ -349,9 +349,12 @@ heightForHeaderInSection:(NSInteger)section {
 
 -(void)addPullToRefresh {
     // add refresh control
-    refreshControl = [[UIRefreshControl alloc]init];
-    [self.tableView addSubview:refreshControl];
-    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    if (!refreshControl) {
+        refreshControl = [[UIRefreshControl alloc]init];
+        [self.tableView addSubview:refreshControl];
+        [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
+    }
+
 }
 -(void)refreshTable {
     
@@ -368,17 +371,20 @@ heightForHeaderInSection:(NSInteger)section {
 -(void)addProgressBar {
     
     // set up progr
-    progressBar = [[YLProgressBar alloc] initWithFrame:CGRectMake(0,0,self.tableView.frame.size.width,10)];
-    progressBar.type                = YLProgressBarTypeFlat;
-    progressBar.trackTintColor      = [UIColor clearColor];
-    progressBar.progressTintColor   = [UIColor colorWithRed:105.0/255.0 green:203.0/255.0 blue:149.0/255.0 alpha:1.0];
-    progressBar.trackTintColor      = [UIColor lightGrayColor];
-    progressBar.indicatorTextLabel.text  = @"";
-    progressBar.hideGloss           = YES;
-    progressBar.hideStripes         = YES;
-    progressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
-    [progressBar setProgress:0.0];
-    [self.tableView addSubview:progressBar];
+    if (!progressBar) {
+        progressBar = [[YLProgressBar alloc] initWithFrame:CGRectMake(0,0,self.tableView.frame.size.width,10)];
+        progressBar.type                = YLProgressBarTypeFlat;
+        progressBar.trackTintColor      = [UIColor clearColor];
+        progressBar.progressTintColor   = [UIColor colorWithRed:105.0/255.0 green:203.0/255.0 blue:149.0/255.0 alpha:1.0];
+        progressBar.trackTintColor      = [UIColor lightGrayColor];
+        progressBar.indicatorTextLabel.text  = @"";
+        progressBar.hideGloss           = YES;
+        progressBar.hideStripes         = YES;
+        progressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
+        [progressBar setProgress:0.0];
+        [self.tableView addSubview:progressBar];
+    }
+
     
     [self updateProgressBar];
     
