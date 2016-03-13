@@ -402,7 +402,7 @@ heightForHeaderInSection:(NSInteger)section {
     if (!currentUser.loadedInitialTribes)
         return;
     
-    float numberOfTribes = (float)currentUser.tribes.count;
+    float numberOfTribes = (float)currentUser.activities.count;
     float completionProgress = 100.0/numberOfTribes;
     float completions = 0;
     for (Activity * activity in currentUser.activities) {
