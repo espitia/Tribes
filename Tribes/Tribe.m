@@ -32,7 +32,7 @@
 }
 
 
-#pragma mark - Loading methods
+#pragma mark - Loading/Updating methods
 
 -(void)loadTribeWithMembersAndHabitsWithBlock:(void(^)(void))callback {
     
@@ -60,11 +60,6 @@
     
 }
 
--(void)addTribeMembersToHabits {
-    for (Habit * habit in self[@"habits"]) {
-        habit.members = [NSMutableArray arrayWithArray:self.tribeMembers];
-    }
-}
 
 -(void)loadMemberActivitiesWithBlock:(void(^)(void))callback  {
     
@@ -80,8 +75,6 @@
     
 }
 
-#pragma mark - Update methods
-
 -(void)updateMemberActivitiesWithBlock:(void(^)(void))callback  {
     __block int counter = 0;
     for (User * member in tribeMembers) {
@@ -96,50 +89,6 @@
     }
     
 }
-
--(void)updateHabitsWithBlock:(void(^)(void))callback {
-    __block int counter = 0;
-    
-    if (!self.habits)
-        callback();
-    
-    for (Habit * habit in self[@"habits"]) {
-        counter++;
-        [habit updateHabitWithBlock:^{
-            if (counter == [self[@"habits"] count]) {
-                callback();
-            }
-        }];
-    }
-}
-
--(void)updateTribeWithBlock:(void(^)(void))callback {
-    
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        if (error) {
-            NSLog(@"error updating tribe from network.");
-            callback();
-        } else {
-            NSLog(@"successfuly updated tribe object from network.");
-            [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                
-                [self updateHabitsWithBlock:^{
-                    [self updateMembersWithBlock:^{
-                        [self updateMemberActivitiesWithBlock:^{
-                            callback();
-                        }];
-                    }];
-                }];
-            }];
-        }
-    }];
-    
-}
-
-
-
-#pragma mark - Habits loading and updating
 
 -(void)loadHabitsWithBlock:(void(^)(void))callback  {
     __block int counter = 0;
@@ -158,7 +107,25 @@
     
 }
 
-#pragma mark - Members loading and updating
+
+-(void)updateHabitsWithBlock:(void(^)(void))callback {
+    __block int counter = 0;
+    
+    if (!self.habits)
+        callback();
+    
+    for (Habit * habit in self[@"habits"]) {
+        counter++;
+        [habit updateHabitWithBlock:^{
+            if (counter == [self[@"habits"] count]) {
+                callback();
+            }
+        }];
+    }
+}
+
+
+
 
 
 -(void)loadMembersWithBlock:(void(^)(void))callback {
