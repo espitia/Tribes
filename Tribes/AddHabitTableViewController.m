@@ -82,7 +82,7 @@
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
         [alert showWaiting:@"Creating habit..." subTitle:@"🔧🔧🔧" closeButtonTitle:nil duration:0.0];
         [_tribe addHabitToTribeWithName:habitNameTextField.text andBlock:^(BOOL *success) {
-            [currentUser updateTribesWithBlock:^{
+            [_tribe updateTribeWithBlock:^{
                 [alert hideView];
                 [self.navigationController popViewControllerAnimated:true];
             }];
