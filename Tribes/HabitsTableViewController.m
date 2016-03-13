@@ -25,6 +25,8 @@
     // right button to add habit
     UIBarButtonItem * addHabitButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addHabit)];
     [self.navigationItem setRightBarButtonItem:addHabitButton];
+    
+    self.tableView.rowHeight = 70;
 }
 
 -(void)addHabit {
