@@ -242,8 +242,6 @@
                                                 callback(&success);
                                             } else {
                                                 success = true;
-                                                // save tribe
-                                                [self saveInBackground];
                                                 callback(&success);
                                             }
                                         }];
