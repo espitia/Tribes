@@ -364,11 +364,16 @@ heightForHeaderInSection:(NSInteger)section {
 
 }
 -(void)refreshTable {
-    
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
     [currentUser updateTribesWithBlock:^{
-        [refreshControl endRefreshing];
-        [self.tableView reloadData];
-        [self updateProgressBar];
+        [currentUser loadTribesWithBlock:^{
+            [alert hideView];
+
+            [refreshControl endRefreshing];
+            [self.tableView reloadData];
+            [self updateProgressBar];
+        }];
     }];
 }
 
