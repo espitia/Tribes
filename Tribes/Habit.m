@@ -31,10 +31,8 @@
     
     [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error || !object) {
-            //fetch from local and pin
-            [self updateHabitWithBlock:^{
-                callback();
-            }];
+            NSLog(@"error fetching habit from local storage.");
+            callback();
         } else {
             callback();
         }
