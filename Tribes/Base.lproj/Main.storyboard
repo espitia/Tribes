@@ -88,6 +88,38 @@
             </objects>
             <point key="canvasLocation" x="2029.5" y="-421.5"/>
         </scene>
+        <!--Table View Controller-->
+        <scene sceneID="m19-Ra-ygc">
+            <objects>
+                <tableViewController id="MKg-1m-qjs" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ge9-aC-5jD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="FCF-Qt-Xst">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FCF-Qt-Xst" id="7mM-O9-YPQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="MKg-1m-qjs" id="JcN-8e-N0l"/>
+                            <outlet property="delegate" destination="MKg-1m-qjs" id="zF6-GD-Sup"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="hi5-vx-tv4" kind="show" identifier="AddHabit" id="3pt-Dv-Jjq"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WwK-Cf-OQ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2375.5" y="-1264.5"/>
+        </scene>
         <!--Add Habit Table View Controller-->
         <scene sceneID="faN-0w-D3q">
             <objects>
@@ -115,7 +147,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nN-go-qfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2381.5" y="-1180.5"/>
+            <point key="canvasLocation" x="2865.5" y="-1264.5"/>
         </scene>
         <!--Tribe Menu Table View Controller-->
         <scene sceneID="E8S-YX-4ss">
@@ -142,8 +174,8 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="hi5-vx-tv4" kind="show" identifier="AddHabit" id="77X-W5-1tJ"/>
                         <segue destination="vMK-uY-aqW" kind="show" identifier="ShowMembers" id="lAn-yV-AH9"/>
+                        <segue destination="MKg-1m-qjs" kind="show" identifier="ShowHabits" id="uqv-cf-Bao"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2BQ-bk-lFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
