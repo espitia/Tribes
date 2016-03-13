@@ -54,9 +54,6 @@
             self.navigationItem.title = @"Tribes";
             [self.tableView reloadData];
             
-            // add and update progress bar
-            [self addProgressBar];
-            
             [currentUser updateTribesWithBlock:^{
                 [self.tableView reloadData];
 
@@ -71,6 +68,9 @@
     if (!currentUser)
         currentUser = [User currentUser];
     
+    // set up UI elements
+    [self UISetUp];
+
 }
 
 #pragma mark - Table view data source
@@ -295,16 +295,22 @@ heightForHeaderInSection:(NSInteger)section {
     // register table view cell
     [self.tableView registerClass:[MCSwipeTableViewCell class] forCellReuseIdentifier:@"TribeCell"];
     
-    // add pull to refresh control
-    [self addPullToRefresh];
-    
     // add notifier for when app comes into foreground
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(handleEnteredForeground) name:UIApplicationDidBecomeActiveNotification object: nil];
     
-    // set table section height (tribe height)
-    self.tableView.sectionHeaderHeight = 100;
 }
 
+-(void)UISetUp {
+    
+    // add pull to refresh control
+    [self addPullToRefresh];
+    
+    // set table section height (tribe height)
+    self.tableView.sectionHeaderHeight = 100;
+    
+    // add and update progress bar
+    [self addProgressBar];
+}
 -(void)handleEnteredForeground {
     [self refreshTable];
 }
