@@ -7,7 +7,8 @@
 //
 
 #import "MembersTableViewController.h"
-
+#import "AddFriendsTableViewController.h"
+#import "User.h"
 @interface MembersTableViewController ()
 
 @end
@@ -16,36 +17,40 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    // set vc title
+    self.navigationItem.title = @"Members 👫";
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // right button to create Tribe
+    UIBarButtonItem * addMemberButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addMember)];
+    [self.navigationItem setRightBarButtonItem:addMemberButton];
+   
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)addMember {
+    [self performSegueWithIdentifier:@"AddMember" sender:_tribe];
+    
 }
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return _tribe.tribeMembers.count;
 }
 
-/*
+- (CGFloat)tableView:(UITableView *)tableView
+heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    User * member = [_tribe.tribeMembers objectAtIndex:indexPath.row];
+    cell.textLabel.text = member[@"username"];
     
     return cell;
 }

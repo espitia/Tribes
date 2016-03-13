@@ -435,16 +435,16 @@
             </objects>
             <point key="canvasLocation" x="1595.5" y="-2065.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Members Table View Controller-->
         <scene sceneID="yuo-ev-bxK">
             <objects>
-                <tableViewController id="vMK-uY-aqW" sceneMemberID="viewController">
+                <tableViewController id="vMK-uY-aqW" customClass="MembersTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="FDK-9p-s5u">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="6a5-Ec-xRA">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" id="6a5-Ec-xRA">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6a5-Ec-xRA" id="3qR-J3-syU">
@@ -460,7 +460,7 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="lR1-8P-usc" kind="show" id="mId-He-g9O"/>
+                        <segue destination="lR1-8P-usc" kind="show" identifier="AddMember" id="mId-He-g9O"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXz-NG-wAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
