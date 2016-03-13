@@ -53,6 +53,7 @@
         [currentUser loadTribesWithBlock:^{
             self.navigationItem.title = @"Tribes";
             [self.tableView reloadData];
+            [self setUp];
             
             [currentUser updateTribesWithBlock:^{
                 [self.tableView reloadData];
