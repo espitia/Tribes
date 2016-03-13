@@ -172,10 +172,8 @@
  * @return A BOOl value of true or false to let you know if everything went smoothly.
  */
 -(void)addUserToTribe:(PFUser *)user withBlock:(void (^)(BOOL * success))callback {
-    
-    // add user to member relation
-    PFRelation * memberRelationToTribe = [self relationForKey:@"members"];
-    [memberRelationToTribe addObject:user];
+
+
     
     __block BOOL success;
     
@@ -191,8 +189,10 @@
                                             } else {
                                                 success = true;
                                                 // save tribe
-                                                [self saveInBackground];
-                                                callback(&success);
+ 
+                                                [[User currentUser] updateTribesWithBlock:^{
+                                                    callback(&success);
+                                                }];
                                             }
                                         }];
 
