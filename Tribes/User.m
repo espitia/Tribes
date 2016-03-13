@@ -48,9 +48,13 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         
             [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (!error) {
+                    
+                    [self updateTribesWithBlock:^{
+                        callback(true);
+
+                    }];
+                    
                     NSLog(@"successfully saved user with new tribe");
-                    [newTribe pinInBackground];
-                    callback(true);
                 } else {
                     NSLog(@"error saving user with new tribe");
                     callback(false);
