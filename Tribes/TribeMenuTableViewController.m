@@ -88,11 +88,11 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     // show tribe
-    if ([segue.identifier isEqualToString:@"AddFriends"]) {
+    if ([segue.identifier isEqualToString:@"ShowMembers"]) {
         
         // get tribe VC to set the tribe
         MembersTableViewController * membersVC = segue.destinationViewController;
-        
+
         // sender contains habit tapped
         membersVC.tribe = sender;
         
