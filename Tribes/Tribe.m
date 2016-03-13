@@ -55,7 +55,17 @@
     
 }
 
-
+-(void)updateTribeWithBlock:(void(^)(void))callback {
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [PFObject fetchAllInBackground:self[@"habits"] block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            [self updateMembersWithBlock:^{
+                [self updateMemberActivitiesWithBlock:^{
+                    callback();
+                }];
+            }];
+        }];
+    }];
+}
 -(void)loadMemberActivitiesWithBlock:(void(^)(void))callback  {
     
     if (!self.tribeMembers)
