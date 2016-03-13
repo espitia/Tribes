@@ -433,10 +433,10 @@
             </objects>
             <point key="canvasLocation" x="1050.5" y="1205.5"/>
         </scene>
-        <!--Members Table View Controller-->
+        <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
             <objects>
-                <tableViewController id="fft-A3-MET" customClass="MembersTableViewController" sceneMemberID="viewController">
+                <tableViewController id="fft-A3-MET" customClass="AddTribeTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="p02-zY-uVB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
