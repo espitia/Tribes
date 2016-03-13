@@ -28,7 +28,9 @@
     
     self.tableView.rowHeight = 70;
 }
-
+-(void)viewDidAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
 -(void)addHabit {
     [self performSegueWithIdentifier:@"AddHabit" sender:_tribe];
 }
