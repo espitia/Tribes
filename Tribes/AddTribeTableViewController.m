@@ -83,15 +83,22 @@
         
         if (currentUser) {
             
+            // resign keyboard for asthetics with alert
+            [tribeNameTextField resignFirstResponder];
+            
+            // show waiting alert
+            SCLAlertView * waitingAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [waitingAlert showWaiting:@"Creating new Tribe 🔨" subTitle:@"I will be just a second.. ⏲" closeButtonTitle:nil duration:0.0];
+        
+            
             // create the tribe
             [currentUser createNewTribeWithName:tribeNameTextField.text withBlock:^(BOOL success) {
                 
-                
+                [waitingAlert hideView];
                 if (success) {
                     // send tribe back to main viewcontroller
                     [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
                 } else {
-                    [tribeNameTextField resignFirstResponder];
                     
                     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                     [alert addButton:@"OK" actionBlock:^{
