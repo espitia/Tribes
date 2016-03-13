@@ -142,25 +142,25 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
             
         }];
     }];
-        
-
-        
-        
-        
-        
-//        __block int tribeCounter = 0;
-//        for (Tribe * tribe in self.tribes) {
-//            [tribe updateTribeWithBlock:^{
-//                tribeCounter++;
-//                if (tribeCounter == self.tribes.count) {
-//                    callback();
-//                }
-//            }];
-//        }
-//    }
 }
 
 
+-(void)updateTribesMembersAndActivities:(void(^)(void))callback {
+    __block int counter = 0;
+    BOOL shouldSkip;
+    
+    for (Tribe * tribe in self.tribes) {
+        [tribe updateMembersWithBlock:^{
+            [tribe updateMemberActivitiesWithBlock:^{
+                counter++;
+                if (counter == self.tribes.count) {
+                    self.loadedInitialTribes = true;
+                    callback();
+                }
+            }];
+        }];
+    }
+}
 
 #pragma mark - methods to load/update tribe members
 
