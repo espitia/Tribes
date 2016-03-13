@@ -46,7 +46,6 @@
             [self loadHabitsWithBlock:^ {
                 [self loadMembersWithBlock:^ {
                     [self loadMemberActivitiesWithBlock:^{
-                        [self addTribeMembersToHabits];
                         callback();
                     }];
                 }];
@@ -64,6 +63,7 @@
         [member loadActivitiesWithBlock:^{
             counter++;
             if (counter == [tribeMembers count]) {
+                [self addTribeMembersToHabits];
                 callback();
             }
         }];
