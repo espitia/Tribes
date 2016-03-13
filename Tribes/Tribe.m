@@ -40,11 +40,7 @@
         
         if (error || !object) {
             NSLog(@"error fetching tribe from local storage.\n will try to fetch from network.");
-            
-            [self updateTribeWithBlock:^{
-                callback();
-            }];
-            
+            callback();
         } else {
 
             [self loadHabitsWithBlock:^ {
