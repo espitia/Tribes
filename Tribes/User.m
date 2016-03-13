@@ -106,19 +106,37 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         [PFObject fetchAllInBackground:self.tribes block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             
             NSMutableArray * arrayToUpdate = [[NSMutableArray alloc] init];
+            
+            __block int counter = 0;
+            BOOL shouldSkip;
+            
             for (Tribe * tribe in self.tribes) {
-                [arrayToUpdate addObjectsFromArray:tribe.habits];
                 
-                [PFObject fetchAllInBackground:arrayToUpdate block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-                    
-                    [tribe updateMembersWithBlock:^{
-                         [tribe updateMemberActivitiesWithBlock:^{
-                             callback();
-                         }];
+                // if tribe doesn't have habits, no need to fetch habits, members, activities
+                shouldSkip = (tribe.habits) ? true : false;
+
+                if (!shouldSkip) {
+                    [arrayToUpdate addObjectsFromArray:tribe.habits];
+                        
+                        [PFObject fetchAllInBackground:arrayToUpdate block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                            
+                            [tribe updateMembersWithBlock:^{
+                                 [tribe updateMemberActivitiesWithBlock:^{
+                                     counter++;
+                                     if (counter == self.tribes.count) {
+                                         self.loadedInitialTribes = true;
+                                         callback();
+                                     }
+                            }];
+                        }];
                     }];
-                    
-                    
-                }];
+                } else {
+                    counter++;
+                    if (counter == self.tribes.count) {
+                        self.loadedInitialTribes = true;
+                        callback();
+                    }
+                }
                 
             }
             
