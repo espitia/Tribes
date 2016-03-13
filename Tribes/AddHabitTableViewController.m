@@ -78,9 +78,13 @@
     createHabitButton.enabled = false;
     if (![habitNameTextField.text isEqualToString:@""]) {
         
+        // resign keyboard so alert doesn't show with it
+        [habitNameTextField resignFirstResponder];
 
+        // alert user that habit is being created
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
         [alert showWaiting:@"Creating habit..." subTitle:@"🔧🔧🔧" closeButtonTitle:nil duration:0.0];
+        
         [_tribe addHabitToTribeWithName:habitNameTextField.text andBlock:^(BOOL *success) {
             [_tribe updateTribeWithBlock:^{
                 [alert hideView];
