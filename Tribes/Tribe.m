@@ -132,9 +132,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
         
         if (error || !objects || objects.count == 0) {
-            [self updateMembersWithBlock:^{
-                callback();
-            }];
+            callback();
         } else {
             tribeMembers = [NSMutableArray arrayWithArray:objects];
             callback();
