@@ -202,6 +202,13 @@
     return ([self.tribeMembers containsObject:user]) ? true : false;
 }
 
+-(void)addTribeMembersToHabits {
+    for (Habit * habit in self[@"habits"]) {
+        habit.members = [NSMutableArray arrayWithArray:self.tribeMembers];
+    }
+}
+
+
 #pragma mark - Checking statuses of membs/activities
 
 -(BOOL)membersAndActivitesAreLoaded {
