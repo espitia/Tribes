@@ -25,6 +25,7 @@
 		0993B5181C5537940008B7E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5171C5537940008B7E5 /* Activity.m */; };
 		099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */; };
 		099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760551C7E1E8B008E88A7 /* SignUpValidation.m */; };
+		099BB2011C9520E100A734F0 /* FriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2001C9520E100A734F0 /* FriendsTableViewController.m */; };
 		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
 		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
@@ -96,6 +97,8 @@
 		099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpOrLoginViewController.m; sourceTree = "<group>"; };
 		099760541C7E1E8B008E88A7 /* SignUpValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpValidation.h; sourceTree = "<group>"; };
 		099760551C7E1E8B008E88A7 /* SignUpValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpValidation.m; sourceTree = "<group>"; };
+		099BB1FF1C9520E100A734F0 /* FriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsTableViewController.h; sourceTree = "<group>"; };
+		099BB2001C9520E100A734F0 /* FriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsTableViewController.m; sourceTree = "<group>"; };
 		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
 		09BDD94E1C7E929000061567 /* HYBubbleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBubbleButton.m; sourceTree = "<group>"; };
 		09C6584F1C469FEA008C4EC3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
@@ -340,6 +343,8 @@
 		09C658621C483A64008C4EC3 /* Add friends */ = {
 			isa = PBXGroup;
 			children = (
+				099BB1FF1C9520E100A734F0 /* FriendsTableViewController.h */,
+				099BB2001C9520E100A734F0 /* FriendsTableViewController.m */,
 				09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */,
 				09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */,
 			);
@@ -591,6 +596,7 @@
 				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
 				09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
+				099BB2011C9520E100A734F0 /* FriendsTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
 				09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */,
 				0993B5151C550F910008B7E5 /* User.m in Sources */,
