@@ -8,7 +8,7 @@
 
 #import "TribeMenuTableViewController.h"
 #import "MembersTableViewController.h"
-#import "AddHabitTableViewController.h"
+#import "HabitsTableViewController.h"
 #import "User.h"
 #import "Habit.h"
 
@@ -67,6 +67,9 @@
 #pragma mark - UITableViewDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     switch (indexPath.row) {
             
             
@@ -74,7 +77,7 @@
             [self performSegueWithIdentifier:@"ShowMembers" sender:_tribe];
             break;
         case 1:
-            [self performSegueWithIdentifier:@"AddHabit" sender:_tribe];
+            [self performSegueWithIdentifier:@"ShowHabits" sender:_tribe];
             break;
             
         default:
@@ -96,14 +99,14 @@
         // sender contains habit tapped
         membersVC.tribe = sender;
         
-    } else if ([segue.identifier isEqualToString:@"AddHabit"]) {
+    } else if ([segue.identifier isEqualToString:@"ShowHabits"]) {
         
         
         // get tribe VC to set the tribe
-        AddHabitTableViewController * addHabitVC = segue.destinationViewController;
+        HabitsTableViewController * habitsVC = segue.destinationViewController;
         
         // sender contains habit tapped
-        addHabitVC.tribe = sender;
+        habitsVC.tribe = sender;
         
     }
 }
