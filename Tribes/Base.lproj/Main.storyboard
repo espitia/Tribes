@@ -143,7 +143,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <segue destination="hi5-vx-tv4" kind="show" identifier="AddHabit" id="77X-W5-1tJ"/>
-                        <segue destination="vMK-uY-aqW" kind="show" identifier="AddFriends" id="lAn-yV-AH9"/>
+                        <segue destination="vMK-uY-aqW" kind="show" identifier="ShowMembers" id="lAn-yV-AH9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2BQ-bk-lFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -401,10 +401,10 @@
             </objects>
             <point key="canvasLocation" x="1050.5" y="1205.5"/>
         </scene>
-        <!--Add Tribe Table View Controller-->
+        <!--Members Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
             <objects>
-                <tableViewController id="fft-A3-MET" customClass="AddTribeTableViewController" sceneMemberID="viewController">
+                <tableViewController id="fft-A3-MET" customClass="MembersTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="p02-zY-uVB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

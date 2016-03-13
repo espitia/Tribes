@@ -7,7 +7,7 @@
 //
 
 #import "TribeMenuTableViewController.h"
-#import "AddFriendsTableViewController.h"
+#import "MembersTableViewController.h"
 #import "AddHabitTableViewController.h"
 #import "User.h"
 #import "Habit.h"
@@ -71,7 +71,7 @@
             
             
         case 0:
-            [self performSegueWithIdentifier:@"AddFriends" sender:_tribe];
+            [self performSegueWithIdentifier:@"ShowMembers" sender:_tribe];
             break;
         case 1:
             [self performSegueWithIdentifier:@"AddHabit" sender:_tribe];
@@ -91,10 +91,10 @@
     if ([segue.identifier isEqualToString:@"AddFriends"]) {
         
         // get tribe VC to set the tribe
-        AddFriendsTableViewController * addFriendsVC = segue.destinationViewController;
+        MembersTableViewController * membersVC = segue.destinationViewController;
         
         // sender contains habit tapped
-        addFriendsVC.tribe = sender;
+        membersVC.tribe = sender;
         
     } else if ([segue.identifier isEqualToString:@"AddHabit"]) {
         

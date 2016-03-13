@@ -1,5 +1,5 @@
 //
-//  FriendsTableViewController.h
+//  MembersTableViewController.h
 //  Tribes
 //
 //  Created by German Espitia on 3/12/16.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Tribe.h"
 
-@interface FriendsTableViewController : UITableViewController
+@interface MembersTableViewController : UITableViewController
 @property (nonatomic, strong) Tribe * tribe;
 
 @end

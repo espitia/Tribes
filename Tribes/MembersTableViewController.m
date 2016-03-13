@@ -1,18 +1,18 @@
 //
-//  FriendsTableViewController.m
+//  MembersTableViewController.m
 //  Tribes
 //
 //  Created by German Espitia on 3/12/16.
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
-#import "FriendsTableViewController.h"
+#import "MembersTableViewController.h"
 
-@interface FriendsTableViewController ()
+@interface MembersTableViewController ()
 
 @end
 
-@implementation FriendsTableViewController
+@implementation MembersTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
