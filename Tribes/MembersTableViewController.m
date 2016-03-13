@@ -27,6 +27,10 @@
    
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 -(void)addMember {
     [self performSegueWithIdentifier:@"AddMember" sender:_tribe];
     
