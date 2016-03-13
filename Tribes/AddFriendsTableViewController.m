@@ -146,7 +146,7 @@
                 
                 [waitingAlert hideView];
 
-                [self performSegueWithIdentifier:@"UnwindToMembersVC" sender:nil];
+                [self.navigationController popViewControllerAnimated:true];;
             }];
 
         // failed to add friend
