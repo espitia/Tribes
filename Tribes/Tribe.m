@@ -223,7 +223,7 @@
             return false;
         }
     }
-    return true;
+    return false;
 }
 
 -(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(BOOL * success))callback {
