@@ -121,7 +121,6 @@ heightForHeaderInSection:(NSInteger)section {
     // create label for 🦁 or 🐑
     UILabel * lionOrSheepTribe = [[UILabel alloc] init];
     [lionOrSheepTribe setFrame:CGRectMake(337, 35, 40, 40)];
-    [lionOrSheepTribe setText:@"🦁"];
     
     // check if al members completed all habits to set
     lionOrSheepTribe.text = ([tribe allHabitsAreCompleted]) ? @"🦁" : @"🐑" ;
