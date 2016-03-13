@@ -96,20 +96,50 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 
 -(void)updateTribesWithBlock:(void(^)(void))callback {
-    
-    if (!self.tribes) {
-        callback();
-    } else {
-        __block int tribeCounter = 0;
-        for (Tribe * tribe in self.tribes) {
-            [tribe updateTribeWithBlock:^{
-                tribeCounter++;
-                if (tribeCounter == self.tribes.count) {
-                    callback();
-                }
-            }];
-        }
-    }
+ 
+    // if we update each object in certain steps, we will automatically get new objects on update as well. e.g. if user has new tribe in the cloud, if we fetch the user, we;ll also know that there is a new tribe, if we fetch the new tribe w new habits, we'll aso fetch new habits.. etc.
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if (!self.tribes)
+            callback();
+        
+        [PFObject fetchAllInBackground:self.tribes block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            
+            NSMutableArray * arrayToUpdate = [[NSMutableArray alloc] init];
+            for (Tribe * tribe in self.tribes) {
+                [arrayToUpdate addObjectsFromArray:tribe.habits];
+                
+                [PFObject fetchAllInBackground:arrayToUpdate block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                    
+                    [tribe updateMembersWithBlock:^{
+                         [tribe updateMemberActivitiesWithBlock:^{
+                             callback();
+                         }];
+                    }];
+                    
+                    
+                }];
+                
+            }
+            
+        }];
+    }];
+        
+
+        
+        
+        
+        
+//        __block int tribeCounter = 0;
+//        for (Tribe * tribe in self.tribes) {
+//            [tribe updateTribeWithBlock:^{
+//                tribeCounter++;
+//                if (tribeCounter == self.tribes.count) {
+//                    callback();
+//                }
+//            }];
+//        }
+//    }
 }
 
 
