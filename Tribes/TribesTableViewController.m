@@ -66,6 +66,8 @@
     
     // set up UI elements
     [self UISetUp];
+    
+    [self.tableView reloadData];
 
 }
 
