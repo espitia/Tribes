@@ -17,7 +17,6 @@
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
     BOOL weeklyCompletions;
-    UIRefreshControl * refreshControl;
     // ** motivation pushes vars **//
     HYBubbleButton * bubbleGenerator;
     int motivationPushControl;
@@ -35,9 +34,6 @@
     // add segment control for weekly or all-time completions
     [self addSegmentControl];
     
-    // add pull to refresh control
-    [self addPullToRefresh];
-    
     // set title
     self.navigationItem.title = _habit[@"name"];
 
@@ -48,6 +44,13 @@
     // first push
     firstPush = true;
 
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    Tribe * tribe = _habit[@"tribe"];
+    [tribe updateMemberActivitiesForHabit:_habit WithBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 
@@ -341,27 +344,8 @@
     }
 }
 
-#pragma mark - Refresh data
-
--(void)addPullToRefresh {
-    // add refresh control
-    refreshControl = [[UIRefreshControl alloc]init];
-    [self.tableView addSubview:refreshControl];
-    [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
-}
 
 
--(void)refreshTable {
-    
-    Tribe * tribe = _habit[@"tribe"];
-    [tribe updateMembersWithBlock:^{
-        [tribe updateMemberActivitiesWithBlock:^{
-            [refreshControl endRefreshing];
-            [self.tableView reloadData];
-        }];
-    }];
-    
 
-    
-}
+
 @end
