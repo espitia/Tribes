@@ -75,9 +75,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     
     if (!self.tribes) {
-        [self updateTribesWithBlock:^{
-            callback();
-        }];
+        callback();
     } else {
         
         __block int counter = 0;
