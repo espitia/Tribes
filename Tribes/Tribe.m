@@ -105,6 +105,25 @@
 
 }
 
+-(void)updateMemberActivitiesForHabit:(Habit *)habit WithBlock:(void(^)(void))callback  {
+
+    NSMutableArray * arrayOfActivitiesToUpdate = [[NSMutableArray alloc] init];
+    for (User * member in tribeMembers) {
+        Activity * activity = [member activityForHabit:habit];
+        [arrayOfActivitiesToUpdate addObject:activity];
+    }
+    
+
+
+    [PFObject fetchAllInBackground:arrayOfActivitiesToUpdate block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        [PFObject unpinAllInBackground:arrayOfActivitiesToUpdate block:^(BOOL succeeded, NSError * _Nullable error) {
+            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                callback();
+            }];
+        }];
+    }];
+}
+
 -(void)loadHabitsWithBlock:(void(^)(void))callback  {
     __block int counter = 0;
     
