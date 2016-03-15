@@ -224,6 +224,15 @@
     }
 }
 
+-(void)addTribeMembersToHabits:(NSArray *)membersArray {
+    for (Habit * habit in self[@"habits"]) {
+        habit.members = [NSMutableArray arrayWithArray:membersArray];
+    }
+}
+-(void)addTribeMembersToTribe:(NSArray *)membersArray {
+    self.tribeMembers = [NSMutableArray arrayWithArray:membersArray];
+}
+
 
 #pragma mark - Checking statuses of membs/activities
 
