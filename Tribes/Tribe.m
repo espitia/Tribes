@@ -85,18 +85,24 @@
 }
 
 -(void)updateMemberActivitiesWithBlock:(void(^)(void))callback  {
-    __block int counter = 0;
-    for (User * member in tribeMembers) {
-        [member updateActivitiesWithBlock:^{
-            counter++;
-            if (counter == [tribeMembers count]) {
-                NSLog(@"successfuly updated all member activites object from network.");
-                [self addTribeMembersToHabits];
-                callback();
-            }
-        }];
+    
+    // get all members in one array to fetch their activities
+    NSMutableArray * membersToFetchActivitesFrom = [[NSMutableArray alloc] init];
+    for (User * member in self.tribeMembers) {
+        [membersToFetchActivitesFrom addObjectsFromArray:member.activities];
     }
     
+    // fetch all activities
+    [PFObject fetchAllInBackground:membersToFetchActivitesFrom block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        // pin activities
+        [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+            
+            callback();
+            
+        }];
+    }];
+
 }
 
 -(void)loadHabitsWithBlock:(void(^)(void))callback  {
