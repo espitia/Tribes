@@ -32,6 +32,8 @@
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 -(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(BOOL * success))callback;
 
+-(void)addTribeMembersToHabits:(NSArray *)membersArray;
+-(void)addTribeMembersToTribe:(NSArray *)membersArray;
 
 
 @property (nonatomic, strong) NSString * name;
