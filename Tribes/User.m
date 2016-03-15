@@ -94,52 +94,99 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 
 -(void)updateTribesWithBlock:(void(^)(void))callback {
- 
-    // if we update each object in certain steps, we will automatically get new objects on update as well. e.g. if user has new tribe in the cloud, if we fetch the user, we;ll also know that there is a new tribe, if we fetch the new tribe w new habits, we'll aso fetch new habits.. etc.
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        if (!self.tribes)
-            callback();
-        
-        [PFObject fetchAllInBackground:self.tribes block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            
-            NSMutableArray * arrayToUpdate = [[NSMutableArray alloc] init];
-            
-            __block int counter = 0;
-            BOOL shouldSkip;
-            
-            for (Tribe * tribe in self.tribes) {
-                
-                // if tribe doesn't have habits, no need to fetch habits, members, activities
-                shouldSkip = (tribe.habits) ? true : false;
+    
 
-                if (!shouldSkip) {
-                    [arrayToUpdate addObjectsFromArray:tribe.habits];
-                        
-                        [PFObject fetchAllInBackground:arrayToUpdate block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+    // fetch user and pin
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+
+            // if user has no tribes - end updating
+            if (!self.tribes)
+                callback();
+            
+            // fetch tribes
+            [PFObject fetchAllInBackground:self.tribes block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                
+                // pin tribes
+                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                    
+                    // get habits from all tribes to fetch
+                    NSMutableArray * habitsToFetch = [[NSMutableArray alloc] init];
+                    for (Tribe * tribe in self.tribes) {
+                        if (tribe[@"habits"])
+                            [habitsToFetch addObjectsFromArray:tribe[@"habits"]];
+                    }
+                    
+                    // feth habits
+                    [PFObject fetchAllInBackground:habitsToFetch block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+
+                        // pin habits
+                        [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+
                             
-                            [tribe updateMembersWithBlock:^{
-                                 [tribe updateMemberActivitiesWithBlock:^{
-                                     counter++;
-                                     if (counter == self.tribes.count) {
-                                         self.loadedInitialTribes = true;
-                                         callback();
-                                     }
-                            }];
+                            //fetch all members and pin
+                            __block int counter = 0;
+                            for (Tribe * tribe in self.tribes) {
+                                
+                                // fetch members
+                                PFRelation * relationForMembers = [tribe relationForKey:@"members"];
+                                PFQuery * query = [relationForMembers query];
+                                [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+
+                                    // add members to tribe.tribemembers
+                                    // add members to habits
+                                    [tribe addTribeMembersToTribe:objects];
+                                    [tribe addTribeMembersToHabits:objects];
+
+                                    // pin members
+                                    [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                                        counter++;
+
+                                        // when all members of tribes have been fetched
+                                        if (counter == self.tribes.count) {
+                                            
+                                            // get all members in one array to fetch their activities
+                                            NSMutableArray * membersToFetchActivitesFrom = [[NSMutableArray alloc] init];
+                                            for (Tribe * tribe in self.tribes) {
+                                                for (User * member in tribe.tribeMembers) {
+                                                    [membersToFetchActivitesFrom addObjectsFromArray:member.activities];
+                                                }
+                                            }
+                                            
+                                            // fetch all activities
+                                            [PFObject fetchAllInBackground:membersToFetchActivitesFrom block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+
+                                                // pin activities
+                                                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                                                    
+                                                    callback();
+                                                    
+                                                }];
+                                            }];
+                                            
+
+    
+                                        }
+                                        
+                                        
+                                        
+                                    }];
+                                }];
+                            }
+                                
+                            
+                            
                         }];
                     }];
-                } else {
-                    counter++;
-                    if (counter == self.tribes.count) {
-                        self.loadedInitialTribes = true;
-                        callback();
-                    }
-                }
-                
-            }
+                    
+                }];
+            }];
+            
             
         }];
     }];
+    
+
 }
 
 
@@ -319,7 +366,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 
 -(Activity *)activityForHabit:(Habit *)habit {
-    
+
     for (Activity * activity in self.activities) {
         if (activity[@"habit"] == habit) {
             return activity;
