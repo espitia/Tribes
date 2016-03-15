@@ -206,7 +206,7 @@
                                                 success = true;
                                                 // save tribe
  
-                                                [[User currentUser] updateTribesWithBlock:^{
+                                                [self updateTribeWithBlock:^{
                                                     callback(&success);
                                                 }];
                                             }
