@@ -191,8 +191,11 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 
 -(void)updateTribesMembersAndActivities:(void(^)(void))callback {
+    
+    if (!self.tribes)
+        callback();
+    
     __block int counter = 0;
-    BOOL shouldSkip;
     
     for (Tribe * tribe in self.tribes) {
         [tribe updateMembersWithBlock:^{
