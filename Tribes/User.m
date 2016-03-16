@@ -357,10 +357,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }
     }];
 }
--(void)notifyOfCompletionToMembersInTribe:(Tribe *)tribe {
+-(void)notifyOfCompletionToMembersInTribe:(Tribe *)tribe forHabit:(Habit *)habit {
 
     // message to send
-    NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"username"],tribe[@"name"]];
+    NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"username"],habit[@"name"]];
     
     for (User * member in tribe.tribeMembers) {
         if (member != self) {
@@ -385,7 +385,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [[self activityForHabit:habit] completeForToday];
 
     // send push to rest of tribe to notify of completion
-    [self notifyOfCompletionToMembersInTribe:tribe];
+    [self notifyOfCompletionToMembersInTribe:tribe forHabit:habit];
 
     // send 100% tribe completed push
     if ([habit allMembersCompletedActivity])
