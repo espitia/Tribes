@@ -189,26 +189,53 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
-
--(void)updateTribesMembersAndActivities:(void(^)(void))callback {
+-(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(void))callback  {
     
     if (!self.tribes)
-        callback();
+        return;
+
     
-    __block int counter = 0;
-    
+    // get obj ids of all activites of all members in all tribes
+    NSMutableArray * objIdsOfActivitiesToUpdate = [[NSMutableArray alloc] init];
     for (Tribe * tribe in self.tribes) {
-        [tribe updateMembersWithBlock:^{
-            [tribe updateMemberActivitiesWithBlock:^{
-                counter++;
-                if (counter == self.tribes.count) {
-                    self.loadedInitialTribes = true;
-                    callback();
-                }
-            }];
-        }];
+        for (User * member in tribe.tribeMembers) {
+            for (Activity * activity in member.activities) {
+                [objIdsOfActivitiesToUpdate addObject:activity.objectId];
+            }
+        }
     }
+    
+
+    
+    // get those activity objects
+    PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
+    [query whereKey:@"objectId" containedIn:objIdsOfActivitiesToUpdate];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+            
+            // remove all activities from all members to replace them with new
+            for (Tribe * tribe in self.tribes) {
+                for (User * member in tribe.tribeMembers) {
+                    [member.activities removeAllObjects];
+                }
+            }
+            
+            // add new ones to members
+            for (Activity * activity in objects) {
+                for (Tribe * tribe in self.tribes) {
+                    for (User * member in tribe.tribeMembers) {
+                        if (activity[@"createdBy"] == member) {
+                            [member.activities addObject:activity];
+                        }
+                    }
+                }
+            }
+            callback();
+        }];
+    }];
+
 }
+
 
 #pragma mark - methods to load/update tribe members
 
