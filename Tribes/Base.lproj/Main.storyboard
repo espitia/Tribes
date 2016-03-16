@@ -176,6 +176,7 @@
                     <connections>
                         <segue destination="vMK-uY-aqW" kind="show" identifier="ShowMembers" id="lAn-yV-AH9"/>
                         <segue destination="MKg-1m-qjs" kind="show" identifier="ShowHabits" id="uqv-cf-Bao"/>
+                        <segue destination="aSR-04-pcH" kind="unwind" unwindAction="unwindFromTribeMenu:" id="tfa-zb-jBN"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2BQ-bk-lFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -334,7 +335,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSV-2F-rih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11.5" y="797.5"/>
+            <point key="canvasLocation" x="19.5" y="771.5"/>
         </scene>
         <!--Signup View Controller-->
         <scene sceneID="y09-HY-4u5">
@@ -496,6 +497,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXz-NG-wAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aSR-04-pcH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2375.5" y="-2044.5"/>
         </scene>
