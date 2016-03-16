@@ -159,6 +159,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                                                 // pin activities
                                                 [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
                                                     
+                                                    self.loadedInitialTribes = true;
                                                     callback();
                                                     
                                                 }];
