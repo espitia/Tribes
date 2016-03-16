@@ -46,15 +46,6 @@
 
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    Tribe * tribe = _habit[@"tribe"];
-    [tribe updateMemberActivitiesForHabit:_habit WithBlock:^{
-        [self.tableView reloadData];
-    }];
-}
-
-
-
 
 #pragma mark - Table view data source
 
