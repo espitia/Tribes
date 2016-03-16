@@ -60,6 +60,7 @@
         [PFObject fetchAllInBackground:self[@"habits"] block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             [self updateMembersWithBlock:^{
                 [self updateMemberActivitiesWithBlock:^{
+                    [self addTribeMembersToHabits:tribeMembers];
                     callback();
                 }];
             }];
