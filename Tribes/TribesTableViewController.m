@@ -66,9 +66,6 @@
     
     // set up UI elements
     [self UISetUp];
-    
-    [self.tableView reloadData];
-
 }
 
 #pragma mark - Table view data source
