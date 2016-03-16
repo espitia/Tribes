@@ -284,10 +284,7 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([segue.identifier  isEqual: @"AddFriends"]) {
-        AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
-//        vc.tribe = _tribe;
-    } else if ([segue.identifier  isEqual:@"showSettings"]) {
+    if ([segue.identifier  isEqual:@"showSettings"]) {
         SettingsTableViewController * vc = (SettingsTableViewController *)segue.destinationViewController;
         vc.activity = sender;
     }
