@@ -74,6 +74,9 @@
     return currentUser.tribes.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // makes sure tribe objects have been loaded
     if (!currentUser.loadedInitialTribes)
