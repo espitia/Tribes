@@ -309,9 +309,13 @@ heightForHeaderInSection:(NSInteger)section {
     // add and update progress bar
     [self addProgressBar];
 }
+
 -(void)handleEnteredForeground {
-    [currentUser updateTribesMembersAndActivities:^{
+    
+    //update activities when entering foreground
+    [currentUser updateMemberActivitiesForAllTribesWithBlock:^{
         [self.tableView reloadData];
+
     }];
 }
 
