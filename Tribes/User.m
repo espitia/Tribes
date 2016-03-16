@@ -346,7 +346,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
     
     // message to send
-    NSString * msg =  [NSString stringWithFormat:@"%@: 👉 %@",self[@"username"],tribe[@"name"]];
+    NSString * msg =  [NSString stringWithFormat:@"%@: 👉 %@",self[@"username"],habit[@"name"]];
     
     [self sendPushFromMemberToMember:member withMessage:msg andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
         if (success) {
