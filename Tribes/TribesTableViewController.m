@@ -54,6 +54,8 @@
             self.navigationItem.title = @"Tribes";
             [self.tableView reloadData];
             [self setUp];
+            // set up UI elements
+            [self UISetUp];
         }];
     }
 }
