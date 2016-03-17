@@ -10,6 +10,8 @@
 #import <DigitsKit/DigitsKit.h>
 #import "Parse.h"
 #import "SCLAlertView.h"
+#import "User.h"
+#import "TribesTableViewController.h"
 
 @interface SignUpOrLoginViewController ()
 
@@ -134,7 +136,24 @@
         } else {
             [PFUser logInWithUsernameInBackground:session.userID password:session.userID block:^(PFUser * _Nullable user, NSError * _Nullable error) {
                 // The current user is now set to user.
-                [self.navigationController dismissViewControllerAnimated:true completion:nil];
+                // dismiss login
+                [self.navigationController dismissViewControllerAnimated:true completion:^{
+                    
+                    // alert user that app is loading tribes
+                    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
+                    [[User currentUser] updateTribesWithBlock:^{
+                        [alert hideView];
+                        
+                        // reload table view
+                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                        UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
+                        TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
+                        [[User currentUser] loadTribesWithBlock:^{
+                            [tribesVC.tableView reloadData];
+                        }];
+                    }];
+                }];
             }];
         }
     }];
