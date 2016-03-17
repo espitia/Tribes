@@ -176,24 +176,24 @@
     [queryForUserToReplyTo getObjectInBackgroundWithId:objectIdOfUserToReplyTo block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
         if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
-            message = [NSString stringWithFormat:@"%@: 👌", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: 👌", currentUser[@"name"]];
             category = @"WATCHING_YOU_REPLY";
             
         } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
-            message = [NSString stringWithFormat:@"%@: 🖐", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: 🖐", currentUser[@"name"]];
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
-            message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"name"]];
             category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
             //            User * userWhoReceivedApplause = (User *)object;
             //            [userWhoReceivedApplause addReceivedApplauseXp];
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
-            message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"name"]];
         } else if ([identifier isEqualToString:@"THANK_YOU_FOR_APPLAUSE"]) {
-            message = [NSString stringWithFormat:@"%@: ✊", currentUser[@"username"]];
+            message = [NSString stringWithFormat:@"%@: ✊", currentUser[@"name"]];
             
         } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
-            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"username"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
+            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"name"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
         }
         
         
