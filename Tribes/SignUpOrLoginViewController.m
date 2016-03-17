@@ -121,10 +121,6 @@
         [[PFUser currentUser] setObject:textField.text forKey:@"name"];
         [[PFUser currentUser] saveInBackground];
     }];
-
-    
-    //Overwrite SCLAlertView (Buttons, top circle and borders) colors
-    alert.customViewColor = [UIColor colorWithRed:255.0f/255.0f green:177.0f/255.0f blue:0.0f/255.0f alpha:1.0];
     
     [alert showInfo:@"Almost done!" subTitle:@"To finish signing up, set your name so your friends can identify you!" closeButtonTitle:nil duration:0.0];
 }
