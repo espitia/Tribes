@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Parse.h"
 #import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import <DigitsKit/DigitsKit.h>
 #import "User.h"
 
@@ -34,7 +35,7 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     // initialize Fabric:Digits
-    [Fabric with:@[[Digits class]]];
+    [Fabric with:@[[Crashlytics class], [Digits class]]];
 
     // create actions
     [self setUpNotifications:application];
