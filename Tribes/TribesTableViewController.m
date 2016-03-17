@@ -8,7 +8,6 @@
 
 #import "TribesTableViewController.h"
 #import "Parse.h"
-#import "SignupViewController.h"
 #import "TribeDetailTableViewController.h"
 #import "TribeMenuTableViewController.h"
 #import "Tribe.h"
