@@ -58,10 +58,10 @@
             </objects>
             <point key="canvasLocation" x="1595.5" y="-421.5"/>
         </scene>
-        <!--Settings Table View Controller-->
+        <!--Habit Settings Table View Controller-->
         <scene sceneID="WQm-fL-sCu">
             <objects>
-                <tableViewController id="R0B-8d-AIV" customClass="SettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController id="R0B-8d-AIV" customClass="HabitSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZhQ-9q-gNy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -147,6 +147,34 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nN-go-qfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2865.5" y="-1264.5"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="32x-z6-Qiw">
+            <objects>
+                <tableViewController id="oCV-Jp-DoB" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="iTA-br-oQy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="edG-A0-tmD">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="edG-A0-tmD" id="9nS-5d-jrb">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="oCV-Jp-DoB" id="2Ya-KW-cHu"/>
+                            <outlet property="delegate" destination="oCV-Jp-DoB" id="hLO-m0-oyD"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ymQ-au-FhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="914.5" y="-1210.5"/>
         </scene>
         <!--Tribe Menu Table View Controller-->
         <scene sceneID="E8S-YX-4ss">
@@ -236,6 +264,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Tribes" id="dkw-iL-wFf">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="xgz-FX-a3v">
+                            <connections>
+                                <segue destination="oCV-Jp-DoB" kind="show" id="Xfw-33-zbB"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Add" id="qgy-KA-oPa">
                             <connections>
                                 <segue destination="fft-A3-MET" kind="show" identifier="AddTribe" id="nll-Z3-ghn"/>

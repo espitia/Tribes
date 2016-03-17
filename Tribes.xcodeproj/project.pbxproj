@@ -17,7 +17,7 @@
 		0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0965E5811C87F4EE00FFA9C9 /* Habit.m */; };
 		09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B231C768C2D001B7752 /* KRConfettiView.m */; };
 		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
-		09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* SettingsTableViewController.m */; };
+		09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */; };
 		09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */; };
 		09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
@@ -83,8 +83,8 @@
 		09688B221C768C2D001B7752 /* KRConfettiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRConfettiView.h; sourceTree = "<group>"; };
 		09688B231C768C2D001B7752 /* KRConfettiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRConfettiView.m; sourceTree = "<group>"; };
 		09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "completion-sound.mp3"; sourceTree = "<group>"; };
-		09688B301C7B7D92001B7752 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
-		09688B311C7B7D92001B7752 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitSettingsTableViewController.h; sourceTree = "<group>"; };
+		09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitSettingsTableViewController.m; sourceTree = "<group>"; };
 		09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeMenuTableViewController.h; sourceTree = "<group>"; };
 		09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeMenuTableViewController.m; sourceTree = "<group>"; };
 		09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHabitTableViewController.h; sourceTree = "<group>"; };
@@ -268,8 +268,8 @@
 		09688B331C7B7D96001B7752 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				09688B301C7B7D92001B7752 /* SettingsTableViewController.h */,
-				09688B311C7B7D92001B7752 /* SettingsTableViewController.m */,
+				09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */,
+				09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -594,7 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
-				09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */,
+				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
 				099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,

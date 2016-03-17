@@ -1,5 +1,5 @@
 //
-//  SettingsTableViewController.h
+//  HabitSettingsTableViewController.h
 //  Tribes
 //
 //  Created by German Espitia on 2/22/16.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Activity.h"
 
-@interface SettingsTableViewController : UITableViewController
+@interface HabitSettingsTableViewController : UITableViewController
 
 @property (nonatomic, strong) Activity * activity;
 

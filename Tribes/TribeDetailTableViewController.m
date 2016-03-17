@@ -9,7 +9,7 @@
 #import "TribeDetailTableViewController.h"
 #import "AddFriendsTableViewController.h"
 #import "User.h"
-#import "SettingsTableViewController.h"
+#import "HabitSettingsTableViewController.h"
 #import "SCLAlertView.h"
 #import "HYBubbleButton.h"
 
@@ -285,7 +285,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier  isEqual:@"showSettings"]) {
-        SettingsTableViewController * vc = (SettingsTableViewController *)segue.destinationViewController;
+        HabitSettingsTableViewController * vc = (HabitSettingsTableViewController *)segue.destinationViewController;
         vc.activity = sender;
     }
 }

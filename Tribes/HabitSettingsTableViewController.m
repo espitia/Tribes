@@ -1,22 +1,22 @@
 //
-//  SettingsTableViewController.m
+//  HabitSettingsTableViewController.m
 //  Tribes
 //
 //  Created by German Espitia on 2/22/16.
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
-#import "SettingsTableViewController.h"
+#import "HabitSettingsTableViewController.h"
 #import "SCLAlertView.h"
 
-@interface SettingsTableViewController () {
+@interface HabitSettingsTableViewController () {
     BOOL editingDueTime;
     UIDatePicker * timePicker;
 }
 
 @end
 
-@implementation SettingsTableViewController
+@implementation HabitSettingsTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
