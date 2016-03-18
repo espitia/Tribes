@@ -86,15 +86,23 @@
             // resign keyboard for asthetics with alert
             [tribeNameTextField resignFirstResponder];
             
-            // show waiting alert
+            // init waiting alert
             SCLAlertView * waitingAlert = [[SCLAlertView alloc] initWithNewWindow];
-            [waitingAlert showWaiting:@"Creating new Tribe 🔨" subTitle:@"I will be just a second.. ⏲" closeButtonTitle:nil duration:0.0];
-        
+            SCLAlertView * stillWaitingAlert = [[SCLAlertView alloc] initWithNewWindow];
             
+            // show waiting alerts
+            [waitingAlert showWaiting:@"Creating new Tribe 🔨" subTitle:@"It will be just a second.. ⏲" closeButtonTitle:nil duration:6.0];
+            [waitingAlert alertIsDismissed:^{
+                [stillWaitingAlert showWaiting:@"Taking a bit long.. 😬" subTitle:@"Just a few more seconds.. ⏲" closeButtonTitle:nil duration:0.0];
+            }];
+
             // create the tribe
             [currentUser createNewTribeWithName:tribeNameTextField.text withBlock:^(BOOL success) {
                 
+                // remove waiting alerts
                 [waitingAlert hideView];
+                [stillWaitingAlert hideView];
+                
                 if (success) {
                     // send tribe back to main viewcontroller
                     [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
@@ -105,7 +113,7 @@
                         [tribeNameTextField becomeFirstResponder];
                         createTribeButton.enabled = true;
                     }];
-                    [alert showError:@"❌" subTitle:@"There was an error creating your Tribe. Please try again." closeButtonTitle:nil duration:0.0];
+                    [alert showError:@"😬" subTitle:@"There was an error creating your Tribe. Please try again." closeButtonTitle:nil duration:0.0];
                 }
 
             }];
@@ -127,6 +135,4 @@
     }
 
 }
-
-
 @end
