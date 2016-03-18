@@ -5,8 +5,9 @@
 
 target 'Tribes' do
 	pod 'Parse'
-	pod 'Fabric'
-	pod 'Digits'
+    pod 'Fabric'
+    pod 'Crashlytics'
+    pod 'Digits'
 	pod 'TwitterCore'
 	pod 'MCSwipeTableViewCell', '~> 2.1.4'
     pod 'YLProgressBar', '~> 3.8.0'

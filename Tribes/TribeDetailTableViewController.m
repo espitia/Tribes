@@ -9,7 +9,7 @@
 #import "TribeDetailTableViewController.h"
 #import "AddFriendsTableViewController.h"
 #import "User.h"
-#import "SettingsTableViewController.h"
+#import "HabitSettingsTableViewController.h"
 #import "SCLAlertView.h"
 #import "HYBubbleButton.h"
 
@@ -70,7 +70,7 @@
     User * member = _habit.membersAndActivities[indexPath.row][@"member"];
     Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
     
-    NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
+    NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"name"]];
     cell.textLabel.text = titleLabel;
     
     int completions;
@@ -133,13 +133,13 @@
         } else if (activity.hibernation) {
             
             // let user know
-            message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
+            message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"name"]];
             [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             
         } else if ([[member activityForHabit:_habit] completedForDay]) {
             
             // let user know
-            message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"username"]];
+            message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"name"]];
             [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             
             
@@ -285,7 +285,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier  isEqual:@"showSettings"]) {
-        SettingsTableViewController * vc = (SettingsTableViewController *)segue.destinationViewController;
+        HabitSettingsTableViewController * vc = (HabitSettingsTableViewController *)segue.destinationViewController;
         vc.activity = sender;
     }
 }

@@ -7,6 +7,11 @@
 //
 
 #import "SignUpOrLoginViewController.h"
+#import <DigitsKit/DigitsKit.h>
+#import "Parse.h"
+#import "SCLAlertView.h"
+#import "User.h"
+#import "TribesTableViewController.h"
 
 @interface SignUpOrLoginViewController ()
 
@@ -27,15 +32,127 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)signUp:(id)sender {
+    
+    
+    [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
 
-/*
-#pragma mark - Navigation
+        if (error) {
+            NSLog(@"Error authenticating user with Digits");
+        } else {
+            
+            PFQuery * query = [PFUser query];
+            [query whereKey:@"username" equalTo:session.userID];
+            [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+                // found user already! -> log them in to old account
+                if (object) {
+                    [PFUser logInWithUsernameInBackground:session.userID password:session.userID block:^(PFUser * _Nullable user, NSError * _Nullable error) {
+                        // The current user is now set to user.
+                        [self.navigationController dismissViewControllerAnimated:true completion:nil];
+                    }];
+                } else { // sign up
+                    [self signUpUserWithDigitsId:session.userID];
+                }
+            }];
+     
+        }
+        
+    }];
+    
 }
-*/
+
+-(void)signUpUserWithDigitsId:(NSString *)digitsId {
+    //sign up user with Parse
+    PFUser * user = [PFUser user];
+    user.username = digitsId;
+    user.password = digitsId;
+    user[@"digitsUserId"] = digitsId;
+    
+    // add id to digits account to parse user object
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        
+        if (error) {
+            NSLog(@"Error signing up user to Parse");
+        } else {
+            
+            // save installation for pushes
+            PFInstallation *installation = [PFInstallation currentInstallation];
+            installation[@"user"] = [PFUser currentUser];
+            [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (error) {
+                    NSLog(@"Error saving installation object (for push notif.)");
+                } else {
+                    [PFUser becomeInBackground:user.sessionToken block:^(PFUser *user, NSError *error) {
+                        if (error) {
+                            //check for token if error
+                            NSLog(@"Error becoming user");
+                        } else {
+                            
+                            // The current user is now set to user.
+                            // dismiss signup controller
+                            [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                
+                                [self askForUsername];
+                                
+                                
+                            }];
+                            
+                        }
+                    }];
+                }
+                
+                
+            }];
+        }
+        
+        
+        
+    }];
+}
+-(void)askForUsername {
+    // ask user for last step - setting name
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+
+    UITextField * textField = [alert addTextField:@"Enter your name"];
+
+    [alert addButton:@"READY!" actionBlock:^(void) {
+        [[PFUser currentUser] setObject:textField.text forKey:@"name"];
+        [[PFUser currentUser] saveInBackground];
+    }];
+    
+    [alert showInfo:@"Almost done!" subTitle:@"To finish signing up, set your name so your friends can identify you!" closeButtonTitle:nil duration:0.0];
+}
+- (IBAction)signIn:(id)sender {
+
+    [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
+        if (error) {
+            NSLog(@"Error authenticating user to Digits");
+        } else {
+            [PFUser logInWithUsernameInBackground:session.userID password:session.userID block:^(PFUser * _Nullable user, NSError * _Nullable error) {
+                // The current user is now set to user.
+                // dismiss login
+                [self.navigationController dismissViewControllerAnimated:true completion:^{
+                    
+                    // alert user that app is loading tribes
+                    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
+                    [[User currentUser] updateTribesWithBlock:^{
+                        [alert hideView];
+                        
+                        // reload table view
+                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                        UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
+                        TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
+                        [[User currentUser] loadTribesWithBlock:^{
+                            [tribesVC.tableView reloadData];
+                        }];
+                    }];
+                }];
+            }];
+        }
+    }];
+}
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090EDC501C9B5567005D3477 /* SettingsTableViewController.m */; };
 		0917EC471C4037D600BE2697 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC461C4037D600BE2697 /* main.m */; };
 		0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC491C4037D600BE2697 /* AppDelegate.m */; };
 		0917EC501C4037D600BE2697 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC4E1C4037D600BE2697 /* Main.storyboard */; };
@@ -17,7 +18,7 @@
 		0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0965E5811C87F4EE00FFA9C9 /* Habit.m */; };
 		09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B231C768C2D001B7752 /* KRConfettiView.m */; };
 		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
-		09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* SettingsTableViewController.m */; };
+		09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */; };
 		09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */; };
 		09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
@@ -28,7 +29,6 @@
 		099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2001C9520E100A734F0 /* MembersTableViewController.m */; };
 		099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2031C9524F300A734F0 /* HabitsTableViewController.m */; };
 		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
-		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
 		09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */; };
@@ -65,6 +65,8 @@
 
 /* Begin PBXFileReference section */
 		015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tribes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		090EDC4F1C9B5567005D3477 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		090EDC501C9B5567005D3477 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		0917EC421C4037D600BE2697 /* Tribes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tribes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC461C4037D600BE2697 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0917EC481C4037D600BE2697 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,8 +86,8 @@
 		09688B221C768C2D001B7752 /* KRConfettiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRConfettiView.h; sourceTree = "<group>"; };
 		09688B231C768C2D001B7752 /* KRConfettiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRConfettiView.m; sourceTree = "<group>"; };
 		09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "completion-sound.mp3"; sourceTree = "<group>"; };
-		09688B301C7B7D92001B7752 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
-		09688B311C7B7D92001B7752 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitSettingsTableViewController.h; sourceTree = "<group>"; };
+		09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitSettingsTableViewController.m; sourceTree = "<group>"; };
 		09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeMenuTableViewController.h; sourceTree = "<group>"; };
 		09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeMenuTableViewController.m; sourceTree = "<group>"; };
 		09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHabitTableViewController.h; sourceTree = "<group>"; };
@@ -104,8 +106,6 @@
 		099BB2031C9524F300A734F0 /* HabitsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitsTableViewController.m; sourceTree = "<group>"; };
 		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
 		09BDD94E1C7E929000061567 /* HYBubbleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBubbleButton.m; sourceTree = "<group>"; };
-		09C6584F1C469FEA008C4EC3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
-		09C658501C469FEA008C4EC3 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeDetailTableViewController.h; sourceTree = "<group>"; };
 		09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeDetailTableViewController.m; sourceTree = "<group>"; };
 		09C6585B1C47F188008C4EC3 /* Tribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tribe.h; sourceTree = "<group>"; };
@@ -166,6 +166,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090EDC521C9B556C005D3477 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				090EDC4F1C9B5567005D3477 /* SettingsTableViewController.h */,
+				090EDC501C9B5567005D3477 /* SettingsTableViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		0917EC391C4037D500BE2697 = {
 			isa = PBXGroup;
 			children = (
@@ -255,7 +264,7 @@
 			children = (
 				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
 				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
-				09688B331C7B7D96001B7752 /* Settings */,
+				09688B331C7B7D96001B7752 /* Habit Settings */,
 			);
 			name = "Habit Detail";
 			sourceTree = "<group>";
@@ -268,13 +277,13 @@
 			name = Audio;
 			sourceTree = "<group>";
 		};
-		09688B331C7B7D96001B7752 /* Settings */ = {
+		09688B331C7B7D96001B7752 /* Habit Settings */ = {
 			isa = PBXGroup;
 			children = (
-				09688B301C7B7D92001B7752 /* SettingsTableViewController.h */,
-				09688B311C7B7D92001B7752 /* SettingsTableViewController.m */,
+				09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */,
+				09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */,
 			);
-			name = Settings;
+			name = "Habit Settings";
 			sourceTree = "<group>";
 		};
 		09850B1F1C8F343E00FE9609 /* Tribe Menu */ = {
@@ -322,8 +331,6 @@
 			children = (
 				099760511C7D2710008E88A7 /* SignUpOrLoginViewController.h */,
 				099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */,
-				09C6584F1C469FEA008C4EC3 /* SignupViewController.h */,
-				09C658501C469FEA008C4EC3 /* SignupViewController.m */,
 			);
 			name = Signup/onboard;
 			sourceTree = "<group>";
@@ -361,6 +368,7 @@
 			children = (
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
+				090EDC521C9B556C005D3477 /* Settings */,
 				09688B291C77CE9A001B7752 /* Habit Detail */,
 				0993B5191C55385D0008B7E5 /* Create a Tribe */,
 				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
@@ -599,7 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
-				09688B321C7B7D92001B7752 /* SettingsTableViewController.m in Sources */,
+				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
 				099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
@@ -610,13 +618,13 @@
 				09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */,
 				0993B5181C5537940008B7E5 /* Activity.m in Sources */,
 				099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */,
+				090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */,
 				09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */,
 				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
 				09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */,
 				099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */,
-				09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

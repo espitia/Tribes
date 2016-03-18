@@ -54,7 +54,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
     
     User * member = [_tribe.tribeMembers objectAtIndex:indexPath.row];
-    cell.textLabel.text = member[@"username"];
+    cell.textLabel.text = member[@"name"];
     
     return cell;
 }

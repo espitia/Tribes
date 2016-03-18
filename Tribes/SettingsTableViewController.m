@@ -2,17 +2,15 @@
 //  SettingsTableViewController.m
 //  Tribes
 //
-//  Created by German Espitia on 2/22/16.
+//  Created by German Espitia on 3/17/16.
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
 #import "SettingsTableViewController.h"
+#import "Parse.h"
 #import "SCLAlertView.h"
 
-@interface SettingsTableViewController () {
-    BOOL editingDueTime;
-    UIDatePicker * timePicker;
-}
+@interface SettingsTableViewController ()
 
 @end
 
@@ -20,7 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"Settings 🔧";
+    
+    self.tableView.rowHeight = 70;
 }
 
 
@@ -34,71 +33,77 @@
     return 1;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70;
-}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
     
-    switch (indexPath.row) {
+    NSString * title;
+    NSString * detailText;
+    
+    switch (indexPath.section) {
         case 0:
-            [self formatHibernationCell:cell];
+            switch (indexPath.row) {
+                case 0:
+                    title = @"Log out";
+                    detailText = @"📲";
+                    break;
+                    
+                default:
+                    break;
+            }
             break;
             
         default:
             break;
     }
     
+    cell.textLabel.text = title;
+    cell.detailTextLabel.text = detailText;
+    
     return cell;
 }
 
 #pragma mark - Table View Delegate
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    // deselect cell
+    //deselect row
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    
-    // show alert explainers
-    
-    SCLAlertView *alert = [[SCLAlertView alloc] initWithNewWindow];
-    
-    switch (indexPath.row) {
-        case 0:
-            [alert showQuestion:@"🐻 Hibernation" subTitle:@"When you hibernate, you are taking a rest for the day. Other Tribe members won't send you motivation so you can relax 😎" closeButtonTitle:@"OK" duration:0.0];
-            break;
 
+    switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 0:
+                    [self signOut];
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+            
         default:
             break;
     }
-    
-    
 }
 
-#pragma mark - Formatting cells
-
--(void)formatHibernationCell:(UITableViewCell *)cell {
-    cell.textLabel.text = @"🐻 Hibernation";
-
-    UISwitch * hibernationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
-    cell.accessoryView = hibernationSwitch;
+-(void)signOut {
     
-    hibernationSwitch.on = (_activity.hibernation) ? true : false;
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert addButton:@"Yes! 😄" actionBlock:^{
+        [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+            
+            [self showLoginScreen];
+            [self.navigationController popToRootViewControllerAnimated:true];
+        }];
+    }];
+    [alert showWarning:@"Log out" subTitle:@"Are you sure you want to log out?" closeButtonTitle:@"Never mind.. 🤔" duration:0.0];
 
-    [hibernationSwitch addTarget:self action:@selector(handleHibernationSwitch:) forControlEvents:UIControlEventValueChanged];
-    
 }
 
-#pragma mark - Handle actions
-
--(void)handleHibernationSwitch:(UISwitch *)sender {
+-(void)showLoginScreen {
     
-    UISwitch* switchControl = sender;
-    
-    _activity.hibernation = (switchControl.on) ? true : false;
-    [_activity saveEventually];
+    UINavigationController * SignUpLoginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpLoginViewController"];
+    [self.navigationController presentViewController:SignUpLoginViewController animated:YES completion:nil];
 }
-
-
 @end

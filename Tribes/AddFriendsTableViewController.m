@@ -101,7 +101,7 @@
     switch (indexPath.section) {
         case 0:
             // matched users
-            cell.textLabel.text = user[@"username"];
+            cell.textLabel.text = user[@"name"];
             break;
         case 1:
         
