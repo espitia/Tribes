@@ -40,32 +40,37 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [members addObject:self];
     
     [newTribe saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        
-        if (!error) {
-            NSLog(@"successfully saved new tribe");
+        if (!error && succeeded) {
+            [newTribe pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (!error && succeeded) {
+                    NSLog(@"successfully saved new tribe");
                     
-            [self addObject:newTribe forKey:@"tribes"];
-        
-            [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (!error) {
+                    [self addObject:newTribe forKey:@"tribes"];
                     
-                    [self updateTribesWithBlock:^{
-                        callback(true);
-
+                    [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (!error && succeeded) {
+                            
+                            //                    [self updateTribesWithBlock:^{
+                            callback(true);
+                            
+                            //                    }];
+                            
+                            NSLog(@"successfully saved user with new tribe");
+                        } else {
+                            NSLog(@"error saving user with new tribe");
+                            callback(false);
+                        }
                     }];
                     
-                    NSLog(@"successfully saved user with new tribe");
                 } else {
-                    NSLog(@"error saving user with new tribe");
+                    NSLog(@"error saving pinning new tribe");
                     callback(false);
                 }
             }];
-            
         } else {
             NSLog(@"error saving new tribe");
             callback(false);
         }
-        
     }];
 }
 
@@ -174,9 +179,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                                     }];
                                 }];
                             }
-                                
-                            
-                            
+ 
                         }];
                     }];
                     
