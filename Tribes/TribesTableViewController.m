@@ -37,7 +37,6 @@
     // set currentUser
     currentUser = [User currentUser];
     
-//    [self signUp];
 
     //  log in / sign up user if non-existent
     if (!currentUser) {
