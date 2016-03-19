@@ -100,7 +100,17 @@
                 
                 if (success) {
                     NSLog(@"loaded all memebers");
-                    callback(true);
+                    
+                    [self loadActivitiesWithBlock:^(bool success) {
+                        if (success) {
+                            NSLog(@"successfully loaded all activities");
+                            callback(true);
+                        } else {
+                            NSLog(@"failed to load activities");
+                            callback(false);
+                        }
+                    }];
+                    
                 } else {
                     NSLog(@"failed to load members");
                     callback(false);
