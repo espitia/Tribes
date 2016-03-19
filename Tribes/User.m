@@ -30,6 +30,79 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 #pragma mark - Main Loading/Updating methods
 
+-(void)loadTribesWithBlock:(void(^)(bool success))callback {
+    
+    
+    [self loadUserWithBlock:^(bool success) {
+        if (success) {
+            
+            // load all tribes only if there are tribes available
+            if (false) {
+//            if (self.tribes.count > 0) {
+                
+                __block int counter = 0;
+                // iterate through each tribe to load
+                for (Tribe * tribe in self.tribes) {
+                    
+                    [tribe loadTribeWithBlock:^(bool success) {
+                        if (success) {
+                            counter++;
+                            if (counter == self.tribes.count) {
+                                NSLog(@"successfully loaded all tribes");
+                                callback(true);
+                            }
+                        } else {
+                            NSLog(@"failed to load tribes");
+                            callback(false);
+                        }
+                    }];
+                    counter++;
+                }
+            } else {
+                NSLog(@"no tribes were found to load. loading user complete.");
+                callback(true);
+            }
+            
+        } else {
+            NSLog(@"failed to load user.");
+            callback(false);
+        }
+    }];
+    
+}
+
+-(void)loadUserWithBlock:(void(^)(bool success))callback {
+    
+    // fetch from local datastore
+    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        // if no errors were found in object, done
+        if (!error && object && object.createdAt) {
+            callback(true);
+        } else {
+            NSLog(@"error fetching user from local datastore .. will attempt to fetch from network.");
+            //if not found in datastore, fetch from network
+            [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                if (object && !error) {
+                    // if user is found, pin it to local datastore
+                    [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded && !error) {
+                            callback(true);
+                        } else {
+                            NSLog(@"error pinning user");
+                            callback(false);
+                        }
+                    }];
+                } else {
+                    NSLog(@"error fetching user object from network");
+                    callback(false);
+                }
+            }];
+            
+        }
+    }];
+    
+}
 
 #pragma mark - Create Tribe 
 

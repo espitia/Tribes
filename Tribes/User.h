@@ -20,11 +20,11 @@ extern int RECEIVED_APPLAUSE_XP;
 // required parse method
 +(void)load;
 
+// LOADING METHODS
+-(void)loadTribesWithBlock:(void(^)(bool success))callback;
 
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback;
-
-
 
 //removing user from tribe
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;
