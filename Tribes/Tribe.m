@@ -94,7 +94,7 @@
         
         // if attempt successfull and habits are available -> continue to load members and activities
         if (success && habitsWereAvailable) {
-            NSLog(@"2. successfully loaded all habits for tribe %@", self);
+            NSLog(@"2. successfully loaded all habits for tribe");
             
             [self loadMembersWithBlock:^(bool success) {
                 
@@ -134,7 +134,7 @@
     
     // first check if there are habits to load
     if (self.habits.count > 0) {
-        NSLog(@"found habits for tribe %@. will attempt to load first from local datastore.", self);
+        NSLog(@"found habits for tribe. will attempt to load first from local datastore.");
         
                 __block int counter = 0;
         for (Habit * habit in self.habits) {
