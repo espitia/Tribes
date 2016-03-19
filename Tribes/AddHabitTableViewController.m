@@ -85,11 +85,21 @@
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
         [alert showWaiting:@"Creating habit..." subTitle:@"🔧🔧🔧" closeButtonTitle:nil duration:0.0];
         
-        [_tribe addHabitToTribeWithName:habitNameTextField.text andBlock:^(BOOL *success) {
-            [_tribe updateTribeWithBlock:^{
-                [alert hideView];
-                [self.navigationController popViewControllerAnimated:true];
-            }];
+        [_tribe addHabitToTribeWithName:habitNameTextField.text andBlock:^(bool success) {
+            if (success) {
+                [_tribe updateTribeWithBlock:^(bool success) {
+                    if (success) {
+                        [alert hideView];
+                        [self.navigationController popViewControllerAnimated:true];
+                    } else {
+                        SCLAlertView * errorAddingHabit = [[SCLAlertView alloc] initWithNewWindow];
+                        [errorAddingHabit showError:@"Oh oh!" subTitle:@"There was an error adding the habit. Please try again." closeButtonTitle:@"OK" duration:0.0];
+                    }
+                }];
+            } else {
+                SCLAlertView * errorAddingHabit = [[SCLAlertView alloc] initWithNewWindow];
+                [errorAddingHabit showError:@"Oh oh!" subTitle:@"There was an error adding the habit. Please try again." closeButtonTitle:@"OK" duration:0.0];
+            }
         }];
         
         
