@@ -88,6 +88,7 @@
         }
     }];
 }
+
 -(void)loadHabitsMembersAndActivities:(void(^)(bool success))callback {
     // attempt to load habits
     [self loadHabitsWithBlock:^(bool success, bool habitsWereAvailable) {
@@ -295,7 +296,157 @@
     self.tribeMembers = [NSMutableArray arrayWithArray:membersArray];
 }
 
+#pragma mark - Updating methods
 
+-(void)updateTribeWithBlock:(void(^)(bool success))callback {
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if (object && !error && object.createdAt) {
+            NSLog(@"successfully fetched tribe from network");
+            // pin to local datastore
+            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (!error && succeeded) {
+                    NSLog(@"succesfully pinned tribe.");
+                    
+                    [self updateHabitsWithBlock:^(bool success) {
+                        if (success) {
+                            [self updateMembersWithBlock:^(bool success) {
+                                if (success) {
+                                    [self updateActivitiesWithBlock:^(bool success) {
+                                        if (success) {
+                                            NSLog(@"successfully updated tribe");
+                                            callback(true);
+                                        } else {
+                                            NSLog(@"failed to update activities");
+                                            callback(false);
+                                        }
+                                    }];
+                                } else {
+                                    NSLog(@"failed to update members");
+                                    callback(false);
+                                }
+                            }];
+                        } else {
+                            NSLog(@"failed to update members");
+                            callback(false);
+                        }
+                    }];
+                    
+                } else {
+                    NSLog(@"failed to pin tribe");
+                    callback(false);
+                }
+            }];
+        } else {
+            NSLog(@"failed to fetch tribe from network");
+            callback(false);
+        }
+    }];
+}
+
+-(void)updateHabitsWithBlock:(void(^)(bool success))callback {
+    // first check if there are habits to load
+    if (self.habits.count > 0) {
+        NSLog(@"found habits for tribe. will attempt to load first from local datastore.");
+        
+        [PFObject fetchAllInBackground:self.habits block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            
+            if (objects && !error) {
+                NSLog(@"successfully fetched habits to update");
+                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                    
+                    if (succeeded && !error) {
+                        NSLog(@"successfully pinned habits to update");
+                        callback(true);
+                    } else {
+                        NSLog(@"failed to pin habits to update");
+                        callback(false);
+                    }
+                    
+                }];
+            } else {
+                NSLog(@"failed to fetch habits to update");
+                callback(false);
+            }
+        }];
+
+    }
+    
+}
+
+-(void)updateMembersWithBlock:(void(^)(bool success))callback {
+    PFRelation * relationToMembersToFetchFromNetwork = [self relationForKey:@"members"];
+    PFQuery * query = [relationToMembersToFetchFromNetwork query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (!error && objects && [self allMembersFullyLoaded:objects]) {
+            NSLog(@"succesfully fetched members from network");
+            
+            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error) {
+                    NSLog(@"successfully pinned members");
+                    
+                    // add members to tribe.tribeMembers
+                    [self addTribeMembersToTribe:objects];
+                    // add members to habits.members
+                    [self addTribeMembersToHabits:objects];
+                    
+                    callback(true);
+                } else {
+                    NSLog(@"failed to pin members");
+                    callback(false);
+                }
+            }];
+            
+        } else {
+            NSLog(@"failed to load members from network");
+            callback(false);
+        }
+    }];
+    
+}
+
+-(void)updateActivitiesWithBlock:(void(^)(bool success))callback {
+    if (!tribeMembers || tribeMembers.count <= 0) {
+        NSLog(@"Error accessing members when attempting to load activities");
+        callback(false);
+    }
+    
+    // iterate through every member and load their activities
+    __block int memberCounter = 0;
+    for (User * member in tribeMembers) {
+        __block int activityCounter = 0;
+        for (Activity * activity in member.activities) {
+
+            [activity fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    if (object && object.createdAt && !error) {
+                        NSLog(@"successfully fetched activity from network");
+                        [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                            if (succeeded && !error) {
+                                NSLog(@"successfully pinned activity");
+                                
+                                activityCounter++;
+                                
+                                if (activityCounter == member.activities.count) {
+                                    activityCounter = 0; memberCounter++;
+                                    if (memberCounter == tribeMembers.count) {
+                                        callback(true);
+                                    }
+                                }
+                            } else {
+                                NSLog(@"failed to pin activity");
+                                callback(false);
+                            }
+                        }];
+                        
+                    } else {
+                        NSLog(@"failed to fetch activity from network.");
+                        callback(false);
+                    }
+                }];
+        }
+    }
+}
 #pragma mark - Handling users in Tribe
 
 /**
