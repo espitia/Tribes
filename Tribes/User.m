@@ -78,15 +78,18 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         
         // if no errors were found in object, done
         if (!error && object && object.createdAt) {
+            NSLog(@"successfully loaded user from local datastore");
             callback(true);
         } else {
             NSLog(@"error fetching user from local datastore .. will attempt to fetch from network.");
             //if not found in datastore, fetch from network
             [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
                 if (object && !error) {
+                    NSLog(@"successfully fetched user frmo network");
                     // if user is found, pin it to local datastore
                     [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                         if (succeeded && !error) {
+                            NSLog(@"successfully pinned user to local datastore");
                             callback(true);
                         } else {
                             NSLog(@"error pinning user");
