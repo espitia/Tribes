@@ -55,7 +55,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                             callback(false);
                         }
                     }];
-                    counter++;
                 }
             } else {
                 NSLog(@"no tribes were found to load. loading user complete.");
