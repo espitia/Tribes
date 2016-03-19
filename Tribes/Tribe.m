@@ -97,6 +97,7 @@
             NSLog(@"2. successfully loaded all habits for tribe %@", self);
             
             [self loadMembersWithBlock:^(bool success) {
+                
                 if (success) {
                     NSLog(@"loaded all memebers");
                     callback(true);
@@ -186,16 +187,59 @@
                     NSLog(@"failed to load members from network");
                     callback(false);
                 }
-                
-                
             }];
-            
         }
         
     }];
     
 }
 
+-(void)loadActivitiesWithBlock:(void(^)(bool success))callback {
+
+    if (!tribeMembers || tribeMembers.count <= 0) {
+        NSLog(@"Error accessing members when attempting to load activities");
+        callback(false);
+    }
+    
+    for (User * member in tribeMembers) {
+        for (Activity * activity in member.activities) {
+            
+            [activity fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                
+                if (object && object.createdAt && !error) {
+                    NSLog(@"successfully fetched activity from local data store");
+                    callback(true);
+                } else {
+                    NSLog(@"Failed to fetch activity from local data store. will attempt to fetch from network");
+                    
+                    [activity fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                        if (object && object.createdAt && !error) {
+                            NSLog(@"successfully fetched activity from network");
+                            [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                                if (succeeded && !error) {
+                                    NSLog(@"successfully pinned activity");
+                                    callback(true);
+                                } else {
+                                    NSLog(@"failed to pin activity");
+                                    callback(false);
+                                }
+                            }];
+                            
+                        } else {
+                            NSLog(@"failed to fetch activity from network.");
+                            callback(false);
+                        }
+                    }];
+                    
+                    
+                }
+            }];
+            
+            
+        }
+    }
+    
+}
 #pragma mark - Helper methods for Loading
 
 -(BOOL)allMembersFullyLoaded:(NSArray *)members {
