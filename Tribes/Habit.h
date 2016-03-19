@@ -14,6 +14,9 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+//loading methods
+-(void)loadHabitWithBlock:(void(^)(bool success))callback;
+
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
 

@@ -27,6 +27,35 @@
 
 #pragma mark - Loading Methods
 
+-(void)loadHabitWithBlock:(void(^)(bool success))callback {
+    
+    // attempt to load from local datastore
+    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (!error && object && object.createdAt) {
+            NSLog(@"succesfully fetched habit from local datastore");
+            callback(true);
+        } else {
+            NSLog(@"habit not found in local datastore. will attempt to fetch from network");
+            [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                if (object && !error && object.createdAt) {
+                    NSLog(@"successfully fetched habit from network");
+                    [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded && !error) {
+                            NSLog(@"successfully pinned habit");
+                            callback(true);
+                        } else {
+                            NSLog(@"failed to pin habit");
+                            callback(false);
+                        }
+                    }];
+                } else {
+                    NSLog(@"failed to fetch habit from network");
+                    callback(false);
+                }
+            }];
+        }
+    }];
+}
 
 #pragma mark - Push notifications to Tribe members
 
