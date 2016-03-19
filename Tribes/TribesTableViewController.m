@@ -256,11 +256,7 @@ heightForHeaderInSection:(NSInteger)section {
 #pragma mark - Segue handling
 
 -(IBAction)unwindFromAddTribe:(UIStoryboardSegue *)segue {
-    
-    // reload tableview after added new tribe
-    [currentUser loadTribesWithBlock:^{
-        [self.tableView reloadData];
-    }];
+    [self.tableView reloadData];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
