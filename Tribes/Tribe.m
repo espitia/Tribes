@@ -237,7 +237,7 @@
                 } else {
                     NSLog(@"Failed to fetch activity from local data store. will attempt to fetch from network");
                     
-                    [activity fetchIfNeededInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    [activity fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
                         if (object && object.createdAt && !error) {
                             NSLog(@"successfully fetched activity from network");
                             [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
