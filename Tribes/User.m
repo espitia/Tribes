@@ -28,7 +28,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [self registerSubclass];
 }
 
-#pragma mark - Main Loading/Updating methods
+#pragma mark - Main Loading
 
 -(void)loadTribesWithBlock:(void(^)(bool success))callback {
     
@@ -103,6 +103,76 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }
     }];
     
+}
+#pragma mark - Updating methods
+
+-(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(bool success))callback  {
+    
+    if (!self.tribes) {
+        NSLog(@"no tribes available to update it's activities (updateMemActivitesForAllTribes:)");
+        callback(false);
+    } else {
+        // get obj ids of all activites of all members in all tribes
+        NSMutableArray * objIdsOfActivitiesToUpdate = [[NSMutableArray alloc] init];
+        for (Tribe * tribe in self.tribes) {
+            for (User * member in tribe.tribeMembers) {
+                for (Activity * activity in member.activities) {
+                    [objIdsOfActivitiesToUpdate addObject:activity.objectId];
+                }
+            }
+        }
+        
+        
+        
+        // get those activity objects
+        PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
+        [query whereKey:@"objectId" containedIn:objIdsOfActivitiesToUpdate];
+        NSLog(@"updating all activities of all members in all tribes ...");
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            NSLog(@"successfully fetched from network all activities of all members in all tribes ...");
+            
+            if (!error && objects) {
+                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                    
+                    
+                    if (succeeded && !error) {
+                        
+                        NSLog(@"successfully pinned all activities");
+                        // remove all activities from all members to replace them with new
+                        for (Tribe * tribe in self.tribes) {
+                            for (User * member in tribe.tribeMembers) {
+                                [member.activities removeAllObjects];
+                            }
+                        }
+
+                        // add new ones to members
+                        for (Activity * activity in objects) {
+                            for (Tribe * tribe in self.tribes) {
+                                for (User * member in tribe.tribeMembers) {
+                                    if (activity[@"createdBy"] == member) {
+                                        [member.activities addObject:activity];
+                                    }
+                                }
+                            }
+                        }
+                        NSLog(@"successfully updated all activities");
+                        callback(true);
+                    
+                        
+                        
+                    } else {
+                        NSLog(@"failed to pin activities while attempting to update them");
+                        callback(false);
+                    }
+                    
+                }];
+            } else {
+                NSLog(@"failed to update activities");
+                callback(false);
+            }
+            
+        }];
+    }
 }
 
 #pragma mark - Create Tribe 

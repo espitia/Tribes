@@ -23,6 +23,9 @@ extern int RECEIVED_APPLAUSE_XP;
 // LOADING METHODS
 -(void)loadTribesWithBlock:(void(^)(bool success))callback;
 
+// UPDATING MEHTODS
+-(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(bool success))callback;
+
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback;
 
