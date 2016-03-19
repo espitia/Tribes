@@ -40,7 +40,7 @@
     [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
         if (object && !error && object.createdAt) {
-            NSLog(@"successfully loaded tribe from local datastore");
+            NSLog(@"1. successfully loaded tribe from local datastore");
             
             //continue loading habits -> members -> activites
             [self loadHabitsMembersAndActivities:^(bool success) {
@@ -58,7 +58,7 @@
             // fetch from network
             [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
                 
-                if (object && !error) {
+                if (object && !error && object.createdAt) {
                     NSLog(@"successfully fetched tribe from network");
                     // pin to local datastore
                     [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
