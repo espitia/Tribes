@@ -125,31 +125,43 @@
     [alert showInfo:@"Almost done!" subTitle:@"To finish signing up, set your name so your friends can identify you!" closeButtonTitle:nil duration:0.0];
 }
 - (IBAction)signIn:(id)sender {
+    
+    // alert to notify user of any errors
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
 
     [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
         if (error) {
             NSLog(@"Error authenticating user to Digits");
+            [alert showError:@"Oh oh!" subTitle:@"There was an error authenticating your phone number. Please try again." closeButtonTitle:@"OK" duration:0.0];
         } else {
             [PFUser logInWithUsernameInBackground:session.userID password:session.userID block:^(PFUser * _Nullable user, NSError * _Nullable error) {
-                // The current user is now set to user.
-                // dismiss login
-                [self.navigationController dismissViewControllerAnimated:true completion:^{
-                    
-                    // alert user that app is loading tribes
-                    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-                    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
-                    [[User currentUser] updateTribesWithBlock:^{
-                        [alert hideView];
-                        
-                        // reload table view
-                        UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                        UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
-                        TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
-                        [[User currentUser] loadTribesWithBlock:^{
-                            [tribesVC.tableView reloadData];
+                
+                
+                if (!error) {
+                    // The current user is now set to user.
+                    // dismiss login
+                    [self.navigationController dismissViewControllerAnimated:true completion:^{
+
+                        // alert user that app is loading tribes
+                        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                        [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
+                        [[User currentUser] updateTribesWithBlock:^{
+                            [alert hideView];
+                            
+                            // reload table view
+                            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                            UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
+                            TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
+                            [[User currentUser] loadTribesWithBlock:^{
+                                [tribesVC.tableView reloadData];
+                            }];
                         }];
                     }];
-                }];
+                } else {
+                    NSLog(@"error logging in to parse.");
+                    [alert showError:@"Oh oh!" subTitle:@"There was an error logging in. Please try again." closeButtonTitle:@"OK" duration:0.0];
+                }
+                
             }];
         }
     }];
