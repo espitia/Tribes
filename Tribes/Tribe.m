@@ -187,12 +187,24 @@
                 if (!error && objects && [self allMembersFullyLoaded:objects]) {
                     NSLog(@"succesfully fetched members from network");
                     
-                    // add members to tribe.tribeMembers
-                    [self addTribeMembersToTribe:objects];
-                    // add members to habits.members
-                    [self addTribeMembersToHabits:objects];
 
-                    callback(true);
+                    [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded && !error) {
+                            
+                            NSLog(@"successfully pinned members");
+                            
+                            // add members to tribe.tribeMembers
+                            [self addTribeMembersToTribe:objects];
+                            // add members to habits.members
+                            [self addTribeMembersToHabits:objects];
+                            
+                            callback(true);
+                        } else {
+                            NSLog(@"failed to pin members");
+                            callback(false);
+                        }
+                    }];
+
                     
                 } else {
                     NSLog(@"failed to load members from network");
