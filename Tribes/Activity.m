@@ -28,27 +28,6 @@
 
 #pragma mark - Loading/updating methods
 
--(void)loadWithBlock:(void(^)(void))callback {
-    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        if (error || !object) {
-            //fetch from local and pin
-            NSLog(@"error fetching activity form local data storage.");
-            callback();
-        } else {
-            callback();
-        }
-    }];
-}
-
--(void)updateActivityWithBlock:(void(^)(void))callback {
-    
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        NSLog(@"successfuly updated activity object from network.");
-        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            callback();
-        }];
-    }];
-}
 
 
 #pragma mark - Completions

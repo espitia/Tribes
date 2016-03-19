@@ -24,16 +24,7 @@ extern int RECEIVED_APPLAUSE_XP;
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback;
 
-// loading methods
--(void)loadTribesWithBlock:(void(^)(void))callback;
--(void)loadActivitiesWithBlock:(void(^)(void))callback;
--(void)updateActivitiesWithBlock:(void(^)(void))callback;
 
--(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(void))callback;
-
-
-// update tribe data
--(void)updateTribesWithBlock:(void(^)(void))callback;
 
 //removing user from tribe
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;

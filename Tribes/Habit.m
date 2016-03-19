@@ -27,27 +27,6 @@
 
 #pragma mark - Loading Methods
 
--(void)loadWithBlock:(void(^)(void))callback {
-    
-    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        if (error || !object) {
-            NSLog(@"error fetching habit from local storage.");
-            callback();
-        } else {
-            callback();
-        }
-    }];
-}
-
--(void)updateHabitWithBlock:(void(^)(void))callback {
-    
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        NSLog(@"successfuly updated habit object from network.");
-        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            callback();
-        }];
-    }];
-}
 
 #pragma mark - Push notifications to Tribe members
 
