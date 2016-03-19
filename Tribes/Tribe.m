@@ -516,23 +516,18 @@
     return false;
 }
 
--(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(BOOL * success))callback {
-    
+-(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(bool success))callback {
 
-    __block BOOL success;
-    
     // cloud code to add habit and create activites for each user in tribe
     [PFCloud callFunctionInBackground:@"addActivitiesToUsersOfTribe"
                        withParameters:@{@"tribeObjectID":self.objectId,
                                         @"newHabitName":name}
                                 block:^(id  _Nullable object, NSError * _Nullable error) {
-                                            
+                                                                    
                                             if (error) {
-                                                success = false;
-                                                callback(&success);
+                                                callback(false);
                                             } else {
-                                                success = true;
-                                                callback(&success);
+                                                callback(true);
                                             }
                                         }];
     
