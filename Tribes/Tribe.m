@@ -34,8 +34,60 @@
 
 #pragma mark - Loading/Updating methods
 
-
-
+-(void)loadTribeWithBlock:(void(^)(bool success))callback {
+    
+    // fetch tribe from local storage
+    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if (object && !error && object.createdAt) {
+            NSLog(@"successfully loaded tribe from local datastore");
+            
+            //continue loading habits/members and activites
+            [self loadHabitsMembersAndActivitesWithBlock:^(bool success) {
+                if (success) {
+                    NSLog(@"successfully loaded all habits, members and activities");
+                    callback(true);
+                } else {
+                    NSLog(@"failed to load habits, members and activities");
+                    callback(false);
+                }
+            }];
+            
+        } else { // if failed to load from local datastore, fetch from network
+            NSLog(@"failed to load tribe from local datastore. will try to fetch from network");
+            // fetch from network
+            [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                
+                if (object && !error) {
+                    NSLog(@"successfully fetched tribe from network");
+                    // pin to local datastore
+                    [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (!error && succeeded) {
+                            NSLog(@"succesfully pinned tribe.");
+                            
+                            //continue loading habits/members and activites
+                            [self loadHabitsMembersAndActivitesWithBlock:^(bool success) {
+                                if (success) {
+                                    NSLog(@"successfully loaded all habits, members and activities");
+                                    callback(true);
+                                } else {
+                                    NSLog(@"failed to load habits, members and activities");
+                                    callback(false);
+                                }
+                            }];
+                        } else {
+                            NSLog(@"failed to pin tribe");
+                            callback(false);
+                        }
+                    }];
+                } else {
+                    NSLog(@"failed to fetch tribe from network");
+                    callback(false);
+                }
+            }];
+        }
+    }];
+}
 
 #pragma mark - Handling users in Tribe
 

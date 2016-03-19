@@ -15,6 +15,8 @@
 +(NSString *)parseClassName;
 +(void)load;
 
+//loading
+-(void)loadTribeWithBlock:(void(^)(bool success))callback;
 
 // handling users
 -(BOOL)membersAndActivitesAreLoaded;
