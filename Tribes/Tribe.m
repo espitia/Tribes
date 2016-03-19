@@ -211,14 +211,29 @@
         callback(false);
     }
     
+    
+    __block int memberCounter = 0;
+    __block int activityCounter = 0;
+    
     for (User * member in tribeMembers) {
+        
+        
+        
         for (Activity * activity in member.activities) {
             
             [activity fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
                 
                 if (object && object.createdAt && !error) {
                     NSLog(@"successfully fetched activity from local data store");
-                    callback(true);
+                    
+                    activityCounter++;
+                    
+                    if (activityCounter == member.activities.count) {
+                        activityCounter = 0; memberCounter++;
+                        if (memberCounter == tribeMembers.count) {
+                            callback(true);
+                        }
+                    }
                 } else {
                     NSLog(@"Failed to fetch activity from local data store. will attempt to fetch from network");
                     
@@ -228,7 +243,15 @@
                             [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                                 if (succeeded && !error) {
                                     NSLog(@"successfully pinned activity");
-                                    callback(true);
+                                    
+                                    activityCounter++;
+                                    
+                                    if (activityCounter == member.activities.count) {
+                                        activityCounter = 0; memberCounter++;
+                                        if (memberCounter == tribeMembers.count) {
+                                            callback(true);
+                                        }
+                                    }
                                 } else {
                                     NSLog(@"failed to pin activity");
                                     callback(false);
