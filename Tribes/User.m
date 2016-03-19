@@ -99,95 +99,119 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 
 -(void)updateTribesWithBlock:(void(^)(void))callback {
-    
 
     // fetch user and pin
     [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-
-            // if user has no tribes - end updating
-            if (!self.tribes)
-                callback();
-            
-            // fetch tribes
-            [PFObject fetchAllInBackground:self.tribes block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (!error) {
+            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 
-                // pin tribes
-                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error) {
+                    // if user has no tribes - end updating
+                    if (!self.tribes)
+                        callback();
                     
-                    // get habits from all tribes to fetch
-                    NSMutableArray * habitsToFetch = [[NSMutableArray alloc] init];
-                    for (Tribe * tribe in self.tribes) {
-                        if (tribe[@"habits"])
-                            [habitsToFetch addObjectsFromArray:tribe[@"habits"]];
-                    }
-                    
-                    // feth habits
-                    [PFObject fetchAllInBackground:habitsToFetch block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-
-                        // pin habits
-                        [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
-
-                            
-                            //fetch all members and pin
-                            __block int counter = 0;
-                            for (Tribe * tribe in self.tribes) {
+                    // fetch tribes
+                    [PFObject fetchAllInBackground:self.tribes block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                        if (!error) {
+                            // pin tribes
+                            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
                                 
-                                // fetch members
-                                PFRelation * relationForMembers = [tribe relationForKey:@"members"];
-                                PFQuery * query = [relationForMembers query];
-                                [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                                if (succeeded && !error) {
+                                    // get habits from all tribes to fetch
+                                    NSMutableArray * habitsToFetch = [[NSMutableArray alloc] init];
+                                    for (Tribe * tribe in self.tribes) {
+                                        if (tribe[@"habits"])
+                                            [habitsToFetch addObjectsFromArray:tribe[@"habits"]];
+                                    }
+                                    
+                                    // feth habits
+                                    [PFObject fetchAllInBackground:habitsToFetch block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                                        
+                                        if (error) {
+                                            // pin habits
+                                            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                                                
+                                                if (succeeded && !error) {
+                                                    //fetch all members and pin
+                                                    __block int counter = 0;
+                                                    for (Tribe * tribe in self.tribes) {
+                                                        
+                                                        // fetch members
+                                                        PFRelation * relationForMembers = [tribe relationForKey:@"members"];
+                                                        PFQuery * query = [relationForMembers query];
+                                                        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                                                            
+                                                            if (!error) {
+                                                                // add members to tribe.tribemembers
+                                                                // add members to habits
+                                                                [tribe addTribeMembersToTribe:objects];
+                                                                [tribe addTribeMembersToHabits:objects];
+                                                                
+                                                                // pin members
+                                                                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                                                                    
+                                                                    if (!error) {
+                                                                        
+                                                                        counter++;
+                                                                        
+                                                                        // when all members of tribes have been fetched
+                                                                        if (counter == self.tribes.count) {
+                                                                            
+                                                                            // get all members in one array to fetch their activities
+                                                                            NSMutableArray * membersToFetchActivitesFrom = [[NSMutableArray alloc] init];
+                                                                            for (Tribe * tribe in self.tribes) {
+                                                                                for (User * member in tribe.tribeMembers) {
+                                                                                    [membersToFetchActivitesFrom addObjectsFromArray:member.activities];
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            // fetch all activities
+                                                                            [PFObject fetchAllInBackground:membersToFetchActivitesFrom block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                                                                                
+                                                                                // pin activities
+                                                                                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                                                                                    
+                                                                                    self.loadedInitialTribes = true;
+                                                                                    callback();
+                                                                                    
+                                                                                }];
+                                                                            }];
+                                                                        }
+                                                                    } else {
+                                                                        NSLog(@"error pinning members");
+                                                                    }
 
-                                    // add members to tribe.tribemembers
-                                    // add members to habits
-                                    [tribe addTribeMembersToTribe:objects];
-                                    [tribe addTribeMembersToHabits:objects];
-
-                                    // pin members
-                                    [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
-                                        counter++;
-
-                                        // when all members of tribes have been fetched
-                                        if (counter == self.tribes.count) {
-                                            
-                                            // get all members in one array to fetch their activities
-                                            NSMutableArray * membersToFetchActivitesFrom = [[NSMutableArray alloc] init];
-                                            for (Tribe * tribe in self.tribes) {
-                                                for (User * member in tribe.tribeMembers) {
-                                                    [membersToFetchActivitesFrom addObjectsFromArray:member.activities];
+                                                                }];
+                                                            } else {
+                                                                NSLog(@"error finding members of habits");
+                                                            }
+                                                        }];
+                                                    }
+                                                } else {
+                                                    NSLog(@"error pinning habits");
                                                 }
-                                            }
-                                            
-                                            // fetch all activities
-                                            [PFObject fetchAllInBackground:membersToFetchActivitesFrom block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-
-                                                // pin activities
-                                                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
-                                                    
-                                                    self.loadedInitialTribes = true;
-                                                    callback();
-                                                    
-                                                }];
                                             }];
-                                            
-
-    
+                                        } else {
+                                            NSLog(@"error fetching habits");
                                         }
-                                        
-                                        
-                                        
                                     }];
-                                }];
-                            }
- 
-                        }];
+                                } else {
+                                    NSLog(@"error pinning fetched tribes");
+                                }
+                            }];
+                        } else {
+                            NSLog(@"error fetching tribes");
+                        }
                     }];
-                    
-                }];
+                } else {
+                    NSLog(@"error pinning self");
+                }
             }];
-            
-            
-        }];
+        } else {
+            NSLog(@"error fetching 'self' (user)\nerror: %@", error);
+        }
+
     }];
     
 
