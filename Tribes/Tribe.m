@@ -136,9 +136,9 @@
     if (self.habits.count > 0) {
         NSLog(@"found habits for tribe %@. will attempt to load first from local datastore.", self);
         
+                __block int counter = 0;
         for (Habit * habit in self.habits) {
             
-            __block int counter = 0;
             [habit loadHabitWithBlock:^(bool success) {
                 
                 if (success) {
