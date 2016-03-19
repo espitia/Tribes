@@ -32,7 +32,7 @@
 }
 
 
-#pragma mark - Loading/Updating methods
+#pragma mark - Loading methods
 
 -(void)loadTribeWithBlock:(void(^)(bool success))callback {
     
@@ -99,11 +99,11 @@
             [self loadMembersWithBlock:^(bool success) {
                 
                 if (success) {
-                    NSLog(@"loaded all memebers");
+                    NSLog(@"3. successfully loaded all memebers");
                     
                     [self loadActivitiesWithBlock:^(bool success) {
                         if (success) {
-                            NSLog(@"successfully loaded all activities");
+                            NSLog(@"4. successfully loaded all activities");
                             callback(true);
                         } else {
                             NSLog(@"failed to load activities");
@@ -190,7 +190,7 @@
                     [self addTribeMembersToTribe:objects];
                     // add members to habits.members
                     [self addTribeMembersToHabits:objects];
-                    
+
                     callback(true);
                     
                 } else {
@@ -211,14 +211,10 @@
         callback(false);
     }
     
-    
+    // iterate through every member and load their activities
     __block int memberCounter = 0;
-    __block int activityCounter = 0;
-    
     for (User * member in tribeMembers) {
-        
-        
-        
+        __block int activityCounter = 0;
         for (Activity * activity in member.activities) {
             
             [activity fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -229,7 +225,7 @@
                     activityCounter++;
                     
                     if (activityCounter == member.activities.count) {
-                        activityCounter = 0; memberCounter++;
+                        memberCounter++;
                         if (memberCounter == tribeMembers.count) {
                             callback(true);
                         }
