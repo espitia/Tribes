@@ -158,6 +158,12 @@
         
         if (objects && !error && [self allMembersFullyLoaded:objects]) {
             NSLog(@"succesfully loaded all members from local datastore");
+            
+            // add members to tribe.tribeMembers
+            [self addTribeMembersToTribe:objects];
+            // add members to habits.members
+            [self addTribeMembersToHabits:objects];
+            
             callback(true);
         } else {
             
