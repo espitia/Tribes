@@ -37,8 +37,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         if (success) {
             
             // load all tribes only if there are tribes available
-            if (false) {
-//            if (self.tribes.count > 0) {
+            if (self.tribes.count > 0) {
                 
                 __block int counter = 0;
                 // iterate through each tribe to load
