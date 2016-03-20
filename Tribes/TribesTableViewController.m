@@ -300,9 +300,6 @@ heightForHeaderInSection:(NSInteger)section {
 
 -(void)UISetUp {
     
-    // add pull to refresh control
-    [self addPullToRefresh];
-    
     // set table section height (tribe height)
     self.tableView.sectionHeaderHeight = 100;
     
@@ -357,29 +354,6 @@ heightForHeaderInSection:(NSInteger)section {
         AudioServicesPlaySystemSound(audioEffect);
     }
 }
-
-#pragma mark - Refresh data
-
--(void)addPullToRefresh {
-    // add refresh control
-    if (!refreshControl) {
-        refreshControl = [[UIRefreshControl alloc]init];
-        [self.tableView addSubview:refreshControl];
-        [refreshControl addTarget:self action:@selector(refreshTable) forControlEvents:UIControlEventValueChanged];
-    }
-
-}
--(void)refreshTable {
-    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
-    [currentUser updateTribesWithBlock:^{
-            [alert hideView];
-            [refreshControl endRefreshing];
-            [self.tableView reloadData];
-            [self updateProgressBar];
-    }];
-}
-
 
 #pragma mark - Progress Bar
 
