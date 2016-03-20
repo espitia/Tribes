@@ -142,20 +142,9 @@
                     // dismiss login
                     [self.navigationController dismissViewControllerAnimated:true completion:^{
 
-                        // alert user that app is loading tribes
-                        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-                        [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
-                        [[User currentUser] updateTribesWithBlock:^{
-                            [alert hideView];
-                            
-                            // reload table view
-                            UIWindow *window = [UIApplication sharedApplication].keyWindow;
-                            UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
-                            TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
-                            [[User currentUser] loadTribesWithBlock:^{
-                                [tribesVC.tableView reloadData];
-                            }];
-                        }];
+                        //alert user that app is loading tribes
+                        [self alertFetchingTribe];
+                        
                     }];
                 } else {
                     NSLog(@"error logging in to parse.");
@@ -166,5 +155,41 @@
         }
     }];
 }
+-(void)alertFetchingTribe {
+    
+    
+    // alert user that app is loading tribes
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
+    
+    
+    [[User currentUser] updateTribesWithBlock:^(bool success) {
+        
+        [alert hideView];
+        NSLog(@"%d", success);
+        if (success) {
+            
+            // reload table view
+            UIWindow *window = [UIApplication sharedApplication].keyWindow;
+            UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
+            TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
 
+            [[User currentUser] loadTribesWithBlock:^(bool success) {
+                if (success) {
+                    [tribesVC.tableView reloadData];
+                }
+            }];
+        } else  {
+            SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [errorAlert addButton:@"Try again" actionBlock:^{
+                [self alertFetchingTribe];
+            }];
+            [errorAlert showError:@"Oh oh!" subTitle:@"" closeButtonTitle:nil duration:0.0];
+
+        }
+    }];
+
+  
+    
+}
 @end
