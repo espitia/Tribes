@@ -36,24 +36,26 @@
 
     // set currentUser
     currentUser = [User currentUser];
-    
-
+ 
     //  log in / sign up user if non-existent
     if (!currentUser) {
         [self signUp];
     } else {
-        
-        //set up
-        [self setUp];
-        
+    
         self.navigationItem.title = @"Loading Tribes..";
-        
-        [currentUser loadTribesWithBlock:^{
-            self.navigationItem.title = @"Tribes";
-            [self.tableView reloadData];
-            [self setUp];
-            // set up UI elements
-            [self UISetUp];
+        [currentUser loadTribesWithBlock:^(bool success) {
+            
+            if (success) {
+                self.navigationItem.title = @"Tribes";
+                currentUser.loadedInitialTribes = true;
+                [self.tableView reloadData];
+                [self setUp];
+                [self UISetUp];
+            } else {
+                SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error loading your Tribes. Please try again" closeButtonTitle:@"OK" duration:0.0];
+            }
+            
         }];
     }
 }
@@ -66,6 +68,7 @@
     
     // set up UI elements
     [self UISetUp];
+    
 }
 
 #pragma mark - Table view data source
@@ -309,10 +312,13 @@ heightForHeaderInSection:(NSInteger)section {
 
 -(void)handleEnteredForeground {
     
-    //update activities when entering foreground
-    [currentUser updateMemberActivitiesForAllTribesWithBlock:^{
-        [self.tableView reloadData];
-
+    //  update activities when entering foreground
+    [currentUser updateMemberActivitiesForAllTribesWithBlock:^(bool success) {
+        if (success) {
+            [self.tableView reloadData];
+        } else {
+            NSLog(@"failed to update activities");
+        }
     }];
 }
 
