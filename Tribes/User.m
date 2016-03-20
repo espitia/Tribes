@@ -175,7 +175,29 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
 }
 
-#pragma mark - Create Tribe 
+-(void)updateTribesWithBlock:(void(^)(bool success))callback {
+    
+    __block int counter = 0;
+    NSLog(@"attempting to update all tribes");
+    for (Tribe * tribe in self.tribes) {
+        
+        [tribe updateTribeWithBlock:^(bool success) {
+            if (success) {
+                counter++;
+                if (counter == self.tribes.count) {
+                    NSLog(@"successfully updated all tribes");
+                    callback(true);
+                }
+            } else {
+                NSLog(@"failed to update tribes");
+                callback(false);
+            }
+        }];
+    }
+    
+}
+
+#pragma mark - Create Tribe
 
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback {
 
