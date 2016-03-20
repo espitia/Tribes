@@ -256,7 +256,7 @@
                                     activityCounter++;
                                     
                                     if (activityCounter == member.activities.count) {
-                                        activityCounter = 0; memberCounter++;
+                                        memberCounter++;
                                         if (memberCounter == tribeMembers.count) {
                                             callback(true);
                                         }
@@ -359,7 +359,6 @@
 -(void)updateHabitsWithBlock:(void(^)(bool success))callback {
     // first check if there are habits to load
     if (self.habits.count > 0) {
-        NSLog(@"found habits for tribe. will attempt to load first from local datastore.");
         
         [PFObject fetchAllInBackground:self.habits block:^(NSArray * _Nullable objects, NSError * _Nullable error) {
             
@@ -438,9 +437,8 @@
                                 NSLog(@"successfully pinned activity");
                                 
                                 activityCounter++;
-                                
                                 if (activityCounter == member.activities.count) {
-                                    activityCounter = 0; memberCounter++;
+                                    memberCounter++;
                                     if (memberCounter == tribeMembers.count) {
                                         callback(true);
                                     }
