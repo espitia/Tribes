@@ -381,6 +381,9 @@
             }
         }];
 
+    } else {
+        NSLog(@"no habits found for tribe");
+        callback(true);
     }
     
 }
@@ -423,37 +426,57 @@
         callback(false);
     }
     
-    // iterate through every member and load their activities
-    __block int memberCounter = 0;
-    for (User * member in tribeMembers) {
-        __block int activityCounter = 0;
-        for (Activity * activity in member.activities) {
+    // get all members in one array to fetch their activities
+    NSMutableArray * activitiesOfAllMembers = [[NSMutableArray alloc] init];
+    NSMutableArray * objectIdsOfAllActivities = [[NSMutableArray alloc] init];
+    
+    // get activity objects
+    for (User * member in self.tribeMembers) {
+        [activitiesOfAllMembers addObjectsFromArray:member.activities];
+    }
+    // get activity object Ids
+    for (Activity * activity in activitiesOfAllMembers) {
+        NSString * objectId = activity.objectId;
+        [objectIdsOfAllActivities addObject:objectId];
+    }
+    
+    PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
+    [query whereKey:@"objectId" containedIn:objectIdsOfAllActivities];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (objects && !error) {
+            NSLog(@"succesfully fetched activities");
+            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error) {
+                    NSLog(@"succesfully pinned all activiteS");
+                    [self addActivitiesToMembers:objects];
+                    callback(true);
+                } else {
+                    NSLog(@"failed to pin activities");
+                    callback(false);
+                }
+            }];
+            
+        } else {
+            NSLog(@"failed to query all activities");
+            callback(false);
+        }
+        
+    }];
+    
+}
 
-            [activity fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                    if (object && object.createdAt && !error) {
-                        NSLog(@"successfully fetched activity from network");
-                        [object pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                            if (succeeded && !error) {
-                                NSLog(@"successfully pinned activity");
-                                
-                                activityCounter++;
-                                if (activityCounter == member.activities.count) {
-                                    memberCounter++;
-                                    if (memberCounter == tribeMembers.count) {
-                                        callback(true);
-                                    }
-                                }
-                            } else {
-                                NSLog(@"failed to pin activity");
-                                callback(false);
-                            }
-                        }];
-                        
-                    } else {
-                        NSLog(@"failed to fetch activity from network.");
-                        callback(false);
-                    }
-                }];
+-(void)addActivitiesToMembers:(NSArray *)activities {
+    NSMutableArray * members = [[NSMutableArray alloc] init];
+    for (User * member in self.tribeMembers) {
+        [member.activities removeAllObjects];
+        [members addObject:member];
+    }
+    for (User * member in members) {
+        for (Activity * activity in activities) {
+            if (activity[@"createdBy"] == member) {
+                [member.activities addObject:activity];
+            }
         }
     }
 }
