@@ -141,12 +141,14 @@
         
         // successfully added friend
         if (success) {
-            [_tribe updateTribeWithBlock:^{
-                NSLog(@"succesfully added user");
-                
+            [_tribe updateTribeWithBlock:^(bool success) {
                 [waitingAlert hideView];
-
-                [self.navigationController popViewControllerAnimated:true];;
+                if (success) {
+                   [self.navigationController popViewControllerAnimated:true];
+                } else {
+                    SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    [errorAlert showError:@"Oh oh!" subTitle:@"There was an error adding your friend. Please try again" closeButtonTitle:@"OK" duration:0.0];
+                }
             }];
 
         // failed to add friend
