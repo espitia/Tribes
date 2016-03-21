@@ -374,11 +374,15 @@ heightForHeaderInSection:(NSInteger)section {
     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
     [currentUser updateTribesWithBlock:^(bool success) {
+        [alert hideView];
         if (success) {
-            [alert hideView];
             [refreshControl endRefreshing];
             [self.tableView reloadData];
             [self updateProgressBar];
+        } else {
+            SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
+            [error showError:@"Oh oh!" subTitle:@"There was an error fetching your tribes. Please make sure your internet connection is working and try again!" closeButtonTitle:@"OK" duration:0.0];
+            [refreshControl endRefreshing];
         }
     }];
 
