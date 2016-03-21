@@ -313,6 +313,7 @@ heightForHeaderInSection:(NSInteger)section {
     [currentUser updateMemberActivitiesForAllTribesWithBlock:^(bool success) {
         if (success) {
             [self.tableView reloadData];
+            [self updateProgressBar];
         } else {
             NSLog(@"failed to update activities");
         }
