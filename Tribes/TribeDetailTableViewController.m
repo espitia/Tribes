@@ -109,12 +109,6 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
 
     if (indexPath) {
-
-        
-//        if (![_habit membersAndActivitesAreLoaded]) {
-//            // alert user that member and activites are not loaded
-//            return;
-//        }
         
         // init necessary variables
         User * member = _habit.membersAndActivities[indexPath.row][@"member"];
