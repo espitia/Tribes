@@ -59,6 +59,7 @@
                             NSLog(@"succesfully logged in to already created user");
                             // The current user is now set to user.
                             [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                [foundUserAlert hideView];
                                 [self alertFetchingTribe];
                             }];
                         } else {
@@ -152,7 +153,6 @@
     [[User currentUser] updateTribesWithBlock:^(bool success) {
         
         [alert hideView];
-        NSLog(@"%d", success);
         if (success) {
             
             // reload table view
@@ -162,7 +162,10 @@
 
             [[User currentUser] loadTribesWithBlock:^(bool success) {
                 if (success) {
+                    [User currentUser].loadedInitialTribes = true;
                     [tribesVC.tableView reloadData];
+                    [tribesVC setUp];
+                    [tribesVC UISetUp];
                 }
             }];
         } else  {

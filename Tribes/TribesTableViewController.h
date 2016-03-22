@@ -11,6 +11,8 @@
 
 @interface TribesTableViewController : UITableViewController 
 
-//@property (atomic, strong) NSMutableArray * tribes;
+// public methods to call from signing up navigation stack
+-(void)setUp;
+-(void)UISetUp;
 
 @end
