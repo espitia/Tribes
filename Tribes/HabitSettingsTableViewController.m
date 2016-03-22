@@ -7,6 +7,7 @@
 //
 
 #import "HabitSettingsTableViewController.h"
+#import "TribeDetailTableViewController.h"
 #import "SCLAlertView.h"
 
 @interface HabitSettingsTableViewController () {
@@ -21,6 +22,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"Settings 🔧";
+}
+
+-(void)willMoveToParentViewController:(UIViewController *)parent {
+    
+    // if moving back to habit detail vc
+    if (![parent isEqual:self.parentViewController]) {
+        
+        // get habitdetailvc (tribesdetail same thing) and reload data to reflect settings change
+        UINavigationController * navController = (UINavigationController *)self.parentViewController;
+        TribeDetailTableViewController * tribesVc = (TribeDetailTableViewController *)navController.viewControllers[1];
+        [tribesVc.tableView reloadData];
+    }
+    
 }
 
 
