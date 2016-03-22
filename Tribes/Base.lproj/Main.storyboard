@@ -308,8 +308,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="tab-bar-tribe-icon" translatesAutoresizingMaskIntoConstraints="NO" id="yxO-ec-d9b">
+                                <rect key="frame" x="175" y="266" width="24" height="25"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3I-dU-qwj">
-                                <rect key="frame" x="0.0" y="527" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="597" width="375" height="70"/>
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="ysP-Dg-d7Q"/>
@@ -321,34 +324,15 @@
                                     <action selector="signUp:" destination="9jy-fd-g2l" eventType="touchUpInside" id="dEH-pM-hBH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIx-fq-FfZ">
-                                <rect key="frame" x="0.0" y="597" width="375" height="70"/>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="7aR-cw-f62"/>
-                                </constraints>
-                                <state key="normal" title="LOGIN">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="signIn:" destination="9jy-fd-g2l" eventType="touchUpInside" id="99W-my-OGy"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="tab-bar-tribe-icon" translatesAutoresizingMaskIntoConstraints="NO" id="yxO-ec-d9b">
-                                <rect key="frame" x="175" y="266" width="24" height="25"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="QcZ-i1-ek7" firstAttribute="top" secondItem="A3I-dU-qwj" secondAttribute="bottom" id="6ZD-Dd-QuC"/>
                             <constraint firstItem="yxO-ec-d9b" firstAttribute="centerY" secondItem="DHu-eI-IwJ" secondAttribute="centerY" constant="10" id="6sC-B5-o64"/>
-                            <constraint firstItem="AIx-fq-FfZ" firstAttribute="top" secondItem="A3I-dU-qwj" secondAttribute="bottom" id="9LI-4p-sOI"/>
-                            <constraint firstItem="AIx-fq-FfZ" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="PGV-c8-igG"/>
                             <constraint firstItem="yxO-ec-d9b" firstAttribute="centerX" secondItem="DHu-eI-IwJ" secondAttribute="centerX" id="W8k-fK-lTr"/>
                             <constraint firstItem="yxO-ec-d9b" firstAttribute="top" secondItem="9f7-VF-Xfa" secondAttribute="bottom" constant="200" id="btb-nC-keM"/>
-                            <constraint firstItem="QcZ-i1-ek7" firstAttribute="top" secondItem="AIx-fq-FfZ" secondAttribute="bottom" id="eR9-r5-YFJ"/>
                             <constraint firstItem="A3I-dU-qwj" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="toZ-xu-4eI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A3I-dU-qwj" secondAttribute="trailing" constant="-20" id="uby-MQ-LDs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="AIx-fq-FfZ" secondAttribute="trailing" constant="-20" id="wP0-yf-oFh"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

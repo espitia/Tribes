@@ -124,37 +124,6 @@
     
     [alert showInfo:@"Almost done!" subTitle:@"To finish signing up, set your name so your friends can identify you!" closeButtonTitle:nil duration:0.0];
 }
-- (IBAction)signIn:(id)sender {
-    
-    // alert to notify user of any errors
-    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-
-    [[Digits sharedInstance] authenticateWithCompletion:^(DGTSession *session, NSError *error) {
-        if (error) {
-            NSLog(@"Error authenticating user to Digits");
-            [alert showError:@"Oh oh!" subTitle:@"There was an error authenticating your phone number. Please try again." closeButtonTitle:@"OK" duration:0.0];
-        } else {
-            [PFUser logInWithUsernameInBackground:session.userID password:session.userID block:^(PFUser * _Nullable user, NSError * _Nullable error) {
-                
-                
-                if (!error) {
-                    // The current user is now set to user.
-                    // dismiss login
-                    [self.navigationController dismissViewControllerAnimated:true completion:^{
-
-                        //alert user that app is loading tribes
-                        [self alertFetchingTribe];
-                        
-                    }];
-                } else {
-                    NSLog(@"error logging in to parse.");
-                    [alert showError:@"Oh oh!" subTitle:@"There was an error logging in. Please try again." closeButtonTitle:@"OK" duration:0.0];
-                }
-                
-            }];
-        }
-    }];
-}
 -(void)alertFetchingTribe {
     
     
