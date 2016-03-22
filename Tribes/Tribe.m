@@ -534,7 +534,7 @@
             return false;
         }
     }
-    return false;
+    return true;
 }
 
 -(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(bool success))callback {
