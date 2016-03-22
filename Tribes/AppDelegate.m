@@ -137,6 +137,22 @@
     thankYouForApplauseAction.destructive = NO;
     thankYouForApplauseAction.authenticationRequired = NO;
     
+    // ACTION 7
+    UIMutableUserNotificationAction * removeHibernationAction = [[UIMutableUserNotificationAction alloc] init];
+    removeHibernationAction.identifier = @"TURN_OFF_HIBERNATION";
+    removeHibernationAction.title = @"Yes";
+    removeHibernationAction.activationMode = UIUserNotificationActivationModeBackground;
+    removeHibernationAction.destructive = NO;
+    removeHibernationAction.authenticationRequired = NO;
+    
+    // ACTION 8
+    UIMutableUserNotificationAction * dontRemoveHibernationAction = [[UIMutableUserNotificationAction alloc] init];
+    dontRemoveHibernationAction.identifier = @"DONT_TURN_OFF_HIBERNATION";
+    dontRemoveHibernationAction.title = @"No";
+    dontRemoveHibernationAction.activationMode = UIUserNotificationActivationModeBackground;
+    dontRemoveHibernationAction.destructive = NO;
+    dontRemoveHibernationAction.authenticationRequired = NO;
+    
     // CATEGORY 1 (ACTION 1 AND ACTION 2)
     UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
     motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
@@ -157,7 +173,12 @@
     thankYouForApplauseReplyCategory.identifier = @"THANK_YOU_FOR_APPLAUSE_REPLY";
     [thankYouForApplauseReplyCategory setActions:@[thankYouForApplauseAction] forContext:UIUserNotificationActionContextDefault];
     
-    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory, thankYouForApplauseReplyCategory]];
+    // CATEGORY 5 (ACTION 7 AND ACTION 8)
+    UIMutableUserNotificationCategory * hibernationCategory = [[UIMutableUserNotificationCategory alloc] init];
+    hibernationCategory.identifier = @"HIBERNATION_RESPONSE";
+    [hibernationCategory setActions:@[dontRemoveHibernationAction, removeHibernationAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory, thankYouForApplauseReplyCategory, hibernationCategory]];
     UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
 
     [application registerUserNotificationSettings:settings];
@@ -165,6 +186,13 @@
     
 }
 
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
+    
+    if ([identifier isEqualToString:@"TURN_OFF_HIBERNATION"]) {
+        [self deleteHibernationNotification];
+    }
+    completionHandler();
+}
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
     
     User * currentUser = [User currentUser];
@@ -185,8 +213,6 @@
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
             message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"name"]];
             category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
-            //            User * userWhoReceivedApplause = (User *)object;
-            //            [userWhoReceivedApplause addReceivedApplauseXp];
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
             message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"name"]];
         } else if ([identifier isEqualToString:@"THANK_YOU_FOR_APPLAUSE"]) {
@@ -194,6 +220,7 @@
             
         } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
             message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"name"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
+            
         }
         
         
@@ -212,4 +239,11 @@
      @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
+-(void)deleteHibernationNotification {
+    for (UILocalNotification * notificaiton in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
+        if ([notificaiton.category isEqualToString:@"HIBERNATION_RESPONSE"]) {
+            [[UIApplication sharedApplication] cancelLocalNotification:notificaiton];
+        }
+    }
+}
 @end
