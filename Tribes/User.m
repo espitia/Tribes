@@ -341,6 +341,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
     // complete activity for today
     [[self activityForHabit:habit] completeForToday];
+    
+    //remove hibernation for activity
+    [self activityForHabit:habit].hibernation = false;
+    [[self activityForHabit:habit] saveEventually];
 
     // send push to rest of tribe to notify of completion
     [self notifyOfCompletionToMembersInTribe:tribe forHabit:habit];
