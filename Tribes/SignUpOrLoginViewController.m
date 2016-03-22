@@ -44,14 +44,30 @@
             PFQuery * query = [PFUser query];
             [query whereKey:@"username" equalTo:session.userID];
             [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-
+                
                 // found user already! -> log them in to old account
-                if (object) {
+                if (object && !error) {
+                    
+                    SCLAlertView * foundUserAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    [foundUserAlert showSuccess:@"Found account!" subTitle:@"We found an account associated with your phone number." closeButtonTitle:nil duration:3.0];
+                    
+                    NSLog(@"found user for that phone number. Will attempt to login");
+                    
                     [PFUser logInWithUsernameInBackground:session.userID password:session.userID block:^(PFUser * _Nullable user, NSError * _Nullable error) {
-                        // The current user is now set to user.
-                        [self.navigationController dismissViewControllerAnimated:true completion:nil];
+                        
+                        if (user && !error) {
+                            NSLog(@"succesfully logged in to already created user");
+                            // The current user is now set to user.
+                            [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                [self alertFetchingTribe];
+                            }];
+                        } else {
+                            NSLog(@"Failed to log in to user");
+                        }
+
                     }];
                 } else { // sign up
+                    NSLog(@"did not find user for that phone number, will sign up as new user.");
                     [self signUpUserWithDigitsId:session.userID];
                 }
             }];
@@ -68,28 +84,24 @@
     user.username = digitsId;
     user.password = digitsId;
     user[@"digitsUserId"] = digitsId;
-    
+
     // add id to digits account to parse user object
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         
-        if (error) {
-            NSLog(@"Error signing up user to Parse");
-        } else {
+        if (succeeded && !error) {
+            
+            NSLog(@"succesfully created new user");
             
             // save installation for pushes
             PFInstallation *installation = [PFInstallation currentInstallation];
             installation[@"user"] = [PFUser currentUser];
             [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 
-                if (error) {
-                    NSLog(@"Error saving installation object (for push notif.)");
-                } else {
+                if (succeeded && !error) {
+                    NSLog(@"succesfully created PFInstallation object for user");
+                    
                     [PFUser becomeInBackground:user.sessionToken block:^(PFUser *user, NSError *error) {
-                        if (error) {
-                            //check for token if error
-                            NSLog(@"Error becoming user");
-                        } else {
-                            
+                        if (user && !error) {
                             // The current user is now set to user.
                             // dismiss signup controller
                             [self.navigationController dismissViewControllerAnimated:true completion:^{
@@ -98,13 +110,16 @@
                                 
                                 
                             }];
-                            
+                        } else {
+                            NSLog(@"error signing in to user (becomeInBg)");
                         }
                     }];
+                } else {
+                    NSLog(@"Error saving installation object (for push notif.)");
                 }
-                
-                
             }];
+        } else {
+            NSLog(@"failed to sign up user");
         }
         
         
@@ -115,14 +130,16 @@
     // ask user for last step - setting name
     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
 
-    UITextField * textField = [alert addTextField:@"Enter your name"];
+    UITextField * nameTextField = [alert addTextField:@"Name"];
+    UITextField * emailTextField = [alert addTextField:@"Email"];
 
     [alert addButton:@"READY!" actionBlock:^(void) {
-        [[PFUser currentUser] setObject:textField.text forKey:@"name"];
+        [[PFUser currentUser] setObject:nameTextField.text forKey:@"name"];
+        [[PFUser currentUser] setObject:emailTextField.text forKey:@"email"];
         [[PFUser currentUser] saveInBackground];
     }];
     
-    [alert showInfo:@"Almost done!" subTitle:@"To finish signing up, set your name so your friends can identify you!" closeButtonTitle:nil duration:0.0];
+    [alert showInfo:@"Almost done 😁" subTitle:@"To finish signing up, set your name and email! " closeButtonTitle:nil duration:0.0];
 }
 -(void)alertFetchingTribe {
     
