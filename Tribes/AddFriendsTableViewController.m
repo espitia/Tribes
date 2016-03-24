@@ -43,10 +43,12 @@
             [self askForUserPermissionOfAddressBook];
 
             break;
-        case 2:
+        case 2: {
             NSLog(@"accepted status");
-//            [self askForUserPermissionOfAddressBook];
             [self lookUpMatches];
+            
+            [self setUpAddressBook];
+        }
             break;
             
         default:
@@ -70,7 +72,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return matchedContacts.count;
+    switch (section) {
+        case 0:
+            return matchedContacts.count;
+            break;
+        case 1:
+            return addressBookContacts.count;
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 
 
@@ -97,21 +109,22 @@
     if (matchedContacts.count == 0) {
         return cell;
     }
-    
-    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
+    PFUser * user;
 
     switch (indexPath.section) {
         case 0:
-            // matched users
+            user = [matchedContacts objectAtIndex:indexPath.row];
             cell.textLabel.text = user[@"name"];
             break;
         case 1:
-        
+
+            // fill in contact name/last name/ number
+            cell.textLabel.text = [NSString stringWithFormat:@"yo"];
             break;
-            
         default:
             break;
     }
+
     
     return cell;
 }
