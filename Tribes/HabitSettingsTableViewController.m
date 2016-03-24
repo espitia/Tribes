@@ -117,68 +117,13 @@
     
     // add local notification to remove hibernation on the next day
     if (_activity.hibernation) {
-        [self makeHibernationNotification];
+        [_activity makeHibernationNotification];
     } else {
-        [self deleteHibernationNotification];
+        [_activity deleteHibernationNotification];
     }
 }
 
--(void)makeHibernationNotification {
-    
-    // if other habits have set hibernation, dont allow for creation of more notifications
-    if ([self hibernationNotificationAlreadySet])
-        return;
-    
-    // fire date (tomorrow 10am)
-    NSDate* now = [NSDate date] ;
-    NSDateComponents* tomorrowComponents = [NSDateComponents new] ;
-    tomorrowComponents.day = 1 ;
-    NSCalendar* calendar = [NSCalendar currentCalendar] ;
-    NSDate* tomorrow = [calendar dateByAddingComponents:tomorrowComponents toDate:now options:0] ;
-    NSDateComponents* tomorrowAt10AMComponents = [calendar components:(NSCalendarUnitDay|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:tomorrow] ;
-    tomorrowAt10AMComponents.hour = 10;
-    NSDate* tomorrowAt10AM = [calendar dateFromComponents:tomorrowAt10AMComponents] ;
-    
-    // make local notificaiton to take it off the next day
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = tomorrowAt10AM;
-    localNotification.repeatInterval = NSCalendarUnitDay;
-    localNotification.category = @"HIBERNATION_RESPONSE";
-    localNotification.alertBody = @"🐻 It's a new day! Would you like to turn hibernations off?";
-    localNotification.soundName = UILocalNotificationDefaultSoundName;
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-    
-    NSLog(@"sceduel notif: %@", [[UIApplication sharedApplication] scheduledLocalNotifications]);
-}
 
--(void)deleteHibernationNotification {
-    
-    // if other habits have hibernation, dont remove
-    if ([self otherHabitsHaveHibernationOn])
-        return;
-    
-    // if no other habit has hibernation on, remove it
-    for (UILocalNotification * notificaiton in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
-        if ([notificaiton.category isEqualToString:@"HIBERNATION_RESPONSE"]) {
-            [[UIApplication sharedApplication] cancelLocalNotification:notificaiton];
-        }
-    }
-}
 
--(BOOL)hibernationNotificationAlreadySet {
-    for (UILocalNotification * notificaiton in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
-        if ([notificaiton.category isEqualToString:@"HIBERNATION_RESPONSE"]) {
-            return true;
-        }
-    }
-    return false;
-}
--(BOOL)otherHabitsHaveHibernationOn {
-    for (Activity * activity in [User currentUser].activities) {
-        if (activity.hibernation) {
-            return true;
-        }
-    }
-    return false;
-}
+
 @end
