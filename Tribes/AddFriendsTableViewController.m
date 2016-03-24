@@ -11,10 +11,12 @@
 #import "Parse.h"
 #import "SCLAlertView.h"
 #import "User.h"
+#import "APAddressBook.h"
 
 
 @interface AddFriendsTableViewController () {
     NSMutableArray * matchedContacts;
+    NSArray * addressBookContacts;
 }
 
 @end
@@ -241,4 +243,24 @@
     return ([matchedContacts containsObject:user]) ? true : false;
 }
 
+#pragma mark - APContacts
+
+-(void)setUpAddressBook {
+    APAddressBook *addressBook = [[APAddressBook alloc] init];
+
+    // don't forget to show some activity
+    [addressBook loadContacts:^(NSArray <APContact *> *contacts, NSError *error)
+     {
+         // hide activity
+         if (!error)
+         {
+             // do something with contacts array
+             addressBookContacts = [NSArray arrayWithArray:contacts];
+         }
+         else
+         {
+             // show error
+         }
+     }];
+}
 @end
