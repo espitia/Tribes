@@ -12,6 +12,7 @@ target 'Tribes' do
 	pod 'MCSwipeTableViewCell', '~> 2.1.4'
     pod 'YLProgressBar', '~> 3.8.0'
     pod 'SCLAlertView-Objective-C'
+    pod 'APAddressBook'
 end
 
 target 'TribesTests' do
