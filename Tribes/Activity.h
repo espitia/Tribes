@@ -21,4 +21,9 @@
 -(void)completeForToday;
 -(BOOL)completedForDay;
 
+// hiberantion notification handling
+-(void)deleteHibernationNotification;
+-(BOOL)hibernationNotificationAlreadySet;
+-(void)makeHibernationNotification;
+
 @end
