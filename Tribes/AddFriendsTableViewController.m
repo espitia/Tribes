@@ -107,8 +107,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Friend" forIndexPath:indexPath];
     
-    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
-    APContact * contact = [addressBookContacts objectAtIndex:indexPath.row];
+    PFUser * user;
+    APContact * contact;
+    
+    if (matchedContacts.count > 0) {
+        user = [matchedContacts objectAtIndex:indexPath.row];
+    }
+    if (addressBookContacts.count > 0) {
+        contact = [addressBookContacts objectAtIndex:indexPath.row];
+    }
+    
     
     switch (indexPath.section) {
         case 0:
