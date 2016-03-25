@@ -12,6 +12,7 @@
 #import "SCLAlertView.h"
 #import "User.h"
 #import "APAddressBook.h"
+#import "APContact.h"
 
 
 @interface AddFriendsTableViewController () {
@@ -106,20 +107,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Friend" forIndexPath:indexPath];
     
-    if (matchedContacts.count == 0) {
-        return cell;
-    }
-    PFUser * user;
-
+    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
+    APContact * contact = [addressBookContacts objectAtIndex:indexPath.row];
+    
     switch (indexPath.section) {
         case 0:
-            user = [matchedContacts objectAtIndex:indexPath.row];
             cell.textLabel.text = user[@"name"];
             break;
         case 1:
-
-            // fill in contact name/last name/ number
-            cell.textLabel.text = [NSString stringWithFormat:@"yo"];
+            cell.textLabel.text = [self contactName:contact];
             break;
         default:
             break;

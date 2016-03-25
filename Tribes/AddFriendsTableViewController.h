@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Tribe.h"
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface AddFriendsTableViewController : UITableViewController
+
+@interface AddFriendsTableViewController : UITableViewController <UINavigationControllerDelegate,MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) Tribe * tribe;
 
