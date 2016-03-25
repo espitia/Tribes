@@ -38,30 +38,57 @@
     tribeNameTextField = [[UITextField alloc] init];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [tribeNameTextField becomeFirstResponder];
-}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50;
+}
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Create your own Tribe:";
+    switch (section) {
+        case 0:
+            return @"Create your own Tribe:";
+            break;
+        case 1:
+            return @"Or join your friend's Tribes:";
+            break;
+        default:
+            break;
+    }
+    return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeCell" forIndexPath:indexPath];
     
-        
+    switch (indexPath.section) {
+        case 0:
+            [self addCreateTribeTextFieldToCell:cell];
+            break;
+        case 1:
+            cell.textLabel.text = @"du mon";
+        default:
+            break;
+    }
+
+
+    
+    return cell;
+}
+
+#pragma mark - Configure Cells
+
+-(void)addCreateTribeTextFieldToCell:(UITableViewCell *)cell {
     // add uitextfield for name fo tribe
     CGRect activityNameFrame = CGRectMake(15,
-                                          cell.frame.origin.y - 30,
+                                          cell.frame.origin.y - 55,
                                           cell.frame.size.width,
                                           cell.frame.size.height);
     [tribeNameTextField setFrame:activityNameFrame];
@@ -70,7 +97,6 @@
     [cell.contentView addSubview:tribeNameTextField];
 
     
-    return cell;
 }
 
 #pragma mark - Stuff
