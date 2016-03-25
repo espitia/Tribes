@@ -285,9 +285,22 @@
 #pragma mark - APContacts
 
 -(void)setUpAddressBook {
+    
+    // init address book object
     APAddressBook *addressBook = [[APAddressBook alloc] init];
-
-    // don't forget to show some activity
+    
+    // set address book fields, sorters and filters
+    addressBook.fieldsMask = APContactFieldName | APContactFieldPhonesOnly;
+    addressBook.sortDescriptors = @[
+                                    [NSSortDescriptor sortDescriptorWithKey:@"name.firstName" ascending:YES],
+                                    [NSSortDescriptor sortDescriptorWithKey:@"name.lastName" ascending:YES]];
+    addressBook.filterBlock = ^BOOL(APContact *contact)
+    {
+        return contact.phones.count > 0;
+    };
+    
+    
+    // load contacts
     [addressBook loadContacts:^(NSArray <APContact *> *contacts, NSError *error)
      {
          // hide activity
@@ -295,10 +308,12 @@
          {
              // do something with contacts array
              addressBookContacts = [NSArray arrayWithArray:contacts];
+             [self.tableView reloadData];
          }
          else
          {
              // show error
+             NSLog(@"error loading address book contacts");
          }
      }];
 }
