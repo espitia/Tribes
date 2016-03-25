@@ -128,7 +128,22 @@
 #pragma mark - Table view delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // ADD USERS TO A TRIBE
+    if (indexPath.section == 0) {
+        [self addUserToTribeFromIndexPath:indexPath];
+    }
+    // SEND TEXT TO INVITE USERS
+    else if (indexPath.section == 1) {
+        [self sendUserTextFromIndexPath:indexPath];
+    }
 
+
+
+
+}
+
+-(void)addUserToTribeFromIndexPath:(NSIndexPath *)indexPath {
     // disable user interaction so user doesn't add friend twice
     UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.userInteractionEnabled = false;
@@ -175,10 +190,25 @@
         [spinner stopAnimating];
 
     }];
+}
+
+
+
+-(void)sendUserTextFromIndexPath:(NSIndexPath *)indexPath {
+    APContact * contact = [addressBookContacts objectAtIndex:indexPath.row];
+    NSString * number = [self contactPhones:contact];
     
-
-
-
+    MFMessageComposeViewController *controller =
+    [[MFMessageComposeViewController alloc] init];
+    
+    if([MFMessageComposeViewController canSendText]) {
+        NSString *str= @"Hello";
+        controller.body = str;
+        controller.recipients = [NSArray arrayWithObjects:
+                                 number, nil];
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:true completion:nil];
+    }
 }
 
 #pragma mark - Contacts handling
@@ -271,5 +301,64 @@
              // show error
          }
      }];
+}
+
+- (NSString *)contactName:(APContact *)contact
+{
+    if (contact.name.compositeName)
+    {
+        return contact.name.compositeName;
+    }
+    else if (contact.name.firstName && contact.name.lastName)
+    {
+        return [NSString stringWithFormat:@"%@ %@", contact.name.firstName, contact.name.lastName];
+    }
+    else if (contact.name.firstName || contact.name.lastName)
+    {
+        return contact.name.firstName ?: contact.name.lastName;
+    }
+    else
+    {
+        return @"Untitled contact";
+    }
+}
+
+- (NSString *)contactPhones:(APContact *)contact
+{
+    if (contact.phones.count > 0)
+    {
+        NSMutableString *result = [[NSMutableString alloc] init];
+        for (APPhone *phone in contact.phones)
+        {
+            NSString *string = phone.localizedLabel.length == 0 ? phone.number :
+            [NSString stringWithFormat:@"%@ (%@)", phone.number,
+             phone.localizedLabel];
+            [result appendFormat:@"%@, ", string];
+        }
+        return result;
+    }
+    else
+    {
+        return @"(No phones)";
+    }
+}
+
+#pragma mark - sending texts
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
+    switch (result) {
+        case MessageComposeResultCancelled:
+            NSLog(@"Cancelled");
+            break;
+        case MessageComposeResultFailed:
+            NSLog(@"Failed");
+            break;
+        case MessageComposeResultSent:
+            NSLog(@"sent");
+            break;
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 @end
