@@ -110,20 +110,18 @@
     PFUser * user;
     APContact * contact;
     
-    if (matchedContacts.count > 0) {
-        user = [matchedContacts objectAtIndex:indexPath.row];
-    }
-    if (addressBookContacts.count > 0) {
-        contact = [addressBookContacts objectAtIndex:indexPath.row];
-    }
-    
-    
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = user[@"name"];
+            if (matchedContacts.count > 0) {
+                user = [matchedContacts objectAtIndex:indexPath.row];
+                cell.textLabel.text = user[@"name"];
+            }
             break;
         case 1:
-            cell.textLabel.text = [self contactName:contact];
+            if (addressBookContacts.count > 0) {
+                contact = [addressBookContacts objectAtIndex:indexPath.row];
+                cell.textLabel.text = [self contactName:contact];
+            }
             break;
         default:
             break;
