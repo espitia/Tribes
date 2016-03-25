@@ -74,6 +74,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // if user has no tribe - add call to action to create/join one
+    if (currentUser.tribes.count == 0)
+        return 1;
+    
     return currentUser.tribes.count;
 }
 
@@ -81,6 +85,11 @@
     return 70;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    // if user has no tribe - add call to action to create/join one
+    if (currentUser.tribes.count == 0)
+        return 0;
+    
     // makes sure tribe objects have been loaded
     if (!currentUser.loadedInitialTribes)
         return 0;
@@ -115,6 +124,13 @@ heightForHeaderInSection:(NSInteger)section {
     UILabel * titleLabel = [[UILabel alloc] init];
     [titleLabel setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 38)];
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
+    
+    // if user has no tribe - add call to action to create/join one
+    if (currentUser.tribes.count == 0) {
+        [titleLabel setText:@"👆 Tap to join a Tribe"];
+        [headerView addSubview:titleLabel];
+        return headerView;
+    }
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
     [titleLabel setText:tribe.name];
@@ -229,6 +245,7 @@ heightForHeaderInSection:(NSInteger)section {
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
     Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
@@ -236,6 +253,12 @@ heightForHeaderInSection:(NSInteger)section {
 }
 
 -(void)sectionHeaderTap:(UITapGestureRecognizer *)tap {
+    
+    // if user has no tribe - add call to action to create/join one
+    if (currentUser.tribes.count == 0) {
+        NSLog(@"take them to addd tribes");
+        return;
+    }
     
     // get tribe that was tapped on to send to tribe menu vc control
     for (UILabel * label in tap.view.subviews) {
