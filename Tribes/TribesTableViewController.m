@@ -256,7 +256,7 @@ heightForHeaderInSection:(NSInteger)section {
     
     // if user has no tribe - add call to action to create/join one
     if (currentUser.tribes.count == 0) {
-        NSLog(@"take them to addd tribes");
+        [self performSegueWithIdentifier:@"AddTribe" sender:nil];
         return;
     }
     
