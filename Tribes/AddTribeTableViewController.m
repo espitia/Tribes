@@ -12,12 +12,15 @@
 #import "Tribe.h"
 #import "User.h"
 #import "SCLAlertView.h"
+#import <DigitsKit/DigitsKit.h>
+
 
 @interface AddTribeTableViewController () {
     User * currentUser;
     UITextField * tribeNameTextField;
-    Tribe * tribe;
     UIBarButtonItem * createTribeButton;
+    NSMutableArray * matchedContacts;
+    NSMutableArray * tribesToJoin;
 }
 
 @end
@@ -36,8 +39,37 @@
 
     // initialize textfield
     tribeNameTextField = [[UITextField alloc] init];
+    
+    //init instance variables
+    matchedContacts = [[NSMutableArray alloc] init];
+    tribesToJoin = [[NSMutableArray alloc] init];
+    
+
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    // check authorization access to address book status
+    switch ([DGTContacts contactsAccessAuthorizationStatus]) {
+        case 0:
+            NSLog(@"pending status");
+            [self askForUserPermissionOfAddressBook];
+            
+            break;
+        case 1:
+            NSLog(@"denied status");
+            [self askForUserPermissionOfAddressBook];
+            
+            break;
+        case 2: {
+            NSLog(@"accepted status");
+            [self lookUpMatches];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -45,10 +77,32 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return tribesToJoin.count;
+            break;
+        default:
+            break;
+    }
+    return 100;}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            return 100;
+            break;
+        case 1:
+            return 150;
+            break;
+        default:
+            break;
+    }
+    return 100;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -70,10 +124,10 @@
     
     switch (indexPath.section) {
         case 0:
-            [self addCreateTribeTextFieldToCell:cell];
+            [self configureCellForCreateTribeCell:cell];
             break;
         case 1:
-            cell.textLabel.text = @"du mon";
+            [self configureCellForJoinFriendsTribeCell:cell withIndexPath:indexPath] ;
         default:
             break;
     }
@@ -85,7 +139,7 @@
 
 #pragma mark - Configure Cells
 
--(void)addCreateTribeTextFieldToCell:(UITableViewCell *)cell {
+-(void)configureCellForCreateTribeCell:(UITableViewCell *)cell {
     // add uitextfield for name fo tribe
     CGRect activityNameFrame = CGRectMake(15,
                                           cell.frame.origin.y - 55,
@@ -95,11 +149,36 @@
     tribeNameTextField.placeholder = @"e.g. The Squad 😎";
     [tribeNameTextField setFont:[UIFont systemFontOfSize:40]];
     [cell.contentView addSubview:tribeNameTextField];
+    
+    cell.textLabel.text = nil;
+    cell.detailTextLabel.text = nil;
 
     
 }
 
-#pragma mark - Stuff
+-(void)configureCellForJoinFriendsTribeCell:(UITableViewCell *)cell withIndexPath:(NSIndexPath *)indexPath {
+
+    if (tribesToJoin.count == 0) {
+        cell.textLabel.text = @"No friends have Tribes. Create your own! ☝️";
+        return;
+    }
+    
+    //tribe dictionary contains two keys: tribe for tribe obj and memberFriends for an array of the names of members in tribe
+    NSDictionary * tribe = [tribesToJoin objectAtIndex:indexPath.row];
+    [cell.textLabel setFont:[UIFont systemFontOfSize:40]];
+    cell.textLabel.text = tribe[@"tribe"][@"name"];
+    
+    NSString * membersInTribeText;
+    if ([tribe[@"memberFriends"] count] > 1) {
+        membersInTribeText = [NSString stringWithFormat:@"%@, %@ and others are in this Tribe!", tribe[@"memberFriends"][0],tribe[@"memberFriends"][1]];
+    } else {
+        membersInTribeText = [NSString stringWithFormat:@"%@ is in this Tribe!", tribe[@"memberFriends"][0]];
+    }
+    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:10]];
+    cell.detailTextLabel.text = membersInTribeText;
+}
+
+#pragma mark - Actions
 
 -(void)createTribe {
     
@@ -161,4 +240,117 @@
     }
 
 }
+
+
+#pragma mark - Contacts handling
+
+-(void)askForUserPermissionOfAddressBook {
+    // ask for address book permission
+    DGTSession *userSession = [Digits sharedInstance].session;
+    DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
+    
+    [contacts startContactsUploadWithCompletion:^(DGTContactsUploadResult *result, NSError *error) {
+        if (!error) {
+            
+            if (result != nil) {
+                
+                // look for matches
+                [self lookUpMatches];
+            }
+            
+        } else {
+            
+            //analyze what the error is and handle it with alert views for now.
+            // more info on errors here: https://docs.fabric.io/ios/digits/find-friends.html#permissions-control-flow
+        }
+    }];
+}
+
+-(void)lookUpMatches {
+    
+    // search for matches
+    DGTSession *userSession = [Digits sharedInstance].session;
+    DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
+    
+    
+    [contacts lookupContactMatchesWithCursor:nil completion:^(NSArray *matches, NSString *nextCursor, NSError *error) {
+        
+        if (error) { NSLog(@"error: %@", error); }
+        
+        // get matching PFUsers for corresponding digitsID key
+        [self fetchMatchedUsers:matches];
+    }];
+}
+
+-(void)fetchMatchedUsers:(NSArray *)arrayOfMatchedDGTUsers {
+    __block int counter = 0;
+
+    // iterate through matched Digits Users and fetch the PFUser associated via digitUser.userId
+    for (DGTUser * user in arrayOfMatchedDGTUsers) {
+        // query
+        PFQuery * query = [PFUser query];
+        [query whereKey:@"digitsUserId" equalTo:user.userID];
+        
+        // fetch users by digitsID
+        [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable user, NSError * _Nullable error) {
+            counter++;
+
+            if (user && !error) {
+                // check if matchedContacts (w/ PFUsers) already has contact
+                if (![self contactAlreadyExists:(PFUser *)user]) {
+                    // if not, add user to matchedContacts
+                    [matchedContacts addObject:user];
+                }
+            } else {
+                NSLog(@"error finding PFUser for DGTUser.");
+            }
+            if (counter == arrayOfMatchedDGTUsers.count) {
+                [self findTribeForMatchedUsers];
+            }
+
+        }];
+        
+    }
+}
+
+// in case digits brings back two ids pointing to the same PFUser, thus, fethcing two PFUsers
+-(BOOL)contactAlreadyExists:(PFUser *)user {
+    return ([matchedContacts containsObject:user]) ? true : false;
+}
+
+-(void)findTribeForMatchedUsers {
+    
+    NSMutableArray * rawArrayOfTribes = [[NSMutableArray alloc] init];
+    
+    // add all tribes to which matched users belong to
+    for (User * matchedUser in matchedContacts) {
+        for (Tribe * tribe in matchedUser.tribes) {
+            if (![rawArrayOfTribes containsObject:tribe]) {
+                [rawArrayOfTribes addObject:tribe];
+            }
+        }
+    }
+    
+    //add all members of selected tribe to tribedictionary in order to display in detail text on table
+    for (Tribe * tribe in rawArrayOfTribes) {
+        NSMutableArray * membersInTribe = [[NSMutableArray alloc] init];
+        for (User * matchedUser in matchedContacts) {
+            if ([matchedUser.tribes containsObject:tribe]) {
+                //belongs to tribe
+                [membersInTribe addObject:matchedUser[@"name"]];
+            }
+        }
+        NSDictionary * tribeToJoin = @{@"tribe":tribe,
+                        @"memberFriends":membersInTribe};
+        [tribesToJoin addObject:tribeToJoin];
+    }
+    
+    [self.tableView reloadData];
+    
+
+    
+}
+
+
+
 @end
