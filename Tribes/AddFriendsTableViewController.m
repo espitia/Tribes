@@ -210,7 +210,7 @@
     [[MFMessageComposeViewController alloc] init];
     
     if([MFMessageComposeViewController canSendText]) {
-        NSString *str= @"Hello";
+        NSString *str= @"Hey! I am trying to get the whole squad on Tribes ✊ It's an app to make sure we get our shit done 😎 Download it here: http://google.com";
         controller.body = str;
         controller.recipients = [NSArray arrayWithObjects:
                                  number, nil];
@@ -366,19 +366,23 @@
     }
 }
 
-#pragma mark - sending texts
+#pragma mark - sending texts delegate
+
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result {
+    
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    
     switch (result) {
         case MessageComposeResultCancelled:
-            NSLog(@"Cancelled");
+            NSLog(@"Cancelled sending of text");
             break;
         case MessageComposeResultFailed:
-            NSLog(@"Failed");
-            break;
+            NSLog(@"Failed to send text");
+            [alert showError:self title:@"😥❌📲" subTitle:@"Failed to send text 😞 Please try again." closeButtonTitle:@"OK" duration:0.0];            break;
         case MessageComposeResultSent:
-            NSLog(@"sent");
-            break;
+            NSLog(@"Succesfully sent text message invite.");
+            [alert showSuccess:self title:@"🤓📲👫" subTitle:@"Successfully sent invite! Once they download the app they will be asked if they want to join your Tribe 🎉" closeButtonTitle:@"OK" duration:0.0];            break;
         default:
             break;
     }
