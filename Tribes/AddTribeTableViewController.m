@@ -174,8 +174,10 @@
     } else {
         membersInTribeText = [NSString stringWithFormat:@"%@ is in this Tribe!", tribe[@"memberFriends"][0]];
     }
-    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:10]];
+    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:16]];
     cell.detailTextLabel.text = membersInTribeText;
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
 #pragma mark - Actions
