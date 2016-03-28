@@ -343,8 +343,57 @@ heightForHeaderInSection:(NSInteger)section {
             NSLog(@"failed to update activities");
         }
     }];
+    
+    [self checkForNewData];
 }
 
+-(void)checkForNewData {
+    
+    [currentUser checkForNewDataWithBlock:^(bool tribes, bool habits, bool members) {
+        
+        NSString * alertTitle;
+        NSString * alertMessage;
+        
+        // if new tibes were found
+        if (tribes) {
+            
+            NSLog(@"new tribes found to be downloaded");
+            alertTitle = @"New Tribes 😎";
+            alertMessage = @"Someone has added you to a new Tribe! Tap OK to update now.";
+        }
+        
+        // new habits were found
+        else if (!tribes && habits) {
+            
+            NSLog(@"new habits found to be downloaded");
+            alertTitle = @"New Habits 😎";
+            alertMessage = @"A member of one of your Tribes added a new habit! Tap OK to update now.";
+            
+        }
+        // new members were found
+        else if (!tribes && !habits && members) {
+            
+            NSLog(@"new members found to be downloaded");
+            alertTitle = @"New Members 😎";
+            alertMessage = @"A new member has been added to one of your Tribes. Tap OK to update now.";
+        }
+        
+        // show alert to download new data
+        if (tribes || habits || members) {
+            
+            SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [newNewAlert addButton:@"OK" actionBlock:^{
+                [currentUser updateTribesWithBlock:^(bool success) {
+                    NSLog(@"updatedTribes");
+                }];
+            }];
+            [newNewAlert showInfo:alertTitle subTitle:alertMessage closeButtonTitle:nil duration:0.0];
+        } else {
+            NSLog(@"no new data was found to update tribes/habits/members.");
+        }
+    }];
+    
+}
 // helper method for setting images under swipeable cells
 - (UIView *)viewWithImageName:(NSString *)imageName {
     UIImage *image = [UIImage imageNamed:imageName];

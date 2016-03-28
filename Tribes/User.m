@@ -197,6 +197,148 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
 }
 
+#pragma mark - Checking for new data before reloading all objects unnecessarily
+
+-(void)checkForNewDataWithBlock:(void(^)(bool tribes, bool habits, bool members))callback {
+
+    [self checkForNewTribesWithBlock:^(bool available) {
+        if (available) {
+            callback(true, true, true);
+        } else {
+            // check for new habits
+            [self checkForNewHabitsWithBlock:^(bool available) {
+                if (available) {
+                    callback(false, true, true);
+                } else {
+                    // check for new members
+                    [self checkForNewMembersWithBlock:^(bool available) {
+                        if (available) {
+                            callback(false, false, true);
+                        } else {
+                            callback(false, false, false);
+                        }
+                    }];
+                }
+            }];
+        }
+    }];
+}
+
+-(void)checkForNewTribesWithBlock:(void(^)(bool available))callback {
+    
+    // get array of all habits user is in to compare to new
+    NSMutableArray * copyOfOldTribes = [[NSMutableArray alloc] init];
+    [copyOfOldTribes addObjectsFromArray:self.tribes];
+    
+    // arrays to hold new data and compare old data to
+    NSMutableArray * arrayOfNewTribes = [[NSMutableArray alloc] init];
+
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:self.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    
+        if (object && !error) {
+            
+            User * user = (User *)object;
+            [arrayOfNewTribes addObjectsFromArray:user.tribes];
+            if (copyOfOldTribes.count != arrayOfNewTribes.count) {
+                NSLog(@"new tribes found!");
+                callback(true);
+            } else {
+                NSLog(@"no new tribes found");
+                NSLog(@"%@", error);
+                callback(false);
+            }
+            
+        } else {
+            NSLog(@"error fetching user to check for new tribes");
+            callback(false);
+        }
+    }];
+
+}
+
+-(void)checkForNewHabitsWithBlock:(void(^)(bool available))callback {
+    // get array of all habits user is in to compare to new
+    NSMutableArray * copyOfOldHabits = [[NSMutableArray alloc] init];
+    for (Tribe * tribe in self.tribes) {
+        [copyOfOldHabits addObjectsFromArray:tribe.habits];
+    }
+    
+    // arrays to hold new data and compare old data to
+    NSMutableArray * arrayOfNewHabits = [[NSMutableArray alloc] init];
+    
+    // counter to keep tab on tribes
+    __block int counter = 0;
+    
+    for (Tribe * tribe in self.tribes) {
+        
+        PFQuery * queryForTribe = [PFQuery queryWithClassName:@"Tribe"];
+        [queryForTribe getObjectInBackgroundWithId:tribe.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            
+            if (object && !error) {
+                counter++;
+                [arrayOfNewHabits addObjectsFromArray:object[@"habits"]];
+                if (counter == self.tribes.count) {
+                    
+                    // check if there are new habits available
+                    if (copyOfOldHabits.count != arrayOfNewHabits.count) {
+                        callback(true);
+                    } else {
+                        callback(false);
+                    }
+                    
+                }
+            } else {
+                NSLog(@"error fetching tribes to check for new data");
+                callback(false);
+            }
+        }];
+    }
+}
+
+-(void)checkForNewMembersWithBlock:(void(^)(bool available))callback {
+    
+    // old data to compare new to
+    NSMutableArray * oldCopyOfAllMembers = [[NSMutableArray alloc] init];
+    
+    for (Tribe * tribe in self.tribes) {
+        [oldCopyOfAllMembers addObjectsFromArray:tribe.tribeMembers];
+    }
+    
+    // arrays to hold new data and compare old data to
+    NSMutableArray * arrayOfNewMembers = [[NSMutableArray alloc] init];
+    
+    __block int counter = 0;
+    for (Tribe * tribe in self.tribes) {
+        
+        PFRelation * relationToMembers = [tribe relationForKey:@"members"];
+        PFQuery * query = [relationToMembers query];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            if (objects && !error) {
+                counter++;
+                [arrayOfNewMembers addObjectsFromArray:objects];
+                if (counter == self.tribes.count) {
+                    
+                    // check if there are new members
+                    if (arrayOfNewMembers.count != oldCopyOfAllMembers.count) {
+                        callback(true);
+                    } else {
+                        callback(false);
+                    }
+                }
+                
+            } else {
+                NSLog(@"error fetching members relation to check if there is new data available.");
+                callback(false);
+            }
+        }];
+    
+    }
+    
+    
+  
+}
+
 #pragma mark - Create Tribe
 
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback {
