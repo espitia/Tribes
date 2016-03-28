@@ -55,5 +55,6 @@ extern int RECEIVED_APPLAUSE_XP;
 @property int lvl;
 @property int xp;
 @property BOOL loadedInitialTribes;
+@property BOOL weeklyReportActive;
 
 @end

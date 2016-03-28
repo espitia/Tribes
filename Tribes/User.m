@@ -21,6 +21,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 @dynamic lvl;
 @dynamic xp;
 @synthesize loadedInitialTribes;
+@dynamic weeklyReportActive;
 
 #pragma mark - Parse required methods
 
@@ -547,6 +548,17 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     for (Activity * activity in self.activities) {
         activity.hibernation = false;
         [activity saveEventually];
+    }
+}
+
+#pragma mark - Weekly Report
+-(BOOL)weeklyReportActive {
+    int date = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday
+                                                   fromDate:[NSDate date]] weekday];
+    if (date == 2) {
+        return true;
+    } else {
+        return false;
     }
 }
 
