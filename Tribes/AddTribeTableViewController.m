@@ -51,14 +51,16 @@
     // check authorization access to address book status
     switch ([DGTContacts contactsAccessAuthorizationStatus]) {
         case 0:
-            NSLog(@"pending status");
-            [self askForUserPermissionOfAddressBook];
+        case 1: {
             
-            break;
-        case 1:
-            NSLog(@"denied status");
-            [self askForUserPermissionOfAddressBook];
+            NSLog(@"pending/denied status");
+            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert addButton:@"OK 👌" actionBlock:^{
+                [self askForUserPermissionOfAddressBook];
+            }];
+            [alert showNotice:@"Join a Tribe" subTitle:@"In order to join a friend's Tribe, we need permission to look them up through your address book." closeButtonTitle:nil duration:0.0];
             
+        }
             break;
         case 2: {
             NSLog(@"accepted status");
