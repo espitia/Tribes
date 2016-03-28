@@ -132,10 +132,9 @@
             
         } else if ([[member activityForHabit:_habit] completedForDay]) {
             
-            // let user know
-            message = [NSString stringWithFormat:@"%@ already did it!\n Let it be 🦁", member[@"name"]];
-            [alert showInfo:@"🖐" subTitle:message closeButtonTitle:@"OK" duration:0.0];
-            
+            // praise user
+            [self showBubbleEffectAndSendApplausePushWithLocation:location toUser:member];
+
             
         } else {
             [self showBubbleEffectAndSendPushWithLocation:location toUser:member];
@@ -143,6 +142,58 @@
     }
 
 }
+
+-(void)showBubbleEffectAndSendApplausePushWithLocation:(CGPoint)location toUser:(User *)member {
+    
+    // makes sure that if user switches user being sent motivation, we reset (1st and 7th push does send)
+    if (!currentUserBeingSentMotivation || currentUserBeingSentMotivation != member) {
+        currentUserBeingSentMotivation = member;
+        motivationPushControl = 0;
+        firstPush = true;
+    }
+    
+    // initialize bubble generator
+    bubbleGenerator = [[HYBubbleButton alloc] initWithFrame:CGRectMake(location.x, location.y, 0, 0) maxLeft:150 maxRight:150 maxHeight:300];
+    bubbleGenerator.backgroundColor = [UIColor clearColor];
+    bubbleGenerator.maxLeft = 300;
+    bubbleGenerator.maxRight = 300;
+    bubbleGenerator.maxHeight = 600;
+    bubbleGenerator.duration = 8;
+    [self.view addSubview:bubbleGenerator];
+    
+    int TAPS_TO_SEND_PUSH = 6;
+    
+    
+    // send push if first or re-starting round
+    if ((motivationPushControl == 0 && firstPush) || motivationPushControl == TAPS_TO_SEND_PUSH) {
+        
+        // send push with lion
+        UIImage * lion = [self imageFromText:@"👏"];
+        bubbleGenerator.images = @[lion];
+ 
+        NSString * message = [NSString stringWithFormat:@"%@: 👏", [User currentUser][@"name"]];
+        NSString * category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
+        [[User currentUser] sendPushFromMemberToMember:member withMessage:message andCategory:category];
+  
+        if (motivationPushControl == TAPS_TO_SEND_PUSH) {
+            motivationPushControl = 0;
+            firstPush = false;
+        } else {
+            motivationPushControl++;
+        }
+        
+    } else {
+        // send stars
+        UIImage * key = [self imageFromText:@"⚡️"];
+        bubbleGenerator.images = @[key];
+        motivationPushControl++;
+    }
+    
+    [bubbleGenerator generateBubbleInRandom];
+    
+}
+
+
 
 -(void)showBubbleEffectAndSendPushWithLocation:(CGPoint)location toUser:(User *)member {
     
