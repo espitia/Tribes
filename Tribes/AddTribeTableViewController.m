@@ -21,6 +21,7 @@
     UIBarButtonItem * createTribeButton;
     NSMutableArray * matchedContacts;
     NSMutableArray * tribesToJoin;
+    BOOL loadingTribesToJoin;
 }
 
 @end
@@ -43,6 +44,7 @@
     //init instance variables
     matchedContacts = [[NSMutableArray alloc] init];
     tribesToJoin = [[NSMutableArray alloc] init];
+    loadingTribesToJoin = true;
     
 
 }
@@ -84,7 +86,7 @@
             return 1;
             break;
         case 1:
-            return tribesToJoin.count;
+            return (tribesToJoin.count == 0) ? 1 : tribesToJoin.count;
             break;
         default:
             break;
@@ -159,9 +161,21 @@
 }
 
 -(void)configureCellForJoinFriendsTribeCell:(UITableViewCell *)cell withIndexPath:(NSIndexPath *)indexPath {
+    
+
+
+    if (loadingTribesToJoin) {
+        [cell.textLabel setFont:[UIFont systemFontOfSize:20]];
+        [cell.textLabel setText:@"Looking for friend's Tribes... 🕵"];
+        cell.detailTextLabel.text = nil;
+        return;
+    }
 
     if (tribesToJoin.count == 0) {
-        cell.textLabel.text = @"No friends have Tribes. Create your own! ☝️";
+        [cell.textLabel setFont:[UIFont systemFontOfSize:20]];
+        cell.textLabel.text = @"We couldn't find any friend's Tribe 😞";
+        [cell.detailTextLabel setFont:[UIFont systemFontOfSize:20]];
+        cell.detailTextLabel.text = @"Create your own! ☝️😄";
         return;
     }
     
@@ -349,6 +363,7 @@
         [tribesToJoin addObject:tribeToJoin];
     }
     
+    loadingTribesToJoin = false;
     [self.tableView reloadData];
     
 
