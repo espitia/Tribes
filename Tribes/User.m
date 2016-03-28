@@ -399,6 +399,15 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
+#pragma mark - Hibernation
+
+-(void)removeAllHibernationFromActivities {
+    for (Activity * activity in self.activities) {
+        activity.hibernation = false;
+        [activity saveEventually];
+    }
+}
+
 #pragma mark - Levels and XP
 
 -(void)addXp:(int)xpToAdd {

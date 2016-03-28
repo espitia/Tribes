@@ -189,6 +189,7 @@
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
     
     if ([identifier isEqualToString:@"TURN_OFF_HIBERNATION"]) {
+        [[User currentUser] removeAllHibernationFromActivities];
         [self deleteHibernationNotification];
     }
     completionHandler();

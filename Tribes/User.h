@@ -39,7 +39,7 @@ extern int RECEIVED_APPLAUSE_XP;
 
 // handling activities
 -(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe;
-
+-(void)removeAllHibernationFromActivities;
 
 // dealing with pushes
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe forHabit:(Habit *)habit withBlock:(void (^)(BOOL))callback;
