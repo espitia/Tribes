@@ -19,6 +19,7 @@
 #import "YLProgressBar.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "SCLAlertView.h"
+#import "WeeklyReportTableViewController.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
@@ -272,7 +273,7 @@ heightForHeaderInSection:(NSInteger)section {
     
     // enable weekly reports on Monday and configure indexpath to correctly user data source
     if (currentUser.weeklyReportActive && indexPath.row == 0) {
-        [self performSegueWithIdentifier:@"showWeeklyReport" sender:nil];
+        [self performSegueWithIdentifier:@"showWeeklyReport" sender:tribe];
 
     }
     // REPORT DAYS (MONDAY) BUT NOT TAPPING REPORT
@@ -341,6 +342,11 @@ heightForHeaderInSection:(NSInteger)section {
         // sender contrains tribe tapped
         tribeMenuVC.tribe = sender;
         
+    } else if ([segue.identifier isEqualToString:@"showWeeklyReport"]) {
+        // get tribe menu vc to set tribe
+        WeeklyReportTableViewController * weeklyReportVC = segue.destinationViewController;
+        // sender contrains tribe tapped
+        weeklyReportVC.tribe = sender;
     }
 }
 
