@@ -251,7 +251,14 @@ heightForHeaderInSection:(NSInteger)section {
         [self makeItRainConfetti];
         [self updateProgressBar];
         [self playSound:@"completion-sound" :@".mp3"];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+        if (currentUser.weeklyReportActive) {
+            NSIndexPath * weeklyReportIndexPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
+            [self.tableView reloadRowsAtIndexPaths:@[weeklyReportIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        } else {
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+
     }];
 }
 
@@ -263,7 +270,7 @@ heightForHeaderInSection:(NSInteger)section {
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
     
-    // enable weekly reports on monday and configure indexpath to correctly user data source
+    // enable weekly reports on Monday and configure indexpath to correctly user data source
     if (currentUser.weeklyReportActive && indexPath.row == 0) {
         [self performSegueWithIdentifier:@"showWeeklyReport" sender:nil];
 
