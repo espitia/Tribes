@@ -169,13 +169,13 @@
     tomorrowComponents.day = 1 ;
     NSCalendar* calendar = [NSCalendar currentCalendar] ;
     NSDate* tomorrow = [calendar dateByAddingComponents:tomorrowComponents toDate:now options:0] ;
-    NSDateComponents* tomorrowAt10AMComponents = [calendar components:(NSCalendarUnitDay|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:tomorrow] ;
-    tomorrowAt10AMComponents.hour = 10;
-    NSDate* tomorrowAt10AM = [calendar dateFromComponents:tomorrowAt10AMComponents] ;
+    NSDateComponents* tomorrowAt9AMComponents = [calendar components:(NSCalendarUnitDay|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:tomorrow] ;
+    tomorrowAt9AMComponents.hour = 9;
+    NSDate* tomorrowAt9AM = [calendar dateFromComponents:tomorrowAt9AMComponents] ;
     
     // make local notificaiton to take it off the next day
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.fireDate = tomorrowAt10AM;
+    localNotification.fireDate = tomorrowAt9AM;
     localNotification.repeatInterval = NSCalendarUnitDay;
     localNotification.category = @"HIBERNATION_RESPONSE";
     localNotification.alertBody = @"🐻 It's a new day! Would you like to turn hibernations off?";
