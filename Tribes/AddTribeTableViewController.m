@@ -196,6 +196,40 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 
+#pragma mark - TableView Delegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // tapped on a friends tribe!
+    if (indexPath.section == 1) {
+        
+        Tribe * tribe = [tribesToJoin objectAtIndex:indexPath.row];
+        if (tribe) {
+           
+            SCLAlertView * waitingAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [waitingAlert showWaiting:@"Joining Tribe 😎" subTitle:@"It will be just one second ..." closeButtonTitle:nil duration:0.0];
+            
+            [tribe addUserToTribe:[User currentUser] withBlock:^(BOOL *success) {
+                if (success) {
+                    [waitingAlert hideView];
+                    SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    NSString * successMessage = [NSString stringWithFormat:@"You have now joined %@! Make us proud ✊", tribe[@"name"]];
+                    [successAlert addButton:@"Will do!" actionBlock:^{
+                        [self.navigationController popViewControllerAnimated:true];
+                    }];
+                    [successAlert showSuccess:@"Success 😃" subTitle:successMessage  closeButtonTitle:nil duration:0.0];
+                } else {
+                    SCLAlertView * errorAlert = [[SCLAlertView alloc]  initWithNewWindow];
+                    [errorAlert showError:@"Oh oh 😬" subTitle:@"There was an error while joining the Tribe 🤔 Please try again." closeButtonTitle:@"OK" duration:0.0];
+                }
+            }];
+        } else {
+            NSLog(@"error getting tribe to add");
+        }
+
+    }
+}
+
 #pragma mark - Actions
 
 -(void)createTribe {
@@ -295,7 +329,7 @@
     
     [contacts lookupContactMatchesWithCursor:nil completion:^(NSArray *matches, NSString *nextCursor, NSError *error) {
         
-        if (matches && !error) {
+        if (matches.count > 0 && !error) {
             // get matching PFUsers for corresponding digitsID key
             [self fetchMatchedUsers:matches];
         } else {
