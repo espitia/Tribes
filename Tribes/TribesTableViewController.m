@@ -95,8 +95,11 @@
         return 0;
 
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
-    
-    return [tribe[@"habits"] count];
+    if (currentUser.weeklyReportActive) {
+        return [tribe[@"habits"] count] + 1;
+    } else {
+        return [tribe[@"habits"] count];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -167,8 +170,18 @@ heightForHeaderInSection:(NSInteger)section {
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
-    [self configureCell:cell forRowAtIndexPath:indexPath];
-    
+    // enable weekly reports on monday and configure indexpath to correctly user data source
+    if (currentUser.weeklyReportActive && indexPath.row == 0) {
+        cell.textLabel.text = @"Weekly report is available! 📈";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    } else if (currentUser.weeklyReportActive && indexPath.row != 0) {
+        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        [self configureCell:cell forRowAtIndexPath:newIndexPath];
+        return cell;
+    } else {
+        [self configureCell:cell forRowAtIndexPath:indexPath];
+    }
     return cell;
 }
 
@@ -247,9 +260,28 @@ heightForHeaderInSection:(NSInteger)section {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
-    Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
-    [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
+    
+    // enable weekly reports on monday and configure indexpath to correctly user data source
+    if (currentUser.weeklyReportActive && indexPath.row == 0) {
+        [self performSegueWithIdentifier:@"showWeeklyReport" sender:nil];
+
+    }
+    // REPORT DAYS (MONDAY) BUT NOT TAPPING REPORT
+    else if (currentUser.weeklyReportActive && indexPath.row != 0) {
+        
+        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        Habit * habit = [tribe[@"habits"] objectAtIndex:newIndexPath.row];
+        [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
+        
+    }
+    // REGULAR DAYS
+    else {
+
+        Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
+        [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
+    }
 }
 
 -(void)sectionHeaderTap:(UITapGestureRecognizer *)tap {
