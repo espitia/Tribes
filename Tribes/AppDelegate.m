@@ -12,6 +12,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import <DigitsKit/DigitsKit.h>
 #import "User.h"
+#import "SCLAlertView.h"
 
 
 @interface AppDelegate ()
@@ -55,7 +56,95 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    [PFPush handlePush:userInfo];
+    
+    if ([userInfo objectForKey:@"aps"]) {
+    
+        User * currentUser = [User currentUser];
+        NSString * title;
+        NSString * messageToDisplay = userInfo[@"aps"][@"alert"];
+        NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
+        __block NSString * messageToSend;
+        __block NSString * categoryToSend;
+        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+
+        NSString * category = userInfo[@"aps"][@"category"];   // The one we want to switch on
+        NSArray * possibleCategories = @[@"MOTIVATION_REPLY",
+                                         @"COMPLETION_REPLY",
+                                         @"WATCHING_YOU_REPLY",
+                                         @"THANK_YOU_FOR_APPLAUSE_REPLY",
+                                         @"HIBERNATION_RESPONSE"];
+        
+        int item = (int)[possibleCategories indexOfObject:category];
+        
+        switch (item) {
+            case 0: {
+                // MOTIVATIONAL REPLY
+                title = @"Motivation Received 💪";
+                [alert addButton:@"👌" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: 👌", currentUser[@"name"]];
+                    categoryToSend = @"WATCHING_YOU_REPLY";
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
+                }];
+                [alert addButton:@"✋" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: 🖐", currentUser[@"name"]];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:nil];
+                }];
+            }
+                break;
+            case 1: {
+                // COMPLETION REPLY
+                title = @"📈📈📈";
+                [alert addButton:@"👏" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: 👏", currentUser[@"name"]];
+                    categoryToSend = @"THANK_YOU_FOR_APPLAUSE_REPLY";
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
+                }];
+            }
+                break;
+            case 2: {
+                // WATCHING YOU REPLY
+                title = @"👉🕑🗯";
+                messageToSend = [NSString stringWithFormat:@"%@: 👀", currentUser[@"name"]];
+                [alert addButton:@"👀" actionBlock:^{
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
+                }];
+            }
+                break;
+            case 3: {
+                // THANK YOU FOR APPLAUSE REPLY
+                title = @"😍😍😍";
+                [alert addButton:@"✊" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: ✊", currentUser[@"name"]];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:nil];
+                }];
+            }
+                break;
+            case 4: {
+                // HIBERNATION REPONSE
+                title = @"Wake up 💤";
+                [alert addButton:@"Yes" actionBlock:^{
+                    [[User currentUser] removeAllHibernationFromActivities];
+                    [self deleteHibernationNotification];
+                }];
+                [alert addButton:@"No" actionBlock:^{
+                }];
+            }
+                break;
+            default:
+                [alert addButton:@"OK" actionBlock:^{
+                }];
+                break;
+        }
+        
+        [alert showInfo:title subTitle:messageToDisplay closeButtonTitle:nil duration:0.0];
+    }
+
+}
+-(void)sendPushWithMessage:(NSString *)message toUserWithObjectId:(NSString *)objectId andCategory:(NSString *)category {
+    PFQuery * queryForUserToReplyTo = [PFUser query];
+    [queryForUserToReplyTo getObjectInBackgroundWithId:objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [[User currentUser] sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
