@@ -278,6 +278,8 @@
             
         } else {
             
+            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showError:@"Oh oh 😬" subTitle:@"There was an error searching for Friends, please try again" closeButtonTitle:@"OK" duration:0.0];
             //analyze what the error is and handle it with alert views for now.
             // more info on errors here: https://docs.fabric.io/ios/digits/find-friends.html#permissions-control-flow
         }
@@ -293,10 +295,15 @@
     
     [contacts lookupContactMatchesWithCursor:nil completion:^(NSArray *matches, NSString *nextCursor, NSError *error) {
         
-        if (error) { NSLog(@"error: %@", error); }
-        
-        // get matching PFUsers for corresponding digitsID key
-        [self fetchMatchedUsers:matches];
+        if (matches && !error) {
+            // get matching PFUsers for corresponding digitsID key
+            [self fetchMatchedUsers:matches];
+        } else {
+            NSLog(@"error: %@", error);
+            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert showError:@"Oh oh 😬" subTitle:@"There was an error searching for Friends, please try again" closeButtonTitle:@"OK" duration:0.0];
+        }
+
     }];
 }
 
