@@ -93,7 +93,7 @@
                 break;
             case 1: {
                 // COMPLETION REPLY
-                title = @"📈📈📈";
+                title = @"Squad is up!";
                 [alert addButton:@"👏" actionBlock:^{
                     messageToSend = [NSString stringWithFormat:@"%@: 👏", currentUser[@"name"]];
                     categoryToSend = @"THANK_YOU_FOR_APPLAUSE_REPLY";
@@ -103,7 +103,7 @@
                 break;
             case 2: {
                 // WATCHING YOU REPLY
-                title = @"👉🕑🗯";
+                title = @"Watch em!";
                 messageToSend = [NSString stringWithFormat:@"%@: 👀", currentUser[@"name"]];
                 [alert addButton:@"👀" actionBlock:^{
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
@@ -112,7 +112,7 @@
                 break;
             case 3: {
                 // THANK YOU FOR APPLAUSE REPLY
-                title = @"😍😍😍";
+                title = @"Great job!";
                 [alert addButton:@"✊" actionBlock:^{
                     messageToSend = [NSString stringWithFormat:@"%@: ✊", currentUser[@"name"]];
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:nil];
