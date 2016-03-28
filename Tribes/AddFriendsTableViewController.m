@@ -121,6 +121,7 @@
             if (addressBookContacts.count > 0) {
                 contact = [addressBookContacts objectAtIndex:indexPath.row];
                 cell.textLabel.text = [self contactName:contact];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             break;
         default:
