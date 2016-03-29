@@ -34,7 +34,8 @@
 
 -(void)addTribeMembersToHabits:(NSArray *)membersArray;
 -(void)addTribeMembersToTribe:(NSArray *)membersArray;
-
+// stats
+-(id)userWithMostCompletionsForLastWeek;
 
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;

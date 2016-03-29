@@ -526,6 +526,16 @@
     return (self.membersAndActivities.count == 0 || !self.membersAndActivities) ? false : true;
 }
 
+-(User *)userWithMostCompletionsForLastWeek {
+    User * topUser;
+    for (User * user in tribeMembers) {
+        if ([user lastWeekCompletionsForTribe:self] > [topUser lastWeekCompletionsForTribe:self]) {
+            topUser = user;
+        }
+    }
+    return topUser;
+}
+
 #pragma mark - State of Tribe
 
 -(BOOL)allHabitsAreCompleted {
