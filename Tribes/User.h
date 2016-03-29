@@ -36,6 +36,7 @@ extern int RECEIVED_APPLAUSE_XP;
 
 // handling activities w/ habits
 -(Activity *)activityForHabit:(Habit *)habit;
+-(int)lastWeekCompletionsForTribe:(Tribe *)tribe;
 
 // handling activities
 -(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe;
