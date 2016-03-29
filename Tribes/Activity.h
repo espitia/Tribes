@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) NSMutableArray * completionDates;
 @property int weekCompletions;
+@property int lastWeekCompletions;
 @property BOOL hibernation;
 
 -(void)completeForToday;

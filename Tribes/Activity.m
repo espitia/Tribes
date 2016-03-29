@@ -57,6 +57,31 @@
 
     return counter;
 }
+-(int)lastWeekCompletions {
+
+    
+    // get startOfWeek to hold the first day of the week, according to locale (monday vs. sunday)
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    [cal setFirstWeekday:2];
+    NSDate *lastWeekDate = [NSDate dateWithTimeIntervalSinceNow:-604800];
+    NSDate *startOfLastWeek;
+    NSTimeInterval interval;
+    [cal rangeOfUnit:NSCalendarUnitWeekOfYear
+           startDate:&startOfLastWeek
+            interval:&interval
+             forDate:lastWeekDate];
+    NSDate *endOfLastweek = [NSDate dateWithTimeInterval:604800 sinceDate:startOfLastWeek];
+    
+    int counter = 0;
+    
+    // count how many days are in this week
+    for (NSDate * date in self.completionDates) {
+        if ([self date:date isBetweenDate:startOfLastWeek andDate:endOfLastweek]) {
+            counter++;
+        }
+    }
+    return counter;
+}
 
 #pragma mark - Action methods
 
