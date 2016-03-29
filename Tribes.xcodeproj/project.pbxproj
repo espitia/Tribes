@@ -29,6 +29,8 @@
 		099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2001C9520E100A734F0 /* MembersTableViewController.m */; };
 		099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2031C9524F300A734F0 /* HabitsTableViewController.m */; };
 		09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */; };
+		09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E5551CA9EDED00A82E3F /* RecognitionTableViewCell.m */; };
+		09A4E5581CA9EDED00A82E3F /* RecognitionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */; };
 		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
@@ -106,6 +108,9 @@
 		099BB2031C9524F300A734F0 /* HabitsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitsTableViewController.m; sourceTree = "<group>"; };
 		09A4E5501CA9EC0700A82E3F /* WeeklyReportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTableViewController.h; sourceTree = "<group>"; };
 		09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTableViewController.m; sourceTree = "<group>"; };
+		09A4E5541CA9EDED00A82E3F /* RecognitionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecognitionTableViewCell.h; sourceTree = "<group>"; };
+		09A4E5551CA9EDED00A82E3F /* RecognitionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecognitionTableViewCell.m; sourceTree = "<group>"; };
+		09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecognitionTableViewCell.xib; sourceTree = "<group>"; };
 		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
 		09BDD94E1C7E929000061567 /* HYBubbleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBubbleButton.m; sourceTree = "<group>"; };
 		09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeDetailTableViewController.h; sourceTree = "<group>"; };
@@ -322,6 +327,9 @@
 			children = (
 				09A4E5501CA9EC0700A82E3F /* WeeklyReportTableViewController.h */,
 				09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */,
+				09A4E5541CA9EDED00A82E3F /* RecognitionTableViewCell.h */,
+				09A4E5551CA9EDED00A82E3F /* RecognitionTableViewCell.m */,
+				09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */,
 			);
 			name = "Weekly Report";
 			sourceTree = "<group>";
@@ -532,6 +540,7 @@
 				0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */,
 				0917EC521C4037D600BE2697 /* Assets.xcassets in Resources */,
 				09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */,
+				09A4E5581CA9EDED00A82E3F /* RecognitionTableViewCell.xib in Resources */,
 				0917EC501C4037D600BE2697 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -637,6 +646,7 @@
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
 				09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */,
 				099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */,
+				09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */,
 				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
