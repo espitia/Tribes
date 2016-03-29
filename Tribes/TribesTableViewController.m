@@ -180,7 +180,9 @@ heightForHeaderInSection:(NSInteger)section {
         NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         [self configureCell:cell forRowAtIndexPath:newIndexPath];
         return cell;
-    } else {
+    }
+    // regular day
+    else {
         [self configureCell:cell forRowAtIndexPath:indexPath];
     }
     return cell;
@@ -252,7 +254,7 @@ heightForHeaderInSection:(NSInteger)section {
         [self makeItRainConfetti];
         [self updateProgressBar];
         [self playSound:@"completion-sound" :@".mp3"];
-
+        // modify indexpath to accomadte for weekly report cell
         if (currentUser.weeklyReportActive) {
             NSIndexPath * weeklyReportIndexPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
             [self.tableView reloadRowsAtIndexPaths:@[weeklyReportIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
