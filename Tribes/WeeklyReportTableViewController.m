@@ -17,17 +17,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSLog(@"%@", _tribe);
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.navigationItem.title = @"Weekly Report 📈";
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    // register cells
+    [self.tableView registerNib:[UINib nibWithNibName:@"RecognitionTableViewCell"
+                                               bundle:nil]
+         forCellReuseIdentifier:@"RecognitionCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"HabitReportTableViewCell"
+                                               bundle:nil]
+         forCellReuseIdentifier:@"HabitCell"];
 }
 
 #pragma mark - Table view data source
