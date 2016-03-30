@@ -85,51 +85,111 @@
     }
 
     return cell;
+
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)configureCellForRecognitionCell:(RecognitionTableViewCell *)cell {
+    
+    User * user = [_tribe userWithMostCompletionsForLastWeek];
+    cell.recognitionTitle.text = @"Most completions:";
+    int lastWeeksCompletions = [user lastWeekCompletionsForTribe:_tribe];
+    cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"name"], lastWeeksCompletions];
+    cell.emojiReward.text = @"🏅";
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(void)configureCellForHabitCell:(HabitReportTableViewCell *)cell andIndexPath:(NSIndexPath *)indexPath {
+
+    // labels cell
+    if (indexPath.row == 0) {
+        cell.username.text = @"";
+        cell.thisWeekCompletionsleftView.image = nil;
+        cell.changeLeftView.image = nil;
+        
+        cell.lastWeekCompletions.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.lastWeekCompletions.textAlignment = NSTextAlignmentCenter;
+        cell.lastWeekCompletions.numberOfLines = 2;
+        [cell.lastWeekCompletions setFont:[UIFont boldSystemFontOfSize:10]];
+        
+        cell.thisWeekCompletions.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.thisWeekCompletions.textAlignment = NSTextAlignmentCenter;
+        cell.thisWeekCompletions.numberOfLines = 2;
+        [cell.thisWeekCompletions setFont:[UIFont boldSystemFontOfSize:10]];
+        
+        cell.changeOverWeek.lineBreakMode = NSLineBreakByWordWrapping;
+        cell.changeOverWeek.textAlignment = NSTextAlignmentCenter;
+        cell.changeOverWeek.numberOfLines = 2;
+        [cell.changeOverWeek setFont:[UIFont boldSystemFontOfSize:10]];
+        
+        cell.lastWeekCompletions.text = @"Last week";
+        cell.thisWeekCompletions.text = @"This week";
+        cell.changeOverWeek.text = @"Change";
+    }
+    
+    else {
+        User * user = [_tribe.tribeMembers objectAtIndex:indexPath.row - 1];
+        // set name
+        cell.username.text = user[@"name"];
+        
+        int lastWeekCompletions = [user lastWeekCompletionsForTribe:_tribe];
+        int thisWeeksCompletions = [user thisWeekCompletionsForTribe:_tribe];
+        int changeOverWeek = lastWeekCompletions - thisWeeksCompletions;
+        
+        NSString * thisWeek;
+        if (thisWeeksCompletions > lastWeekCompletions) {
+            cell.thisWeekCompletionsleftView.image = [UIImage imageNamed:@"green-up-arrow"];
+            thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
+        } else if (thisWeeksCompletions < lastWeekCompletions) {
+            cell.thisWeekCompletionsleftView.image = [UIImage imageNamed:@"red-down-arrow"];
+            thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
+        } else {
+            thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
+        }
+        NSString * lastWeek = [NSString stringWithFormat:@"%d", lastWeekCompletions];
+        NSString * change = [NSString stringWithFormat:@"%d", changeOverWeek];
+
+        cell.lastWeekCompletions.text = lastWeek;
+        cell.thisWeekCompletions.text = thisWeek;
+        cell.changeOverWeek.text = change;
+    }
+
+    
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+#pragma mark - Table View Delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    // on recognition section, show one row
+    if (indexPath.section == 0) {
+        return 100;
+    }
+    // on habit report sections, show a row for each member
+    else {
+        return 50;
+    }
+  
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 50;
 }
-*/
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark - Helper methods
+- (NSString *)imageToNSString:(UIImage *)image
+{
+    NSData *imageData = UIImagePNGRepresentation(image);
+    
+    return [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
 }
-*/
+
+- (UIImage *)stringToUIImage:(NSString *)string
+{
+    NSData *data = [[NSData alloc]initWithBase64EncodedString:string
+                                                      options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    
+    return [UIImage imageWithData:data];
+}
 
 @end
