@@ -68,10 +68,22 @@
 //
 //}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReportCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ReportCell" forIndexPath:indexPath];
     
+    if (indexPath.section == 0) {
+        RecognitionTableViewCell * cell = [[RecognitionTableViewCell alloc] init];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"RecognitionCell" forIndexPath:indexPath];
+        [self configureCellForRecognitionCell:cell];
+    }
+    
+    
+    else {
+        HabitReportTableViewCell * cell = [[HabitReportTableViewCell alloc] init];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"HabitCell" forIndexPath:indexPath];
+        [self configureCellForHabitCell:cell andIndexPath:indexPath];
+    }
+
     return cell;
 }
 
