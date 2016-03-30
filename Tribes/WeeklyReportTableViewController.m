@@ -7,6 +7,8 @@
 //
 
 #import "WeeklyReportTableViewController.h"
+#import "RecognitionTableViewCell.h"
+#import "HabitReportTableViewCell.h"
 
 @interface WeeklyReportTableViewController ()
 
@@ -31,14 +33,40 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 0;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    
+    // on recognition section, show one row
+    if (section == 0) {
+        return 1;
+    }
+    // on habit report sections, show a row for each member + a row for the labels
+    else {
+        return _tribe.tribeMembers.count + 1;
+    }
 }
 
-
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    switch (section) {
+        case 0:
+            return @"Recognitions:";
+            break;
+        case 1:
+            return @"Individuals:";
+            break;
+            
+        default:
+            break;
+    }
+    return @"";
+    
+}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//
+//}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ReportCell" forIndexPath:indexPath];
     
