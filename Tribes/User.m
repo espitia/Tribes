@@ -561,6 +561,17 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         return false;
     }
 }
+
+-(int)thisWeekCompletionsForTribe:(Tribe *)tribe {
+    int totalWeeklyCompletions = 0;
+    for (Activity * activity in self.activities) {
+        if (activity[@"tribe"] == tribe) {
+            totalWeeklyCompletions = totalWeeklyCompletions + activity.weekCompletions;
+        }
+    }
+    return totalWeeklyCompletions;
+}
+
 -(int)lastWeekCompletionsForTribe:(Tribe *)tribe {
     int totalWeeklyCompletions = 0;
     for (Activity * activity in self.activities) {
