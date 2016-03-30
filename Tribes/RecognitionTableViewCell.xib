@@ -15,33 +15,34 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="99.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Peeps: 34 completions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOf-jw-paS">
-                        <rect key="frame" x="8" y="50" width="255" height="35"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="🏆" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVc-HI-cS7">
-                        <rect key="frame" x="271" y="14.5" width="41" height="72"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="🏅" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVc-HI-cS7">
+                        <rect key="frame" x="249" y="8" width="63" height="77"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="63" id="9cO-DR-bIs"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="60"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Most completions:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wAe-Gf-idh">
-                        <rect key="frame" x="8" y="14" width="304" height="34"/>
+                        <rect key="frame" x="8" y="18" width="255" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Peeps: 34 completions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOf-jw-paS">
+                        <rect key="frame" x="8" y="54" width="255" height="35"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="topMargin" secondItem="wAe-Gf-idh" secondAttribute="top" id="2pA-fl-wkD"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="jVc-HI-cS7" secondAttribute="trailing" id="6CR-Yn-mXx"/>
-                    <constraint firstItem="jOf-jw-paS" firstAttribute="top" secondItem="wAe-Gf-idh" secondAttribute="bottom" constant="8" id="Bhs-Lk-x03"/>
-                    <constraint firstItem="jVc-HI-cS7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6.5" id="VLv-hw-4f6"/>
-                    <constraint firstItem="jVc-HI-cS7" firstAttribute="leading" secondItem="jOf-jw-paS" secondAttribute="trailing" constant="8" id="b1e-zA-syj"/>
-                    <constraint firstAttribute="leadingMargin" secondItem="jOf-jw-paS" secondAttribute="leading" id="h5X-Wa-azC"/>
-                    <constraint firstAttribute="leadingMargin" secondItem="wAe-Gf-idh" secondAttribute="leading" id="pEt-t5-qiP"/>
+                    <constraint firstAttribute="topMargin" secondItem="jVc-HI-cS7" secondAttribute="top" id="01d-21-OFJ"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="jOf-jw-paS" secondAttribute="leading" constant="-10" id="53O-0j-1GD"/>
+                    <constraint firstItem="wAe-Gf-idh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="Emq-lI-wMU"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="jVc-HI-cS7" secondAttribute="trailing" id="Sjm-0r-HaA"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="wAe-Gf-idh" secondAttribute="leading" constant="-10" id="lmU-HC-SQH"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
