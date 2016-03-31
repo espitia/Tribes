@@ -171,7 +171,7 @@
         
         cell.lastWeekCompletions.text = @"Last week";
         cell.thisWeekCompletions.text = @"This week";
-        cell.changeOverWeek.text = @"Change";
+        cell.changeOverWeek.text = @"Growth";
     }
     
     else {
@@ -186,14 +186,16 @@
         NSString * thisWeek;
         if (thisWeeksCompletions > lastWeekCompletions) {
             cell.thisWeekCompletionsleftView.image = [UIImage imageNamed:@"green-up-arrow"];
-            thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
+            cell.changeLeftView.image = [UIImage imageNamed:@"green-up-arrow"];
         } else if (thisWeeksCompletions < lastWeekCompletions) {
             cell.thisWeekCompletionsleftView.image = [UIImage imageNamed:@"red-down-arrow"];
-            thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
+            cell.changeLeftView.image = [UIImage imageNamed:@"red-down-arrow"];
         } else {
-            thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
+            cell.thisWeekCompletionsleftView.image = nil;
+            cell.changeLeftView.image = nil;
         }
         NSString * lastWeek = [NSString stringWithFormat:@"%d", lastWeekCompletions];
+        NSString * thisWeek = [NSString stringWithFormat:@"%d", thisWeeksCompletions];
         NSString * change = [NSString stringWithFormat:@"%d", changeOverWeek];
 
         cell.lastWeekCompletions.text = lastWeek;
