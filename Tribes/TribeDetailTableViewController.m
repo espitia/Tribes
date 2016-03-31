@@ -130,7 +130,15 @@
             message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"name"]];
             [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             
-        } else if ([[member activityForHabit:_habit] completedForDay]) {
+        } else if (activity.watcher) {
+            
+            // let user know
+            message = [NSString stringWithFormat:@"%@ is a watcher!\n Only here to motivate those who are participating in this habit 😎", member[@"name"]];
+            [alert showInfo:@"👀" subTitle:message closeButtonTitle:@"OK" duration:0.0];
+            
+        }
+        
+        else if ([[member activityForHabit:_habit] completedForDay]) {
             
             // praise user
             [self showBubbleEffectAndSendApplausePushWithLocation:location toUser:member];
@@ -256,6 +264,9 @@
 #pragma mark - Format completion string
 
 -(NSString *)formatCompletionsStringForActivity:(Activity *)activity andCompletions:(int)completions {
+    
+    if (activity.watcher)
+        return @"👀";
     
     if (activity.hibernation)
         return @"🐻";

@@ -410,8 +410,13 @@
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
 				09688B291C77CE9A001B7752 /* Habit Detail */,
+<<<<<<< HEAD
 				09A4E5531CA9EC0B00A82E3F /* Weekly Report */,
 				090EDC521C9B556C005D3477 /* Settings */,
+||||||| merged common ancestors
+=======
+				090EDC521C9B556C005D3477 /* Settings */,
+>>>>>>> develop
 				0993B5191C55385D0008B7E5 /* Create a Tribe */,
 				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,

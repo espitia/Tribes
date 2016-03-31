@@ -14,6 +14,8 @@
 @interface HabitSettingsTableViewController () {
     BOOL editingDueTime;
     UIDatePicker * timePicker;
+    UISwitch * hibernationSwitch;
+    UISwitch * watcherSwitch;
 }
 
 @end
@@ -46,7 +48,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -59,7 +61,9 @@
         case 0:
             [self formatHibernationCell:cell];
             break;
-            
+        case 1:
+            [self formatWatcherCell:cell];
+            break;
         default:
             break;
     }
@@ -83,6 +87,9 @@
         case 0:
             [alert showQuestion:@"🐻 Hibernation" subTitle:@"When you hibernate, you are taking a rest for the day. Other Tribe members won't send you motivation so you can relax 😎" closeButtonTitle:@"OK" duration:0.0];
             break;
+        case 1:
+            [alert showQuestion:@"👀 Watcher" subTitle:@"When you are a watcher, you are not expected to take part in doing the habit. All you are asked to do is to motivate and keep those who are accountable! ✊" closeButtonTitle:@"OK" duration:0.0];
+            break;
 
         default:
             break;
@@ -96,12 +103,24 @@
 -(void)formatHibernationCell:(UITableViewCell *)cell {
     cell.textLabel.text = @"🐻 Hibernation";
 
-    UISwitch * hibernationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    hibernationSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     cell.accessoryView = hibernationSwitch;
     
     hibernationSwitch.on = (_activity.hibernation) ? true : false;
 
     [hibernationSwitch addTarget:self action:@selector(handleHibernationSwitch:) forControlEvents:UIControlEventValueChanged];
+    
+}
+
+-(void)formatWatcherCell:(UITableViewCell *)cell {
+    cell.textLabel.text = @"👀 Watcher";
+    
+    watcherSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = watcherSwitch;
+    
+    watcherSwitch.on = (_activity.watcher) ? true : false;
+    
+    [watcherSwitch addTarget:self action:@selector(handleWatcherSwitch:) forControlEvents:UIControlEventValueChanged];
     
 }
 
@@ -117,10 +136,30 @@
     
     // add local notification to remove hibernation on the next day
     if (_activity.hibernation) {
+        
+        // turn off watcher setting (if you are hibernating you are active in habit)
+        if (_activity.watcher) {
+            _activity.watcher = false;
+            [_activity saveEventually];
+            [watcherSwitch setOn:false];
+        }
+        
         [_activity makeHibernationNotification];
     } else {
         [_activity deleteHibernationNotification];
     }
+}
+
+-(void)handleWatcherSwitch:(UISwitch *)sender {
+    UISwitch* switchControl = sender;
+    _activity.watcher = (switchControl.on) ? true : false;
+    
+    if (_activity.watcher && _activity.hibernation) {
+        _activity.hibernation = false;
+        [hibernationSwitch setOn:false];
+    }
+    [_activity saveEventually];
+    
 }
 
 

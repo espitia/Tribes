@@ -18,6 +18,7 @@
 @property int weekCompletions;
 @property int lastWeekCompletions;
 @property BOOL hibernation;
+@property BOOL watcher;
 
 -(void)completeForToday;
 -(BOOL)completedForDay;

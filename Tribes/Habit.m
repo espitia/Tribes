@@ -180,7 +180,9 @@
         Activity * activity = [self.members[i] activityForHabit:self];
         if (![activity completedForDay]) {
             if (!activity.hibernation) {
-                return false;
+                if (!activity.watcher) {
+                    return false;
+                }
             }
         }
     }

@@ -203,10 +203,12 @@ heightForHeaderInSection:(NSInteger)section {
     // cell modifications that go for both complete/uncomplete tribes
     [self configureCellForAllTribes:cell withHabit:habit];
     
-    // cell modifications depending on completion/uncompleted
-    if ([habit completedForDay]) {
+    // cell modifications depending on watcher/completion/uncompleted
+    if ([currentUser activityForHabit:habit].watcher) {
+        [self configureCellForWatcher:cell];
+    } else if ([habit completedForDay]) {
         [self configureCellForCompletedTribeHabit:cell withTribe:tribe andHabit:habit];
-    } else {
+    } else if (![habit completedForDay]) {
         [self configureCellForUncompleteTribeHabit:cell withTribe:tribe andHabit:habit atIndexPath:indexPath];
     }
     
@@ -263,6 +265,12 @@ heightForHeaderInSection:(NSInteger)section {
         }
 
     }];
+}
+- (void)configureCellForWatcher:(MCSwipeTableViewCell *)cell  {
+    // set detail text depending on whether all tribe members completed their activity
+    NSString * check = @"👀";
+    NSString * detailText = [check stringByAppendingString:cell.detailTextLabel.text];
+    [cell.detailTextLabel setText:detailText];
 }
 
 #pragma mark - Table view delegate
@@ -386,12 +394,12 @@ heightForHeaderInSection:(NSInteger)section {
         if (success) {
             [self.tableView reloadData];
             [self updateProgressBar];
+            [self checkForNewData];
+
         } else {
             NSLog(@"failed to update activities");
         }
-    }];
-    
-    [self checkForNewData];
+    }]; 
 }
 
 -(void)checkForNewData {
@@ -540,7 +548,7 @@ heightForHeaderInSection:(NSInteger)section {
     float completionProgress = 100.0/numberOfTribes;
     float completions = 0;
     for (Activity * activity in currentUser.activities) {
-        if ([activity completedForDay]) {
+        if ([activity completedForDay] || activity.watcher) {
             completions++;
         }
     }

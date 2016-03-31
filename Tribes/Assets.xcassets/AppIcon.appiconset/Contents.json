@@ -11,8 +11,9 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "tribes40pt.png",
       "scale" : "2x"
     },
     {
@@ -23,13 +24,12 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Tribes App Icon x120.png",
+      "filename" : "tribes60pt.png",
       "scale" : "2x"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Tribes App Icon x240.png",
+      "size" : "60x60",
       "scale" : "3x"
     },
     {
@@ -55,19 +55,19 @@
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "Tribes App Icon 76x76.png",
+      "filename" : "app-icon-76x76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "Tribes App Icon 152x152.png",
+      "filename" : "app-icon-152x152.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "167x167.png",
+      "filename" : "app-icon-167x167.png",
       "scale" : "2x"
     }
   ],
