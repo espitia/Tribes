@@ -553,14 +553,17 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 #pragma mark - Weekly Report
 -(BOOL)weeklyReportActive {
-    int date = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday
-                                                   fromDate:[NSDate date]] weekday];
-    if (date == 2) {
+    // check if it is sunday after 9pm to show reports
+    int date = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:[NSDate date]] weekday];
+    int hour = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:[NSDate date]] hour];
+    
+    if (date == 1 && hour > 21) {
         return true;
     } else {
         return false;
     }
 }
+
 
 -(int)thisWeekCompletionsForTribe:(Tribe *)tribe {
     int totalWeeklyCompletions = 0;
