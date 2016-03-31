@@ -124,6 +124,23 @@
 }
 
 -(void)configureCellForTribeReportCell:(TribeReportTableViewCell *)cell {
+    
+    NSString * thisWeeksCompletions = [NSString stringWithFormat:@"%d", _tribe.thisWeeksCompletions];
+    NSString * lastWeeksCompletions = [NSString stringWithFormat:@"%d", _tribe.lastWeeksCompletions];
+    NSString * growth = [NSString stringWithFormat:@"%d", _tribe.thisWeeksCompletions - _tribe.lastWeeksCompletions];
+    
+    if (_tribe.thisWeeksCompletions > _tribe.lastWeeksCompletions) {
+        cell.thisWeeksCompletionsLeftView.image = [UIImage imageNamed:@"green-up-arrow"];
+        cell.growthLeftView.image = [UIImage imageNamed:@"green-up-arrow"];
+    } else {
+        cell.thisWeeksCompletionsLeftView.image = [UIImage imageNamed:@"red-down-arrow"];
+        cell.growthLeftView.image = [UIImage imageNamed:@"red-down-arrow"];
+    }
+    
+    cell.thisWeeksCompletions.text = thisWeeksCompletions;
+    cell.lastWeeksCompletions.text = lastWeeksCompletions;
+    cell.growth.text = growth;
+    
 }
 
 -(void)configureCellForHabitCell:(HabitReportTableViewCell *)cell andIndexPath:(NSIndexPath *)indexPath {
