@@ -15,6 +15,8 @@
 		0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */; };
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
+		0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */; };
+		0957A2491CAD70F100175EE2 /* TribeReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */; };
 		0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0965E5811C87F4EE00FFA9C9 /* Habit.m */; };
 		09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B231C768C2D001B7752 /* KRConfettiView.m */; };
 		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
@@ -85,6 +87,9 @@
 		0917EC661C4037D600BE2697 /* TribesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TribesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC6A1C4037D600BE2697 /* TribesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TribesUITests.m; sourceTree = "<group>"; };
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0957A2451CAD70F100175EE2 /* TribeReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeReportTableViewCell.h; sourceTree = "<group>"; };
+		0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeReportTableViewCell.m; sourceTree = "<group>"; };
+		0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TribeReportTableViewCell.xib; sourceTree = "<group>"; };
 		0965E5801C87F4EE00FFA9C9 /* Habit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Habit.h; sourceTree = "<group>"; };
 		0965E5811C87F4EE00FFA9C9 /* Habit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Habit.m; sourceTree = "<group>"; };
 		09688B221C768C2D001B7752 /* KRConfettiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRConfettiView.h; sourceTree = "<group>"; };
@@ -340,6 +345,9 @@
 		09A4E55E1CAAED9A00A82E3F /* Report Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0957A2451CAD70F100175EE2 /* TribeReportTableViewCell.h */,
+				0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */,
+				0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */,
 				09A4E5591CAAED9200A82E3F /* HabitReportTableViewCell.h */,
 				09A4E55A1CAAED9200A82E3F /* HabitReportTableViewCell.m */,
 				09A4E55B1CAAED9200A82E3F /* HabitReportTableViewCell.xib */,
@@ -557,6 +565,7 @@
 				0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */,
 				0917EC521C4037D600BE2697 /* Assets.xcassets in Resources */,
 				09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */,
+				0957A2491CAD70F100175EE2 /* TribeReportTableViewCell.xib in Resources */,
 				09A4E5581CA9EDED00A82E3F /* RecognitionTableViewCell.xib in Resources */,
 				0917EC501C4037D600BE2697 /* Main.storyboard in Resources */,
 			);
@@ -646,6 +655,7 @@
 			files = (
 				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
 				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
+				0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
 				099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
