@@ -9,6 +9,7 @@
 #import "WeeklyReportTableViewController.h"
 #import "RecognitionTableViewCell.h"
 #import "HabitReportTableViewCell.h"
+#import "TribeReportTableViewCell.h"
 
 @interface WeeklyReportTableViewController ()
 
@@ -28,24 +29,35 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"HabitReportTableViewCell"
                                                bundle:nil]
          forCellReuseIdentifier:@"HabitCell"];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"TribeReportTableViewCell"
+                                               bundle:nil]
+         forCellReuseIdentifier:@"TribeReportCell"];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    // on recognition section, show one row
-    if (section == 0) {
-        return 1;
+    switch (section) {
+        case 0: // recognitions section
+            return 1;
+            break;
+        case 1: // tribe report section
+            return 1;
+            break;
+        case 2: // individuals section
+            return _tribe.tribeMembers.count + 1;
+            break;
+        default:
+            return 1;
+            break;
     }
-    // on habit report sections, show a row for each member + a row for the labels
-    else {
-        return _tribe.tribeMembers.count + 1;
-    }
+
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -55,6 +67,9 @@
             return @"Recognitions:";
             break;
         case 1:
+            return @"Tribe:";
+            break;
+        case 2:
             return @"Individuals:";
             break;
             
@@ -71,14 +86,22 @@
     
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"ReportCell" forIndexPath:indexPath];
     
+    // recognition cells
     if (indexPath.section == 0) {
         RecognitionTableViewCell * cell = [[RecognitionTableViewCell alloc] init];
         cell = [tableView dequeueReusableCellWithIdentifier:@"RecognitionCell" forIndexPath:indexPath];
         [self configureCellForRecognitionCell:cell];
     }
     
+    // tribe report cell
+    else if (indexPath.section == 1) {
+        TribeReportTableViewCell * cell = [[TribeReportTableViewCell alloc] init];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"TribeReportCell" forIndexPath:indexPath];
+        [self configureCellForTribeReportCell:cell];
+    }
     
-    else {
+    // habit report cells
+    else if (indexPath.section == 2) {
         HabitReportTableViewCell * cell = [[HabitReportTableViewCell alloc] init];
         cell = [tableView dequeueReusableCellWithIdentifier:@"HabitCell" forIndexPath:indexPath];
         [self configureCellForHabitCell:cell andIndexPath:indexPath];
@@ -96,6 +119,9 @@
     int lastWeeksCompletions = [user lastWeekCompletionsForTribe:_tribe];
     cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"name"], lastWeeksCompletions];
     cell.emojiReward.text = @"🏅";
+}
+
+-(void)configureCellForTribeReportCell:(TribeReportTableViewCell *)cell {
 }
 
 -(void)configureCellForHabitCell:(HabitReportTableViewCell *)cell andIndexPath:(NSIndexPath *)indexPath {
@@ -161,35 +187,23 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
-    // on recognition section, show one row
-    if (indexPath.section == 0) {
-        return 100;
-    }
-    // on habit report sections, show a row for each member
-    else {
-        return 50;
+    switch (indexPath.section) {
+        case 0: // recognitions and tribe reports rows
+        case 1:
+            return 100;
+            break;
+        case 2: // individuals section
+            return 50;
+            break;
+        default:
+            return 100;
+            break;
     }
   
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 50;
-}
-
-#pragma mark - Helper methods
-- (NSString *)imageToNSString:(UIImage *)image
-{
-    NSData *imageData = UIImagePNGRepresentation(image);
-    
-    return [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-}
-
-- (UIImage *)stringToUIImage:(NSString *)string
-{
-    NSData *data = [[NSData alloc]initWithBase64EncodedString:string
-                                                      options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    
-    return [UIImage imageWithData:data];
 }
 
 @end
