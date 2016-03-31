@@ -132,9 +132,12 @@
     if (_tribe.thisWeeksCompletions > _tribe.lastWeeksCompletions) {
         cell.thisWeeksCompletionsLeftView.image = [UIImage imageNamed:@"green-up-arrow"];
         cell.growthLeftView.image = [UIImage imageNamed:@"green-up-arrow"];
-    } else {
+    } else if(_tribe.thisWeeksCompletions < _tribe.lastWeeksCompletions) {
         cell.thisWeeksCompletionsLeftView.image = [UIImage imageNamed:@"red-down-arrow"];
         cell.growthLeftView.image = [UIImage imageNamed:@"red-down-arrow"];
+    } else {
+        cell.thisWeeksCompletionsLeftView.image = nil;
+        cell.growthLeftView.image = nil;
     }
     
     cell.thisWeeksCompletions.text = thisWeeksCompletions;
