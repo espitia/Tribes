@@ -18,6 +18,8 @@
 @dynamic name;
 @dynamic habits;
 @synthesize membersAndActivities;
+@dynamic thisWeeksCompletions;
+@dynamic lastWeeksCompletions;
 // tribe members is = as members but since members key is a pfrelation, we create another variable to hold array of members
 @synthesize tribeMembers;
 
@@ -526,6 +528,7 @@
     return (self.membersAndActivities.count == 0 || !self.membersAndActivities) ? false : true;
 }
 
+#pragma mark - Stats
 -(User *)userWithMostCompletionsForLastWeek {
     User * topUser;
     for (User * user in tribeMembers) {
@@ -534,6 +537,20 @@
         }
     }
     return topUser;
+}
+-(int)lastWeeksCompletions {
+    int total = 0;
+    for (User * user in tribeMembers) {
+        total = total + [user lastWeekCompletionsForTribe:self];
+    }
+    return total;
+}
+-(int)thisWeeksCompletions {
+    int total = 0;
+    for (User * user in tribeMembers) {
+        total = total + [user thisWeekCompletionsForTribe:self];
+    }
+    return total;
 }
 
 #pragma mark - State of Tribe
