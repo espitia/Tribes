@@ -183,7 +183,7 @@
         int thisWeeksCompletions = [user thisWeekCompletionsForTribe:_tribe];
         int changeOverWeek = lastWeekCompletions - thisWeeksCompletions;
         
-        NSString * thisWeek;
+
         if (thisWeeksCompletions > lastWeekCompletions) {
             cell.thisWeekCompletionsleftView.image = [UIImage imageNamed:@"green-up-arrow"];
             cell.changeLeftView.image = [UIImage imageNamed:@"green-up-arrow"];
