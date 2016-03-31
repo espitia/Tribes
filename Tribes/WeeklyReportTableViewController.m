@@ -106,6 +106,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"HabitCell" forIndexPath:indexPath];
         [self configureCellForHabitCell:cell andIndexPath:indexPath];
     }
+    
+    cell.userInteractionEnabled = false;
 
     return cell;
 
