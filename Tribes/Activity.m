@@ -17,6 +17,7 @@
 @dynamic hibernation;
 @dynamic watcher;
 @dynamic weekCompletions;
+@dynamic lastWeekCompletions;
 
 #pragma mark - Parse required methods
 
