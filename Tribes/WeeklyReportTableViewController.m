@@ -181,7 +181,7 @@
         
         int lastWeekCompletions = [user lastWeekCompletionsForTribe:_tribe];
         int thisWeeksCompletions = [user thisWeekCompletionsForTribe:_tribe];
-        int changeOverWeek = lastWeekCompletions - thisWeeksCompletions;
+        int changeOverWeek = thisWeeksCompletions - lastWeekCompletions;
         
 
         if (thisWeeksCompletions > lastWeekCompletions) {
