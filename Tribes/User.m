@@ -556,8 +556,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     // check if it is sunday after 9pm to show reports
     int date = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:[NSDate date]] weekday];
     int hour = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:[NSDate date]] hour];
-    
-    if (date == 1 && hour > 21) {
+
+    if (date == 1 && hour > 19) {
         return true;
     } else {
         return false;
