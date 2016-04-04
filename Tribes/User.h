@@ -40,6 +40,7 @@ extern int RECEIVED_APPLAUSE_XP;
 //stats for reports
 -(int)lastWeekCompletionsForTribe:(Tribe *)tribe;
 -(int)thisWeekCompletionsForTribe:(Tribe *)tribe;
+-(int)thisWeekCompletionsForNonWatcherHabitsForTribe:(Tribe *)tribe;
 
 // handling activities
 -(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe;

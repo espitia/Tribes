@@ -563,7 +563,19 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         return false;
     }
 }
-
+-(int)thisWeekCompletionsForNonWatcherHabitsForTribe:(Tribe *)tribe {
+    
+    NSMutableArray * arrayOfNonWatcherHabits = [[NSMutableArray alloc] init];
+    arrayOfNonWatcherHabits = [tribe nonWatcherHabits];
+    
+    int totalWeeklyCompletions = 0;
+    for (Activity * activity in self.activities) {
+        if (activity[@"tribe"] == tribe && [arrayOfNonWatcherHabits containsObject:activity[@"habit"]]) {
+            totalWeeklyCompletions = totalWeeklyCompletions + activity.weekCompletions;
+        }
+    }
+    return totalWeeklyCompletions;
+}
 
 -(int)thisWeekCompletionsForTribe:(Tribe *)tribe {
     int totalWeeklyCompletions = 0;
