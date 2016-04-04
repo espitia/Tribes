@@ -200,10 +200,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+    
     // tapped on a friends tribe!
     if (indexPath.section == 1) {
         
-        Tribe * tribe = [tribesToJoin objectAtIndex:indexPath.row];
+        Tribe * tribe = [tribesToJoin objectAtIndex:indexPath.row][@"tribe"];
+
         if (tribe) {
            
             // if user is already in tribe, dont add, alert
