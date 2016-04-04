@@ -19,6 +19,7 @@
 
 -(void)sortMembersAndActivitiesByTotalActivityCompletions;
 -(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
+-(void)pairMembersAndActivities;
 
 -(BOOL)completedForDay;
 -(BOOL)allMembersCompletedActivity;

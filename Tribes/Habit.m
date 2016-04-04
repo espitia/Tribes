@@ -104,6 +104,9 @@
 
 
 #pragma mark - Sorting members by activity
+-(void)pairMembersAndActivities {
+    [self pairMembersAndActivitiesWithBlock:^{}];
+}
 
 -(void)pairMembersAndActivitiesWithBlock:(void (^)(void))callback {
     
