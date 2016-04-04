@@ -118,7 +118,7 @@
     
     User * user = [_tribe userWithMostCompletionsForLastWeek];
     cell.recognitionTitle.text = @"Most completions:";
-    int lastWeeksCompletions = [user lastWeekCompletionsForTribe:_tribe];
+    int lastWeeksCompletions = [user thisWeekCompletionsForTribe:_tribe];
     cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"name"], lastWeeksCompletions];
     cell.emojiReward.text = @"🏅";
 }
