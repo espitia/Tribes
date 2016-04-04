@@ -529,10 +529,14 @@
 }
 
 #pragma mark - Stats
--(User *)userWithMostCompletionsForLastWeek {
+/**
+ * Gets user with most completions for this. Only counts habits that are not watched -> habits that all tribe members are participating in.
+ *
+ */
+-(User *)userWithMostCompletionsForThisWeekOnNonWatcherHabits {
     User * topUser;
     for (User * user in tribeMembers) {
-        if ([user lastWeekCompletionsForTribe:self] > [topUser lastWeekCompletionsForTribe:self]) {
+        if ([user thisWeekCompletionsForNonWatcherHabitsForTribe:self] > [topUser thisWeekCompletionsForNonWatcherHabitsForTribe:self]) {
             topUser = user;
         }
     }
@@ -553,6 +557,38 @@
     return total;
 }
 
+-(NSArray *)nonWatcherHabits {
+    
+    NSMutableArray * arrayOfNonWatcherHabits = [[NSMutableArray alloc] init];
+    
+    // get habits that do not have watcher status
+    for (Habit * habit in self.habits) {
+        
+        // if habits doest have members and activities available
+        if (!habit.membersAndActivities) {
+            [habit pairMembersAndActivities];
+        }
+        
+        int counter = 0;
+        bool watcherFound = false;
+        
+        //check for watcher variable in activities
+        for (NSDictionary * membAndActivities in habit.membersAndActivities) {
+            
+            BOOL watcher = [membAndActivities[@"activity"][@"watcher"] boolValue];
+            if (watcher) {
+                watcherFound = true;
+            }
+            counter++;
+            
+            if (counter == habit.membersAndActivities.count && (watcherFound == false || !watcherFound)) {
+                [arrayOfNonWatcherHabits addObject:habit];
+            }
+        }
+    }
+
+    return arrayOfNonWatcherHabits;
+}
 #pragma mark - State of Tribe
 
 -(BOOL)allHabitsAreCompleted {

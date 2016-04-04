@@ -27,11 +27,9 @@
 
 // state of tirbe
 -(BOOL)allHabitsAreCompleted;
--(id)userWithMostCompletionsForLastWeek;
+-(id)userWithMostCompletionsForThisWeekOnNonWatcherHabits;
 @property int lastWeeksCompletions;
 @property int thisWeeksCompletions;
-
-
 
 // adding to the tribe
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
@@ -45,6 +43,7 @@
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
 @property (nonatomic, strong) NSMutableArray * tribeMembers;
 @property (nonatomic, strong) NSMutableArray * habits;
+@property (nonatomic, strong) NSMutableArray * nonWatcherHabits;
 
 
 
