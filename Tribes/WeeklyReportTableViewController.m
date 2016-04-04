@@ -116,10 +116,10 @@
 
 -(void)configureCellForRecognitionCell:(RecognitionTableViewCell *)cell {
     
-    User * user = [_tribe userWithMostCompletionsForLastWeek];
+    User * user = [_tribe userWithMostCompletionsForThisWeekOnNonWatcherHabits];
     cell.recognitionTitle.text = @"Most completions:";
-    int lastWeeksCompletions = [user thisWeekCompletionsForTribe:_tribe];
-    cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"name"], lastWeeksCompletions];
+    int thisWeeksCompletions = [user thisWeekCompletionsForNonWatcherHabitsForTribe:_tribe];
+    cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"name"], thisWeeksCompletions];
     cell.emojiReward.text = @"🏅";
 }
 
