@@ -20,6 +20,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import "SCLAlertView.h"
 #import "WeeklyReportTableViewController.h"
+#import "PremiumViewController.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
@@ -69,6 +70,9 @@
     
     // set up UI elements
     [self UISetUp];
+ 
+//    PremiumViewController * vc = [[PremiumViewController alloc] init];
+//    [self.navigationController presentViewController:vc animated:false completion:nil];
     
 }
 

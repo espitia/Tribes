@@ -10,4 +10,11 @@
 
 @interface PremiumViewController : UIViewController
 
+
+@property BOOL isUserPremium;
+
+- (IBAction)restore;
+- (IBAction)tapForPremium;
+
+
 @end
