@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface IAPHelper : NSObject
-
+-(int)daysRemainingOnSubscription;
+-(NSDate *)expirationDate;
 @end
