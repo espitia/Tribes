@@ -15,6 +15,9 @@
 		0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */; };
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
+		0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0923AD0E1CB41BA00022753D /* StoreKit.framework */; };
+		0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD111CB41BC00022753D /* PremiumViewController.m */; };
+		0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0923AD121CB41BC00022753D /* PremiumViewController.xib */; };
 		0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */; };
 		0957A2491CAD70F100175EE2 /* TribeReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */; };
 		0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0965E5811C87F4EE00FFA9C9 /* Habit.m */; };
@@ -87,6 +90,10 @@
 		0917EC661C4037D600BE2697 /* TribesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TribesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC6A1C4037D600BE2697 /* TribesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TribesUITests.m; sourceTree = "<group>"; };
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0923AD0E1CB41BA00022753D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0923AD101CB41BC00022753D /* PremiumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumViewController.h; sourceTree = "<group>"; };
+		0923AD111CB41BC00022753D /* PremiumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumViewController.m; sourceTree = "<group>"; };
+		0923AD121CB41BC00022753D /* PremiumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PremiumViewController.xib; sourceTree = "<group>"; };
 		0957A2451CAD70F100175EE2 /* TribeReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeReportTableViewCell.h; sourceTree = "<group>"; };
 		0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeReportTableViewCell.m; sourceTree = "<group>"; };
 		0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TribeReportTableViewCell.xib; sourceTree = "<group>"; };
@@ -151,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */,
 				09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */,
 				09F2BF881C405799008ABDF7 /* libz.tbd in Frameworks */,
 				09F2BF861C405792008ABDF7 /* SystemConfiguration.framework in Frameworks */,
@@ -263,6 +271,16 @@
 				09688B231C768C2D001B7752 /* KRConfettiView.m */,
 			);
 			name = KRConfettiView;
+			sourceTree = "<group>";
+		};
+		0923AD151CB41BC50022753D /* Premium */ = {
+			isa = PBXGroup;
+			children = (
+				0923AD101CB41BC00022753D /* PremiumViewController.h */,
+				0923AD111CB41BC00022753D /* PremiumViewController.m */,
+				0923AD121CB41BC00022753D /* PremiumViewController.xib */,
+			);
+			name = Premium;
 			sourceTree = "<group>";
 		};
 		09688B251C768C42001B7752 /* Extra functionality */ = {
@@ -409,6 +427,7 @@
 			children = (
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
+				0923AD151CB41BC50022753D /* Premium */,
 				09688B291C77CE9A001B7752 /* Habit Detail */,
 				09A4E5531CA9EC0B00A82E3F /* Weekly Report */,
 				090EDC521C9B556C005D3477 /* Settings */,
@@ -422,6 +441,7 @@
 		B9B81BAF6BDE1D7C59ED6619 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0923AD0E1CB41BA00022753D /* StoreKit.framework */,
 				09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */,
 				09F2BF871C405799008ABDF7 /* libz.tbd */,
 				09F2BF851C405791008ABDF7 /* SystemConfiguration.framework */,
@@ -561,6 +581,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */,
 				09A4E55D1CAAED9200A82E3F /* HabitReportTableViewCell.xib in Resources */,
 				0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */,
 				0917EC521C4037D600BE2697 /* Assets.xcassets in Resources */,
@@ -664,6 +685,7 @@
 				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */,
+				0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */,
 				09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */,
 				0993B5181C5537940008B7E5 /* Activity.m in Sources */,
 				099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */,
