@@ -502,7 +502,9 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
-
+/**
+ * Get Activity object that corresponds to Habit.
+ */
 
 -(Activity *)activityForHabit:(Habit *)habit {
 

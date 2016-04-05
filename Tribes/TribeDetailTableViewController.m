@@ -8,6 +8,7 @@
 
 #import "TribeDetailTableViewController.h"
 #import "AddFriendsTableViewController.h"
+#import "TribesTableViewController.h"
 #import "User.h"
 #import "HabitSettingsTableViewController.h"
 #import "SCLAlertView.h"
@@ -45,7 +46,18 @@
     firstPush = true;
 
 }
-
+-(void)willMoveToParentViewController:(UIViewController *)parent {
+    
+    // if moving back to tribesTableVC, reload to show changes in settings (hibernation/watcher)
+    if (![parent isEqual:self.parentViewController]) {
+        
+        // get tribestableviewcontroller and reload data to reflect settings change
+        UINavigationController * navController = (UINavigationController *)self.parentViewController;
+        TribesTableViewController * tribesVc = (TribesTableViewController *)navController.viewControllers[0];
+        [tribesVc.tableView reloadData];
+    }
+    
+}
 
 #pragma mark - Table view data source
 
