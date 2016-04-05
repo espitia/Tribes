@@ -56,7 +56,6 @@
                 [self.tableView reloadData];
                 [self setUp];
                 [self UISetUp];
-                [self setUpAdBanner];
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                 [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error loading your Tribes. Please try again" closeButtonTitle:@"OK" duration:0.0];
@@ -76,7 +75,7 @@
     
     // set up UI elements
     [self UISetUp];
-    
+    [self setUpAdBanner];
     
 }
 
@@ -649,7 +648,7 @@ heightForHeaderInSection:(NSInteger)section {
 {
     if (!bannerIsVisible)
     {
-        
+
         [UIView animateWithDuration:0.5 animations:^{
             [self.navigationController setToolbarHidden:false];
             bannerIsVisible = true;
