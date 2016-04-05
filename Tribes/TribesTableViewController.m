@@ -203,9 +203,9 @@ heightForHeaderInSection:(NSInteger)section {
     // cell modifications that go for both complete/uncomplete tribes
     [self configureCellForAllTribes:cell withHabit:habit];
     
-    // cell modifications depending on watcher/completion/uncompleted
-    if ([currentUser activityForHabit:habit].watcher) {
-        [self configureCellForWatcher:cell];
+    // cell modifications depending on watcher|hibernation/completion/uncompleted
+    if ([currentUser activityForHabit:habit].watcher || [currentUser activityForHabit:habit].hibernation) {
+        [self configureCellForSetting:cell withHabit:habit]; // for watcher/hibernation settings
     } else if ([habit completedForDay]) {
         [self configureCellForCompletedTribeHabit:cell withTribe:tribe andHabit:habit];
     } else if (![habit completedForDay]) {
@@ -266,10 +266,21 @@ heightForHeaderInSection:(NSInteger)section {
 
     }];
 }
-- (void)configureCellForWatcher:(MCSwipeTableViewCell *)cell  {
-    // set detail text depending on whether all tribe members completed their activity
-    NSString * check = @"👀";
-    NSString * detailText = [check stringByAppendingString:cell.detailTextLabel.text];
+
+/**
+ * Modify cell depending on habit setting (hibernation 🐻 or watcher 👀)
+ */
+- (void)configureCellForSetting:(MCSwipeTableViewCell *)cell withHabit:(Habit *)habit  {
+    
+    Activity * activity = [currentUser activityForHabit:habit];
+    
+    NSString * stringAddition;
+    if (activity.hibernation) {
+        stringAddition = @"🐻";
+    } else if (activity.watcher) {
+        stringAddition = @"👀";
+    }
+    NSString * detailText = [stringAddition stringByAppendingString:cell.detailTextLabel.text];
     [cell.detailTextLabel setText:detailText];
 }
 
