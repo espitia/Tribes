@@ -7,7 +7,7 @@
 //
 
 #import "PremiumViewController.h"
-
+#import "IAPHelper.h"
 #import <StoreKit/StoreKit.h>
 
 //put the name of your view controller in place of MyViewController
@@ -133,10 +133,19 @@
 
 -(void)becomePremium {
 
-    // if no experitation date or it is nil, set experation date to 30 days from now
-    // if there is, add 30 days
+    IAPHelper * helper = [[IAPHelper alloc] init];
+    
+    int daysLeft = [helper daysRemainingOnSubscription];
+    NSDate * newExpirationDate;
+    
+    if (daysLeft > 0) {
+        newExpirationDate = [[helper expirationDate] dateByAddingTimeInterval:2592000];
+    } else {
+        newExpirationDate = [NSDate dateWithTimeIntervalSinceNow:2592000];
+    }
     
     [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"premium"];
+    [[NSUserDefaults standardUserDefaults] setObject:newExpirationDate forKey:@"expirationDate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
