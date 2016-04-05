@@ -144,9 +144,8 @@
         newExpirationDate = [NSDate dateWithTimeIntervalSinceNow:2592000];
     }
     
-    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"premium"];
-    [[NSUserDefaults standardUserDefaults] setObject:newExpirationDate forKey:@"expirationDate"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [helper make1MonthPremiumPurchaseWithNewExpirationDate:newExpirationDate];
+
 }
 
 
