@@ -29,7 +29,15 @@
 }
 -(NSDate *)expirationDate {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"expirationDate"];
-
 }
+-(BOOL)userIsPremium {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:@"premium"];
+}
+-(void)make1MonthPremiumPurchaseWithNewExpirationDate:(NSDate *)newExpirationDate {
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"premium"];
+    [[NSUserDefaults standardUserDefaults] setObject:newExpirationDate forKey:@"expirationDate"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end
 
