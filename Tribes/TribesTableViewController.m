@@ -21,12 +21,15 @@
 #import "SCLAlertView.h"
 #import "WeeklyReportTableViewController.h"
 #import "PremiumViewController.h"
+#import "IAPHelper.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
     UIRefreshControl * refreshControl;
     YLProgressBar * progressBar;
     KRConfettiView * confettiView;
+    ADBannerView *adView;
+    BOOL bannerIsVisible;
 }
 
 @end
@@ -53,6 +56,7 @@
                 [self.tableView reloadData];
                 [self setUp];
                 [self UISetUp];
+                [self setUpAdBanner];
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                 [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error loading your Tribes. Please try again" closeButtonTitle:@"OK" duration:0.0];
@@ -60,6 +64,8 @@
             
         }];
     }
+    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -70,9 +76,7 @@
     
     // set up UI elements
     [self UISetUp];
- 
-//    PremiumViewController * vc = [[PremiumViewController alloc] init];
-//    [self.navigationController presentViewController:vc animated:false completion:nil];
+    
     
 }
 
@@ -628,6 +632,61 @@ heightForHeaderInSection:(NSInteger)section {
 -(void)stopConfetti {
     [confettiView stopConfetti];
 }
+
+
+#pragma mark - iAds
+
+-(void)setUpAdBanner {
+    IAPHelper * helper = [[IAPHelper alloc] init];
+    if ([helper userIsPremium]) {
+        adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.toolbar.frame.size.width, 50)];
+        [self.navigationController.toolbar addSubview:adView];
+        adView.delegate = self;
+        bannerIsVisible = NO;
+    }
+}
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    if (!bannerIsVisible)
+    {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.navigationController setToolbarHidden:false];
+            bannerIsVisible = true;
+        }];
+        
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+    if (bannerIsVisible)
+    {
+        [UIView animateWithDuration:0.5 animations:^{
+            [self.navigationController setToolbarHidden:true];
+            bannerIsVisible = true;
+        }];
+    }
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
+{
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = YES;
+    
+    if (!willLeave && shouldExecuteAction)
+    {
+        // stop all interactive processes in the app
+        // [video pause];
+        // [audio pause];
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner
+{
+}
+
 @end
 
 

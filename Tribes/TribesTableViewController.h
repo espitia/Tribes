@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MCSwipeTableViewCell.h"
+#import <iAd/iAd.h>
 
-@interface TribesTableViewController : UITableViewController 
+
+@interface TribesTableViewController : UITableViewController <ADBannerViewDelegate>
 
 // public methods to call from signing up navigation stack
 -(void)setUp;
