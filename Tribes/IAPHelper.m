@@ -10,16 +10,17 @@
 
 @implementation IAPHelper
 
+/**
+ * Returns int with days remaining on subscription.
+ */
 -(int)daysRemainingOnSubscription {
     NSDate *expirationDate = [[NSUserDefaults standardUserDefaults]
                               objectForKey:@"expirationDate"];
     
     NSTimeInterval timeInt = [expirationDate timeIntervalSinceDate:[NSDate date]];
     
-    //3
     int days = timeInt / 60 / 60 / 24;
-    
-    //4
+
     if (days > 0) {
         return days;
     } else {
@@ -30,8 +31,12 @@
 -(NSDate *)expirationDate {
     return [[NSUserDefaults standardUserDefaults] objectForKey:@"expirationDate"];
 }
+
+/**
+ * Returns BOOL indicating whether user is premium or not.
+ */
 -(BOOL)userIsPremium {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:@"premium"];
+    return ([self daysRemainingOnSubscription] > 0);
 }
 -(void)make1MonthPremiumPurchaseWithNewExpirationDate:(NSDate *)newExpirationDate {
     [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"premium"];
