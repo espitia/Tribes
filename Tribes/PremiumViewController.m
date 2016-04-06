@@ -132,20 +132,9 @@
 }
 
 -(void)becomePremium {
-
     IAPHelper * helper = [[IAPHelper alloc] init];
-    
-    int daysLeft = [helper daysRemainingOnSubscription];
-    NSDate * newExpirationDate;
-    
-    if (daysLeft > 0) {
-        newExpirationDate = [[helper expirationDate] dateByAddingTimeInterval:2592000];
-    } else {
-        newExpirationDate = [NSDate dateWithTimeIntervalSinceNow:2592000];
-    }
-    
-    [helper make1MonthPremiumPurchaseWithNewExpirationDate:newExpirationDate];
-
+    [helper make1MonthPremiumPurchase];
+    [self.navigationController dismissViewControllerAnimated:true completion:nil];
 }
 
 
