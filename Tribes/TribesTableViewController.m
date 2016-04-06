@@ -301,10 +301,25 @@ heightForHeaderInSection:(NSInteger)section {
     
     // enable weekly reports on Monday and configure indexpath to correctly user data source
     if (currentUser.weeklyReportActive && indexPath.row == 0) {
-        [self performSegueWithIdentifier:@"showWeeklyReport" sender:tribe];
+        
+        IAPHelper * helper = [[IAPHelper alloc] init];
+        if ([helper userIsPremium]) {
+            
+            [self performSegueWithIdentifier:@"showWeeklyReport" sender:tribe];
+        
+        } else {
+            
+            // show alert to upgrade to premium
+            SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
+                // show premium vc
+                NSLog(@"show premium here");
+            }];
+            [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
+        }
 
     }
-    // REPORT DAYS (MONDAY) BUT NOT TAPPING REPORT
+    // REPORT DAYS (MONDAY) BUT NOT TAPPING REPORT (tapping a habit instead)
     else if (currentUser.weeklyReportActive && indexPath.row != 0) {
         
         NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
