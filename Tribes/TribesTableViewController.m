@@ -655,10 +655,16 @@ heightForHeaderInSection:(NSInteger)section {
     
     // if user is not on premium, show ad
     if (![helper userIsPremium]) {
-        adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.toolbar.frame.size.width, 50)];
-        [self.navigationController.toolbar addSubview:adView];
-        adView.delegate = self;
+        // check to see if it already showing
+        if (!adView) {
+            adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.toolbar.frame.size.width, 50)];
+            [self.navigationController.toolbar addSubview:adView];
+            adView.delegate = self;
+            bannerIsVisible = NO;
+        }
+    } else {
         bannerIsVisible = NO;
+        adView = nil;
     }
 }
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
