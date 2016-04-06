@@ -10,6 +10,7 @@
 #import "TribeDetailTableViewController.h"
 #import "SCLAlertView.h"
 #import "User.h"
+#import "IAPHelper.h"
 
 @interface HabitSettingsTableViewController () {
     BOOL editingDueTime;
@@ -128,37 +129,73 @@
 
 -(void)handleHibernationSwitch:(UISwitch *)sender {
     
+    IAPHelper * helper = [[IAPHelper alloc] init];
     UISwitch* switchControl = sender;
-    
-    
-    _activity.hibernation = (switchControl.on) ? true : false;
-    [_activity saveEventually];
-    
-    // add local notification to remove hibernation on the next day
-    if (_activity.hibernation) {
+
+    // check for premium subscription
+    if ([helper userIsPremium]) {
         
-        // turn off watcher setting (if you are hibernating you are active in habit)
-        if (_activity.watcher) {
-            _activity.watcher = false;
-            [_activity saveEventually];
-            [watcherSwitch setOn:false];
+        _activity.hibernation = (switchControl.on) ? true : false;
+        [_activity saveEventually];
+        
+        // add local notification to remove hibernation on the next day
+        if (_activity.hibernation) {
+            
+            // turn off watcher setting (if you are hibernating you are active in habit)
+            if (_activity.watcher) {
+                _activity.watcher = false;
+                [_activity saveEventually];
+                [watcherSwitch setOn:false];
+            }
+            
+            [_activity makeHibernationNotification];
+        } else {
+            [_activity deleteHibernationNotification];
         }
-        
-        [_activity makeHibernationNotification];
     } else {
-        [_activity deleteHibernationNotification];
+        
+        // switch back to off
+        switchControl.on = false;
+        
+        // show alert to upgrade to premium
+        SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
+        [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
+            // show premium vc
+            NSLog(@"show premium here");
+        }];
+        [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
     }
 }
 
 -(void)handleWatcherSwitch:(UISwitch *)sender {
-    UISwitch* switchControl = sender;
-    _activity.watcher = (switchControl.on) ? true : false;
     
-    if (_activity.watcher && _activity.hibernation) {
-        _activity.hibernation = false;
-        [hibernationSwitch setOn:false];
+    IAPHelper * helper = [[IAPHelper alloc] init];
+    UISwitch* switchControl = sender;
+    
+    // check if user has premium subscription
+    if ([helper userIsPremium]) {
+        
+        _activity.watcher = (switchControl.on) ? true : false;
+        
+        if (_activity.watcher && _activity.hibernation) {
+            _activity.hibernation = false;
+            [hibernationSwitch setOn:false];
+        }
+        [_activity saveEventually];
+        
+    } else {
+        
+        // switch back to off
+        switchControl.on = false;
+        
+        // show alert to upgrade to premium
+        SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
+        [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
+            // show premium vc
+            NSLog(@"show premium here");
+        }];
+        [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
     }
-    [_activity saveEventually];
     
 }
 
