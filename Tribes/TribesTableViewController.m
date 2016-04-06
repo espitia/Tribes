@@ -637,7 +637,9 @@ heightForHeaderInSection:(NSInteger)section {
 
 -(void)setUpAdBanner {
     IAPHelper * helper = [[IAPHelper alloc] init];
-    if ([helper userIsPremium]) {
+    
+    // if user is not on premium, show ad
+    if (![helper userIsPremium]) {
         adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.toolbar.frame.size.width, 50)];
         [self.navigationController.toolbar addSubview:adView];
         adView.delegate = self;
