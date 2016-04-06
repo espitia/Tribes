@@ -38,11 +38,27 @@
 -(BOOL)userIsPremium {
     return ([self daysRemainingOnSubscription] > 0);
 }
--(void)make1MonthPremiumPurchaseWithNewExpirationDate:(NSDate *)newExpirationDate {
-    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"premium"];
+
+/**
+ * Adds 1 month to subscription whether user already has subscription or not.
+ */
+-(void)make1MonthPremiumPurchase {
+    int daysLeft = [self daysRemainingOnSubscription];
+    NSDate * newExpirationDate;
+    
+    // check if user already has subscription to add more time or set 1 month from now for new subscriber
+    if (daysLeft > 0) {
+        newExpirationDate = [[self expirationDate] dateByAddingTimeInterval:2592000];
+    } else {
+        newExpirationDate = [NSDate dateWithTimeIntervalSinceNow:2592000];
+    }
+    
+    // save new expiration date
     [[NSUserDefaults standardUserDefaults] setObject:newExpirationDate forKey:@"expirationDate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
 }
+
 
 @end
 

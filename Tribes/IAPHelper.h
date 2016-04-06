@@ -12,5 +12,6 @@
 -(int)daysRemainingOnSubscription;
 -(NSDate *)expirationDate;
 -(BOOL)userIsPremium;
--(void)make1MonthPremiumPurchaseWithNewExpirationDate:(NSDate *)newExpirationDate;
+-(void)make1MonthPremiumPurchase;
+
 @end
