@@ -8,13 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PremiumViewController : UIViewController
+@interface PremiumViewController : UIViewController <UIPageViewControllerDataSource>
 
-
-@property BOOL isUserPremium;
-
-- (IBAction)restore;
-- (IBAction)tapForPremium;
+@property (strong, nonatomic) UIPageViewController *pageController;
 
 
 @end
