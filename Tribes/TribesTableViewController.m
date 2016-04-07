@@ -313,7 +313,8 @@ heightForHeaderInSection:(NSInteger)section {
             SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
             [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
                 // show premium vc
-                NSLog(@"show premium here");
+                PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
+                [self presentViewController:premiumVC animated:true completion:nil];
             }];
             [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
         }

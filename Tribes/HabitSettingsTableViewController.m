@@ -11,6 +11,7 @@
 #import "SCLAlertView.h"
 #import "User.h"
 #import "IAPHelper.h"
+#import "PremiumViewController.h"
 
 @interface HabitSettingsTableViewController () {
     BOOL editingDueTime;
@@ -161,7 +162,8 @@
         SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
         [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
             // show premium vc
-            NSLog(@"show premium here");
+            PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumHibernationSetting];
+            [self presentViewController:premiumVC animated:true completion:nil];
         }];
         [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
     }
@@ -192,7 +194,8 @@
         SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
         [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
             // show premium vc
-            NSLog(@"show premium here");
+            PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWatcherSetting];
+            [self presentViewController:premiumVC animated:true completion:nil];
         }];
         [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
     }
