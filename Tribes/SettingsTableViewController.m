@@ -50,7 +50,7 @@
                 case 1: {
                     IAPHelper * helper = [[IAPHelper alloc] init];
                     if ([helper userIsPremium]) {
-                        title = [NSString stringWithFormat:@"Subscribed🏅%d left", [helper daysRemainingOnSubscription]];
+                        title = [NSString stringWithFormat:@"Subscribed!🏅Expires in %d days", [helper daysRemainingOnSubscription]];
                     } else {
                         title = @"Upgrade ⭐️";
                     }
