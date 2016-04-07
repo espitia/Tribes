@@ -24,17 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-    // data source of images
-    images = @[[UIImage imageNamed:@"hibernation-mode"],[UIImage imageNamed:@"watcher-mode"],
-               [UIImage imageNamed:@"remove-ads"],[UIImage imageNamed:@"weekly-report"]];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
--(void)viewDidAppear:(BOOL)animated {
+   
     [[upgradeButton layer] setBorderWidth:1.0f];
     [[upgradeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
     upgradeButton.layer.cornerRadius = 10; // this value vary as per your desire
