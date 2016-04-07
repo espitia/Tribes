@@ -311,7 +311,7 @@ heightForHeaderInSection:(NSInteger)section {
             
             // show alert to upgrade to premium
             SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
-            [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
+            [premiumFeatureAlert addButton:@"MORE INFO" actionBlock:^{
                 // show premium vc
                 PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
                 [self presentViewController:premiumVC animated:true completion:nil];

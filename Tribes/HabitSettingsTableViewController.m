@@ -160,7 +160,7 @@
         
         // show alert to upgrade to premium
         SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
-        [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
+        [premiumFeatureAlert addButton:@"MORE INFO" actionBlock:^{
             // show premium vc
             PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumHibernationSetting];
             [self presentViewController:premiumVC animated:true completion:nil];
@@ -192,7 +192,7 @@
         
         // show alert to upgrade to premium
         SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
-        [premiumFeatureAlert addButton:@"UPGRADE" actionBlock:^{
+        [premiumFeatureAlert addButton:@"MORE INFO" actionBlock:^{
             // show premium vc
             PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWatcherSetting];
             [self presentViewController:premiumVC animated:true completion:nil];
