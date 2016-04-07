@@ -9,6 +9,8 @@
 #import "SettingsTableViewController.h"
 #import "Parse.h"
 #import "SCLAlertView.h"
+#import "IAPHelper.h"
+#import "PremiumViewController.h"
 
 @interface SettingsTableViewController ()
 
@@ -30,7 +32,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 2;
 }
 
 
@@ -38,14 +40,21 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
     
     NSString * title;
-    NSString * detailText;
     
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
                 case 0:
-                    title = @"Log out";
-                    detailText = @"📲";
+                    title = @"Remove Ads 🚫";
+                    break;
+                case 1: {
+                    IAPHelper * helper = [[IAPHelper alloc] init];
+                    if ([helper userIsPremium]) {
+                        title = [NSString stringWithFormat:@"Subscribed🏅%d left", [helper daysRemainingOnSubscription]];
+                    } else {
+                        title = @"Upgrade ⭐️";
+                    }
+                }
                     break;
                     
                 default:
@@ -58,7 +67,8 @@
     }
     
     cell.textLabel.text = title;
-    cell.detailTextLabel.text = detailText;
+
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
@@ -73,8 +83,20 @@
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
-                case 0:
-                    [self signOut];
+                case 0: {
+                    PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumRemoveAds];
+                    [self presentViewController:premiumVC animated:true completion:nil];
+                }
+                    break;
+                case 1: {
+                    IAPHelper * helper = [[IAPHelper alloc] init];
+                    if ([helper userIsPremium]) {
+                        
+                    } else {
+                        PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
+                        [self presentViewController:premiumVC animated:true completion:nil];
+                    }
+                }
                     break;
                     
                 default:
@@ -87,23 +109,4 @@
     }
 }
 
--(void)signOut {
-    
-    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert addButton:@"Yes! 😄" actionBlock:^{
-        [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-            
-            [self showLoginScreen];
-            [self.navigationController popToRootViewControllerAnimated:true];
-        }];
-    }];
-    [alert showWarning:@"Log out" subTitle:@"Are you sure you want to log out?" closeButtonTitle:@"Never mind.. 🤔" duration:0.0];
-
-}
-
--(void)showLoginScreen {
-    
-    UINavigationController * SignUpLoginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SignUpLoginViewController"];
-    [self.navigationController presentViewController:SignUpLoginViewController animated:YES completion:nil];
-}
 @end
