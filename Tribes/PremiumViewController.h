@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PremiumViewController : UIViewController <UIPageViewControllerDataSource>
+typedef enum {
+    PremiumHibernationSetting,
+    PremiumWatcherSetting,
+    PremiumWeeklyReport,
+    PremiumRemoveAds
+} StartingFeatureToSell;
 
+
+@interface PremiumViewController : UIViewController <UIPageViewControllerDataSource> {
+    StartingFeatureToSell startingFeature;
+}
+- (id)initWithFeature:(StartingFeatureToSell)feature;
 @property (strong, nonatomic) UIPageViewController *pageController;
 
-
 @end
+

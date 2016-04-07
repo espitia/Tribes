@@ -16,15 +16,50 @@
 
 
 @implementation PremiumViewController {
-    NSArray * images;
+    NSMutableArray * images;
 }
 
+
+- (id)initWithFeature:(StartingFeatureToSell)feature {
+    if ((self = [super init])) {
+        startingFeature = feature;
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     // data source of images
-    images = @[[UIImage imageNamed:@"hibernation-mode"],[UIImage imageNamed:@"watcher-mode"],
-               [UIImage imageNamed:@"remove-ads"],[UIImage imageNamed:@"weekly-report"]];
+    images = [[NSMutableArray alloc] init];
+    
+    
+    images = [NSMutableArray arrayWithArray:@[[UIImage imageNamed:@"hibernation-mode"],
+                                              [UIImage imageNamed:@"watcher-mode"],
+                                              [UIImage imageNamed:@"weekly-report"],
+                                              [UIImage imageNamed:@"remove-ads"]]];
+    
+    switch (startingFeature) {
+        case 0:
+            [images removeObjectAtIndex:0];
+            [images insertObject:[UIImage imageNamed:@"hibernation-mode"]  atIndex:0];
+            break;
+        case 1:
+            [images removeObjectAtIndex:1];
+            [images insertObject:[UIImage imageNamed:@"watcher-mode"]  atIndex:0];
+            break;
+        case 2:
+            [images removeObjectAtIndex:2];
+            [images insertObject:[UIImage imageNamed:@"weekly-report"]  atIndex:0];
+            break;
+        case 3:
+            [images removeObjectAtIndex:3];
+            [images insertObject:[UIImage imageNamed:@"remove-ads"]  atIndex:0];
+            break;
+            
+        default:
+            break;
+    }
+
     
     
     self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
