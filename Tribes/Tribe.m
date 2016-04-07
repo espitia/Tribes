@@ -18,6 +18,7 @@
 @dynamic name;
 @dynamic habits;
 @synthesize membersAndActivities;
+@dynamic nonWatcherHabits;
 @dynamic thisWeeksCompletions;
 @dynamic lastWeeksCompletions;
 // tribe members is = as members but since members key is a pfrelation, we create another variable to hold array of members
