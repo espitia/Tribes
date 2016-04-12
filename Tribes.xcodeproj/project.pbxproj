@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */; };
+		090C23931CBC84E300A52DF6 /* PremiumChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */; };
 		090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090EDC501C9B5567005D3477 /* SettingsTableViewController.m */; };
 		0917EC471C4037D600BE2697 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC461C4037D600BE2697 /* main.m */; };
 		0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC491C4037D600BE2697 /* AppDelegate.m */; };
@@ -75,6 +77,9 @@
 
 /* Begin PBXFileReference section */
 		015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tribes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		090C238F1CBC84E300A52DF6 /* PremiumChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumChildViewController.h; sourceTree = "<group>"; };
+		090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumChildViewController.m; sourceTree = "<group>"; };
+		090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PremiumChildViewController.xib; sourceTree = "<group>"; };
 		090EDC4F1C9B5567005D3477 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		090EDC501C9B5567005D3477 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		0917EC421C4037D600BE2697 /* Tribes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tribes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -282,9 +287,9 @@
 				0923AD101CB41BC00022753D /* PremiumViewController.h */,
 				0923AD111CB41BC00022753D /* PremiumViewController.m */,
 				0923AD121CB41BC00022753D /* PremiumViewController.xib */,
-				0923AD191CB5D1BD0022753D /* PremiumChildViewController.h */,
-				0923AD1A1CB5D1BD0022753D /* PremiumChildViewController.m */,
-				0923AD1B1CB5D1BD0022753D /* PremiumChildViewController.xib */,
+				090C238F1CBC84E300A52DF6 /* PremiumChildViewController.h */,
+				090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */,
+				090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */,
 			);
 			name = Premium;
 			sourceTree = "<group>";
@@ -591,6 +596,7 @@
 			files = (
 				0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */,
 				09A4E55D1CAAED9200A82E3F /* HabitReportTableViewCell.xib in Resources */,
+				090C23931CBC84E300A52DF6 /* PremiumChildViewController.xib in Resources */,
 				0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */,
 				0917EC521C4037D600BE2697 /* Assets.xcassets in Resources */,
 				09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */,
@@ -693,6 +699,7 @@
 				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */,
+				090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */,
 				0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */,
 				09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */,
 				0993B5181C5537940008B7E5 /* Activity.m in Sources */,
