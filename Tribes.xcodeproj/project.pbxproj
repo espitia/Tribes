@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */; };
 		090C23931CBC84E300A52DF6 /* PremiumChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */; };
+		090C23961CBD9EBF00A52DF6 /* AddManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */; };
 		090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090EDC501C9B5567005D3477 /* SettingsTableViewController.m */; };
 		0917EC471C4037D600BE2697 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC461C4037D600BE2697 /* main.m */; };
 		0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC491C4037D600BE2697 /* AppDelegate.m */; };
@@ -80,6 +81,8 @@
 		090C238F1CBC84E300A52DF6 /* PremiumChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumChildViewController.h; sourceTree = "<group>"; };
 		090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumChildViewController.m; sourceTree = "<group>"; };
 		090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PremiumChildViewController.xib; sourceTree = "<group>"; };
+		090C23941CBD9EBF00A52DF6 /* AddManagerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddManagerTableViewController.h; sourceTree = "<group>"; };
+		090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddManagerTableViewController.m; sourceTree = "<group>"; };
 		090EDC4F1C9B5567005D3477 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
 		090EDC501C9B5567005D3477 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		0917EC421C4037D600BE2697 /* Tribes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tribes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -197,6 +200,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */ = {
+			isa = PBXGroup;
+			children = (
+				090C23941CBD9EBF00A52DF6 /* AddManagerTableViewController.h */,
+				090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */,
+			);
+			name = "Add manager (Tribes/Membs/Habits)";
+			sourceTree = "<group>";
+		};
 		090EDC521C9B556C005D3477 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -438,6 +450,7 @@
 		09F2BF911C4316E4008ABDF7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
 				0923AD151CB41BC50022753D /* Premium */,
@@ -689,6 +702,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
+				090C23961CBD9EBF00A52DF6 /* AddManagerTableViewController.m in Sources */,
 				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
 				0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,

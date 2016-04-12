@@ -56,7 +56,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TfD-TI-SVS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1595.5" y="-421.5"/>
+            <point key="canvasLocation" x="2387.5" y="-421.5"/>
         </scene>
         <!--Habit Settings Table View Controller-->
         <scene sceneID="WQm-fL-sCu">
@@ -85,7 +85,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0B-xZ-LbK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2029.5" y="-421.5"/>
+            <point key="canvasLocation" x="2997.5" y="-421.5"/>
         </scene>
         <!--Habits Table View Controller-->
         <scene sceneID="m19-Ra-ygc">
@@ -117,7 +117,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WwK-Cf-OQ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2375.5" y="-1264.5"/>
+            <point key="canvasLocation" x="2071.5" y="-1264.5"/>
         </scene>
         <!--Add Habit Table View Controller-->
         <scene sceneID="faN-0w-D3q">
@@ -146,7 +146,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nN-go-qfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2865.5" y="-1264.5"/>
+            <point key="canvasLocation" x="2561.5" y="-1264.5"/>
         </scene>
         <!--Settings Table View Controller-->
         <scene sceneID="32x-z6-Qiw">
@@ -183,7 +183,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymQ-au-FhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="914.5" y="-1210.5"/>
+            <point key="canvasLocation" x="922.5" y="-1264.5"/>
         </scene>
         <!--Tribe Menu Table View Controller-->
         <scene sceneID="E8S-YX-4ss">
@@ -217,7 +217,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2BQ-bk-lFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1595.5" y="-1264.5"/>
+            <point key="canvasLocation" x="1515.5" y="-1264.5"/>
         </scene>
         <!--Add Friends Table View Controller-->
         <scene sceneID="Fjp-5f-yNX">
@@ -247,7 +247,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9y-Qg-ReQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2865.5" y="-2044.5"/>
+            <point key="canvasLocation" x="2561.5" y="-2032.5"/>
         </scene>
         <!--Tribes-->
         <scene sceneID="YNw-0g-xML">
@@ -280,7 +280,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Add" id="qgy-KA-oPa">
                             <connections>
-                                <segue destination="fft-A3-MET" kind="show" identifier="AddTribe" id="nll-Z3-ghn"/>
+                                <segue destination="7aW-ZW-jAt" kind="show" identifier="AddManager" id="8LY-Fg-VaM"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -389,7 +389,36 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9UW-B1-USr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1023" y="-1944"/>
+            <point key="canvasLocation" x="914.5" y="-2044.5"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="Tin-5m-gVF">
+            <objects>
+                <tableViewController id="7aW-ZW-jAt" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="eup-uY-HgL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="AKZ-m1-d27">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AKZ-m1-d27" id="UKQ-89-lE0">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="7aW-ZW-jAt" id="fgN-fS-YV8"/>
+                            <outlet property="delegate" destination="7aW-ZW-jAt" id="8a9-4H-zOf"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xi8-gu-im5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="922.5" y="-2841.5"/>
         </scene>
         <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
@@ -401,7 +430,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TribeCell" textLabel="0Az-bg-SyB" detailTextLabel="vGd-CE-ddI" rowHeight="100" style="IBUITableViewCellStyleSubtitle" id="Dnb-Lz-0CS">
-                                <rect key="frame" x="0.0" y="92" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dnb-Lz-0CS" id="OjD-uJ-GCF">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
@@ -439,7 +468,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1595.5" y="-2065.5"/>
+            <point key="canvasLocation" x="2419.5" y="-2993.5"/>
         </scene>
         <!--Members Table View Controller-->
         <scene sceneID="yuo-ev-bxK">
@@ -472,7 +501,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXz-NG-wAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aSR-04-pcH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2375.5" y="-2044.5"/>
+            <point key="canvasLocation" x="2071.5" y="-2032.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="icT-Oq-OGf">
