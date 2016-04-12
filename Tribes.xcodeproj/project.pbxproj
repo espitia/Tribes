@@ -57,6 +57,7 @@
 		09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */; };
 		09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */; };
 		09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */; };
+		09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +161,8 @@
 		09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribesTableViewController.m; sourceTree = "<group>"; };
 		09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTribeTableViewController.h; sourceTree = "<group>"; };
 		09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTribeTableViewController.m; sourceTree = "<group>"; };
+		09F7DD141CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberOrHabitMenuTableViewController.h; sourceTree = "<group>"; };
+		09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberOrHabitMenuTableViewController.m; sourceTree = "<group>"; };
 		A309CDB5F419EAF7FFA3C780 /* Pods-Tribes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.release.xcconfig"; sourceTree = "<group>"; };
 		F69CD1EF3DA25D700DB49634 /* Pods-Tribes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,6 +208,8 @@
 			children = (
 				090C23941CBD9EBF00A52DF6 /* AddManagerTableViewController.h */,
 				090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */,
+				0993B5191C55385D0008B7E5 /* Create a Tribe */,
+				09F7DD171CBDA25A00503205 /* AddMember/HabitMenu */,
 			);
 			name = "Add manager (Tribes/Membs/Habits)";
 			sourceTree = "<group>";
@@ -347,8 +352,6 @@
 			children = (
 				09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */,
 				09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */,
-				09850B231C8F8E0300FE9609 /* Add Habit */,
-				09C658621C483A64008C4EC3 /* Add friends */,
 			);
 			name = "Tribe Menu";
 			sourceTree = "<group>";
@@ -457,11 +460,21 @@
 				09688B291C77CE9A001B7752 /* Habit Detail */,
 				09A4E5531CA9EC0B00A82E3F /* Weekly Report */,
 				090EDC521C9B556C005D3477 /* Settings */,
-				0993B5191C55385D0008B7E5 /* Create a Tribe */,
 				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		09F7DD171CBDA25A00503205 /* AddMember/HabitMenu */ = {
+			isa = PBXGroup;
+			children = (
+				09F7DD141CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.h */,
+				09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */,
+				09850B231C8F8E0300FE9609 /* Add Habit */,
+				09C658621C483A64008C4EC3 /* Add friends */,
+			);
+			name = AddMember/HabitMenu;
 			sourceTree = "<group>";
 		};
 		B9B81BAF6BDE1D7C59ED6619 /* Frameworks */ = {
@@ -728,6 +741,7 @@
 				099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */,
 				09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */,
 				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
+				09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
