@@ -22,6 +22,7 @@
 #import "WeeklyReportTableViewController.h"
 #import "PremiumViewController.h"
 #import "IAPHelper.h"
+#import "AddHabitTableViewController.h"
 
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
@@ -95,15 +96,16 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    // if user has no tribe - add call to action to create/join one
-    if (currentUser.tribes.count == 0)
+    
+    if (!currentUser.tribes || !currentUser.loadedInitialTribes)
         return 0;
     
-    // makes sure tribe objects have been loaded
-    if (!currentUser.loadedInitialTribes)
-        return 0;
-
     Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+
+    // if tribe has no habits - add call to action to create a habit
+    if ([tribe[@"habits"] count] == 0)
+        return 1;
+
     if (currentUser.weeklyReportActive) {
         return [tribe[@"habits"] count] + 1;
     } else {
@@ -179,6 +181,14 @@ heightForHeaderInSection:(NSInteger)section {
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
+    // if user created a tribe but tribe has no habits - call to action to add one
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    
+    // if tribe has no habits - add call to action to create a habit
+    if ([tribe[@"habits"] count] == 0) {
+        cell.textLabel.text = @"👆 Tap to add a habit";
+        return cell;
+    }
     // enable weekly reports on monday and configure indexpath to correctly user data source
     if (currentUser.weeklyReportActive && indexPath.row == 0) {
         cell.textLabel.text = @"Weekly report is available! 📈";
@@ -300,8 +310,12 @@ heightForHeaderInSection:(NSInteger)section {
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
     
+    // if user has no habits in tribe, send them to add habit
+    if ([tribe[@"habits"] count] == 0) {
+        [self performSegueWithIdentifier:@"AddFirstHabit" sender:tribe];
+    }
     // enable weekly reports on Monday and configure indexpath to correctly user data source
-    if (currentUser.weeklyReportActive && indexPath.row == 0) {
+    else if (currentUser.weeklyReportActive && indexPath.row == 0) {
         
         IAPHelper * helper = [[IAPHelper alloc] init];
         if ([helper userIsPremium]) {
@@ -392,6 +406,10 @@ heightForHeaderInSection:(NSInteger)section {
         WeeklyReportTableViewController * weeklyReportVC = segue.destinationViewController;
         // sender contrains tribe tapped
         weeklyReportVC.tribe = sender;
+    } else if ([segue.identifier isEqualToString:@"AddFirstHabit"]) {
+        // if tribe has no habits, send to add first habit
+        AddHabitTableViewController * vc = (AddHabitTableViewController *)segue.destinationViewController;
+        vc.tribe = sender;
     }
 }
 
