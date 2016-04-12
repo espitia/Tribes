@@ -56,7 +56,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TfD-TI-SVS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2387.5" y="-421.5"/>
+            <point key="canvasLocation" x="1651.5" y="-421.5"/>
         </scene>
         <!--Habit Settings Table View Controller-->
         <scene sceneID="WQm-fL-sCu">
@@ -85,7 +85,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0B-xZ-LbK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2997.5" y="-421.5"/>
+            <point key="canvasLocation" x="2245.5" y="-421.5"/>
         </scene>
         <!--Habits Table View Controller-->
         <scene sceneID="m19-Ra-ygc">
@@ -117,7 +117,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WwK-Cf-OQ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2691.5" y="-2160.5"/>
+            <point key="canvasLocation" x="3059.5" y="-1288.5"/>
         </scene>
         <!--Add Habit Table View Controller-->
         <scene sceneID="faN-0w-D3q">
@@ -146,7 +146,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7nN-go-qfD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3241.5" y="-2160.5"/>
+            <point key="canvasLocation" x="3657.5" y="-1304.5"/>
         </scene>
         <!--Settings Table View Controller-->
         <scene sceneID="32x-z6-Qiw">
@@ -183,7 +183,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymQ-au-FhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922.5" y="-1264.5"/>
+            <point key="canvasLocation" x="366.5" y="-1440.5"/>
         </scene>
         <!--Add Member Or Habit Menu Table View Controller-->
         <scene sceneID="Tv5-M9-SJj">
@@ -216,7 +216,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lYo-9N-8KV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1585.5" y="-2716.5"/>
+            <point key="canvasLocation" x="2275.5" y="-2152.5"/>
         </scene>
         <!--Tribe Menu Table View Controller-->
         <scene sceneID="E8S-YX-4ss">
@@ -250,7 +250,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2BQ-bk-lFS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1935.5" y="-1958.5"/>
+            <point key="canvasLocation" x="1651.5" y="-1332.5"/>
         </scene>
         <!--Add Friends Table View Controller-->
         <scene sceneID="Fjp-5f-yNX">
@@ -280,7 +280,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9y-Qg-ReQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3233.5" y="-2944.5"/>
+            <point key="canvasLocation" x="3649.5" y="-2168.5"/>
         </scene>
         <!--Tribes-->
         <scene sceneID="YNw-0g-xML">
@@ -322,6 +322,7 @@
                         <segue destination="0NR-7X-qsU" kind="show" identifier="showTribeHabit" id="f46-2A-NoN"/>
                         <segue destination="EcN-nQ-Wco" kind="show" identifier="TribeMenu" id="WJo-lI-QRi"/>
                         <segue destination="x6J-ww-3zm" kind="show" identifier="showWeeklyReport" id="j3G-CH-Hii"/>
+                        <segue destination="fft-A3-MET" kind="show" identifier="AddTribe" id="Wlf-vK-7ao"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aiv-5d-Uau" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -422,7 +423,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9UW-B1-USr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="914.5" y="-2044.5"/>
+            <point key="canvasLocation" x="914.5" y="-1440.5"/>
         </scene>
         <!--Add Manager Table View Controller-->
         <scene sceneID="Tin-5m-gVF">
@@ -455,7 +456,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xi8-gu-im5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="922.5" y="-2841.5"/>
+            <point key="canvasLocation" x="1651.5" y="-2160.5"/>
         </scene>
         <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
@@ -505,7 +506,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1567.5" y="-3465.5"/>
+            <point key="canvasLocation" x="2227.5" y="-2961.5"/>
         </scene>
         <!--Members Table View Controller-->
         <scene sceneID="yuo-ev-bxK">
@@ -538,7 +539,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AXz-NG-wAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="aSR-04-pcH" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2635.5" y="-3008.5"/>
+            <point key="canvasLocation" x="3051.5" y="-2160.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="icT-Oq-OGf">
@@ -563,6 +564,7 @@
         <image name="tab-bar-tribe-icon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Wlf-vK-7ao"/>
         <segue reference="4jV-l5-Rgk"/>
         <segue reference="pOM-lO-I9W"/>
     </inferredMetricsTieBreakers>

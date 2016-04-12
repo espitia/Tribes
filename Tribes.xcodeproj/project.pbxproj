@@ -453,14 +453,14 @@
 		09F2BF911C4316E4008ABDF7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
-				0923AD151CB41BC50022753D /* Premium */,
 				09688B291C77CE9A001B7752 /* Habit Detail */,
+				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
+				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
+				0923AD151CB41BC50022753D /* Premium */,
 				09A4E5531CA9EC0B00A82E3F /* Weekly Report */,
 				090EDC521C9B556C005D3477 /* Settings */,
-				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
 			name = Controllers;
