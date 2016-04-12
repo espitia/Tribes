@@ -576,7 +576,7 @@ heightForHeaderInSection:(NSInteger)section {
 -(void)updateProgressBar {
     
     // makes sure tribe objects have been loaded
-    if (!currentUser.loadedInitialTribes)
+    if (!currentUser.loadedInitialTribes || !currentUser.tribes)
         return;
     
     float numberOfHabitsOnWatcher = 0;
