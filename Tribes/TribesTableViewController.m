@@ -190,11 +190,12 @@ heightForHeaderInSection:(NSInteger)section {
         return cell;
     }
     // enable weekly reports on monday and configure indexpath to correctly user data source
-    if (currentUser.weeklyReportActive && indexPath.row == 0) {
-        cell.textLabel.text = @"Weekly report is available! 📈";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    else if (currentUser.weeklyReportActive && indexPath.row == 0) {
+        [self configureWeeklyReportCell:cell forRowAtIndexPath:indexPath];
         return cell;
-    } else if (currentUser.weeklyReportActive && indexPath.row != 0) {
+    }
+    // regular cells for when weekly report is on (modify indexpath)
+    else if (currentUser.weeklyReportActive && indexPath.row != 0) {
         NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         [self configureCell:cell forRowAtIndexPath:newIndexPath];
         return cell;
@@ -207,7 +208,10 @@ heightForHeaderInSection:(NSInteger)section {
 }
 
 #pragma mark - Configure Cell
-
+- (void)configureWeeklyReportCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    cell.textLabel.text = @"Weekly report is available! 📈";
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+}
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     // makes sure tribe objects have been loaded
