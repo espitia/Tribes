@@ -111,17 +111,6 @@
         
     }
 }
--(void)willMoveToParentViewController:(UIViewController *)parent {
-    
-    // if moving back to tribestablevc
-    if (![parent isEqual:self.parentViewController]) {
-        
-        // get tribestablevc and reload data to show newly added habits
-        UINavigationController * navController = (UINavigationController *)self.parentViewController;
-        TribesTableViewController * tribesVc = (TribesTableViewController *)navController.viewControllers[0];
-        [tribesVc.tableView reloadData];
-    }
 
-}
 
 @end
