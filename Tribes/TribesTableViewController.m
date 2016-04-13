@@ -450,7 +450,7 @@ heightForHeaderInSection:(NSInteger)section {
         if (success) {
             [self.tableView reloadData];
             [self updateProgressBar];
-            [self checkForNewData];
+//            [self checkForNewData];
 
         } else {
             NSLog(@"failed to update activities");
