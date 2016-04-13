@@ -58,10 +58,20 @@
                         if (user && !error) {
                             NSLog(@"succesfully logged in to already created user");
                             // The current user is now set to user.
-                            [self.navigationController dismissViewControllerAnimated:true completion:^{
-                                [foundUserAlert hideView];
-                                [self alertFetchingTribe];
+                            
+                            // set installation to user to receive pushes
+                            [[PFInstallation currentInstallation] setObject:user forKey:@"user"];
+                            [[PFInstallation currentInstallation] saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                                
+                                
+                                [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                    [foundUserAlert hideView];
+                                    [self alertFetchingTribe];
+                                }];
+                                
+                                
                             }];
+
                         } else {
                             NSLog(@"Failed to log in to user");
                         }
