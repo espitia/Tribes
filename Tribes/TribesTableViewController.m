@@ -75,7 +75,6 @@
         currentUser = [User currentUser];
     
     // set up UI elements
-    [self UISetUp];
     [self setUpAdBanner];
     [self.tableView reloadData];
     
