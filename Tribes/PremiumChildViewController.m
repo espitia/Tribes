@@ -29,7 +29,7 @@
 }
 
 - (IBAction)upgrade:(id)sender {
-    [iAPHelper make1MonthPremiumPurchase];
+    [iAPHelper make1MonthPremiumPurchaseWithTableViewController:self andReload:false orDismiss:true];
 }
 - (IBAction)restore:(id)sender {
     [iAPHelper restore];

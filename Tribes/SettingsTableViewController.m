@@ -131,7 +131,7 @@
 -(void)extendPremiumOptions {
     SCLAlertView * extendPremium = [[SCLAlertView alloc] initWithNewWindow];
     [extendPremium addButton:@"ADD 1 MONTH" actionBlock:^{
-        [iAPHelper make1MonthPremiumPurchaseWithTableViewController:self];
+        [iAPHelper make1MonthPremiumPurchaseWithTableViewController:self andReload:true orDismiss:false];
     }];
     [extendPremium showSuccess:@"Extend Subscription" subTitle:@"You already have Tribes Premium. Would you like to extend your subscription?" closeButtonTitle:@"MAYBE LATER" duration:0.0];
     
