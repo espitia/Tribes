@@ -40,8 +40,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    IAPHelper * helper = [[IAPHelper alloc] init];
-    return ([helper userIsPremium]) ? 1 : 2;
+    return 2;
 }
 
 
@@ -54,16 +53,20 @@
         case 0:
             switch (indexPath.row) {
                 case 0: {
-                    IAPHelper * helper = [[IAPHelper alloc] init];
-                    if ([helper userIsPremium]) {
-                        title = [NSString stringWithFormat:@"Subscribed!🏅Expires in %d days", [helper daysRemainingOnSubscription]];
+                    if ([iAPHelper userIsPremium]) {
+                        title = [NSString stringWithFormat:@"Subscribed!🏅Expires in %d days", [iAPHelper daysRemainingOnSubscription]];
                     } else {
                         title = @"Upgrade ⭐️";
                     }
                 }
                     break;
                 case 1: {
-                    title = @"Remove Ads 🚫";
+                    if ([iAPHelper userIsPremium]) {
+                        title = @"Extend your subscription ⭐";
+                    } else {
+                        title = @"Remove Ads 🚫";
+                    }
+
                 }
                     break;
                     
@@ -94,8 +97,8 @@
         case 0:
             switch (indexPath.row) {
                 case 0: {
-                    IAPHelper * helper = [[IAPHelper alloc] init];
-                    if ([helper userIsPremium]) {
+                    // if premium, ask to extend, if not, show premium vc
+                    if ([iAPHelper userIsPremium]) {
                         [self extendPremiumOptions];
                     } else {
                         PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
@@ -104,8 +107,13 @@
                 }
                     break;
                 case 1: {
-                    PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumRemoveAds];
-                    [self presentViewController:premiumVC animated:true completion:nil];
+                    // if premium, ask to extend, if not, show premium vc
+                    if ([iAPHelper userIsPremium]) {
+                        [self extendPremiumOptions];
+                    } else {
+                        PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumRemoveAds];
+                        [self presentViewController:premiumVC animated:true completion:nil];
+                    }
 
                 }
                     break;
