@@ -64,8 +64,10 @@
     [[NSUserDefaults standardUserDefaults] setObject:newExpirationDate forKey:@"expirationDate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    if (self.tableViewControllerToReload) {
-        [self.tableViewControllerToReload.tableView reloadData];
+    if (self.tableViewControllerToConfigureAfterPurchase && self.reload) {
+        [self.tableViewControllerToConfigureAfterPurchase.tableView reloadData];
+    } else if (self.tableViewControllerToConfigureAfterPurchase && self.dismiss) {
+        [self.tableViewControllerToConfigureAfterPurchase dismissViewControllerAnimated:true completion:nil];
     }
     
 }
@@ -75,8 +77,10 @@
 /**
  * Pass UITableViewController to reload data when purchaes is complete.
  */
--(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc {
-    self.tableViewControllerToReload = vc;
+-(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc andReload:(BOOL)reload orDismiss:(BOOL)dismiss {
+    self.tableViewControllerToConfigureAfterPurchase = vc;
+    self.reload = reload;
+    self.dismiss = dismiss;
     [self make1MonthPremiumPurchase];
 }
 -(void)make1MonthPremiumPurchase {

@@ -19,11 +19,13 @@
 /**
  * UITableViewController to reloadDate when purchase completes.
  */
-@property (nonatomic, strong) UITableViewController * tableViewControllerToReload;
+@property (nonatomic, strong) UITableViewController * tableViewControllerToConfigureAfterPurchase;
+@property BOOL reload;
+@property BOOL dismiss;
 
 // public methods to make purchase
 -(void)make1MonthPremiumPurchase;
--(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc;
+-(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc andReload:(BOOL)reload orDismiss:(BOOL)dismiss;
 - (void)restore;
 
 @end
