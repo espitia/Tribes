@@ -64,12 +64,21 @@
     [[NSUserDefaults standardUserDefaults] setObject:newExpirationDate forKey:@"expirationDate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    if (self.tableViewControllerToReload) {
+        [self.tableViewControllerToReload.tableView reloadData];
+    }
+    
 }
 
 #pragma mark - Purchasing Premium
 #define kBecomePremiumProductIdentifier @"com.tribes.1monthsub"
-
-
+/**
+ * Pass UITableViewController to reload data when purchaes is complete.
+ */
+-(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc {
+    self.tableViewControllerToReload = vc;
+    [self make1MonthPremiumPurchase];
+}
 -(void)make1MonthPremiumPurchase {
     
     
