@@ -13,7 +13,9 @@
 #import "PremiumViewController.h"
 #import "SCLAlertView.h"
 
-@interface SettingsTableViewController ()
+@interface SettingsTableViewController () {
+    IAPHelper * iAPHelper;
+}
 
 @end
 
@@ -23,6 +25,7 @@
     [super viewDidLoad];
     
     self.tableView.rowHeight = 70;
+    iAPHelper = [[IAPHelper alloc] init];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -119,10 +122,10 @@
 
 -(void)extendPremiumOptions {
     SCLAlertView * extendPremium = [[SCLAlertView alloc] initWithNewWindow];
-    [extendPremium addButton:@"Add 1 Month" actionBlock:^{
-        IAPHelper * helper = [[IAPHelper alloc] init];
-        [helper make1MonthPremiumPurchase];
+    [extendPremium addButton:@"ADD 1 MONTH" actionBlock:^{
+        [iAPHelper make1MonthPremiumPurchaseWithTableViewController:self];
     }];
+    [extendPremium showSuccess:@"Extend Subscription" subTitle:@"You already have Tribes Premium. Would you like to extend your subscription?" closeButtonTitle:@"MAYBE LATER" duration:0.0];
     
 }
 @end
