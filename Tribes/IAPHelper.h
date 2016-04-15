@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface IAPHelper : NSObject
+@interface IAPHelper : NSObject 
+
+// states of subscription/user
 -(int)daysRemainingOnSubscription;
 -(NSDate *)expirationDate;
 -(BOOL)userIsPremium;
+
+// public methods to make purchase
 -(void)make1MonthPremiumPurchase;
+- (void)restore;
 
 @end
