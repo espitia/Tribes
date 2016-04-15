@@ -11,6 +11,7 @@
 #import "SCLAlertView.h"
 #import "IAPHelper.h"
 #import "PremiumViewController.h"
+#import "SCLAlertView.h"
 
 @interface SettingsTableViewController ()
 
@@ -24,6 +25,10 @@
     self.tableView.rowHeight = 70;
 }
 
+-(void)viewDidAppear:(BOOL)animated {
+    [self.tableView reloadData];
+}
+
 
 #pragma mark - Table view data source
 
@@ -32,7 +37,8 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    IAPHelper * helper = [[IAPHelper alloc] init];
+    return ([helper userIsPremium]) ? 1 : 2;
 }
 
 
@@ -44,16 +50,17 @@
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
-                case 0:
-                    title = @"Remove Ads 🚫";
-                    break;
-                case 1: {
+                case 0: {
                     IAPHelper * helper = [[IAPHelper alloc] init];
                     if ([helper userIsPremium]) {
                         title = [NSString stringWithFormat:@"Subscribed!🏅Expires in %d days", [helper daysRemainingOnSubscription]];
                     } else {
                         title = @"Upgrade ⭐️";
                     }
+                }
+                    break;
+                case 1: {
+                    title = @"Remove Ads 🚫";
                 }
                     break;
                     
@@ -84,18 +91,19 @@
         case 0:
             switch (indexPath.row) {
                 case 0: {
-                    PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumRemoveAds];
-                    [self presentViewController:premiumVC animated:true completion:nil];
-                }
-                    break;
-                case 1: {
                     IAPHelper * helper = [[IAPHelper alloc] init];
                     if ([helper userIsPremium]) {
-                        
+                        [self extendPremiumOptions];
                     } else {
                         PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
                         [self presentViewController:premiumVC animated:true completion:nil];
                     }
+                }
+                    break;
+                case 1: {
+                    PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumRemoveAds];
+                    [self presentViewController:premiumVC animated:true completion:nil];
+
                 }
                     break;
                     
@@ -109,4 +117,12 @@
     }
 }
 
+-(void)extendPremiumOptions {
+    SCLAlertView * extendPremium = [[SCLAlertView alloc] initWithNewWindow];
+    [extendPremium addButton:@"Add 1 Month" actionBlock:^{
+        IAPHelper * helper = [[IAPHelper alloc] init];
+        [helper make1MonthPremiumPurchase];
+    }];
+    
+}
 @end
