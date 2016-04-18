@@ -320,14 +320,14 @@
 			name = "Extra functionality";
 			sourceTree = "<group>";
 		};
-		09688B291C77CE9A001B7752 /* Habit Detail */ = {
+		09688B291C77CE9A001B7752 /* Habit Detail VC */ = {
 			isa = PBXGroup;
 			children = (
 				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
 				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
 				09688B331C7B7D96001B7752 /* Habit Settings */,
 			);
-			name = "Habit Detail";
+			name = "Habit Detail VC";
 			sourceTree = "<group>";
 		};
 		09688B2F1C7AB8FE001B7752 /* Audio */ = {
@@ -455,7 +455,7 @@
 			children = (
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
-				09688B291C77CE9A001B7752 /* Habit Detail */,
+				09688B291C77CE9A001B7752 /* Habit Detail VC */,
 				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
 				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
 				0923AD151CB41BC50022753D /* Premium */,
@@ -891,7 +891,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = Tribes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = motif.Tribes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribes.tribes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -907,7 +907,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = Tribes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = motif.Tribes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tribes.tribes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
