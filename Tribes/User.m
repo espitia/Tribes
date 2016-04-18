@@ -180,20 +180,46 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     __block int counter = 0;
     NSLog(@"attempting to update all tribes");
-    for (Tribe * tribe in self.tribes) {
-        
-        [tribe updateTribeWithBlock:^(bool success) {
-            if (success) {
-                counter++;
-                if (counter == self.tribes.count) {
-                    NSLog(@"successfully updated all tribes");
-                    callback(true);
+    
+    if (!self.tribes) {
+        [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object && !error) {
+                for (Tribe * tribe in self.tribes) {
+                    
+                    [tribe updateTribeWithBlock:^(bool success) {
+                        if (success) {
+                            counter++;
+                            if (counter == self.tribes.count) {
+                                NSLog(@"successfully updated all tribes");
+                                callback(true);
+                            }
+                        } else {
+                            NSLog(@"failed to update tribes");
+                            callback(false);
+                        }
+                    }];
                 }
             } else {
-                NSLog(@"failed to update tribes");
+                NSLog(@"error fetchign user to grab tribes");
                 callback(false);
             }
         }];
+    } else {
+        for (Tribe * tribe in self.tribes) {
+            
+            [tribe updateTribeWithBlock:^(bool success) {
+                if (success) {
+                    counter++;
+                    if (counter == self.tribes.count) {
+                        NSLog(@"successfully updated all tribes");
+                        callback(true);
+                    }
+                } else {
+                    NSLog(@"failed to update tribes");
+                    callback(false);
+                }
+            }];
+        }
     }
     
 }
