@@ -117,6 +117,16 @@
                             // dismiss signup controller
                             [self.navigationController dismissViewControllerAnimated:true completion:^{
                                 
+                                // reload table view
+                                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                                UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
+                                TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
+                       
+                                [User currentUser].loadedInitialTribes = true;
+                                [tribesVC.tableView reloadData];
+                                [tribesVC setUp];
+                                [tribesVC UISetUp];
+                
                                 [self askForUsername];
                                 
                                 
