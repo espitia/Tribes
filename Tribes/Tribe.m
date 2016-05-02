@@ -491,7 +491,7 @@
  * @param User to be added to tribe
  * @return A BOOl value of true or false to let you know if everything went smoothly.
  */
--(void)addUserToTribe:(PFUser *)user withBlock:(void (^)(BOOL * success))callback {
+-(void)addUserToTribe:(User *)user withBlock:(void (^)(BOOL * success))callback {
 
 
     
@@ -509,10 +509,14 @@
                                             } else {
                                                 success = true;
                                                 // save tribe
- 
-//                                                [self updateTribeWithBlock:^{
-//                                                    callback(&success);
-//                                                }];
+                                                if (user == [User currentUser]) {
+                                                    [user updateTribesWithBlock:^(bool success) {
+                                                        callback(&success);
+                                                    }];
+                                                } else {
+                                                    callback(&success);
+                                                }
+
                                             }
                                         }];
 
