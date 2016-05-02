@@ -50,7 +50,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    // check authorization access to address book status
+    // check authorization access to address book status and look up matches to fetch tribes to join
     switch ([DGTContacts contactsAccessAuthorizationStatus]) {
         case 0:
         case 1: {
@@ -179,8 +179,13 @@
         return;
     }
     
+    
+    
+    
+    
     //tribe dictionary contains two keys: tribe for tribe obj and memberFriends for an array of the names of members in tribe
     NSDictionary * tribe = [tribesToJoin objectAtIndex:indexPath.row];
+    NSLog(@"%@", tribe);
     [cell.textLabel setFont:[UIFont systemFontOfSize:40]];
     cell.textLabel.text = tribe[@"tribe"][@"name"];
     
@@ -403,22 +408,40 @@
         }
     }
     
-    //add all members of selected tribe to tribedictionary in order to display in detail text on table
-    for (Tribe * tribe in rawArrayOfTribes) {
-        NSMutableArray * membersInTribe = [[NSMutableArray alloc] init];
-        for (User * matchedUser in matchedContacts) {
-            if ([matchedUser.tribes containsObject:tribe]) {
-                //belongs to tribe
-                [membersInTribe addObject:matchedUser[@"name"]];
-            }
-        }
-        NSDictionary * tribeToJoin = @{@"tribe":tribe,
-                        @"memberFriends":membersInTribe};
-        [tribesToJoin addObject:tribeToJoin];
-    }
     
-    loadingTribesToJoin = false;
-    [self.tableView reloadData];
+    //add all members of selected tribe to tribedictionary in order to display in detail text on table
+    __block int counter = 0;
+
+    for (Tribe * tribe in rawArrayOfTribes) {
+
+        NSMutableArray * membersInTribe = [[NSMutableArray alloc] init];
+
+        [tribe fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            counter++;
+
+            
+            for (User * matchedUser in matchedContacts) {
+                if ([matchedUser.tribes containsObject:tribe]) {
+                    //belongs to tribe
+                    [membersInTribe addObject:matchedUser[@"name"]];
+                }
+            }
+            NSDictionary * tribeToJoin = @{@"tribe":tribe,
+                                           @"memberFriends":membersInTribe};
+            [tribesToJoin addObject:tribeToJoin];
+            
+            if (counter == rawArrayOfTribes.count) {
+                loadingTribesToJoin = false;
+                [self.tableView reloadData];
+            }
+    
+        }];
+        
+        
+    }
+
+
+
     
 
     
