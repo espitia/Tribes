@@ -13,6 +13,7 @@
 #import "User.h"
 #import "SCLAlertView.h"
 #import <DigitsKit/DigitsKit.h>
+#import <Crashlytics/Crashlytics.h>
 
 
 @interface AddTribeTableViewController () {
@@ -226,9 +227,15 @@
                 
                 [tribe addUserToTribe:[User currentUser] withBlock:^(BOOL *success) {
                     
+                    [waitingAlert hideView];
+
                     // if successfully added user to tribe
                     if (success) {
-                        [waitingAlert hideView];
+                        
+                        // log event
+                        [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@true}];
+                        
+                        
                         SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
                         NSString * successMessage = [NSString stringWithFormat:@"You have now joined %@! Make us proud ✊", tribe[@"name"]];
                         [successAlert addButton:@"Will do!" actionBlock:^{
@@ -236,6 +243,10 @@
                         }];
                         [successAlert showSuccess:@"Success 😃" subTitle:successMessage  closeButtonTitle:nil duration:0.0];
                     } else {
+                        
+                        // log event
+                        [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@false}];
+                        
                         SCLAlertView * errorAlert = [[SCLAlertView alloc]  initWithNewWindow];
                         [errorAlert showError:@"Oh oh 😬" subTitle:@"There was an error while joining the Tribe 🤔 Please try again." closeButtonTitle:@"OK" duration:0.0];
                     }
@@ -243,6 +254,8 @@
             }
         } else {
             NSLog(@"error getting tribe to add");
+            // log event
+            [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@true}];
         }
 
     }
@@ -279,9 +292,16 @@
                 [stillWaitingAlert hideView];
                 
                 if (success) {
+                    
+                    // log event
+                    [Answers logCustomEventWithName:@"Created Tribe" customAttributes:@{@"success":@true}];
+                    
                     // send tribe back to main viewcontroller
                     [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
                 } else {
+                    
+                    // log event
+                    [Answers logCustomEventWithName:@"Created Tribe" customAttributes:@{@"success":@false}];
                     
                     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                     [alert addButton:@"OK" actionBlock:^{
@@ -355,6 +375,8 @@
             SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
             [alert showError:@"Oh oh 😬" subTitle:@"There was an error searching for Friends, please try again" closeButtonTitle:@"OK" duration:0.0];
         }
+
+        
 
     }];
 }

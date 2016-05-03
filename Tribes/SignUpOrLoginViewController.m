@@ -8,6 +8,7 @@
 
 #import "SignUpOrLoginViewController.h"
 #import <DigitsKit/DigitsKit.h>
+#import <Crashlytics/Crashlytics.h>
 #import "Parse.h"
 #import "SCLAlertView.h"
 #import "User.h"
@@ -116,6 +117,10 @@
                             // The current user is now set to user.
                             // dismiss signup controller
                             [self.navigationController dismissViewControllerAnimated:true completion:^{
+                                
+                                [Answers logSignUpWithMethod:@"Digits"
+                                                     success:@YES
+                                            customAttributes:@{}];
                                 
                                 // reload table view
                                 UIWindow *window = [UIApplication sharedApplication].keyWindow;

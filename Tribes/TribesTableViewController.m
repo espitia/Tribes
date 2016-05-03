@@ -13,6 +13,7 @@
 #import "Tribe.h"
 #import "Habit.h"
 #import "MCSwipeTableViewCell.h"
+#import <Crashlytics/Crashlytics.h>
 #import "User.h"
 #import "Activity.h"
 #import "KRConfettiView.h"
@@ -188,6 +189,7 @@ heightForHeaderInSection:(NSInteger)section {
         cell.textLabel.text = @"👆 Tap to add a habit";
         return cell;
     }
+    
     // enable weekly reports on monday and configure indexpath to correctly user data source
     else if (currentUser.weeklyReportActive && indexPath.row == 0) {
         [self configureWeeklyReportCell:cell forRowAtIndexPath:indexPath];
@@ -273,6 +275,9 @@ heightForHeaderInSection:(NSInteger)section {
     
     [cell setSwipeGestureWithView:checkView color:greenColor mode:MCSwipeTableViewCellModeSwitch state:MCSwipeTableViewCellState1 completionBlock:^(MCSwipeTableViewCell *cell, MCSwipeTableViewCellState state, MCSwipeTableViewCellMode mode) {
 
+        // log event
+        [Answers logCustomEventWithName:@"Complete habit" customAttributes:@{}];
+        
         [currentUser completeActivityForHabit:habit inTribe:tribe];
         [self makeItRainConfetti];
         [self updateProgressBar];
@@ -315,6 +320,10 @@ heightForHeaderInSection:(NSInteger)section {
     
     // if user has no habits in tribe, send them to add habit
     if ([tribe[@"habits"] count] == 0) {
+        
+        // log event
+        [Answers logCustomEventWithName:@"Tapped to create first habit" customAttributes:@{}];
+        
         [self performSegueWithIdentifier:@"AddFirstHabit" sender:tribe];
     }
     // enable weekly reports on Monday and configure indexpath to correctly user data source
@@ -349,6 +358,9 @@ heightForHeaderInSection:(NSInteger)section {
     // REGULAR DAYS
     else {
 
+        // log event
+        [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
+        
         Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
         [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
     }
@@ -358,6 +370,10 @@ heightForHeaderInSection:(NSInteger)section {
     
     // if user has no tribe - add call to action to create/join one
     if (currentUser.tribes.count == 0) {
+        
+        // log event
+        [Answers logCustomEventWithName:@"Tapped to add first Tribe" customAttributes:@{}];
+        
         [self performSegueWithIdentifier:@"AddTribe" sender:nil];
         return;
     }

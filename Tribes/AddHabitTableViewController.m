@@ -9,6 +9,7 @@
 #import "AddHabitTableViewController.h"
 #import "User.h"
 #import "SCLAlertView.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface AddHabitTableViewController () {
     User * currentUser;
@@ -87,6 +88,10 @@
         
         [_tribe addHabitToTribeWithName:habitNameTextField.text andBlock:^(bool success) {
             if (success) {
+                
+                // log event
+                [Answers logCustomEventWithName:@"Added habit" customAttributes:@{@"success":@true}];
+                
                 [_tribe updateTribeWithBlock:^(bool success) {
                     if (success) {
                         [alert hideView];
@@ -97,6 +102,10 @@
                     }
                 }];
             } else {
+                
+                // log event
+                [Answers logCustomEventWithName:@"Add habit" customAttributes:@{@"success":@false}];
+                
                 SCLAlertView * errorAddingHabit = [[SCLAlertView alloc] initWithNewWindow];
                 [errorAddingHabit showError:@"Oh oh!" subTitle:@"There was an error adding the habit. Please try again." closeButtonTitle:@"OK" duration:0.0];
             }

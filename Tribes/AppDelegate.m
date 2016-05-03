@@ -285,6 +285,10 @@
 }
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
     
+    // log event
+    NSString * identifierStringForEvent = identifier;
+    [Answers logCustomEventWithName:@"Replied to push via action" customAttributes:@{@"action":identifierStringForEvent}];
+    
     User * currentUser = [User currentUser];
     NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
     __block NSString * message;

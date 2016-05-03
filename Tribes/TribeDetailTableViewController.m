@@ -13,7 +13,7 @@
 #import "HabitSettingsTableViewController.h"
 #import "SCLAlertView.h"
 #import "HYBubbleButton.h"
-
+#import <Crashlytics/Crashlytics.h>
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
@@ -123,6 +123,9 @@
         // if selected own member cell -> show settings
         if (member == currentUser) {
             
+            // log event
+            [Answers logCustomEventWithName:@"Tapped to see habit settings" customAttributes:@{}];
+            
             [self performSegueWithIdentifier:@"showSettings" sender:activity];
             
         } else if (activity.hibernation) {
@@ -141,11 +144,13 @@
         
         else if ([[member activityForHabit:_habit] completedForDay]) {
             
-            // praise user
+            // send applause
             [self showBubbleEffectAndSendApplausePushWithLocation:location toUser:member];
 
             
         } else {
+            
+            // send motivation
             [self showBubbleEffectAndSendPushWithLocation:location toUser:member];
         }
     }
@@ -180,6 +185,9 @@
         UIImage * lion = [self imageFromText:@"👏"];
         bubbleGenerator.images = @[lion];
  
+        // log event
+        [Answers logCustomEventWithName:@"Sent applause" customAttributes:@{}];
+        
         NSString * message = [NSString stringWithFormat:@"%@: 👏", [User currentUser][@"name"]];
         NSString * category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
         [[User currentUser] sendPushFromMemberToMember:member withMessage:message andCategory:category];
@@ -236,7 +244,15 @@
         [[User currentUser] sendMotivationToMember:member inTribe:_habit[@"tribe"] forHabit:_habit withBlock:^(BOOL success) {
             if (success) {
                 
+                // log event
+                [Answers logCustomEventWithName:@"Sent motivation" customAttributes:@{@"success":@true}];
+                
             } else {
+                
+                // log event
+                [Answers logCustomEventWithName:@"Sent motivation" customAttributes:@{@"success":@false}];
+                
+                // show error alert
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                 [alert showError:@"❌" subTitle:@"Seems like there was a problem sending the motivation 😔 Try again!" closeButtonTitle:@"OK" duration:0.0];
             }
