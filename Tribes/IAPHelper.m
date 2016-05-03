@@ -73,7 +73,7 @@
 }
 
 #pragma mark - Purchasing Premium
-#define kBecomePremiumProductIdentifier @"com.tribes.1monthsub"
+#define kBecomePremiumProductIdentifier @"com.usetribes.1monthsub"
 /**
  * Pass UITableViewController to reload data when purchaes is complete.
  */
