@@ -370,6 +370,9 @@
         if (matches.count > 0 && !error) {
             // get matching PFUsers for corresponding digitsID key
             [self fetchMatchedUsers:matches];
+        } else if (matches.count == 0) {
+            loadingTribesToJoin = false;
+            [self.tableView reloadData];
         } else {
             NSLog(@"error: %@", error);
             SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
