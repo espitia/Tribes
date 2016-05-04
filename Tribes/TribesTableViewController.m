@@ -24,7 +24,8 @@
 #import "PremiumViewController.h"
 #import "IAPHelper.h"
 #import "AddHabitTableViewController.h"
-
+@import AVFoundation;
+@import AVKit;
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
     User * currentUser;
     UIRefreshControl * refreshControl;
@@ -78,6 +79,18 @@
     // set up UI elements
     [self setUpAdBanner];
     [self.tableView reloadData];
+    
+    // check to show walkthrough video
+    if ([self shouldPlayWalkthroughVideo]) {
+        
+        // show alert with explanation of why the video
+        SCLAlertView * walkthroughVideoAlert = [[SCLAlertView alloc] initWithNewWindow];
+        [walkthroughVideoAlert addButton:@"OK" actionBlock:^{
+            [self playWalkthroughVideo];
+        }];
+        [walkthroughVideoAlert showSuccess:@"Helper Video 🎥" subTitle:@"Congrats on setting up your Tribe 🎉 Here's a short video to help you get the most out of it!" closeButtonTitle:nil duration:0.0];
+    }
+        
     
 }
 
@@ -543,6 +556,29 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(void)removeAllActivitiesCompletedSignifier {
     self.navigationItem.title = @"Tribes";
+}
+-(BOOL)shouldPlayWalkthroughVideo {
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [userDefaults objectForKey:@"playedWalkthroughVideo"] == NULL);
+}
+-(void)playWalkthroughVideo {
+    // grab a local URL to our video
+    NSURL *videoURL = [[NSBundle mainBundle]URLForResource:@"Tribes-Intro-Video" withExtension:@"mp4"];
+    
+    // create an AVPlayer
+    AVPlayer *player = [AVPlayer playerWithURL:videoURL];
+    
+    // create a player view controller
+    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
+    controller.player = player;
+    
+    // present view controller
+    [self presentViewController:controller animated:true completion:nil];
+    [player play];
+    
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@true forKey:@"playedWalkthroughVideo"];
+    [userDefaults synchronize];
 }
 
 #pragma mark - Method to play sound
