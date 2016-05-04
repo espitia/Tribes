@@ -13,6 +13,7 @@
 #import "SCLAlertView.h"
 #import "User.h"
 #import "TribesTableViewController.h"
+#import "SignUpValidation.h"
 
 @import AVFoundation;
 @import AVKit;
@@ -184,9 +185,37 @@
     UITextField * emailTextField = [alert addTextField:@"Email"];
 
     [alert addButton:@"READY!" actionBlock:^(void) {
-        [[PFUser currentUser] setObject:nameTextField.text forKey:@"name"];
-        [[PFUser currentUser] setObject:emailTextField.text forKey:@"email"];
-        [[PFUser currentUser] saveInBackground];
+        
+        SignUpValidation * validate = [[SignUpValidation alloc] init];
+        
+        // check to make sure username is valid
+        [validate isUsernameValid:nameTextField.text withBlock:^(BOOL success) {
+            if (success) {
+                
+                // if username is valid, check email to see if it is valid
+                if ([validate isEmailValid:emailTextField.text]) {
+                    
+                    // if both are valid, set and save 
+                    [[PFUser currentUser] setObject:nameTextField.text forKey:@"name"];
+                    [[PFUser currentUser] setObject:emailTextField.text forKey:@"email"];
+                    [[PFUser currentUser] saveInBackground];
+                } else {
+                    SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
+                    [error addButton:@"OK" actionBlock:^{
+                        [self askForUsername];
+                    }];
+                    [error showError:@"Error" subTitle:@"Looks like your email is invalid :( Please try again" closeButtonTitle:nil duration:0.0];
+                }
+            } else {
+                SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
+                [error addButton:@"OK" actionBlock:^{
+                    [self askForUsername];
+                }];
+                [error showError:@"Error" subTitle:@"Looks like your username is taken :( Please try again" closeButtonTitle:nil duration:0.0];
+            }
+        }];
+        
+
     }];
     
     [alert showInfo:@"Almost done 😁" subTitle:@"To finish signing up, set your name and email! " closeButtonTitle:nil duration:0.0];
