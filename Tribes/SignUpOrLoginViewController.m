@@ -14,6 +14,9 @@
 #import "User.h"
 #import "TribesTableViewController.h"
 
+@import AVFoundation;
+@import AVKit;
+
 @interface SignUpOrLoginViewController ()
 
 @end
@@ -32,6 +35,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)playIntroVideo:(id)sender {
+
+    
+    // grab a local URL to our video
+    NSURL *videoURL = [[NSBundle mainBundle]URLForResource:@"Tribes-Intro-Video" withExtension:@"mp4"];
+    
+    // create an AVPlayer
+    AVPlayer *player = [AVPlayer playerWithURL:videoURL];
+    
+    // create a player view controller
+    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
+    controller.player = player;
+    
+    // present view controller
+    [self presentViewController:controller animated:true completion:nil];
+    [player play];
+    
+    
 }
 - (IBAction)signUp:(id)sender {
     
