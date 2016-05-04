@@ -68,7 +68,7 @@
             [query whereKey:@"username" equalTo:session.userID];
             [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
                 
-                // found user already! -> log them in to old account
+                // FOUND USER ALREADY -> LOG INTO OLD ACCOUNT
                 if (object && !error) {
                     
                     SCLAlertView * foundUserAlert = [[SCLAlertView alloc] initWithNewWindow];
@@ -100,7 +100,9 @@
                         }
 
                     }];
-                } else { // sign up
+                } else {
+                    
+                    // ELSE IF NOT FOUND OLD ACCOUNT -> sign up
                     NSLog(@"did not find user for that phone number, will sign up as new user.");
                     [self signUpUserWithDigitsId:session.userID];
                 }
