@@ -563,7 +563,7 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(void)playWalkthroughVideo {
     // grab a local URL to our video
-    NSURL *videoURL = [[NSBundle mainBundle]URLForResource:@"Tribes-Intro-Video" withExtension:@"mp4"];
+    NSURL *videoURL = [[NSBundle mainBundle]URLForResource:@"cropped tribes tutorial" withExtension:@"mp4"];
     
     // create an AVPlayer
     AVPlayer *player = [AVPlayer playerWithURL:videoURL];
