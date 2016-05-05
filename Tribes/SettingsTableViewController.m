@@ -36,13 +36,36 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 35.0;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    switch (section)
+    {
+        case 0:
+            sectionName = @"General";
+            break;
+        case 1:
+            sectionName = @"Let's connect 🤗";
+            break;
+            // ...
+        default:
+            sectionName = @"";
+            break;
+    }
+    return sectionName;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SettingsCell" forIndexPath:indexPath];
@@ -74,6 +97,18 @@
                     break;
             }
             break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
+                    title = @"Live chat 💬";
+                    break;
+                case 1:
+                    title = @"Snapchat 👻";
+                    break;
+                    
+                default:
+                    break;
+            }
             
         default:
             break;
@@ -122,6 +157,17 @@
                     break;
             }
             break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
+                    
+                    break;
+                case 1:
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.snapchat.com/add/tribeshq"]];
+                    
+                default:
+                    break;
+            }
             
         default:
             break;
