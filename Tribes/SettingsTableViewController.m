@@ -12,6 +12,7 @@
 #import "IAPHelper.h"
 #import "PremiumViewController.h"
 #import "SCLAlertView.h"
+#import "Helpshift.h"
 
 @interface SettingsTableViewController () {
     IAPHelper * iAPHelper;
@@ -159,8 +160,10 @@
             break;
         case 1:
             switch (indexPath.row) {
-                case 0:
-                    
+                case 0: {
+                    [[Helpshift sharedInstance] showConversation:self
+                                                     withOptions:nil];
+                }
                     break;
                 case 1:
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.snapchat.com/add/tribeshq"]];

@@ -13,6 +13,7 @@ target 'Tribes' do
     pod 'YLProgressBar', '~> 3.8.0'
     pod 'SCLAlertView-Objective-C'
     pod 'APAddressBook'
+    pod 'Helpshift', '5.5.1'
 end
 
 target 'TribesTests' do
