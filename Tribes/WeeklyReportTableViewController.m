@@ -174,7 +174,8 @@
         cell.changeOverWeek.text = @"Growth";
     }
     
-    else {
+    else { // individuals' cells
+        
         User * user = [_tribe.tribeMembers objectAtIndex:indexPath.row - 1];
         // set name
         cell.username.text = user[@"name"];
