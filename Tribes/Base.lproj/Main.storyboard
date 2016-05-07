@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HVO-Vb-vDt">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HVO-Vb-vDt">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -356,7 +356,7 @@
                                     <action selector="signUp:" destination="9jy-fd-g2l" eventType="touchUpInside" id="dEH-pM-hBH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvN-ta-YaX">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvN-ta-YaX">
                                 <rect key="frame" x="87" y="179" width="200" height="200"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="HvN-ta-YaX" secondAttribute="height" multiplier="1:1" id="mu4-aR-zJg"/>
@@ -366,7 +366,7 @@
                                     <action selector="playIntroVideo:" destination="9jy-fd-g2l" eventType="touchUpInside" id="8Ab-gF-FpW"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="helper-text" translatesAutoresizingMaskIntoConstraints="NO" id="kBd-CQ-GWF">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="helper-text" translatesAutoresizingMaskIntoConstraints="NO" id="kBd-CQ-GWF">
                                 <rect key="frame" x="57" y="387" width="260" height="65"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="kBd-CQ-GWF" secondAttribute="height" multiplier="4:1" id="piM-v5-57D"/>
@@ -384,6 +384,7 @@
                             <constraint firstItem="HvN-ta-YaX" firstAttribute="centerX" secondItem="DHu-eI-IwJ" secondAttribute="centerX" id="tNh-zg-U6B"/>
                             <constraint firstItem="A3I-dU-qwj" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="toZ-xu-4eI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A3I-dU-qwj" secondAttribute="trailing" constant="-20" id="uby-MQ-LDs"/>
+                            <constraint firstItem="HvN-ta-YaX" firstAttribute="top" secondItem="9f7-VF-Xfa" secondAttribute="bottom" constant="115" id="xQ5-qw-h5g"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fQj-vo-tqE"/>
