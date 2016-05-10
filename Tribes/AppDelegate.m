@@ -13,7 +13,8 @@
 #import <DigitsKit/DigitsKit.h>
 #import "User.h"
 #import "SCLAlertView.h"
-#import "Helpshift.h"
+#import "HelpshiftAll.h"
+#import "HelpshiftCore.h"
 
 
 
@@ -41,9 +42,8 @@
     [Fabric with:@[[Crashlytics class], [Digits class]]];
     
     // Helpshift
-    [Helpshift installForApiKey:@"a250753efe5cf80517add93d137cea11"
-                     domainName:@"tribes.helpshift.com"
-                          appID:@"tribes_platform_20160505142741624-1e3d5fb2e22f334"];
+    [HelpshiftCore initializeWithProvider:[HelpshiftAll sharedInstance]];
+    [HelpshiftCore installForApiKey:@"a250753efe5cf80517add93d137cea11" domainName:@"tribes.helpshift.com" appID:@"tribes_platform_20160505142741624-1e3d5fb2e22f334"];
 
     // create actions
     [self setUpNotifications:application];
