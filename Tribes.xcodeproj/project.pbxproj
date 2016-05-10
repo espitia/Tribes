@@ -42,7 +42,6 @@
 		09A4E5581CA9EDED00A82E3F /* RecognitionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */; };
 		09A4E55C1CAAED9200A82E3F /* HabitReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E55A1CAAED9200A82E3F /* HabitReportTableViewCell.m */; };
 		09A4E55D1CAAED9200A82E3F /* HabitReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09A4E55B1CAAED9200A82E3F /* HabitReportTableViewCell.xib */; };
-		09AC31901CDA34BF00D40BC8 /* Tribes-Intro-Video.mp4 in Frameworks */ = {isa = PBXBuildFile; fileRef = 09AC318E1CDA32BC00D40BC8 /* Tribes-Intro-Video.mp4 */; };
 		09AC31941CDAB4BD00D40BC8 /* Tribes-Intro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */; };
 		09AC31971CDB892700D40BC8 /* cropped tribes tutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */; };
 		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
@@ -143,7 +142,6 @@
 		09A4E5591CAAED9200A82E3F /* HabitReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitReportTableViewCell.h; sourceTree = "<group>"; };
 		09A4E55A1CAAED9200A82E3F /* HabitReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitReportTableViewCell.m; sourceTree = "<group>"; };
 		09A4E55B1CAAED9200A82E3F /* HabitReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitReportTableViewCell.xib; sourceTree = "<group>"; };
-		09AC318E1CDA32BC00D40BC8 /* Tribes-Intro-Video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Tribes-Intro-Video.mp4"; path = "/Users/germanespitia/Documents/Tribes/Tribes/Tribes/Tribes-Intro-Video.mp4"; sourceTree = "<absolute>"; };
 		09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tribes-Intro.mp4"; sourceTree = "<group>"; };
 		09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cropped tribes tutorial.mp4"; sourceTree = "<group>"; };
 		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
@@ -178,7 +176,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				09AC31901CDA34BF00D40BC8 /* Tribes-Intro-Video.mp4 in Frameworks */,
 				0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */,
 				09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */,
 				09F2BF881C405799008ABDF7 /* libz.tbd in Frameworks */,
