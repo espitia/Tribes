@@ -1,0 +1,45 @@
+PODS:
+  - APAddressBook (0.2.3):
+    - APAddressBook/Core (= 0.2.3)
+  - APAddressBook/Core (0.2.3)
+  - Bolts/Tasks (1.7.0)
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
+  - Digits (2.0.2):
+    - TwitterCore (= 2.0.2)
+  - Fabric (1.6.7)
+  - Helpshift (5.5.1)
+  - MCSwipeTableViewCell (2.1.4)
+  - Parse (1.13.0):
+    - Bolts/Tasks (~> 1.6)
+  - SCLAlertView-Objective-C (1.0.2)
+  - TwitterCore (2.0.2):
+    - Fabric
+  - YLProgressBar (3.8.1)
+
+DEPENDENCIES:
+  - APAddressBook
+  - Crashlytics
+  - Digits
+  - Fabric
+  - Helpshift (= 5.5.1)
+  - MCSwipeTableViewCell (~> 2.1.4)
+  - Parse
+  - SCLAlertView-Objective-C
+  - TwitterCore
+  - YLProgressBar (~> 3.8.0)
+
+SPEC CHECKSUMS:
+  APAddressBook: 2a91bf05999548bea210ec9d1a68073f4dc8bfce
+  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
+  Digits: a5c8ddfed18d5e0496e9b6f459f0bca44de588db
+  Fabric: caf7580c725e64db144f610ac65cd60956911dc7
+  Helpshift: 1b89b3632bf46af10d2c9d9f448e64a0ccf667ec
+  MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
+  Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
+  SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
+  TwitterCore: 0f44d8980a6879d5205dcb4e010d15e643e56fa0
+  YLProgressBar: c6699d75d58042377132c9301d3ab8fd0204937d
+
+COCOAPODS: 0.39.0

@@ -1,0 +1,35 @@
+//
+//  Habit.h
+//  Tribes
+//
+//  Created by German Espitia on 3/2/16.
+//  Copyright © 2016 German Espitia. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
+
+@interface Habit : PFObject<PFSubclassing>
+
++(NSString *)parseClassName;
++(void)load;
+
+//loading methods
+-(void)loadHabitWithBlock:(void(^)(bool success))callback;
+
+-(void)sortMembersAndActivitiesByTotalActivityCompletions;
+-(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
+-(void)pairMembersAndActivities;
+
+-(BOOL)completedForDay;
+-(BOOL)allMembersCompletedActivity;
+
+-(void)sendTribe100PercentCompletedPush;
+
+@property (nonatomic, strong) NSMutableArray * members;
+@property (nonatomic, strong) NSMutableArray * membersAndActivities;
+@property (nonatomic, strong) NSMutableArray * completionDates;
+
+
+@end
+

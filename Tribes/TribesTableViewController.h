@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCSwipeTableViewCell.h"
+#import <iAd/iAd.h>
 
-@interface TribesTableViewController : UITableViewController
 
-@property (atomic, strong) NSMutableArray * tribes;
+@interface TribesTableViewController : UITableViewController <ADBannerViewDelegate>
+
+// public methods to call from signing up navigation stack
+-(void)setUp;
+-(void)UISetUp;
 
 @end

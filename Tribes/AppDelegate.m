@@ -9,7 +9,13 @@
 #import "AppDelegate.h"
 #import "Parse.h"
 #import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 #import <DigitsKit/DigitsKit.h>
+#import "User.h"
+#import "SCLAlertView.h"
+#import "HelpshiftAll.h"
+#import "HelpshiftCore.h"
+
 
 
 @interface AppDelegate ()
@@ -26,16 +32,127 @@
     [Parse enableLocalDatastore];
     
     // Initialize Parse.
-    [Parse setApplicationId:@"k8emsJi8KX6VFiyUESvFQ9sE38Vlj4zEnddpavyJ"
-                  clientKey:@"WzlPb6BjwDCuq0eqa1W51I2fn7TtgbOz7vTAueoh"];
+    [Parse setApplicationId:@"qkVfFQQyzW0O8hMLqYoqaOqltuJtF1qlMDOahqfO"
+                  clientKey:@"e5jVDLbxBVEw9KMZivDMh1NZaXCzdxIRhiXpXMmO"];
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     // initialize Fabric:Digits
-    [Fabric with:@[[Digits class]]];
+    [Fabric with:@[[Crashlytics class], [Digits class]]];
+    
+    // Helpshift
+    [HelpshiftCore initializeWithProvider:[HelpshiftAll sharedInstance]];
+    [HelpshiftCore installForApiKey:@"a250753efe5cf80517add93d137cea11" domainName:@"tribes.helpshift.com" appID:@"tribes_platform_20160505142741624-1e3d5fb2e22f334"];
 
+    // create actions
+    [self setUpNotifications:application];
+    
+    // ui changes
+    [self colorNavBar];
+    
     return YES;
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *installation = [PFInstallation currentInstallation];
+    [installation setDeviceTokenFromData:deviceToken];
+    installation.channels = @[ @"global" ];
+    [installation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    
+    if ([userInfo objectForKey:@"aps"]) {
+    
+        User * currentUser = [User currentUser];
+        NSString * title;
+        NSString * messageToDisplay = userInfo[@"aps"][@"alert"];
+        NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
+        NSString * habitName = userInfo[@"habitName"];
+        __block NSString * messageToSend;
+        __block NSString * categoryToSend;
+        SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+
+        NSString * category = userInfo[@"aps"][@"category"];   // The one we want to switch on
+        NSArray * possibleCategories = @[@"MOTIVATION_REPLY",
+                                         @"COMPLETION_REPLY",
+                                         @"WATCHING_YOU_REPLY",
+                                         @"THANK_YOU_FOR_APPLAUSE_REPLY",
+                                         @"HIBERNATION_RESPONSE"];
+        
+        int item = (int)[possibleCategories indexOfObject:category];
+        
+        switch (item) {
+            case 0: {
+                // MOTIVATIONAL REPLY
+                title = @"Motivation Received 💪";
+                [alert addButton:@"👌" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"name"], habitName];
+                    categoryToSend = @"WATCHING_YOU_REPLY";
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
+                }];
+                [alert addButton:@"✋" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"name"], habitName];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:nil];
+                }];
+            }
+                break;
+            case 1: {
+                // COMPLETION REPLY
+                title = @"Squad is up!";
+                [alert addButton:@"👏" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"name"], habitName];
+                    categoryToSend = @"THANK_YOU_FOR_APPLAUSE_REPLY";
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
+                }];
+            }
+                break;
+            case 2: {
+                // WATCHING YOU REPLY
+                title = @"Watch em!";
+                messageToSend = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"name"], habitName];
+                [alert addButton:@"👀" actionBlock:^{
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
+                }];
+            }
+                break;
+            case 3: {
+                // THANK YOU FOR APPLAUSE REPLY
+                title = @"Great job!";
+                [alert addButton:@"✊" actionBlock:^{
+                    messageToSend = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"name"], habitName];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:nil];
+                }];
+            }
+                break;
+            case 4: {
+                // HIBERNATION REPONSE
+                title = @"Wake up 💤";
+                [alert addButton:@"Yes" actionBlock:^{
+                    [[User currentUser] removeAllHibernationFromActivities];
+                    [self deleteHibernationNotification];
+                }];
+                [alert addButton:@"No" actionBlock:^{
+                }];
+            }
+                break;
+            default:
+                [alert addButton:@"OK" actionBlock:^{
+                }];
+                break;
+        }
+        
+        [alert showInfo:title subTitle:messageToDisplay closeButtonTitle:nil duration:0.0];
+    }
+
+}
+-(void)sendPushWithMessage:(NSString *)message toUserWithObjectId:(NSString *)objectId habitName:(NSString *)habitName andCategory:(NSString *)category {
+    PFQuery * queryForUserToReplyTo = [PFUser query];
+    [queryForUserToReplyTo getObjectInBackgroundWithId:objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [[User currentUser] sendPushFromMemberToMember:(User *)object withMessage:message habitName:habitName andCategory:category];
+    }];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -60,4 +177,176 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - Notificaitons
+
+-(void)setUpNotifications:(UIApplication *)application {
+    
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    
+    // ACTION 1
+    UIMutableUserNotificationAction * acknowledgeAction = [[UIMutableUserNotificationAction alloc] init];
+    acknowledgeAction.identifier = @"ACKNOWLEDGE";
+    acknowledgeAction.title = @"👌";
+    acknowledgeAction.activationMode = UIUserNotificationActivationModeBackground;
+    acknowledgeAction.destructive = NO;
+    acknowledgeAction.authenticationRequired = NO;
+    
+    // ACTION 2
+    UIMutableUserNotificationAction * notDoingItAction = [[UIMutableUserNotificationAction alloc] init];
+    notDoingItAction.identifier = @"NOT_DOING_IT";
+    notDoingItAction.title = @"🖐";
+    notDoingItAction.activationMode = UIUserNotificationActivationModeBackground;
+    notDoingItAction.destructive = NO;
+    notDoingItAction.authenticationRequired = NO;
+    
+    // ACTION 3
+    UIMutableUserNotificationAction * applaudAction = [[UIMutableUserNotificationAction alloc] init];
+    applaudAction.identifier = @"APPLAUD";
+    applaudAction.title = @"👏";
+    applaudAction.activationMode = UIUserNotificationActivationModeBackground;
+    applaudAction.destructive = NO;
+    applaudAction.authenticationRequired = NO;
+    
+    // ACTION 4
+    UIMutableUserNotificationAction * textReplyAction = [[UIMutableUserNotificationAction alloc] init];
+    textReplyAction.identifier = @"TEXT_REPLY";
+    textReplyAction.title = @"💬";
+    textReplyAction.activationMode = UIUserNotificationActivationModeBackground;
+    textReplyAction.destructive = NO;
+    textReplyAction.authenticationRequired = NO;
+    textReplyAction.behavior = UIUserNotificationActionBehaviorTextInput;
+    
+    // ACTION 5
+    UIMutableUserNotificationAction * watchingYouAction = [[UIMutableUserNotificationAction alloc] init];
+    watchingYouAction.identifier = @"WATCHING_YOU";
+    watchingYouAction.title = @"👀";
+    watchingYouAction.activationMode = UIUserNotificationActivationModeBackground;
+    watchingYouAction.destructive = NO;
+    watchingYouAction.authenticationRequired = NO;
+    
+    // ACTION 6
+    UIMutableUserNotificationAction * thankYouForApplauseAction = [[UIMutableUserNotificationAction alloc] init];
+    thankYouForApplauseAction.identifier = @"THANK_YOU_FOR_APPLAUSE";
+    thankYouForApplauseAction.title = @"✊";
+    thankYouForApplauseAction.activationMode = UIUserNotificationActivationModeBackground;
+    thankYouForApplauseAction.destructive = NO;
+    thankYouForApplauseAction.authenticationRequired = NO;
+    
+    // ACTION 7
+    UIMutableUserNotificationAction * removeHibernationAction = [[UIMutableUserNotificationAction alloc] init];
+    removeHibernationAction.identifier = @"TURN_OFF_HIBERNATION";
+    removeHibernationAction.title = @"Yes";
+    removeHibernationAction.activationMode = UIUserNotificationActivationModeBackground;
+    removeHibernationAction.destructive = NO;
+    removeHibernationAction.authenticationRequired = NO;
+    
+    // ACTION 8
+    UIMutableUserNotificationAction * dontRemoveHibernationAction = [[UIMutableUserNotificationAction alloc] init];
+    dontRemoveHibernationAction.identifier = @"DONT_TURN_OFF_HIBERNATION";
+    dontRemoveHibernationAction.title = @"No";
+    dontRemoveHibernationAction.activationMode = UIUserNotificationActivationModeBackground;
+    dontRemoveHibernationAction.destructive = NO;
+    dontRemoveHibernationAction.authenticationRequired = NO;
+    
+    // CATEGORY 1 (ACTION 1 AND ACTION 2)
+    UIMutableUserNotificationCategory * motivationReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    motivationReplyCategory.identifier = @"MOTIVATION_REPLY";
+    [motivationReplyCategory setActions:@[notDoingItAction, acknowledgeAction] forContext:UIUserNotificationActionContextDefault];
+
+    // CATEGORY 2 (ACTION 3)
+    UIMutableUserNotificationCategory * completionReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    completionReplyCategory.identifier = @"COMPLETION_REPLY";
+    [completionReplyCategory setActions:@[applaudAction] forContext:UIUserNotificationActionContextDefault];
+    
+    // CATEGORY 3 (ACTION 5)
+    UIMutableUserNotificationCategory * watchingYouReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    watchingYouReplyCategory.identifier = @"WATCHING_YOU_REPLY";
+    [watchingYouReplyCategory setActions:@[watchingYouAction] forContext:UIUserNotificationActionContextDefault];
+    
+    // CATEGORY 4 (ACTION 6)
+    UIMutableUserNotificationCategory * thankYouForApplauseReplyCategory = [[UIMutableUserNotificationCategory alloc] init];
+    thankYouForApplauseReplyCategory.identifier = @"THANK_YOU_FOR_APPLAUSE_REPLY";
+    [thankYouForApplauseReplyCategory setActions:@[thankYouForApplauseAction] forContext:UIUserNotificationActionContextDefault];
+    
+    // CATEGORY 5 (ACTION 7 AND ACTION 8)
+    UIMutableUserNotificationCategory * hibernationCategory = [[UIMutableUserNotificationCategory alloc] init];
+    hibernationCategory.identifier = @"HIBERNATION_RESPONSE";
+    [hibernationCategory setActions:@[dontRemoveHibernationAction, removeHibernationAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet * categories = [NSSet setWithArray:@[motivationReplyCategory, completionReplyCategory, watchingYouReplyCategory, thankYouForApplauseReplyCategory, hibernationCategory]];
+    UIUserNotificationSettings * settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes categories:categories];
+
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+    
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
+    
+    if ([identifier isEqualToString:@"TURN_OFF_HIBERNATION"]) {
+        [[User currentUser] removeAllHibernationFromActivities];
+        [self deleteHibernationNotification];
+    }
+    completionHandler();
+}
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
+    
+    // log event
+    NSString * identifierStringForEvent = identifier;
+    [Answers logCustomEventWithName:@"Replied to push via action" customAttributes:@{@"action":identifierStringForEvent}];
+    
+    User * currentUser = [User currentUser];
+    NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
+    NSString * habitName = userInfo[@"habitName"];
+    __block NSString * message;
+    __block NSString * category;
+    
+    PFQuery * queryForUserToReplyTo = [PFUser query];
+    [queryForUserToReplyTo getObjectInBackgroundWithId:objectIdOfUserToReplyTo block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
+        if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
+            message = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"name"], habitName];
+            category = @"WATCHING_YOU_REPLY";
+            
+        } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
+            message = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"name"], habitName];
+            
+        } else if ([identifier isEqualToString:@"APPLAUD"]) {
+            message = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"name"], habitName];
+            category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
+        } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
+            message = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"name"], habitName];
+        } else if ([identifier isEqualToString:@"THANK_YOU_FOR_APPLAUSE"]) {
+            message = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"name"], habitName];
+            
+        } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
+            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"name"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
+            
+        }
+        
+        
+        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message habitName:habitName andCategory:category];
+        completionHandler();
+        
+    }];
+}
+#pragma mark - Util
+
+-(void)colorNavBar {
+    UIColor * baseColor = [UIColor colorWithRed:255.0f/255.0f green:177.0f/255.0f blue:0.0f/255.0f alpha:1.0];
+    [[UINavigationBar appearance] setBarTintColor: baseColor];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+}
+
+-(void)deleteHibernationNotification {
+    for (UILocalNotification * notificaiton in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
+        if ([notificaiton.category isEqualToString:@"HIBERNATION_RESPONSE"]) {
+            [[UIApplication sharedApplication] cancelLocalNotification:notificaiton];
+        }
+    }
+}
 @end

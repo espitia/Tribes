@@ -9,10 +9,15 @@
 #import "AddFriendsTableViewController.h"
 #import <DigitsKit/DigitsKit.h>
 #import "Parse.h"
+#import "SCLAlertView.h"
+#import "User.h"
+#import "APAddressBook.h"
+#import "APContact.h"
 
 
 @interface AddFriendsTableViewController () {
     NSMutableArray * matchedContacts;
+    NSArray * addressBookContacts;
 }
 
 @end
@@ -39,10 +44,12 @@
             [self askForUserPermissionOfAddressBook];
 
             break;
-        case 2:
+        case 2: {
             NSLog(@"accepted status");
-//            [self askForUserPermissionOfAddressBook];
             [self lookUpMatches];
+            
+            [self setUpAddressBook];
+        }
             break;
             
         default:
@@ -66,7 +73,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return matchedContacts.count;
+    switch (section) {
+        case 0:
+            return matchedContacts.count;
+            break;
+        case 1:
+            return addressBookContacts.count;
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 
 
@@ -90,24 +107,27 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Friend" forIndexPath:indexPath];
     
-    if (matchedContacts.count == 0) {
-        return cell;
-    }
+    PFUser * user;
+    APContact * contact;
     
-    PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
-
     switch (indexPath.section) {
         case 0:
-            // matched users
-            cell.textLabel.text = user[@"username"];
+            if (matchedContacts.count > 0) {
+                user = [matchedContacts objectAtIndex:indexPath.row];
+                cell.textLabel.text = user[@"name"];
+            }
             break;
         case 1:
-        
+            if (addressBookContacts.count > 0) {
+                contact = [addressBookContacts objectAtIndex:indexPath.row];
+                cell.textLabel.text = [self contactName:contact];
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
             break;
-            
         default:
             break;
     }
+
     
     return cell;
 }
@@ -115,7 +135,22 @@
 #pragma mark - Table view delegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // ADD USERS TO A TRIBE
+    if (indexPath.section == 0) {
+        [self addUserToTribeFromIndexPath:indexPath];
+    }
+    // SEND TEXT TO INVITE USERS
+    else if (indexPath.section == 1) {
+        [self sendUserTextFromIndexPath:indexPath];
+    }
 
+
+
+
+}
+
+-(void)addUserToTribeFromIndexPath:(NSIndexPath *)indexPath {
     // disable user interaction so user doesn't add friend twice
     UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.userInteractionEnabled = false;
@@ -126,62 +161,64 @@
     cell.accessoryView = spinner;
     [spinner startAnimating];
     
-    // weak self to not have any issues to present alert view
-    __unsafe_unretained typeof(self) weakSelf = self;
     
-    // alert controller
-    UIAlertController * __block alert;
-    UIAlertAction * __block defaultAction;
+    SCLAlertView * waitingAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [waitingAlert showWaiting:@"Adding buddy.. 😀" subTitle:@"It will just take a moment 👌" closeButtonTitle:nil duration:0.0];
     
-    // message to go in alert view
-    NSString * __block alertTitle = @"";
-    NSString * __block alertMessage = @"";
-    
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+
     // add user to tribe's members relation
     PFUser * user = [matchedContacts objectAtIndex:indexPath.row];
     [_tribe addUserToTribe:user withBlock:^(BOOL * success) {
         
+        
         // successfully added friend
         if (success) {
-            
-            NSLog(@"succesfully added user");
-            alertTitle = @"✅✅✅";
-            alertMessage = @"Successfully added friend.\nInviting friends: Major 🔑!";
-            
-             defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action) {
-                                                                      [self.navigationController popViewControllerAnimated:true];
-                                                                  }];
+            [_tribe updateTribeWithBlock:^(bool success) {
+                [waitingAlert hideView];
+                if (success) {
+                    [self.navigationController popToRootViewControllerAnimated:true];
+                } else {
+                    SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    [errorAlert showError:@"Oh oh!" subTitle:@"There was an error adding your friend. Please try again" closeButtonTitle:@"OK" duration:0.0];
+                }
+            }];
+
         // failed to add friend
         } else {
+            
+            [waitingAlert hideView];
+            
+            [alert showError:@"❌❌❌" subTitle:@"Something went wrong 😬.\n Try again." closeButtonTitle:@"OK" duration:0.0];
             NSLog(@"failed to add user");
-            alertTitle = @"❌❌❌";
-            alertMessage = @"Something went wrong 😬.\n Try again.";
         }
         
         // stop animating spinner
         [spinner stopAnimating];
-        
-        // finish alert set up
-        alert = [UIAlertController alertControllerWithTitle:alertTitle
-                                                    message:alertMessage
-                                             preferredStyle:UIAlertControllerStyleAlert];
-        
-        
-        // add action (if success, pop to tribe VC)
-        [alert addAction:defaultAction];
-        
-        // present alert
-        [weakSelf presentViewController:alert animated:YES completion:nil];
 
     }];
-    
-
-
-
 }
 
-#pragma mark - Helper methods
+
+
+-(void)sendUserTextFromIndexPath:(NSIndexPath *)indexPath {
+    APContact * contact = [addressBookContacts objectAtIndex:indexPath.row];
+    NSString * number = [self contactPhones:contact];
+    
+    MFMessageComposeViewController *controller =
+    [[MFMessageComposeViewController alloc] init];
+    
+    if([MFMessageComposeViewController canSendText]) {
+        NSString *str= @"Hey! I am trying to get the whole squad on Tribes ✊ It's an app to make sure we get our shit done 😎 Download it here: http://bit.ly/UseTribes";
+        controller.body = str;
+        controller.recipients = [NSArray arrayWithObjects:
+                                 number, nil];
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:true completion:nil];
+    }
+}
+
+#pragma mark - Contacts handling
 
 -(void)askForUserPermissionOfAddressBook {
     // ask for address book permission
@@ -252,4 +289,102 @@
     return ([matchedContacts containsObject:user]) ? true : false;
 }
 
+#pragma mark - APContacts
+
+-(void)setUpAddressBook {
+    
+    // init address book object
+    APAddressBook *addressBook = [[APAddressBook alloc] init];
+    
+    // set address book fields, sorters and filters
+    addressBook.fieldsMask = APContactFieldName | APContactFieldPhonesOnly;
+    addressBook.sortDescriptors = @[
+                                    [NSSortDescriptor sortDescriptorWithKey:@"name.firstName" ascending:YES],
+                                    [NSSortDescriptor sortDescriptorWithKey:@"name.lastName" ascending:YES]];
+    addressBook.filterBlock = ^BOOL(APContact *contact)
+    {
+        return contact.phones.count > 0;
+    };
+    
+    
+    // load contacts
+    [addressBook loadContacts:^(NSArray <APContact *> *contacts, NSError *error)
+     {
+         // hide activity
+         if (!error)
+         {
+             // do something with contacts array
+             addressBookContacts = [NSArray arrayWithArray:contacts];
+             [self.tableView reloadData];
+         }
+         else
+         {
+             // show error
+             NSLog(@"error loading address book contacts");
+         }
+     }];
+}
+
+- (NSString *)contactName:(APContact *)contact
+{
+    if (contact.name.compositeName)
+    {
+        return contact.name.compositeName;
+    }
+    else if (contact.name.firstName && contact.name.lastName)
+    {
+        return [NSString stringWithFormat:@"%@ %@", contact.name.firstName, contact.name.lastName];
+    }
+    else if (contact.name.firstName || contact.name.lastName)
+    {
+        return contact.name.firstName ?: contact.name.lastName;
+    }
+    else
+    {
+        return @"Untitled contact";
+    }
+}
+
+- (NSString *)contactPhones:(APContact *)contact
+{
+    if (contact.phones.count > 0)
+    {
+        NSMutableString *result = [[NSMutableString alloc] init];
+        for (APPhone *phone in contact.phones)
+        {
+            NSString *string = phone.localizedLabel.length == 0 ? phone.number :
+            [NSString stringWithFormat:@"%@ (%@)", phone.number,
+             phone.localizedLabel];
+            [result appendFormat:@"%@, ", string];
+        }
+        return result;
+    }
+    else
+    {
+        return @"(No phones)";
+    }
+}
+
+#pragma mark - sending texts delegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
+    
+    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+    
+    switch (result) {
+        case MessageComposeResultCancelled:
+            NSLog(@"Cancelled sending of text");
+            break;
+        case MessageComposeResultFailed:
+            NSLog(@"Failed to send text");
+            [alert showError:self title:@"😥❌📲" subTitle:@"Failed to send text 😞 Please try again." closeButtonTitle:@"OK" duration:0.0];            break;
+        case MessageComposeResultSent:
+            NSLog(@"Succesfully sent text message invite.");
+            [alert showSuccess:self title:@"🤓📲👫" subTitle:@"Successfully sent invite! Once they download the app they will be asked if they want to join your Tribe 🎉" closeButtonTitle:@"OK" duration:0.0];            break;
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:true completion:nil];
+}
 @end

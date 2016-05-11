@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */; };
+		090C23931CBC84E300A52DF6 /* PremiumChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */; };
+		090C23961CBD9EBF00A52DF6 /* AddManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */; };
+		090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 090EDC501C9B5567005D3477 /* SettingsTableViewController.m */; };
 		0917EC471C4037D600BE2697 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC461C4037D600BE2697 /* main.m */; };
 		0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC491C4037D600BE2697 /* AppDelegate.m */; };
 		0917EC501C4037D600BE2697 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC4E1C4037D600BE2697 /* Main.storyboard */; };
@@ -14,8 +18,33 @@
 		0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */; };
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
+		0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0923AD0E1CB41BA00022753D /* StoreKit.framework */; };
+		0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD111CB41BC00022753D /* PremiumViewController.m */; };
+		0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0923AD121CB41BC00022753D /* PremiumViewController.xib */; };
+		0923AD181CB42B100022753D /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD171CB42B100022753D /* IAPHelper.m */; };
+		0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */; };
+		0957A2491CAD70F100175EE2 /* TribeReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */; };
+		0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0965E5811C87F4EE00FFA9C9 /* Habit.m */; };
+		09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B231C768C2D001B7752 /* KRConfettiView.m */; };
+		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
+		09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */; };
+		09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */; };
+		09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
-		09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658501C469FEA008C4EC3 /* SignupViewController.m */; };
+		0993B5151C550F910008B7E5 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5141C550F910008B7E5 /* User.m */; };
+		0993B5181C5537940008B7E5 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0993B5171C5537940008B7E5 /* Activity.m */; };
+		099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */; };
+		099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760551C7E1E8B008E88A7 /* SignUpValidation.m */; };
+		099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2001C9520E100A734F0 /* MembersTableViewController.m */; };
+		099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2031C9524F300A734F0 /* HabitsTableViewController.m */; };
+		09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */; };
+		09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E5551CA9EDED00A82E3F /* RecognitionTableViewCell.m */; };
+		09A4E5581CA9EDED00A82E3F /* RecognitionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */; };
+		09A4E55C1CAAED9200A82E3F /* HabitReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E55A1CAAED9200A82E3F /* HabitReportTableViewCell.m */; };
+		09A4E55D1CAAED9200A82E3F /* HabitReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09A4E55B1CAAED9200A82E3F /* HabitReportTableViewCell.xib */; };
+		09AC31941CDAB4BD00D40BC8 /* Tribes-Intro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */; };
+		09AC31971CDB892700D40BC8 /* cropped tribes tutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */; };
+		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
 		09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */; };
@@ -25,12 +54,12 @@
 		09F2BF7E1C405775008ABDF7 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF7D1C405775008ABDF7 /* CoreLocation.framework */; };
 		09F2BF801C40577B008ABDF7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF7F1C40577B008ABDF7 /* QuartzCore.framework */; };
 		09F2BF821C405782008ABDF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF811C405782008ABDF7 /* Security.framework */; };
-		09F2BF841C405788008ABDF7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF831C405788008ABDF7 /* StoreKit.framework */; };
 		09F2BF861C405792008ABDF7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF851C405791008ABDF7 /* SystemConfiguration.framework */; };
 		09F2BF881C405799008ABDF7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF871C405799008ABDF7 /* libz.tbd */; };
 		09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */; };
 		09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */; };
 		09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */; };
+		09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +81,13 @@
 
 /* Begin PBXFileReference section */
 		015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tribes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		090C238F1CBC84E300A52DF6 /* PremiumChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumChildViewController.h; sourceTree = "<group>"; };
+		090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumChildViewController.m; sourceTree = "<group>"; };
+		090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PremiumChildViewController.xib; sourceTree = "<group>"; };
+		090C23941CBD9EBF00A52DF6 /* AddManagerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddManagerTableViewController.h; sourceTree = "<group>"; };
+		090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddManagerTableViewController.m; sourceTree = "<group>"; };
+		090EDC4F1C9B5567005D3477 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		090EDC501C9B5567005D3477 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		0917EC421C4037D600BE2697 /* Tribes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tribes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC461C4037D600BE2697 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0917EC481C4037D600BE2697 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,8 +102,50 @@
 		0917EC661C4037D600BE2697 /* TribesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TribesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC6A1C4037D600BE2697 /* TribesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TribesUITests.m; sourceTree = "<group>"; };
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09C6584F1C469FEA008C4EC3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
-		09C658501C469FEA008C4EC3 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
+		0923AD0E1CB41BA00022753D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0923AD101CB41BC00022753D /* PremiumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumViewController.h; sourceTree = "<group>"; };
+		0923AD111CB41BC00022753D /* PremiumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumViewController.m; sourceTree = "<group>"; };
+		0923AD121CB41BC00022753D /* PremiumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PremiumViewController.xib; sourceTree = "<group>"; };
+		0923AD161CB42B100022753D /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
+		0923AD171CB42B100022753D /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		0957A2451CAD70F100175EE2 /* TribeReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeReportTableViewCell.h; sourceTree = "<group>"; };
+		0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeReportTableViewCell.m; sourceTree = "<group>"; };
+		0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TribeReportTableViewCell.xib; sourceTree = "<group>"; };
+		0965E5801C87F4EE00FFA9C9 /* Habit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Habit.h; sourceTree = "<group>"; };
+		0965E5811C87F4EE00FFA9C9 /* Habit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Habit.m; sourceTree = "<group>"; };
+		09688B221C768C2D001B7752 /* KRConfettiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KRConfettiView.h; sourceTree = "<group>"; };
+		09688B231C768C2D001B7752 /* KRConfettiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KRConfettiView.m; sourceTree = "<group>"; };
+		09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "completion-sound.mp3"; sourceTree = "<group>"; };
+		09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitSettingsTableViewController.h; sourceTree = "<group>"; };
+		09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitSettingsTableViewController.m; sourceTree = "<group>"; };
+		09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeMenuTableViewController.h; sourceTree = "<group>"; };
+		09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeMenuTableViewController.m; sourceTree = "<group>"; };
+		09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHabitTableViewController.h; sourceTree = "<group>"; };
+		09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddHabitTableViewController.m; sourceTree = "<group>"; };
+		0993B5131C550F910008B7E5 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		0993B5141C550F910008B7E5 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		0993B5161C5537940008B7E5 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		0993B5171C5537940008B7E5 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		099760511C7D2710008E88A7 /* SignUpOrLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpOrLoginViewController.h; sourceTree = "<group>"; };
+		099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpOrLoginViewController.m; sourceTree = "<group>"; };
+		099760541C7E1E8B008E88A7 /* SignUpValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpValidation.h; sourceTree = "<group>"; };
+		099760551C7E1E8B008E88A7 /* SignUpValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpValidation.m; sourceTree = "<group>"; };
+		099BB1FF1C9520E100A734F0 /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
+		099BB2001C9520E100A734F0 /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
+		099BB2021C9524F300A734F0 /* HabitsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitsTableViewController.h; sourceTree = "<group>"; };
+		099BB2031C9524F300A734F0 /* HabitsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitsTableViewController.m; sourceTree = "<group>"; };
+		09A4E5501CA9EC0700A82E3F /* WeeklyReportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTableViewController.h; sourceTree = "<group>"; };
+		09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTableViewController.m; sourceTree = "<group>"; };
+		09A4E5541CA9EDED00A82E3F /* RecognitionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecognitionTableViewCell.h; sourceTree = "<group>"; };
+		09A4E5551CA9EDED00A82E3F /* RecognitionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecognitionTableViewCell.m; sourceTree = "<group>"; };
+		09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecognitionTableViewCell.xib; sourceTree = "<group>"; };
+		09A4E5591CAAED9200A82E3F /* HabitReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitReportTableViewCell.h; sourceTree = "<group>"; };
+		09A4E55A1CAAED9200A82E3F /* HabitReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitReportTableViewCell.m; sourceTree = "<group>"; };
+		09A4E55B1CAAED9200A82E3F /* HabitReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HabitReportTableViewCell.xib; sourceTree = "<group>"; };
+		09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tribes-Intro.mp4"; sourceTree = "<group>"; };
+		09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cropped tribes tutorial.mp4"; sourceTree = "<group>"; };
+		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
+		09BDD94E1C7E929000061567 /* HYBubbleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYBubbleButton.m; sourceTree = "<group>"; };
 		09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeDetailTableViewController.h; sourceTree = "<group>"; };
 		09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeDetailTableViewController.m; sourceTree = "<group>"; };
 		09C6585B1C47F188008C4EC3 /* Tribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tribe.h; sourceTree = "<group>"; };
@@ -80,7 +158,6 @@
 		09F2BF7D1C405775008ABDF7 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		09F2BF7F1C40577B008ABDF7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		09F2BF811C405782008ABDF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		09F2BF831C405788008ABDF7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		09F2BF851C405791008ABDF7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		09F2BF871C405799008ABDF7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -88,6 +165,8 @@
 		09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribesTableViewController.m; sourceTree = "<group>"; };
 		09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTribeTableViewController.h; sourceTree = "<group>"; };
 		09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTribeTableViewController.m; sourceTree = "<group>"; };
+		09F7DD141CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberOrHabitMenuTableViewController.h; sourceTree = "<group>"; };
+		09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberOrHabitMenuTableViewController.m; sourceTree = "<group>"; };
 		A309CDB5F419EAF7FFA3C780 /* Pods-Tribes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.release.xcconfig"; sourceTree = "<group>"; };
 		F69CD1EF3DA25D700DB49634 /* Pods-Tribes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,10 +176,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */,
 				09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */,
 				09F2BF881C405799008ABDF7 /* libz.tbd in Frameworks */,
 				09F2BF861C405792008ABDF7 /* SystemConfiguration.framework in Frameworks */,
-				09F2BF841C405788008ABDF7 /* StoreKit.framework in Frameworks */,
 				09F2BF821C405782008ABDF7 /* Security.framework in Frameworks */,
 				09F2BF801C40577B008ABDF7 /* QuartzCore.framework in Frameworks */,
 				09F2BF7E1C405775008ABDF7 /* CoreLocation.framework in Frameworks */,
@@ -128,6 +207,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */ = {
+			isa = PBXGroup;
+			children = (
+				090C23941CBD9EBF00A52DF6 /* AddManagerTableViewController.h */,
+				090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */,
+				0993B5191C55385D0008B7E5 /* Create a Tribe */,
+				09F7DD171CBDA25A00503205 /* AddMember/HabitMenu */,
+			);
+			name = "Add manager (Tribes/Membs/Habits)";
+			sourceTree = "<group>";
+		};
+		090EDC521C9B556C005D3477 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				090EDC4F1C9B5567005D3477 /* SettingsTableViewController.h */,
+				090EDC501C9B5567005D3477 /* SettingsTableViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		0917EC391C4037D500BE2697 = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +255,9 @@
 				0917EC481C4037D600BE2697 /* AppDelegate.h */,
 				0917EC491C4037D600BE2697 /* AppDelegate.m */,
 				0917EC4E1C4037D600BE2697 /* Main.storyboard */,
+				09688B2F1C7AB8FE001B7752 /* Audio */,
+				09AC318F1CDA32BF00D40BC8 /* Resources */,
+				09688B251C768C42001B7752 /* Extra functionality */,
 				09C6585E1C47F18C008C4EC3 /* Models */,
 				09F2BF911C4316E4008ABDF7 /* Controllers */,
 				0917EC511C4037D600BE2697 /* Assets.xcassets */,
@@ -192,11 +294,142 @@
 			path = TribesUITests;
 			sourceTree = "<group>";
 		};
+		091BFD731C85E005005D15AE /* KRConfettiView */ = {
+			isa = PBXGroup;
+			children = (
+				09688B221C768C2D001B7752 /* KRConfettiView.h */,
+				09688B231C768C2D001B7752 /* KRConfettiView.m */,
+			);
+			name = KRConfettiView;
+			sourceTree = "<group>";
+		};
+		0923AD151CB41BC50022753D /* Premium */ = {
+			isa = PBXGroup;
+			children = (
+				0923AD101CB41BC00022753D /* PremiumViewController.h */,
+				0923AD111CB41BC00022753D /* PremiumViewController.m */,
+				0923AD121CB41BC00022753D /* PremiumViewController.xib */,
+				090C238F1CBC84E300A52DF6 /* PremiumChildViewController.h */,
+				090C23901CBC84E300A52DF6 /* PremiumChildViewController.m */,
+				090C23911CBC84E300A52DF6 /* PremiumChildViewController.xib */,
+			);
+			name = Premium;
+			sourceTree = "<group>";
+		};
+		09688B251C768C42001B7752 /* Extra functionality */ = {
+			isa = PBXGroup;
+			children = (
+				091BFD731C85E005005D15AE /* KRConfettiView */,
+				09BDD94C1C7E929000061567 /* HYBubbleButton */,
+			);
+			name = "Extra functionality";
+			sourceTree = "<group>";
+		};
+		09688B291C77CE9A001B7752 /* Habit Detail VC */ = {
+			isa = PBXGroup;
+			children = (
+				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
+				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
+				09688B331C7B7D96001B7752 /* Habit Settings */,
+			);
+			name = "Habit Detail VC";
+			sourceTree = "<group>";
+		};
+		09688B2F1C7AB8FE001B7752 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
+		09688B331C7B7D96001B7752 /* Habit Settings */ = {
+			isa = PBXGroup;
+			children = (
+				09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */,
+				09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */,
+			);
+			name = "Habit Settings";
+			sourceTree = "<group>";
+		};
+		09850B1F1C8F343E00FE9609 /* Tribe Menu */ = {
+			isa = PBXGroup;
+			children = (
+				09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */,
+				09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */,
+			);
+			name = "Tribe Menu";
+			sourceTree = "<group>";
+		};
+		09850B231C8F8E0300FE9609 /* Add Habit */ = {
+			isa = PBXGroup;
+			children = (
+				099BB2021C9524F300A734F0 /* HabitsTableViewController.h */,
+				099BB2031C9524F300A734F0 /* HabitsTableViewController.m */,
+				09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */,
+				09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */,
+			);
+			name = "Add Habit";
+			sourceTree = "<group>";
+		};
+		0993B5191C55385D0008B7E5 /* Create a Tribe */ = {
+			isa = PBXGroup;
+			children = (
+				09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */,
+				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
+			);
+			name = "Create a Tribe";
+			sourceTree = "<group>";
+		};
+		09A4E5531CA9EC0B00A82E3F /* Weekly Report */ = {
+			isa = PBXGroup;
+			children = (
+				09A4E5501CA9EC0700A82E3F /* WeeklyReportTableViewController.h */,
+				09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */,
+				09A4E55E1CAAED9A00A82E3F /* Report Cells */,
+			);
+			name = "Weekly Report";
+			sourceTree = "<group>";
+		};
+		09A4E55E1CAAED9A00A82E3F /* Report Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0957A2451CAD70F100175EE2 /* TribeReportTableViewCell.h */,
+				0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */,
+				0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */,
+				09A4E5591CAAED9200A82E3F /* HabitReportTableViewCell.h */,
+				09A4E55A1CAAED9200A82E3F /* HabitReportTableViewCell.m */,
+				09A4E55B1CAAED9200A82E3F /* HabitReportTableViewCell.xib */,
+				09A4E5541CA9EDED00A82E3F /* RecognitionTableViewCell.h */,
+				09A4E5551CA9EDED00A82E3F /* RecognitionTableViewCell.m */,
+				09A4E5561CA9EDED00A82E3F /* RecognitionTableViewCell.xib */,
+			);
+			name = "Report Cells";
+			sourceTree = "<group>";
+		};
+		09AC318F1CDA32BF00D40BC8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */,
+				09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		09BDD94C1C7E929000061567 /* HYBubbleButton */ = {
+			isa = PBXGroup;
+			children = (
+				09BDD94D1C7E929000061567 /* HYBubbleButton.h */,
+				09BDD94E1C7E929000061567 /* HYBubbleButton.m */,
+			);
+			path = HYBubbleButton;
+			sourceTree = "<group>";
+		};
 		09C658521C46CD6B008C4EC3 /* Signup/onboard */ = {
 			isa = PBXGroup;
 			children = (
-				09C6584F1C469FEA008C4EC3 /* SignupViewController.h */,
-				09C658501C469FEA008C4EC3 /* SignupViewController.m */,
+				099760511C7D2710008E88A7 /* SignUpOrLoginViewController.h */,
+				099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */,
 			);
 			name = Signup/onboard;
 			sourceTree = "<group>";
@@ -204,8 +437,18 @@
 		09C6585E1C47F18C008C4EC3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0923AD161CB42B100022753D /* IAPHelper.h */,
+				0923AD171CB42B100022753D /* IAPHelper.m */,
 				09C6585B1C47F188008C4EC3 /* Tribe.h */,
 				09C6585C1C47F188008C4EC3 /* Tribe.m */,
+				0965E5801C87F4EE00FFA9C9 /* Habit.h */,
+				0965E5811C87F4EE00FFA9C9 /* Habit.m */,
+				0993B5131C550F910008B7E5 /* User.h */,
+				0993B5141C550F910008B7E5 /* User.m */,
+				0993B5161C5537940008B7E5 /* Activity.h */,
+				0993B5171C5537940008B7E5 /* Activity.m */,
+				099760541C7E1E8B008E88A7 /* SignUpValidation.h */,
+				099760551C7E1E8B008E88A7 /* SignUpValidation.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -213,6 +456,8 @@
 		09C658621C483A64008C4EC3 /* Add friends */ = {
 			isa = PBXGroup;
 			children = (
+				099BB1FF1C9520E100A734F0 /* MembersTableViewController.h */,
+				099BB2001C9520E100A734F0 /* MembersTableViewController.m */,
 				09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */,
 				09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */,
 			);
@@ -224,23 +469,35 @@
 			children = (
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
-				09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */,
-				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
-				09C658561C46CFA2008C4EC3 /* TribeDetailTableViewController.h */,
-				09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */,
-				09C658621C483A64008C4EC3 /* Add friends */,
+				09688B291C77CE9A001B7752 /* Habit Detail VC */,
+				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
+				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
+				0923AD151CB41BC50022753D /* Premium */,
+				09A4E5531CA9EC0B00A82E3F /* Weekly Report */,
+				090EDC521C9B556C005D3477 /* Settings */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		09F7DD171CBDA25A00503205 /* AddMember/HabitMenu */ = {
+			isa = PBXGroup;
+			children = (
+				09F7DD141CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.h */,
+				09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */,
+				09850B231C8F8E0300FE9609 /* Add Habit */,
+				09C658621C483A64008C4EC3 /* Add friends */,
+			);
+			name = AddMember/HabitMenu;
+			sourceTree = "<group>";
+		};
 		B9B81BAF6BDE1D7C59ED6619 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0923AD0E1CB41BA00022753D /* StoreKit.framework */,
 				09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */,
 				09F2BF871C405799008ABDF7 /* libz.tbd */,
 				09F2BF851C405791008ABDF7 /* SystemConfiguration.framework */,
-				09F2BF831C405788008ABDF7 /* StoreKit.framework */,
 				09F2BF811C405782008ABDF7 /* Security.framework */,
 				09F2BF7F1C40577B008ABDF7 /* QuartzCore.framework */,
 				09F2BF7D1C405775008ABDF7 /* CoreLocation.framework */,
@@ -333,6 +590,14 @@
 					0917EC411C4037D600BE2697 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = K93NF4PY9Z;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					0917EC5A1C4037D600BE2697 = {
 						CreatedOnToolsVersion = 7.2;
@@ -369,8 +634,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09AC31941CDAB4BD00D40BC8 /* Tribes-Intro.mp4 in Resources */,
+				0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */,
+				09A4E55D1CAAED9200A82E3F /* HabitReportTableViewCell.xib in Resources */,
+				090C23931CBC84E300A52DF6 /* PremiumChildViewController.xib in Resources */,
+				09AC31971CDB892700D40BC8 /* cropped tribes tutorial.mp4 in Resources */,
 				0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */,
 				0917EC521C4037D600BE2697 /* Assets.xcassets in Resources */,
+				09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */,
+				0957A2491CAD70F100175EE2 /* TribeReportTableViewCell.xib in Resources */,
+				09A4E5581CA9EDED00A82E3F /* RecognitionTableViewCell.xib in Resources */,
 				0917EC501C4037D600BE2697 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,13 +730,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
+				090C23961CBD9EBF00A52DF6 /* AddManagerTableViewController.m in Sources */,
+				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
+				0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */,
+				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
+				099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
+				09A4E55C1CAAED9200A82E3F /* HabitReportTableViewCell.m in Sources */,
 				09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */,
+				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
+				099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */,
+				090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */,
+				0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */,
+				09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */,
+				0993B5181C5537940008B7E5 /* Activity.m in Sources */,
+				0923AD181CB42B100022753D /* IAPHelper.m in Sources */,
+				099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */,
+				090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */,
+				09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */,
 				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
+				0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
 				09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */,
-				09C658511C469FEA008C4EC3 /* SignupViewController.m in Sources */,
+				099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */,
+				09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */,
+				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
+				09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -558,6 +852,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "45d7348e-2810-4028-8dbf-cca232c97b03";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -595,6 +890,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "45d7348e-2810-4028-8dbf-cca232c97b03";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -609,9 +905,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tribes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = motif.Tribes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.usetribes.tribes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -625,9 +922,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Tribes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = motif.Tribes;
+				PRODUCT_BUNDLE_IDENTIFIER = com.usetribes.tribes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
