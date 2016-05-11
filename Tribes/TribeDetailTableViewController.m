@@ -190,7 +190,7 @@
         
         NSString * message = [NSString stringWithFormat:@"%@: 👏", [User currentUser][@"name"]];
         NSString * category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
-        [[User currentUser] sendPushFromMemberToMember:member withMessage:message andCategory:category];
+        [[User currentUser] sendPushFromMemberToMember:member withMessage:message habitName:self.habit[@"name"] andCategory:category];
   
         if (motivationPushControl == TAPS_TO_SEND_PUSH) {
             motivationPushControl = 0;
