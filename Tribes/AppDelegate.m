@@ -70,6 +70,7 @@
         NSString * title;
         NSString * messageToDisplay = userInfo[@"aps"][@"alert"];
         NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
+        NSString * habitName = userInfo[@"habitName"];
         __block NSString * messageToSend;
         __block NSString * categoryToSend;
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
@@ -88,13 +89,13 @@
                 // MOTIVATIONAL REPLY
                 title = @"Motivation Received 💪";
                 [alert addButton:@"👌" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: 👌", currentUser[@"name"]];
+                    messageToSend = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"name"], habitName];
                     categoryToSend = @"WATCHING_YOU_REPLY";
-                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
                 }];
                 [alert addButton:@"✋" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: 🖐", currentUser[@"name"]];
-                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:nil];
+                    messageToSend = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"name"], habitName];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:nil];
                 }];
             }
                 break;
@@ -102,18 +103,18 @@
                 // COMPLETION REPLY
                 title = @"Squad is up!";
                 [alert addButton:@"👏" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: 👏", currentUser[@"name"]];
+                    messageToSend = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"name"], habitName];
                     categoryToSend = @"THANK_YOU_FOR_APPLAUSE_REPLY";
-                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
                 }];
             }
                 break;
             case 2: {
                 // WATCHING YOU REPLY
                 title = @"Watch em!";
-                messageToSend = [NSString stringWithFormat:@"%@: 👀", currentUser[@"name"]];
+                messageToSend = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"name"], habitName];
                 [alert addButton:@"👀" actionBlock:^{
-                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:categoryToSend];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
                 }];
             }
                 break;
@@ -121,8 +122,8 @@
                 // THANK YOU FOR APPLAUSE REPLY
                 title = @"Great job!";
                 [alert addButton:@"✊" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: ✊", currentUser[@"name"]];
-                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo andCategory:nil];
+                    messageToSend = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"name"], habitName];
+                    [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:nil];
                 }];
             }
                 break;
@@ -147,10 +148,10 @@
     }
 
 }
--(void)sendPushWithMessage:(NSString *)message toUserWithObjectId:(NSString *)objectId andCategory:(NSString *)category {
+-(void)sendPushWithMessage:(NSString *)message toUserWithObjectId:(NSString *)objectId habitName:(NSString *)habitName andCategory:(NSString *)category {
     PFQuery * queryForUserToReplyTo = [PFUser query];
     [queryForUserToReplyTo getObjectInBackgroundWithId:objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        [[User currentUser] sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
+        [[User currentUser] sendPushFromMemberToMember:(User *)object withMessage:message habitName:habitName andCategory:category];
     }];
 }
 
