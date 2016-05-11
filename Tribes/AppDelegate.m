@@ -299,6 +299,7 @@
     
     User * currentUser = [User currentUser];
     NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];
+    NSString * habitName = userInfo[@"habitName"];
     __block NSString * message;
     __block NSString * category;
     
@@ -306,19 +307,19 @@
     [queryForUserToReplyTo getObjectInBackgroundWithId:objectIdOfUserToReplyTo block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
         if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
-            message = [NSString stringWithFormat:@"%@: 👌", currentUser[@"name"]];
+            message = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"name"], habitName];
             category = @"WATCHING_YOU_REPLY";
             
         } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
-            message = [NSString stringWithFormat:@"%@: 🖐", currentUser[@"name"]];
+            message = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"name"], habitName];
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
-            message = [NSString stringWithFormat:@"%@: 👏", currentUser[@"name"]];
+            message = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"name"], habitName];
             category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
-            message = [NSString stringWithFormat:@"%@: 👀", currentUser[@"name"]];
+            message = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"name"], habitName];
         } else if ([identifier isEqualToString:@"THANK_YOU_FOR_APPLAUSE"]) {
-            message = [NSString stringWithFormat:@"%@: ✊", currentUser[@"name"]];
+            message = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"name"], habitName];
             
         } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
             message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"name"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
@@ -326,7 +327,7 @@
         }
         
         
-        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message andCategory:category];
+        [currentUser sendPushFromMemberToMember:(User *)object withMessage:message habitName:habitName andCategory:category];
         completionHandler();
         
     }];
