@@ -420,7 +420,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
  @param msg message to send member
  @param category the category of reply actions that will be available to the recepient of the push: "MOTIVATION_REPLY", "COMPLETION_REPLY". 
  */
--(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback {
+-(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg habitName:(NSString *)habitName andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback {
 
     __block BOOL success;
     
@@ -437,7 +437,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                        withParameters:@{@"receiverId":member.objectId,
                                         @"senderId":self.objectId,
                                         @"msg":msg,
-                                        @"category":category}
+                                        @"category":category,
+                                        @"habitName":habitName}
                                 block:^(id  _Nullable object, NSError * _Nullable error) {
                                     
                                     if (error) {
@@ -453,8 +454,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                                 }];
 }
 
--(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg andCategory:(NSString *)category {
-    [self sendPushFromMemberToMember:member withMessage:msg andCategory:category withBlock:^(BOOL *success) {
+-(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg habitName:(NSString *)habitName andCategory:(NSString *)category {
+    [self sendPushFromMemberToMember:member withMessage:msg habitName:habitName andCategory:category withBlock:^(BOOL *success) {
         
     }];
 }
@@ -474,7 +475,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     // message to send
     NSString * msg =  [NSString stringWithFormat:@"%@: 👉 %@",self[@"name"],habit[@"name"]];
     
-    [self sendPushFromMemberToMember:member withMessage:msg andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
+    [self sendPushFromMemberToMember:member withMessage:msg habitName:habit[@"name"] andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
         if (success) {
             callback(true);
             NSLog(@"sent motivation to %@", member[@"name"]);
@@ -492,7 +493,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     for (User * member in tribe.tribeMembers) {
         if (member != self) {
             
-            [self sendPushFromMemberToMember:member withMessage:msg andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
+            [self sendPushFromMemberToMember:member withMessage:msg habitName:habit[@"name"]andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
                 if (success) {
                     NSLog(@"sent completion push for %@ to %@",self[@"name"],member[@"name"]);
                 } else {
