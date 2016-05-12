@@ -209,7 +209,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     
     // tapped on a friends tribe!
-    if (indexPath.section == 1) {
+    if (indexPath.section == 1 && !loadingTribesToJoin) {
         
         Tribe * tribe = [tribesToJoin objectAtIndex:indexPath.row][@"tribe"];
 
