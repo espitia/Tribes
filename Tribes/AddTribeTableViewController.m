@@ -221,36 +221,51 @@
                 [errorAlert showError:@"Already in Tribe!" subTitle:@"Looks like you already belong to this Tribe!" closeButtonTitle:@"Oh... 🙄" duration:0.0];
             } else {
                 
-                // if user is not in tribe, show waiting alert (adding tribe)
-                SCLAlertView * waitingAlert = [[SCLAlertView alloc] initWithNewWindow];
-                [waitingAlert showWaiting:@"Joining Tribe 😎" subTitle:@"It will be just one second ..." closeButtonTitle:nil duration:0.0];
+                // if user not in tribe, show alert to confirm they want to join
+                SCLAlertView * confirmAlert = [[SCLAlertView alloc] initWithNewWindow];
                 
-                [tribe addUserToTribe:[User currentUser] withBlock:^(BOOL *success) {
+                // message to show in confirm alert
+                NSString * msg = [NSString stringWithFormat:@"Are you sure you want to join %@?", tribe[@"name"]];
+               
+                // button with action of joinign tribe on confirm alert
+                [confirmAlert addButton:@"YES 😁" actionBlock:^{
                     
-                    [waitingAlert hideView];
+                    // if user is not in tribe, show waiting alert (adding tribe)
+                    SCLAlertView * waitingAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    [waitingAlert showWaiting:@"Joining Tribe 😎" subTitle:@"It will be just one second ..." closeButtonTitle:nil duration:0.0];
+                    
+                    [tribe addUserToTribe:[User currentUser] withBlock:^(BOOL *success) {
+                        
+                        [waitingAlert hideView];
+                        
+                        // if successfully added user to tribe
+                        if (success) {
+                            
+                            // log event
+                            [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@true}];
+                            
+                            
+                            SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
+                            NSString * successMessage = [NSString stringWithFormat:@"You have now joined %@! Make us proud ✊", tribe[@"name"]];
+                            [successAlert addButton:@"Will do!" actionBlock:^{
+                                [self.navigationController popViewControllerAnimated:true];
+                            }];
+                            [successAlert showSuccess:@"Success 😃" subTitle:successMessage  closeButtonTitle:nil duration:0.0];
+                        } else {
+                            
+                            // log event
+                            [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@false}];
+                            
+                            SCLAlertView * errorAlert = [[SCLAlertView alloc]  initWithNewWindow];
+                            [errorAlert showError:@"Oh oh 😬" subTitle:@"There was an error while joining the Tribe 🤔 Please try again." closeButtonTitle:@"OK" duration:0.0];
+                        }
+                    }];
 
-                    // if successfully added user to tribe
-                    if (success) {
-                        
-                        // log event
-                        [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@true}];
-                        
-                        
-                        SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
-                        NSString * successMessage = [NSString stringWithFormat:@"You have now joined %@! Make us proud ✊", tribe[@"name"]];
-                        [successAlert addButton:@"Will do!" actionBlock:^{
-                            [self.navigationController popViewControllerAnimated:true];
-                        }];
-                        [successAlert showSuccess:@"Success 😃" subTitle:successMessage  closeButtonTitle:nil duration:0.0];
-                    } else {
-                        
-                        // log event
-                        [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@false}];
-                        
-                        SCLAlertView * errorAlert = [[SCLAlertView alloc]  initWithNewWindow];
-                        [errorAlert showError:@"Oh oh 😬" subTitle:@"There was an error while joining the Tribe 🤔 Please try again." closeButtonTitle:@"OK" duration:0.0];
-                    }
                 }];
+                [confirmAlert showInfo:@"Confirm 📝" subTitle:msg closeButtonTitle:@"Never mind.." duration:0.0];
+                
+                
+                
             }
         } else {
             NSLog(@"error getting tribe to add");
