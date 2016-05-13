@@ -209,7 +209,7 @@
     [[MFMessageComposeViewController alloc] init];
     
     if([MFMessageComposeViewController canSendText]) {
-        NSString *str= @"Hey! I am trying to get the whole squad on Tribes ✊ It's an app to make sure we get our shit done 😎 Download it here: http://bit.ly/UseTribes";
+        NSString *str= @"Hey! I am trying to get the whole squad on Tribes ✊ It's an app to make sure we get our stuff done 😎 Download it here: http://bit.ly/UseTribes";
         controller.body = str;
         controller.recipients = [NSArray arrayWithObjects:
                                  number, nil];
