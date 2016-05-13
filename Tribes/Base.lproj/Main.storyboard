@@ -325,6 +325,7 @@
                         <segue destination="x6J-ww-3zm" kind="show" identifier="showWeeklyReport" id="j3G-CH-Hii"/>
                         <segue destination="fft-A3-MET" kind="show" identifier="AddTribe" id="Wlf-vK-7ao"/>
                         <segue destination="hi5-vx-tv4" kind="show" identifier="AddFirstHabit" id="aDo-Yy-kpM"/>
+                        <segue destination="lR1-8P-usc" kind="show" identifier="addFriendToTribe" id="pmR-Nk-1kI"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aiv-5d-Uau" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -580,6 +581,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Wlf-vK-7ao"/>
+        <segue reference="pmR-Nk-1kI"/>
         <segue reference="aDo-Yy-kpM"/>
         <segue reference="4jV-l5-Rgk"/>
         <segue reference="pOM-lO-I9W"/>
