@@ -21,11 +21,6 @@
     // Do any additional setup after loading the view from its nib.
    
     iAPHelper = [[IAPHelper alloc] init];
-    
-    [[upgradeButton layer] setBorderWidth:1.0f];
-    [[upgradeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
-    upgradeButton.layer.cornerRadius = 10; // this value vary as per your desire
-    upgradeButton.clipsToBounds = YES;
 }
 
 - (IBAction)upgrade:(id)sender {
