@@ -87,7 +87,9 @@
         // show alert with explanation of why the video
         SCLAlertView * walkthroughVideoAlert = [[SCLAlertView alloc] initWithNewWindow];
         [walkthroughVideoAlert addButton:@"OK" actionBlock:^{
+            
             [self playWalkthroughVideo];
+            [Answers logCustomEventWithName:@"Played Video Tutorial" customAttributes:@{@"placement":@"initial helper alert"}];
         }];
         [walkthroughVideoAlert showSuccess:@"Helper Video 🎥" subTitle:@"Congrats on setting up your Tribe 🎉 Here's a short video to help you get the most out of it!" closeButtonTitle:nil duration:0.0];
     }
