@@ -177,7 +177,14 @@
             [_tribe updateTribeWithBlock:^(bool success) {
                 [waitingAlert hideView];
                 if (success) {
-                    [self.navigationController popToRootViewControllerAnimated:true];
+                    
+                    SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    [successAlert addButton:@"AWESOME 😁" actionBlock:^{
+                        [self.navigationController popToRootViewControllerAnimated:true];
+                    }];
+                    [successAlert showSuccess:@"Success 😄" subTitle:@"You've successfully added your buddy!" closeButtonTitle:nil duration:0.0];
+                    
+                    
                 } else {
                     SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
                     [errorAlert showError:@"Oh oh!" subTitle:@"There was an error adding your friend. Please try again" closeButtonTitle:@"OK" duration:0.0];
