@@ -10,6 +10,7 @@
 #import "Parse.h"
 #import "TribeDetailTableViewController.h"
 #import "TribeMenuTableViewController.h"
+#import "AddFriendsTableViewController.h"
 #import "Tribe.h"
 #import "Habit.h"
 #import "MCSwipeTableViewCell.h"
@@ -118,6 +119,10 @@
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0)
         return 1;
+    
+    // if tirbe has no members - add call to action to add a friend
+    if (tribe.tribeMembers.count == 1)
+        return [tribe[@"habits"] count] + 1;
 
     if (currentUser.weeklyReportActive) {
         return [tribe[@"habits"] count] + 1;
@@ -200,6 +205,19 @@ heightForHeaderInSection:(NSInteger)section {
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0) {
         cell.textLabel.text = @"👆 Tap to add a habit";
+        return cell;
+    }
+
+    // if tribe has no habits - add call to action to add a friend
+    if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
+        cell.textLabel.text = @"👆 Tap to add a friend";
+        return cell;
+    }
+    
+    // regular cell when showing call to action to add friend
+    else if (tribe.tribeMembers.count == 1 && indexPath.row != 0) {
+        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        [self configureCell:cell forRowAtIndexPath:newIndexPath];
         return cell;
     }
     
@@ -339,6 +357,24 @@ heightForHeaderInSection:(NSInteger)section {
         
         [self performSegueWithIdentifier:@"AddFirstHabit" sender:tribe];
     }
+    
+    // if user has no tribe members , send them add friends
+    else if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
+        
+        [self performSegueWithIdentifier:@"addFriendToTribe" sender:nil];
+        
+    }
+    
+    // if user has no tribe members but has habits, send them to corresponding habits
+    else if (tribe.tribeMembers.count == 1 && indexPath.row != 0) {
+        
+        // log event
+        [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
+        
+        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        Habit * habit = [tribe[@"habits"] objectAtIndex:newIndexPath.row];
+        [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
+    }
     // enable weekly reports on Monday and configure indexpath to correctly user data source
     else if (currentUser.weeklyReportActive && indexPath.row == 0) {
         
@@ -441,6 +477,10 @@ heightForHeaderInSection:(NSInteger)section {
     } else if ([segue.identifier isEqualToString:@"AddFirstHabit"]) {
         // if tribe has no habits, send to add first habit
         AddHabitTableViewController * vc = (AddHabitTableViewController *)segue.destinationViewController;
+        vc.tribe = sender;
+    } else if ([segue.identifier isEqualToString:@"addFriendToTribe"]) {
+        // send to add friend to tribe when tribe has no tribe members other than user,
+        AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
         vc.tribe = sender;
     }
 }
