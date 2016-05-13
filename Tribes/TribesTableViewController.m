@@ -361,7 +361,7 @@ heightForHeaderInSection:(NSInteger)section {
     // if user has no tribe members , send them add friends
     else if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
         
-        [self performSegueWithIdentifier:@"addFriendToTribe" sender:nil];
+        [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
         
     }
     
