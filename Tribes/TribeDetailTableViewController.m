@@ -188,7 +188,8 @@
         // log event
         [Answers logCustomEventWithName:@"Sent applause" customAttributes:@{}];
         
-        NSString * message = [NSString stringWithFormat:@"%@: 👏", [User currentUser][@"name"]];
+        NSString * message = [NSString stringWithFormat:@"%@: 👏 (%@)", [User currentUser][@"name"], self.habit[@"name"]];
+        
         NSString * category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
         [[User currentUser] sendPushFromMemberToMember:member withMessage:message habitName:self.habit[@"name"] andCategory:category];
   
