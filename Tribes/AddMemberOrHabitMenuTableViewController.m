@@ -46,6 +46,7 @@
     
     Tribe * tribe = [[User currentUser].tribes objectAtIndex:indexPath.row];
     cell.textLabel.text = tribe.name;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     // Configure the cell...
     
     return cell;
