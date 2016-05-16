@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    PremiumHibernationSetting,
-    PremiumWatcherSetting,
     PremiumWeeklyReport,
     PremiumRemoveAds
 } StartingFeatureToSell;

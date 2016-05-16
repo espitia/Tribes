@@ -33,26 +33,16 @@
     images = [[NSMutableArray alloc] init];
     
     
-    images = [NSMutableArray arrayWithArray:@[[UIImage imageNamed:@"hibernation-mode"],
-                                              [UIImage imageNamed:@"watcher-mode"],
-                                              [UIImage imageNamed:@"weekly-report"],
+    images = [NSMutableArray arrayWithArray:@[[UIImage imageNamed:@"weekly-report"],
                                               [UIImage imageNamed:@"remove-ads"]]];
     
     switch (startingFeature) {
         case 0:
             [images removeObjectAtIndex:0];
-            [images insertObject:[UIImage imageNamed:@"hibernation-mode"]  atIndex:0];
+            [images insertObject:[UIImage imageNamed:@"weekly-report"]  atIndex:0];
             break;
         case 1:
             [images removeObjectAtIndex:1];
-            [images insertObject:[UIImage imageNamed:@"watcher-mode"]  atIndex:0];
-            break;
-        case 2:
-            [images removeObjectAtIndex:2];
-            [images insertObject:[UIImage imageNamed:@"weekly-report"]  atIndex:0];
-            break;
-        case 3:
-            [images removeObjectAtIndex:3];
             [images insertObject:[UIImage imageNamed:@"remove-ads"]  atIndex:0];
             break;
             
@@ -101,7 +91,7 @@
     
     index++;
     
-    if (index == 4) {
+    if (index == 2) {
         return nil;
     }
     
@@ -112,7 +102,7 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController {
     // The number of items reflected in the page indicator.
-    return 4;
+    return 2;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController {
