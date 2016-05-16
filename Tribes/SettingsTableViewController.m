@@ -13,8 +13,10 @@
 #import "PremiumViewController.h"
 #import "SCLAlertView.h"
 #import "HelpshiftSupport.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface SettingsTableViewController () {
+
+@interface SettingsTableViewController () <MFMailComposeViewControllerDelegate> {
     IAPHelper * iAPHelper;
 }
 
@@ -41,7 +43,17 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+   switch (section) {
+        case 0:
+           return 2;
+        case 1:
+            return 4;
+            break;
+            
+        default:
+            return 1;
+            break;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -106,6 +118,12 @@
                 case 1:
                     title = @"Snapchat 👻";
                     break;
+                case 2:
+                    title = @"Email 📧";
+                    break;
+                case 3:
+                    title = @"Twitter 🐦";
+                    break;
                     
                 default:
                     break;
@@ -164,8 +182,24 @@
                     [HelpshiftSupport showConversation:self withOptions:nil];
                 }
                     break;
-                case 1:
+                case 1: {
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.snapchat.com/add/tribeshq"]];
+                }
+                    break;
+                    
+                case 2: {
+                    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+                    controller.mailComposeDelegate = self;
+                    [controller setToRecipients:@[@"tribeshq@gmail.com"]];
+                    [controller setSubject:@"About Tribes.."];
+                    [controller setMessageBody:@"Hello there 🖖" isHTML:NO];
+                    if (self) [self presentViewController:controller animated:true completion:nil];
+                }
+                    break;
+                case 3: {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.twitter.com/tribeshq"]];
+                }
+                    break;
                     
                 default:
                     break;
@@ -183,5 +217,17 @@
     }];
     [extendPremium showSuccess:@"Extend Subscription" subTitle:@"You already have Tribes Premium. Would you like to extend your subscription?" closeButtonTitle:@"MAYBE LATER" duration:0.0];
     
+}
+
+#pragma mark - Mail Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error; {
+    if (result == MFMailComposeResultSent) {
+        SCLAlertView * emailSentAlert = [[SCLAlertView alloc] initWithNewWindow];
+        [emailSentAlert showSuccess:@"Email sent 📧" subTitle:@"Thank you for reaching out. I will get back to you as soon as possible 🏃" closeButtonTitle:@"AWESOME" duration:0.0];
+    }
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 @end
