@@ -70,9 +70,8 @@
             sectionName = @"General";
             break;
         case 1:
-            sectionName = @"Let's connect 🤗";
+            sectionName = @"Feedback? Lets connect 📢";
             break;
-            // ...
         default:
             sectionName = @"";
             break;
