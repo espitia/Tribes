@@ -204,7 +204,7 @@
                     [error addButton:@"OK" actionBlock:^{
                         [self askForUsername];
                     }];
-                    [error showError:@"Error" subTitle:@"Looks like your email is invalid :( Please try again" closeButtonTitle:nil duration:0.0];
+                    [error showError:@"Error" subTitle:@"Looks like your email is invalid 😞 Please try again" closeButtonTitle:nil duration:0.0];
                 }
             } else {
                 SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
