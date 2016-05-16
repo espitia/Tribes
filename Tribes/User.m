@@ -582,15 +582,16 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 #pragma mark - Weekly Report
 -(BOOL)weeklyReportActive {
-    // check if it is sunday after 9pm to show reports
-    int date = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitWeekday fromDate:[NSDate date]] weekday];
-    int hour = (int)[[[NSCalendar currentCalendar] components:NSCalendarUnitHour fromDate:[NSDate date]] hour];
+    
+    for (Activity * activity in self.activities) {
+        if (activity.completionDates) {
+            if (activity.completionDates.count > 3) {
+                return true;
+            }
+        }
 
-    if (date == 1 && hour > 19) {
-        return true;
-    } else {
-        return false;
     }
+    return false;
 }
 -(int)thisWeekCompletionsForNonWatcherHabitsForTribe:(Tribe *)tribe {
     
