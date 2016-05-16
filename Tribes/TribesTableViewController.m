@@ -243,7 +243,7 @@ heightForHeaderInSection:(NSInteger)section {
 
 #pragma mark - Configure Cell
 - (void)configureWeeklyReportCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.textLabel.text = @"Weekly report is available! 📈";
+    cell.textLabel.text = @"Weekly report 📈";
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 }
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
