@@ -44,8 +44,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    switch (section) {
-        case 0:
-           return 2;
+       case 0: {
+           IAPHelper * helper = [[IAPHelper alloc] init];
+           return ([helper userIsPremium]) ? 2 : 1;
+       }
         case 1:
             return 4;
             break;
@@ -95,13 +97,9 @@
                     }
                 }
                     break;
+                    // 2nd row of 1st section only shown if user is premium
                 case 1: {
-                    if ([iAPHelper userIsPremium]) {
                         title = @"Extend your subscription ⭐";
-                    } else {
-                        title = @"Remove Ads 🚫";
-                    }
-
                 }
                     break;
                     
@@ -160,14 +158,8 @@
                 }
                     break;
                 case 1: {
-                    // if premium, ask to extend, if not, show premium vc
-                    if ([iAPHelper userIsPremium]) {
-                        [self extendPremiumOptions];
-                    } else {
-                        PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumRemoveAds];
-                        [self presentViewController:premiumVC animated:true completion:nil];
-                    }
-
+                    // if premium, ask to extend, if not, this row is not shown
+                    [self extendPremiumOptions];
                 }
                     break;
                     

@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef enum {
-    PremiumWeeklyReport,
-    PremiumRemoveAds
+    PremiumWeeklyReport
 } StartingFeatureToSell;
 
 
