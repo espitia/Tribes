@@ -11,7 +11,6 @@
 #import "SCLAlertView.h"
 #import "IAPHelper.h"
 #import "PremiumViewController.h"
-#import "SCLAlertView.h"
 #import "HelpshiftSupport.h"
 #import <MessageUI/MFMailComposeViewController.h>
 
@@ -203,10 +202,16 @@
 
 -(void)extendPremiumOptions {
     SCLAlertView * extendPremium = [[SCLAlertView alloc] initWithNewWindow];
-    [extendPremium addButton:@"ADD 1 MONTH" actionBlock:^{
-        [iAPHelper make1MonthPremiumPurchaseWithTableViewController:self andReload:true orDismiss:false];
+    [extendPremium addButton:@"Add 1 month for $1.99" actionBlock:^{
+        [iAPHelper makePremiumPurchaseForMonths:1 WithTableViewController:self andReload:true orDismiss:false];
     }];
-    [extendPremium showSuccess:@"Extend Subscription" subTitle:@"You already have Tribes Premium. Would you like to extend your subscription?" closeButtonTitle:@"MAYBE LATER" duration:0.0];
+    [extendPremium addButton:@"Add 3 months for $5.99" actionBlock:^{
+        [iAPHelper makePremiumPurchaseForMonths:3 WithTableViewController:self andReload:true orDismiss:false];
+    }];
+    [extendPremium addButton:@"Add 6 months for $9.99" actionBlock:^{
+        [iAPHelper makePremiumPurchaseForMonths:6 WithTableViewController:self andReload:true orDismiss:false];
+    }];
+    [extendPremium showSuccess:@"Extend Subscription" subTitle:@"You already have Tribes Premium. Would you like to extend your subscription?" closeButtonTitle:@"Maybe later" duration:0.0];
     
 }
 
