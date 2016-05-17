@@ -11,7 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-@interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver>
+@interface IAPHelper () <SKProductsRequestDelegate, SKPaymentTransactionObserver> {
+    int monthsToPurchase;
+}
 
 @end
 
@@ -49,15 +51,17 @@
 /**
  * Adds 1 month to subscription whether user already has subscription or not.
  */
--(void)add1MonthToSubscription {
+-(void)addMonthsToSubscription:(int)months {
     int daysLeft = [self daysRemainingOnSubscription];
     NSDate * newExpirationDate;
     
+    int secondsToAdd = months * 2678400;
+    
     // check if user already has subscription to add more time or set 1 month from now for new subscriber
     if (daysLeft > 0) {
-        newExpirationDate = [[self expirationDate] dateByAddingTimeInterval:2678400];
+        newExpirationDate = [[self expirationDate] dateByAddingTimeInterval:secondsToAdd];
     } else {
-        newExpirationDate = [NSDate dateWithTimeIntervalSinceNow:2678400];
+        newExpirationDate = [NSDate dateWithTimeIntervalSinceNow:secondsToAdd];
     }
     
     // save new expiration date
@@ -73,18 +77,34 @@
 }
 
 #pragma mark - Purchasing Premium
-#define kBecomePremiumProductIdentifier @"com.usetribes.1monthsub"
+
 /**
  * Pass UITableViewController to reload data when purchaes is complete.
  */
--(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc andReload:(BOOL)reload orDismiss:(BOOL)dismiss {
+-(void)makePremiumPurchaseForMonths:(int)months WithTableViewController:(UITableViewController *)vc andReload:(BOOL)reload orDismiss:(BOOL)dismiss {
+    monthsToPurchase = months;
     self.tableViewControllerToConfigureAfterPurchase = vc;
     self.reload = reload;
     self.dismiss = dismiss;
-    [self make1MonthPremiumPurchase];
+    [self makePremiumPurchaseWithMonths:months];
 }
--(void)make1MonthPremiumPurchase {
+-(void)makePremiumPurchaseWithMonths:(int)months {
     
+    NSString * productIndentifier;
+    switch (months) {
+        case 1:
+            productIndentifier = @"com.usetribes.1monthsub";
+            break;
+        case 3:
+            productIndentifier = @"com.usetribes.3monthsub";
+            break;
+        case 6:
+            productIndentifier = @"com.usetribes.6monthsub";
+            break;
+            
+        default:
+            break;
+    }
     
     NSLog(@"User requests to come premium");
     
@@ -96,7 +116,7 @@
         //another function and replace kRemoveAdsProductIdentifier with
         //the identifier for the other product
         
-        SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:kBecomePremiumProductIdentifier]];
+        SKProductsRequest *productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:[NSSet setWithObject:productIndentifier]];
         productsRequest.delegate = self;
         [productsRequest start];
         
@@ -142,7 +162,7 @@
             //called when the user successfully restores a purchase
             NSLog(@"Transaction state -> Restored");
             
-            [self add1MonthToSubscription];
+            [self addMonthsToSubscription:monthsToPurchase];
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
             break;
         }
@@ -157,7 +177,7 @@
                 break;
             case SKPaymentTransactionStatePurchased:
                 //this is called when the user has successfully purchased the package (Cha-Ching!)
-                [self add1MonthToSubscription]; //you can add your code for what you want to happen when the user buys the purchase here, for this tutorial we use removing ads
+                [self addMonthsToSubscription:monthsToPurchase]; //you can add your code for what you want to happen when the user buys the purchase here, for this tutorial we use removing ads
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 NSLog(@"Transaction state -> Purchased");
                 break;

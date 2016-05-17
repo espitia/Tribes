@@ -15,7 +15,7 @@
 -(int)daysRemainingOnSubscription;
 -(NSDate *)expirationDate;
 -(BOOL)userIsPremium;
-
+-(void)addMonthsToSubscription:(int)months;
 /**
  * UITableViewController to reloadDate when purchase completes.
  */
@@ -24,8 +24,8 @@
 @property BOOL dismiss;
 
 // public methods to make purchase
--(void)make1MonthPremiumPurchase;
--(void)make1MonthPremiumPurchaseWithTableViewController:(UITableViewController *)vc andReload:(BOOL)reload orDismiss:(BOOL)dismiss;
+-(void)makePremiumPurchaseWithMonths:(int)months;
+-(void)makePremiumPurchaseForMonths:(int)months WithTableViewController:(UITableViewController *)vc andReload:(BOOL)reload orDismiss:(BOOL)dismiss;
 - (void)restore;
 
 @end
