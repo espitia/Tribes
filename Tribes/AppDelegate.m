@@ -322,6 +322,7 @@
     // log event
     NSString * identifierStringForEvent = identifier;
     [Answers logCustomEventWithName:@"Replied to push via action" customAttributes:@{@"action":identifierStringForEvent}];
+    [Leanplum track:@"Replied to push via action" withInfo:identifierStringForEvent];
     
     User * currentUser = [User currentUser];
     NSString * objectIdOfUserToReplyTo = userInfo[@"senderId"];

@@ -14,7 +14,7 @@
 #import "SCLAlertView.h"
 #import <DigitsKit/DigitsKit.h>
 #import <Crashlytics/Crashlytics.h>
-
+#import <Leanplum/Leanplum.h>
 
 @interface AddTribeTableViewController () {
     User * currentUser;
@@ -243,6 +243,7 @@
                             
                             // log event
                             [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@true}];
+                            [Leanplum track:@"Joined friend's tribe" withParameters:@{@"success":@true}];
                             
                             
                             SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
@@ -255,6 +256,7 @@
                             
                             // log event
                             [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@false}];
+                            [Leanplum track:@"Joined friend's tribe" withParameters:@{@"success":@true}];
                             
                             SCLAlertView * errorAlert = [[SCLAlertView alloc]  initWithNewWindow];
                             [errorAlert showError:@"Oh oh 😬" subTitle:@"There was an error while joining the Tribe 🤔 Please try again." closeButtonTitle:@"OK" duration:0.0];
@@ -269,8 +271,6 @@
             }
         } else {
             NSLog(@"error getting tribe to add");
-            // log event
-            [Answers logCustomEventWithName:@"Joined Friend's Tribe" customAttributes:@{@"success":@true}];
         }
 
     }
@@ -310,6 +310,7 @@
                     
                     // log event
                     [Answers logCustomEventWithName:@"Created Tribe" customAttributes:@{@"success":@true}];
+                    [Leanplum track:@"Create Tribe" withParameters:@{@"success":@true}];
                     
                     // send tribe back to main viewcontroller
                     [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
@@ -317,6 +318,8 @@
                     
                     // log event
                     [Answers logCustomEventWithName:@"Created Tribe" customAttributes:@{@"success":@false}];
+                    [Leanplum track:@"Create Tribe" withParameters:@{@"success":@false}];
+
                     
                     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                     [alert addButton:@"OK" actionBlock:^{

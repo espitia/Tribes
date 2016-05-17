@@ -14,6 +14,7 @@
 #import "User.h"
 #import "TribesTableViewController.h"
 #import "SignUpValidation.h"
+#import <Leanplum/Leanplum.h>
 
 @import AVFoundation;
 @import AVKit;
@@ -146,6 +147,7 @@
                                 [Answers logSignUpWithMethod:@"Digits"
                                                      success:@YES
                                             customAttributes:@{}];
+                                [Leanplum track:@"Signed up"];
                                 
                                 // reload table view
                                 UIWindow *window = [UIApplication sharedApplication].keyWindow;

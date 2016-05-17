@@ -13,7 +13,7 @@
 #import "User.h"
 #import "APAddressBook.h"
 #import "APContact.h"
-
+#import <Leanplum/Leanplum.h>
 
 @interface AddFriendsTableViewController () {
     NSMutableArray * matchedContacts;
@@ -179,7 +179,8 @@
                 if (success) {
                     
                     SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
-                    [successAlert addButton:@"AWESOME 😁" actionBlock:^{
+                    [successAlert addButton:@"AWESOME 😁" actionBlock:^{            [Leanplum track:@"Add friend" withParameters:@{@"success":@true}];
+
                         [self.navigationController popToRootViewControllerAnimated:true];
                     }];
                     [successAlert showSuccess:@"Success 😄" subTitle:@"You've successfully added your buddy!" closeButtonTitle:nil duration:0.0];
@@ -188,6 +189,8 @@
                 } else {
                     SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
                     [errorAlert showError:@"Oh oh!" subTitle:@"There was an error adding your friend. Please try again" closeButtonTitle:@"OK" duration:0.0];
+                    [Leanplum track:@"Txt message invite" withParameters:@{@"success":@false}];
+
                 }
             }];
 
@@ -385,8 +388,10 @@
             break;
         case MessageComposeResultFailed:
             NSLog(@"Failed to send text");
+            [Leanplum track:@"Txt message invite" withParameters:@{@"success":@false}];
             [alert showError:self title:@"😥❌📲" subTitle:@"Failed to send text 😞 Please try again." closeButtonTitle:@"OK" duration:0.0];            break;
         case MessageComposeResultSent:
+            [Leanplum track:@"Txt message invite" withParameters:@{@"success":@true}];
             NSLog(@"Succesfully sent text message invite.");
             [alert showSuccess:self title:@"🤓📲👫" subTitle:@"Successfully sent invite! Once they download the app they will be asked if they want to join your Tribe 🎉" closeButtonTitle:@"OK" duration:0.0];            break;
         default:

@@ -25,6 +25,9 @@
 #import "PremiumViewController.h"
 #import "IAPHelper.h"
 #import "AddHabitTableViewController.h"
+#import <Leanplum/Leanplum.h>
+
+
 @import AVFoundation;
 @import AVKit;
 @interface TribesTableViewController () <MCSwipeTableViewCellDelegate> {
@@ -88,6 +91,8 @@
             
             [self playWalkthroughVideo];
             [Answers logCustomEventWithName:@"Played Video Tutorial" customAttributes:@{@"placement":@"initial helper alert"}];
+            [Leanplum track:@"Play walkthrough video"];
+
         }];
         [walkthroughVideoAlert showSuccess:@"Helper Video 🎥" subTitle:@"Congrats on setting up your Tribe 🎉 Here's a short video to help you get the most out of it!" closeButtonTitle:nil duration:0.0];
     }
@@ -308,7 +313,8 @@ heightForHeaderInSection:(NSInteger)section {
 
         // log event
         [Answers logCustomEventWithName:@"Complete habit" customAttributes:@{}];
-        
+        [Leanplum track:@"Complete habit"];
+
         [currentUser completeActivityForHabit:habit inTribe:tribe];
         [self makeItRainConfetti];
         [self updateProgressBar];
@@ -354,6 +360,7 @@ heightForHeaderInSection:(NSInteger)section {
         
         // log event
         [Answers logCustomEventWithName:@"Tapped to create first habit" customAttributes:@{}];
+        [Leanplum track:@"Add first habit"];
         
         [self performSegueWithIdentifier:@"AddFirstHabit" sender:tribe];
     }
@@ -362,7 +369,7 @@ heightForHeaderInSection:(NSInteger)section {
     else if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
         
         [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
-        
+        [Leanplum track:@"Add first friend"];
     }
     
     // if user has no tribe members but has habits, send them to corresponding habits
@@ -370,6 +377,7 @@ heightForHeaderInSection:(NSInteger)section {
         
         // log event
         [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
+        [Leanplum track:@"Tapped on habit"];
         
         NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         Habit * habit = [tribe[@"habits"] objectAtIndex:newIndexPath.row];
@@ -409,6 +417,8 @@ heightForHeaderInSection:(NSInteger)section {
 
         // log event
         [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
+        [Leanplum track:@"Tapped on habit"];
+
         
         Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
         [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
@@ -422,6 +432,7 @@ heightForHeaderInSection:(NSInteger)section {
         
         // log event
         [Answers logCustomEventWithName:@"Tapped to add first Tribe" customAttributes:@{}];
+        [Leanplum track:@"Add first Tribe"];
         
         [self performSegueWithIdentifier:@"AddTribe" sender:nil];
         return;

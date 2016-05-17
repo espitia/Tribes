@@ -14,6 +14,7 @@
 #import "SCLAlertView.h"
 #import "HYBubbleButton.h"
 #import <Crashlytics/Crashlytics.h>
+#import <Leanplum/Leanplum.h>
 
 @interface TribeDetailTableViewController () {
     NSMutableArray * membersAndActivities;
@@ -125,6 +126,8 @@
             
             // log event
             [Answers logCustomEventWithName:@"Tapped to see habit settings" customAttributes:@{}];
+            [Leanplum track:@"Tapped to see habit setting"];
+
             
             [self performSegueWithIdentifier:@"showSettings" sender:activity];
             
@@ -187,6 +190,7 @@
  
         // log event
         [Answers logCustomEventWithName:@"Sent applause" customAttributes:@{}];
+        [Leanplum track:@"Sent applause"];
         
         NSString * message = [NSString stringWithFormat:@"%@: 👏 (%@)", [User currentUser][@"name"], self.habit[@"name"]];
         
@@ -247,6 +251,7 @@
                 
                 // log event
                 [Answers logCustomEventWithName:@"Sent motivation" customAttributes:@{@"success":@true}];
+                [Leanplum track:@"Sent motivation"];
                 
             } else {
                 
