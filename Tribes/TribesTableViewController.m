@@ -32,7 +32,6 @@
     UIRefreshControl * refreshControl;
     YLProgressBar * progressBar;
     KRConfettiView * confettiView;
-    ADBannerView *adView;
     BOOL bannerIsVisible;
 }
 
@@ -78,7 +77,6 @@
         currentUser = [User currentUser];
     
     // set up UI elements
-    [self setUpAdBanner];
     [self.tableView reloadData];
     
     // check to show walkthrough video
@@ -765,66 +763,7 @@ heightForHeaderInSection:(NSInteger)section {
 }
 
 
-#pragma mark - iAds
 
--(void)setUpAdBanner {
-    IAPHelper * helper = [[IAPHelper alloc] init];
-    
-    // if user is not on premium, show ad
-    if (![helper userIsPremium]) {
-        // check to see if it already showing
-        if (!adView) {
-            adView = [[ADBannerView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.toolbar.frame.size.width, 50)];
-            [self.navigationController.toolbar addSubview:adView];
-            adView.delegate = self;
-            bannerIsVisible = NO;
-        }
-    } else {
-        bannerIsVisible = NO;
-        adView = nil;
-    }
-}
-- (void)bannerViewDidLoadAd:(ADBannerView *)banner
-{
-    if (!bannerIsVisible)
-    {
-
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.navigationController setToolbarHidden:false];
-            bannerIsVisible = true;
-        }];
-        
-    }
-}
-
-- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
-{
-    if (bannerIsVisible)
-    {
-        [UIView animateWithDuration:0.5 animations:^{
-            [self.navigationController setToolbarHidden:true];
-            bannerIsVisible = true;
-        }];
-    }
-}
-
-- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave
-{
-    NSLog(@"Banner view is beginning an ad action");
-    BOOL shouldExecuteAction = YES;
-    
-    if (!willLeave && shouldExecuteAction)
-    {
-        // stop all interactive processes in the app
-        // [video pause];
-        // [audio pause];
-    }
-    return shouldExecuteAction;
-}
-
-- (void)bannerViewActionDidFinish:(ADBannerView *)banner
-{
-}
 
 @end
 
