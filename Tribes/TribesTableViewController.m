@@ -400,7 +400,7 @@ heightForHeaderInSection:(NSInteger)section {
                 PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
                 [self presentViewController:premiumVC animated:true completion:nil];
             }];
-            [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"NOT NOW" duration:0.0];
+            [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"MAYBE LATER" duration:0.0];
         }
 
     }
