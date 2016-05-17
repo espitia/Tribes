@@ -14,6 +14,7 @@ target 'Tribes' do
     pod 'SCLAlertView-Objective-C'
     pod 'APAddressBook'
     pod 'Helpshift', '5.5.1'
+    pod 'Leanplum-iOS-SDK'
 end
 
 target 'TribesTests' do

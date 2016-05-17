@@ -9,6 +9,7 @@ PODS:
     - TwitterCore (= 2.0.2)
   - Fabric (1.6.7)
   - Helpshift (5.5.1)
+  - Leanplum-iOS-SDK (1.3.10.1)
   - MCSwipeTableViewCell (2.1.4)
   - Parse (1.13.0):
     - Bolts/Tasks (~> 1.6)
@@ -23,6 +24,7 @@ DEPENDENCIES:
   - Digits
   - Fabric
   - Helpshift (= 5.5.1)
+  - Leanplum-iOS-SDK
   - MCSwipeTableViewCell (~> 2.1.4)
   - Parse
   - SCLAlertView-Objective-C
@@ -36,6 +38,7 @@ SPEC CHECKSUMS:
   Digits: a5c8ddfed18d5e0496e9b6f459f0bca44de588db
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   Helpshift: 1b89b3632bf46af10d2c9d9f448e64a0ccf667ec
+  Leanplum-iOS-SDK: 9e970d4faa16cae6bf96bd3d25adb008072dc03b
   MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
   Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
