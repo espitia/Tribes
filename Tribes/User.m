@@ -113,19 +113,20 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         NSLog(@"no tribes available to update it's activities (updateMemActivitesForAllTribes:)");
         callback(false);
     } else {
-        // get obj ids of all activites of all members in all tribes
+        // get obj ids of all activites of all members in all tribes (locally)
         NSMutableArray * objIdsOfActivitiesToUpdate = [[NSMutableArray alloc] init];
         for (Tribe * tribe in self.tribes) {
             for (User * member in tribe.tribeMembers) {
                 for (Activity * activity in member.activities) {
-                    [objIdsOfActivitiesToUpdate addObject:activity.objectId];
+                    if (![objIdsOfActivitiesToUpdate containsObject:activity.objectId]) {
+                        [objIdsOfActivitiesToUpdate addObject:activity.objectId];
+                    }
                 }
             }
         }
         
         
-        
-        // get those activity objects
+        // update those activity objects
         PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
         [query whereKey:@"objectId" containedIn:objIdsOfActivitiesToUpdate];
         NSLog(@"updating all activities of all members in all tribes ...");
@@ -145,13 +146,14 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                                 [member.activities removeAllObjects];
                             }
                         }
-
                         // add new ones to members
                         for (Activity * activity in objects) {
                             for (Tribe * tribe in self.tribes) {
                                 for (User * member in tribe.tribeMembers) {
                                     if (activity[@"createdBy"] == member) {
-                                        [member.activities addObject:activity];
+                                        if (![member.activities containsObject:activity]) {
+                                            [member.activities addObject:activity];
+                                        }
                                     }
                                 }
                             }
