@@ -15,6 +15,7 @@
 #import "SCLAlertView.h"
 #import "HelpshiftAll.h"
 #import "HelpshiftCore.h"
+#import <Leanplum/Leanplum.h>
 
 
 
@@ -44,6 +45,31 @@
     // Helpshift
     [HelpshiftCore initializeWithProvider:[HelpshiftAll sharedInstance]];
     [HelpshiftCore installForApiKey:@"a250753efe5cf80517add93d137cea11" domainName:@"tribes.helpshift.com" appID:@"tribes_platform_20160505142741624-1e3d5fb2e22f334"];
+    
+    // We've inserted your Tribes API keys here for you :)
+#ifdef DEBUG
+    LEANPLUM_USE_ADVERTISING_ID;
+    [Leanplum setAppId:@"app_FhrLCghhaaP94pieozdYqwWaEhKDnGgJ2WmFMwZIZTk" withDevelopmentKey:@"dev_JJ9hrT9zgGyMn0qv2hGgk1k9na0CkkXlNgZrV33l1xM"];
+#else
+    [Leanplum setAppId:@"app_FhrLCghhaaP94pieozdYqwWaEhKDnGgJ2WmFMwZIZTk" withProductionKey:@"prod_9FosQkjVydQXufcZg9ra3nXr09HAIeHjlyaQu9Ay1UQ"];
+#endif
+    
+    // Optional: Syncs the files between your main bundle and Leanplum.
+    // This allows you to swap out and A/B test any resource file
+    // in your project in realtime.
+    // Replace MyResources with a list of actual paths to include.
+    // [Leanplum syncResourcePaths:@[@"MyResources/.*"] excluding:nil async:YES];
+    
+    // Optional: Tracks in-app purchases automatically as the "Purchase" event.
+    // To require valid receipts upon purchase or change your reported
+    // currency code from USD, update your app settings.
+    // [Leanplum trackInAppPurchases];
+    
+    // Optional: Tracks all screens in your app as states in Leanplum.
+    // [Leanplum trackAllAppScreens];
+    
+    // Starts a new session and updates the app content from Leanplum.
+    [Leanplum start];
 
     // create actions
     [self setUpNotifications:application];
