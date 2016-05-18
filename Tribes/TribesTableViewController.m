@@ -26,6 +26,7 @@
 #import "IAPHelper.h"
 #import "AddHabitTableViewController.h"
 #import <Leanplum/Leanplum.h>
+#import "AppDelegate.h"
 
 
 @import AVFoundation;
@@ -84,20 +85,11 @@
     
     // check to show walkthrough video
     if ([self shouldPlayWalkthroughVideo]) {
-        
-        // show alert with explanation of why the video
-        SCLAlertView * walkthroughVideoAlert = [[SCLAlertView alloc] initWithNewWindow];
-        [walkthroughVideoAlert addButton:@"OK" actionBlock:^{
-            
-            [self playWalkthroughVideo];
-            [Answers logCustomEventWithName:@"Played Video Tutorial" customAttributes:@{@"placement":@"initial helper alert"}];
-            [Leanplum track:@"Play walkthrough video"];
-
-        }];
-        [walkthroughVideoAlert showSuccess:@"Helper Video 🎥" subTitle:@"Congrats on setting up your Tribe 🎉 Here's a short video to help you get the most out of it!" closeButtonTitle:nil duration:0.0];
+        // show alert to user that we are going to show a tutorial video
+        [self showAlertForWalkthroughVideo];
+    } else if ([self shouldAskForNotificationsPermission]) {
+        [self askForNotificationsPermission];
     }
-        
-    
 }
 
 #pragma mark - Table view data source
@@ -612,6 +604,22 @@ heightForHeaderInSection:(NSInteger)section {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [userDefaults objectForKey:@"playedWalkthroughVideo"] == NULL);
 }
+-(BOOL)shouldAskForNotificationsPermission {
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] && ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL));
+}
+-(void)showAlertForWalkthroughVideo {
+    // show alert with explanation of why the video
+    SCLAlertView * walkthroughVideoAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [walkthroughVideoAlert addButton:@"OK" actionBlock:^{
+        
+        [self playWalkthroughVideo];
+        [Answers logCustomEventWithName:@"Played Video Tutorial" customAttributes:@{@"placement":@"initial helper alert"}];
+        [Leanplum track:@"Play walkthrough video"];
+        
+    }];
+    [walkthroughVideoAlert showSuccess:@"Helper Video 🎥" subTitle:@"Congrats on setting up your Tribe 🎉 Here's a short video to help you get the most out of it!" closeButtonTitle:nil duration:0.0];
+}
 -(void)playWalkthroughVideo {
     // grab a local URL to our video
     NSURL *videoURL = [[NSBundle mainBundle]URLForResource:@"cropped tribes tutorial" withExtension:@"mp4"];
@@ -629,6 +637,28 @@ heightForHeaderInSection:(NSInteger)section {
     
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:@true forKey:@"playedWalkthroughVideo"];
+    [userDefaults synchronize];
+    
+
+}
+
+-(void)askForNotificationsPermission {
+    // setup alert
+    SCLAlertView * notificationAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [notificationAlert addButton:@"YES PLEASE" actionBlock:^{
+
+        //ask for notification permission
+        AppDelegate * delegate = [[UIApplication sharedApplication] delegate];
+        [delegate setUpNotifications:[UIApplication sharedApplication]];
+    
+    }];
+    
+    // show alert
+    [notificationAlert showInfo:@"Notifications 📲" subTitle:@"Would you like to send and receive motivation from friends?" closeButtonTitle:nil duration:0.0];
+    
+    
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:@true forKey:@"askedForNotificationsPermission"];
     [userDefaults synchronize];
 }
 
