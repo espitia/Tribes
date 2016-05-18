@@ -73,10 +73,6 @@
     [Leanplum start];
     
     [Appsee start:@"91b914f3ad4b4a00a651179ac6b2b145"];
-
-
-    // create actions
-    [self setUpNotifications:application];
     
     // ui changes
     [self colorNavBar];
