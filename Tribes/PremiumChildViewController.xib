@@ -44,7 +44,7 @@
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Hmi-ru-BAm" secondAttribute="height" multiplier="28:5" id="vpS-jr-UBT"/>
                     </constraints>
-                    <state key="normal" title="Upgrade to Premium">
+                    <state key="normal" title="Premium options">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
