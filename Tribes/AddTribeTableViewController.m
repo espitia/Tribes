@@ -209,7 +209,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     
     // tapped on a friends tribe!
-    if (indexPath.section == 1 && !loadingTribesToJoin) {
+    if (indexPath.section == 1 && !loadingTribesToJoin && tribesToJoin.count > 0) {
         
         Tribe * tribe = [tribesToJoin objectAtIndex:indexPath.row][@"tribe"];
 
@@ -273,6 +273,10 @@
             NSLog(@"error getting tribe to add");
         }
 
+    }
+    
+    else {
+        [tribeNameTextField becomeFirstResponder];
     }
 }
 
