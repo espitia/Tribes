@@ -393,7 +393,8 @@
         case MessageComposeResultSent:
             [Leanplum track:@"Txt message invite" withParameters:@{@"success":@true}];
             NSLog(@"Succesfully sent text message invite.");
-            [alert showSuccess:self title:@"🤓📲👫" subTitle:@"Successfully sent invite! Once they download the app they will be asked if they want to join your Tribe 🎉" closeButtonTitle:@"OK" duration:0.0];            break;
+            [alert showSuccess:self title:@"🤓📲👫" subTitle:@"Successfully sent invite! Make sure they download the app and register to be able to join your Tribe 🎉" closeButtonTitle:@"OK" duration:0.0];
+            break;
         default:
             break;
     }
