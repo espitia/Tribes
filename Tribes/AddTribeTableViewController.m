@@ -51,30 +51,12 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    // check authorization access to address book status and look up matches to fetch tribes to join
-    switch ([DGTContacts contactsAccessAuthorizationStatus]) {
-        case 0:
-        case 1: {
-            
-            NSLog(@"pending/denied status");
-            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert addButton:@"OK 👌" actionBlock:^{
-                [self askForUserPermissionOfAddressBook];
-            }];
-            [alert showNotice:@"Join a Tribe" subTitle:@"In order to join a friend's Tribe, we need permission to look them up through your address book." closeButtonTitle:nil duration:0.0];
-            
-        }
-            break;
-        case 2: {
-            NSLog(@"accepted status");
-            [self lookUpMatches];
-        }
-            break;
-            
-        default:
-            break;
-    }
+    
+    // if user already accepeted address book authorization, look up friends tribes
+    if ([DGTContacts contactsAccessAuthorizationStatus] == 2)
+        [self lookUpMatches];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
