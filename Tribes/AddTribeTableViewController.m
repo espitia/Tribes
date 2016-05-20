@@ -145,43 +145,46 @@
 
 -(void)configureCellForJoinFriendsTribeCell:(UITableViewCell *)cell withIndexPath:(NSIndexPath *)indexPath {
     
-
-
-    if (loadingTribesToJoin) {
-        [cell.textLabel setFont:[UIFont systemFontOfSize:20]];
-        [cell.textLabel setText:@"Looking for friend's Tribes... 🕵"];
-        cell.detailTextLabel.text = nil;
-        return;
+    NSString * title = @"";
+    NSString * detail = @"";
+    [cell.textLabel setFont:[UIFont systemFontOfSize:20]];
+    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:20]];
+    
+    if ([DGTContacts contactsAccessAuthorizationStatus] == 0) {
+        title = @"👆 Search for friend's Tribes!";
     }
-
-    if (tribesToJoin.count == 0) {
-        [cell.textLabel setFont:[UIFont systemFontOfSize:20]];
-        cell.textLabel.text = @"We couldn't find any friend's Tribe 😞";
-        [cell.detailTextLabel setFont:[UIFont systemFontOfSize:20]];
-        cell.detailTextLabel.text = @"Create your own! ☝️😄";
-        return;
+    else if ([DGTContacts contactsAccessAuthorizationStatus] == 1) {
+        title = @"Tribes needs your permission to look up your friends 👫";
     }
     
-    
-    
-    
-    
-    //tribe dictionary contains two keys: tribe for tribe obj and memberFriends for an array of the names of members in tribe
-    NSDictionary * tribe = [tribesToJoin objectAtIndex:indexPath.row];
-    NSLog(@"%@", tribe);
-    [cell.textLabel setFont:[UIFont systemFontOfSize:40]];
-    cell.textLabel.text = tribe[@"tribe"][@"name"];
-    
-    NSString * membersInTribeText;
-    if ([tribe[@"memberFriends"] count] > 1) {
-        membersInTribeText = [NSString stringWithFormat:@"%@, %@ and others are in this Tribe!", tribe[@"memberFriends"][0],tribe[@"memberFriends"][1]];
-    } else {
-        membersInTribeText = [NSString stringWithFormat:@"%@ is in this Tribe!", tribe[@"memberFriends"][0]];
+    else if (loadingTribesToJoin) {
+        title = @"Looking for friend's Tribes... 🕵";
     }
-    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:16]];
-    cell.detailTextLabel.text = membersInTribeText;
+
+    else if (tribesToJoin.count == 0 && !loadingTribesToJoin) {
+        title = @"We couldn't find any friend's Tribe 😞";
+        detail = @"Create your own! ☝️😄";
+    }
     
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    else {
+        
+        //tribe dictionary contains two keys: tribe for tribe obj and memberFriends for an array of the names of members in tribe
+        NSDictionary * tribe = [tribesToJoin objectAtIndex:indexPath.row];
+        [cell.textLabel setFont:[UIFont systemFontOfSize:40]];
+        title = tribe[@"tribe"][@"name"];
+        
+        if ([tribe[@"memberFriends"] count] > 1) {
+            detail = [NSString stringWithFormat:@"%@, %@ and others are in this Tribe!", tribe[@"memberFriends"][0],tribe[@"memberFriends"][1]];
+        } else {
+            detail = [NSString stringWithFormat:@"%@ is in this Tribe!", tribe[@"memberFriends"][0]];
+        }
+        [cell.detailTextLabel setFont:[UIFont systemFontOfSize:16]];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    [cell.textLabel setText:title];
+    [cell.detailTextLabel setText:detail];
 }
 
 #pragma mark - TableView Delegate
