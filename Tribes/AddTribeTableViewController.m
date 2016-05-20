@@ -390,10 +390,18 @@
             
         } else {
             
-            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert showError:@"Oh oh 😬" subTitle:@"There was an error searching for Friends, please try again" closeButtonTitle:@"OK" duration:0.0];
-            //analyze what the error is and handle it with alert views for now.
-            // more info on errors here: https://docs.fabric.io/ios/digits/find-friends.html#permissions-control-flow
+            [Leanplum track:@"Error uploading contacts" withValue:error.code];
+            
+            // if user cancelled find contacts permission, do noting, else, show error alert
+            if (!(error.code == 5)) {
+                SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+                [alert showError:@"Oh oh 😬" subTitle:@"There was an error searching for Friends, please try again" closeButtonTitle:@"OK" duration:0.0];
+                //analyze what the error is and handle it with alert views for now.
+                // more info on errors here: https://docs.fabric.io/ios/digits/find-friends.html#permissions-control-flow
+            }
+
+            
+
         }
     }];
 }
