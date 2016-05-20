@@ -151,7 +151,7 @@
     [cell.detailTextLabel setFont:[UIFont systemFontOfSize:20]];
     
     if ([DGTContacts contactsAccessAuthorizationStatus] == 0) {
-        title = @"👆 Search for friend's Tribes!";
+        title = @"👆 Tap to search for friend's Tribes!";
     }
     else if ([DGTContacts contactsAccessAuthorizationStatus] == 1) {
         title = @"Tribes needs your permission to look up your friends 👫";
@@ -260,7 +260,11 @@
 
     }
     
-    else {
+    else if ([DGTContacts contactsAccessAuthorizationStatus] == 0 ||
+             [DGTContacts contactsAccessAuthorizationStatus] == 1) {
+        [self checkAuthorizationStatus];
+    } else {
+        // "Create your own! ☝️😄"
         [tribeNameTextField becomeFirstResponder];
     }
 }
@@ -340,6 +344,35 @@
 
 
 #pragma mark - Contacts handling
+
+-(void)checkAuthorizationStatus {
+    // check authorization access to address book status and look up matches to fetch tribes to join
+    switch ([DGTContacts contactsAccessAuthorizationStatus]) {
+        case 0: case 1: {
+            
+            NSLog(@"pending/denied status");
+            SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
+            [alert addButton:@"OK 👌" actionBlock:^{
+                [self askForUserPermissionOfAddressBook];
+            }];
+            [alert addButton:@"MAYBE LATER" actionBlock:^{
+                [self.tableView reloadData];
+            }];
+            [alert showNotice:@"Join a Tribe" subTitle:@"In order to join a friend's Tribe, we need permission to look them up through your address book. No worries, we NEVER send anything without permission." closeButtonTitle:nil duration:0.0];
+            
+        }
+            break;
+        case 2: {
+            NSLog(@"accepted status");
+            [self lookUpMatches];
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+}
 
 -(void)askForUserPermissionOfAddressBook {
     // ask for address book permission
