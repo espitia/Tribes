@@ -412,20 +412,26 @@
     DGTSession *userSession = [Digits sharedInstance].session;
     DGTContacts *contacts = [[DGTContacts alloc] initWithUserSession:userSession];
     
-    
     [contacts lookupContactMatchesWithCursor:nil completion:^(NSArray *matches, NSString *nextCursor, NSError *error) {
         
+        // if matches found
         if (matches.count > 0 && !error) {
             // get matching PFUsers for corresponding digitsID key
             [self fetchMatchedUsers:matches];
-        } else if (matches.count == 0 && !error) {
-            NSLog(@"%@", error);
+        }
+        
+        // upload successful but no matches found
+        else if (matches.count == 0 && !error) {
             loadingTribesToJoin = false;
             [self.tableView reloadData];
-        } else {
-            NSLog(@"error: %@", error);
+        }
+        
+        // there was an error with the upload
+        else {
             SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-            [alert showError:@"Oh oh 😬" subTitle:@"There was an error searching for Friends, please try again" closeButtonTitle:@"OK" duration:0.0];
+            [alert showError:@"Error 😞" subTitle:@"There was an error searching for Friends. Please try again." closeButtonTitle:@"OK" duration:0.0];
+            loadingTribesToJoin = false;
+            [self.tableView reloadData];
         }
 
         
