@@ -10,7 +10,7 @@
 
 @interface SignUpValidation : NSObject
 
--(BOOL)isEmailValid:(NSString *)email;
+- (void)isEmailValid:(NSString *)email withBlock:(void(^)(int error))callback;
 -(void)isUsernameValid:(NSString *)usernameToCheck withBlock:(void(^)(BOOL success))callback;
 -(BOOL)isPasswordValid:(NSString *)password;
 
