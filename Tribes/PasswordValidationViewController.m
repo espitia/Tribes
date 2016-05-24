@@ -8,6 +8,7 @@
 
 #import "PasswordValidationViewController.h"
 #import "SignUpValidation.h"
+#import "SCLAlertView.h"
 
 @interface PasswordValidationViewController () <UITextFieldDelegate> {
     SignUpValidation * validation;
@@ -33,7 +34,6 @@
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _passwordTextField.frame.origin.y, self.view.bounds.size.width, 1)];
     topLineView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:topLineView];
-    
     UIView * bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _passwordTextField.frame.origin.y + _passwordTextField.frame.size.height, self.view.bounds.size.width, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:bottomLineView];
@@ -82,8 +82,14 @@
 }
 
 -(void)continueToNextVc {
-    if (passwordValid)
+    
+    // if password is valid, continue to next vc (username vc)
+    if ([validation isPasswordValid:_passwordTextField.text]) {
         [self performSegueWithIdentifier:@"continue" sender:nil];
+    } else {
+        SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
+        [errorAlert showError:@"Oh oh... 😯" subTitle:@"Looks like there was an error with your password. Remember it should have at least 8 characters, 1 letter and 1 number." closeButtonTitle:@"OK" duration:0.0];
+    }
 }
 
 
@@ -96,7 +102,7 @@
 
 #pragma mark - Sign Up Button
 
--(void)slideInSignUpButton {
+-(void)slideInContinueButton {
     
     if (!buttonShowing) {
         buttonShowing = true;
@@ -110,7 +116,7 @@
     
 }
 
--(void)slideOutSignUpButton {
+-(void)slideOutContinueButton {
     
     [UIView animateWithDuration:0.4 animations:^{
         buttonShowing = false;
