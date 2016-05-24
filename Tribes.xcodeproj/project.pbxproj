@@ -18,6 +18,7 @@
 		0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */; };
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
+		091C37331CF49F3A0020B6BE /* EmailValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */; };
 		0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0923AD0E1CB41BA00022753D /* StoreKit.framework */; };
 		0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD111CB41BC00022753D /* PremiumViewController.m */; };
 		0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0923AD121CB41BC00022753D /* PremiumViewController.xib */; };
@@ -102,6 +103,8 @@
 		0917EC661C4037D600BE2697 /* TribesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TribesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC6A1C4037D600BE2697 /* TribesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TribesUITests.m; sourceTree = "<group>"; };
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		091C37311CF49F3A0020B6BE /* EmailValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailValidationViewController.h; sourceTree = "<group>"; };
+		091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailValidationViewController.m; sourceTree = "<group>"; };
 		0923AD0E1CB41BA00022753D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0923AD101CB41BC00022753D /* PremiumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumViewController.h; sourceTree = "<group>"; };
 		0923AD111CB41BC00022753D /* PremiumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumViewController.m; sourceTree = "<group>"; };
@@ -428,6 +431,8 @@
 		09C658521C46CD6B008C4EC3 /* Signup/onboard */ = {
 			isa = PBXGroup;
 			children = (
+				091C37311CF49F3A0020B6BE /* EmailValidationViewController.h */,
+				091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */,
 				099760511C7D2710008E88A7 /* SignUpOrLoginViewController.h */,
 				099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */,
 			);
@@ -750,6 +755,7 @@
 				099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */,
 				090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */,
 				09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */,
+				091C37331CF49F3A0020B6BE /* EmailValidationViewController.m in Sources */,
 				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,

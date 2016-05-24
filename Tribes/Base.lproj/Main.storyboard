@@ -606,10 +606,10 @@
             </objects>
             <point key="canvasLocation" x="405.5" y="-421.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Email Validation View Controller-->
         <scene sceneID="oJn-oW-YNs">
             <objects>
-                <viewController id="iDQ-SP-6a7" sceneMemberID="viewController">
+                <viewController id="iDQ-SP-6a7" customClass="EmailValidationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="0LU-nS-EIa"/>
                         <viewControllerLayoutGuide type="bottom" id="iW9-yb-uW5"/>
