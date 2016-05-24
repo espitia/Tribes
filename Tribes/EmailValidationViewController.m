@@ -62,16 +62,6 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    NSString * completeString;
-    
-    if ([string isEqualToString:@""]) {
-        completeString = [textField.text substringToIndex:[textField.text length]-1];
-    } else {
-        completeString = [textField.text stringByAppendingString:string];
-    }
-    
-    inputEmail = completeString;
-    
     if (!buttonShowing)
         [self slideInSignUpButton];
 
@@ -80,7 +70,7 @@
 
 -(void)continueToNextVc {
     
-    [validation isEmailValid:inputEmail withBlock:^(int error) {
+    [validation isEmailValid:_emailTextField.text withBlock:^(int error) {
         
         if (error == 0) {
             [self performSegueWithIdentifier:@"continue" sender:nil];
