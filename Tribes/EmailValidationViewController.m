@@ -15,7 +15,6 @@
     UIButton * signUpButton;
     CGRect keyboardFrame;
     BOOL buttonShowing;
-    BOOL emailValid;
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *emailTextField;
