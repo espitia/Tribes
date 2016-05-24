@@ -634,7 +634,8 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="dma-OU-PMB" kind="show" id="5eG-2y-kZy"/>
+                        <outlet property="emailTextField" destination="qxU-kE-j7S" id="QjZ-SR-SF4"/>
+                        <segue destination="dma-OU-PMB" kind="show" identifier="continue" id="5eG-2y-kZy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GLx-du-2Yb" userLabel="First Responder" sceneMemberID="firstResponder"/>
