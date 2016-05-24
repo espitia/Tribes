@@ -8,6 +8,7 @@
 
 #import "EmailValidationViewController.h"
 #import "SignUpValidation.h"
+#import "SCLAlertView.h"
 
 @interface EmailValidationViewController () <UITextFieldDelegate> {
     SignUpValidation * validation;
@@ -83,14 +84,28 @@
 
 -(void)showErrorAlertWithError:(int)error {
     
+    NSString * errorMessage = @"";
+    [_emailTextField resignFirstResponder];
+    
     if (error == 1) {
         
         // syntax is wrong
+        errorMessage = @"Looks like there is typo in your email. Double check to make sure it is right!";
+        
         
     } else if (error == 2) {
         
         // email is already taken
+        errorMessage = @"Looks like that email is already taken. Go back and sign in!";
     }
+    
+    SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [errorAlert addButton:@"GOT IT" actionBlock:^{
+        [_emailTextField becomeFirstResponder];
+    }];
+    [errorAlert showError:@"Oh oh.. 😯" subTitle:errorMessage closeButtonTitle:nil duration:0.0];
+    
+    
 }
 
 #pragma mark - Notifications
