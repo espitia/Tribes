@@ -48,11 +48,38 @@
     }];
 }
 
-
-- (BOOL)isEmailValid:(NSString *)email {
+/**
+ * Validate a string to be an acceptable email.
+ * Errors returned are ints.
+ * 0 = no error
+ * 1 = syntax is wrong
+ * 2 = email is already taken
+ */
+- (void)isEmailValid:(NSString *)email withBlock:(void(^)(int error))callback {
+    
+    // check for syntax
     NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-    return [emailTest evaluateWithObject:email];
+    
+    // check for syntax
+    if (![emailTest evaluateWithObject:email]) {
+        callback(1);
+    }
+    
+    // check if email already taken
+    else {
+
+        PFQuery * queryForEmail = [PFUser query];
+        [queryForEmail whereKey:@"emailLowerCase" equalTo:[email lowercaseString]]; // remember to compare to lowercase copy
+        [queryForEmail getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object && !error) {
+                callback(2);
+            } else {
+                callback(0);
+            }
+        }];
+        
+    }
 }
 
 
