@@ -70,22 +70,38 @@
         completeString = [textField.text stringByAppendingString:string];
     }
     
-    if ([validation isEmailValid:completeString]) {
-        [self slideInSignUpButton];
-        emailValid = true;
-    } else {
-        [self slideOutSignUpButton];
-        emailValid = false;
-    }
+    inputEmail = completeString;
     
+    if (!buttonShowing)
+        [self slideInSignUpButton];
+
     return true;
 }
 
 -(void)continueToNextVc {
-    if (emailValid)
-        [self performSegueWithIdentifier:@"continue" sender:nil];
+    
+    [validation isEmailValid:inputEmail withBlock:^(int error) {
+        
+        if (error == 0) {
+            [self performSegueWithIdentifier:@"continue" sender:nil];
+        } else {
+            [self showErrorAlertWithError:error];
+        }
+        
+    }];
 }
 
+-(void)showErrorAlertWithError:(int)error {
+    
+    if (error == 1) {
+        
+        // syntax is wrong
+        
+    } else if (error == 2) {
+        
+        // email is already taken
+    }
+}
 
 #pragma mark - Notifications
 
