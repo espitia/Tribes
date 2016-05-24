@@ -642,10 +642,10 @@
             </objects>
             <point key="canvasLocation" x="1022.5" y="771.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Password Validation View Controller-->
         <scene sceneID="Gxt-Tf-a1f">
             <objects>
-                <viewController id="dma-OU-PMB" sceneMemberID="viewController">
+                <viewController id="dma-OU-PMB" customClass="PasswordValidationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Abh-2B-0AG"/>
                         <viewControllerLayoutGuide type="bottom" id="rrA-V2-nih"/>
@@ -670,6 +670,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="passwordTextField" destination="lSh-Dr-Lds" id="rYK-CP-GUa"/>
                         <segue destination="bgi-0h-mu7" kind="show" id="BA6-Mk-w0C"/>
                     </connections>
                 </viewController>
