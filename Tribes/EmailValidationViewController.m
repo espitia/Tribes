@@ -7,8 +7,17 @@
 //
 
 #import "EmailValidationViewController.h"
+#import "SignUpValidation.h"
 
-@interface EmailValidationViewController ()
+@interface EmailValidationViewController () <UITextFieldDelegate> {
+    SignUpValidation * validation;
+    UIButton * signUpButton;
+    CGRect keyboardFrame;
+    BOOL buttonShowing;
+    BOOL emailValid;
+}
+
+@property (strong, nonatomic) IBOutlet UITextField *emailTextField;
 
 @end
 
@@ -16,22 +25,107 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+
+    // ui touches
+    self.navigationController.navigationBarHidden = false;
+    
+    // lines on top and below email textfield
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _emailTextField.frame.origin.y, self.view.bounds.size.width, 1)];
+    topLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:topLineView];
+    
+    UIView * bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _emailTextField.frame.origin.y + _emailTextField.frame.size.height, self.view.bounds.size.width, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.view addSubview:bottomLineView];
+
+    //add sign up button
+    signUpButton = [[UIButton alloc] init];
+    signUpButton.backgroundColor = [UIColor orangeColor];
+    [signUpButton setTitle:@"Continue" forState:UIControlStateNormal];
+    [signUpButton.titleLabel setTextColor:[UIColor whiteColor]];
+    [signUpButton addTarget:self action:@selector(continueToNextVc) forControlEvents:UIControlEventTouchUpInside];
+    
+    // init  vars
+    buttonShowing = false;
+    _emailTextField.delegate = self;
+    validation = [[SignUpValidation alloc] init];
+    
+    // add notifier for when app comes into foreground
+    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidAppear:(BOOL)animated {
+    [_emailTextField becomeFirstResponder];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSString * completeString;
+    
+    if ([string isEqualToString:@""]) {
+        completeString = [textField.text substringToIndex:[textField.text length]-1];
+    } else {
+        completeString = [textField.text stringByAppendingString:string];
+    }
+    
+    if ([validation isEmailValid:completeString]) {
+        [self slideInSignUpButton];
+        emailValid = true;
+    } else {
+        [self slideOutSignUpButton];
+        emailValid = false;
+    }
+    
+    return true;
 }
-*/
+
+-(void)continueToNextVc {
+    if (emailValid)
+        [self performSegueWithIdentifier:@"continue" sender:nil];
+}
+
+
+#pragma mark - Notifications
+
+-(void)keyboardDidShow:(id)sender {
+    NSDictionary * userInfo = [sender userInfo];
+    keyboardFrame = [[userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+}
+
+#pragma mark - Sign Up Button
+
+-(void)slideInSignUpButton {
+    
+    if (!buttonShowing) {
+        buttonShowing = true;
+        [signUpButton setFrame:CGRectMake(-self.view.frame.size.width, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
+        
+        [UIView animateWithDuration:0.4 animations:^{
+            [signUpButton setFrame:CGRectMake(0, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
+            [self.view addSubview:signUpButton];
+        }];
+    }
+    
+}
+
+-(void)slideOutSignUpButton {
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        buttonShowing = false;
+        [signUpButton setFrame:CGRectMake(-self.view.frame.size.width, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
+    }];
+    
+}
+
+#pragma mark - Util
+
+-(void)setSignifierForTextField:(UITextField *)textField withImage:(UIImage *)image {
+    UIImageView * imgView = [[UIImageView alloc] initWithImage:image];
+    imgView.userInteractionEnabled = true;
+    textField.rightView = imgView;
+}
+
 
 @end
