@@ -29,6 +29,7 @@
     
     // ui touches
     self.navigationController.navigationBarHidden = false;
+    _passwordTextField.secureTextEntry = YES;
     
     // lines on top and below email textfield
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _passwordTextField.frame.origin.y, self.view.bounds.size.width, 1)];
@@ -62,21 +63,8 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
-    NSString * completeString;
-    
-    if ([string isEqualToString:@""]) {
-        completeString = [textField.text substringToIndex:[textField.text length]-1];
-    } else {
-        completeString = [textField.text stringByAppendingString:string];
-    }
-    
-    if ([validation isPasswordValid:completeString]) {
-        [self slideInSignUpButton];
-        passwordValid = true;
-    } else {
-        [self slideOutSignUpButton];
-        passwordValid = false;
-    }
+    if (!buttonShowing)
+        [self slideInContinueButton];
     
     return true;
 }
