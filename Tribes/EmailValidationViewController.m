@@ -7,8 +7,10 @@
 //
 
 #import "EmailValidationViewController.h"
+#import "PasswordValidationViewController.h"
 #import "SignUpValidation.h"
 #import "SCLAlertView.h"
+#import "User.h"
 
 @interface EmailValidationViewController () <UITextFieldDelegate> {
     SignUpValidation * validation;
@@ -73,7 +75,11 @@
     [validation isEmailValid:_emailTextField.text withBlock:^(int error) {
         
         if (error == 0) {
-            [self performSegueWithIdentifier:@"continue" sender:nil];
+            
+            User * user = [User user];
+            user.email = _emailTextField.text;
+            
+            [self performSegueWithIdentifier:@"continue" sender:user];
         } else {
             [self showErrorAlertWithError:error];
         }
@@ -137,6 +143,15 @@
         [signUpButton setFrame:CGRectMake(-self.view.frame.size.width, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
     }];
     
+}
+
+#pragma mark - Navigation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"continue"]) {
+        PasswordValidationViewController * vc = (PasswordValidationViewController *)segue.destinationViewController;
+        vc.user = sender;
+    }
 }
 
 #pragma mark - Util
