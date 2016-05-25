@@ -21,6 +21,7 @@
 		091C37331CF49F3A0020B6BE /* EmailValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */; };
 		091C37361CF4A9B50020B6BE /* PasswordValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */; };
 		091C37391CF4AE930020B6BE /* UsernameValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */; };
+		091C373C1CF60AD40020B6BE /* CongratulationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C373B1CF60AD40020B6BE /* CongratulationsViewController.m */; };
 		0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0923AD0E1CB41BA00022753D /* StoreKit.framework */; };
 		0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD111CB41BC00022753D /* PremiumViewController.m */; };
 		0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0923AD121CB41BC00022753D /* PremiumViewController.xib */; };
@@ -111,6 +112,8 @@
 		091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordValidationViewController.m; sourceTree = "<group>"; };
 		091C37371CF4AE930020B6BE /* UsernameValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernameValidationViewController.h; sourceTree = "<group>"; };
 		091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsernameValidationViewController.m; sourceTree = "<group>"; };
+		091C373A1CF60AD40020B6BE /* CongratulationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CongratulationsViewController.h; sourceTree = "<group>"; };
+		091C373B1CF60AD40020B6BE /* CongratulationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CongratulationsViewController.m; sourceTree = "<group>"; };
 		0923AD0E1CB41BA00022753D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0923AD101CB41BC00022753D /* PremiumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumViewController.h; sourceTree = "<group>"; };
 		0923AD111CB41BC00022753D /* PremiumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumViewController.m; sourceTree = "<group>"; };
@@ -445,6 +448,8 @@
 				091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */,
 				091C37371CF4AE930020B6BE /* UsernameValidationViewController.h */,
 				091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */,
+				091C373A1CF60AD40020B6BE /* CongratulationsViewController.h */,
+				091C373B1CF60AD40020B6BE /* CongratulationsViewController.m */,
 			);
 			name = Signup/onboard;
 			sourceTree = "<group>";
@@ -776,6 +781,7 @@
 				09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */,
 				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
 				09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */,
+				091C373C1CF60AD40020B6BE /* CongratulationsViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
