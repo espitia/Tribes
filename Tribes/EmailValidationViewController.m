@@ -89,13 +89,13 @@
     if (error == 1) {
         
         // syntax is wrong
-        errorMessage = @"Looks like there is typo in your email. Double check to make sure it is right!";
+        errorMessage = @"The magical unicorn of knowledge tells us there is a typo in your email. Double check to make sure it is right!";
         
         
     } else if (error == 2) {
         
         // email is already taken
-        errorMessage = @"Looks like that email is already taken. Go back and sign in!";
+        errorMessage = @"Looks like that email is already taken. Have an account already? Go back and sign in!";
     }
     
     SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
