@@ -9,6 +9,7 @@
 #import "UsernameValidationViewController.h"
 #import "SignUpValidation.h"
 #import "SCLAlertView.h"
+#import <Parse/Parse.h>
 
 @interface UsernameValidationViewController () <UITextFieldDelegate> {
     SignUpValidation * validation;
@@ -77,6 +78,18 @@
         if (error == 0) {
         
             // SIGN UP
+            self.user.username = _usernameTextField.text;
+            self.user[@"usernameLowerCase"] = [_usernameTextField.text lowercaseString];
+            self.user[@"emailLowerCase"] = [self.user.email lowercaseString];
+            
+            [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (!error && succeeded) {
+                    NSLog(@"YAAAAAZ");
+                }
+                
+            }];
+            
             
         } else {
             [self showErrorAlertWithErrorCode:error];
