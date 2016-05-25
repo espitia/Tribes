@@ -55,14 +55,16 @@
     } else {
     
         self.navigationItem.title = @"Loading Tribes..";
+        [self setUp];
+        [self UISetUp];
+        
         [currentUser loadTribesWithBlock:^(bool success) {
             
             if (success) {
                 self.navigationItem.title = @"Tribes";
                 currentUser.loadedInitialTribes = true;
                 [self.tableView reloadData];
-                [self setUp];
-                [self UISetUp];
+                [self updateProgressBar];
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                 [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error loading your Tribes. Please try again" closeButtonTitle:@"OK" duration:0.0];
@@ -693,8 +695,12 @@ heightForHeaderInSection:(NSInteger)section {
         [alert hideView];
         if (success) {
             [refreshControl endRefreshing];
-            [self.tableView reloadData];
-            [self updateProgressBar];
+            
+            [currentUser loadTribesWithBlock:^(bool success) {
+                [self.tableView reloadData];
+                [self updateProgressBar];
+            }];
+
         } else {
             SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
             [error showError:@"Oh oh!" subTitle:@"There was an error fetching your tribes. Please make sure your internet connection is working and try again!" closeButtonTitle:@"OK" duration:0.0];
