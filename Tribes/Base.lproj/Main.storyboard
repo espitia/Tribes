@@ -424,17 +424,17 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="usernameTextField" destination="AsU-XZ-qTf" id="Csv-CT-682"/>
-                        <segue destination="s34-w8-WZT" kind="show" id="Jcy-LI-ANK"/>
+                        <segue destination="s34-w8-WZT" kind="show" identifier="continueToCongratulations" id="Jcy-LI-ANK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTh-f4-tM9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2099.5" y="771.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Congratulations View Controller-->
         <scene sceneID="5GD-ck-jBn">
             <objects>
-                <viewController id="s34-w8-WZT" sceneMemberID="viewController">
+                <viewController id="s34-w8-WZT" customClass="CongratulationsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="O1c-wk-ggZ"/>
                         <viewControllerLayoutGuide type="bottom" id="eLj-JI-yQI"/>
