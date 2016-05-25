@@ -24,28 +24,35 @@
     return [passwordTest evaluateWithObject:password];
 }
 
--(void)isUsernameValid:(NSString *)usernameToCheck withBlock:(void(^)(BOOL success))callback {
+
+/**
+ * Validate a string to be an acceptable username.
+ * Errors returned are ints.
+ * 0 = no error
+ * 1 = syntax is wrong (capitals,lowercase and 3-16 length is acceptable)
+ * 2 = username is already taken
+ */
+-(void)isUsernameValid:(NSString *)usernameToCheck withBlock:(void(^)(int error))callback {
     
-    __block BOOL valid;
     
-    if ([usernameToCheck isEqualToString:@""] || usernameToCheck.length < 3) {
-        callback(false);
-        return;
-    }
+    NSString *usernameRegex = @"[A-Za-z0-9]{3,16}";
+    NSPredicate *usernameTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", usernameRegex];
     
-    PFQuery * query = [PFUser query];
-    [query whereKey:@"username" equalTo:usernameToCheck];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        
-        if (!error) {
-            if (objects.count > 0) {
-                valid = false;
+    // check for syntax
+    if (![usernameTest evaluateWithObject:usernameToCheck]) {
+        callback(1);
+    } else {
+
+        PFQuery * queryForEmail = [PFUser query];
+        [queryForEmail whereKey:@"usernameLowerCase" equalTo:[usernameToCheck lowercaseString]]; // remember to compare to lowercase copy
+        [queryForEmail getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            if (object && !error) {
+                callback(2);
             } else {
-                valid = true;
+                callback(0);
             }
-            callback(valid);
-        }
-    }];
+        }];
+    }
 }
 
 /**
