@@ -30,6 +30,7 @@
     
     // ui touches
     self.navigationController.navigationBarHidden = false;
+    self.navigationItem.title = @"Password";
     _passwordTextField.secureTextEntry = YES;
     
     // lines on top and below email textfield

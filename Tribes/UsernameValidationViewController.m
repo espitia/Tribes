@@ -30,6 +30,8 @@
     
     // ui touches
     self.navigationController.navigationBarHidden = false;
+    self.navigationItem.title = @"Username";
+
     
     // lines on top and below email textfield
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _usernameTextField.frame.origin.y, self.view.bounds.size.width, 1)];
@@ -77,18 +79,21 @@
         
         if (error == 0) {
         
-            // SIGN UP
-            self.user.username = _usernameTextField.text;
-            self.user[@"usernameLowerCase"] = [_usernameTextField.text lowercaseString];
-            self.user[@"emailLowerCase"] = [self.user.email lowercaseString];
+//            // SIGN UP
+//            self.user.username = _usernameTextField.text;
+//            self.user[@"usernameLowerCase"] = [_usernameTextField.text lowercaseString];
+//            self.user[@"emailLowerCase"] = [self.user.email lowercaseString];
+//            
+//            [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//                
+//                if (!error && succeeded) {
+//                    NSLog(@"YAAAAAZ");
+//                }
+//                
+//            }];
             
-            [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                
-                if (!error && succeeded) {
-                    NSLog(@"YAAAAAZ");
-                }
-                
-            }];
+            [self performSegueWithIdentifier:@"continueToCongratulations" sender:nil];
+            
             
             
         } else {

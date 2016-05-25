@@ -30,6 +30,7 @@
 
     // ui touches
     self.navigationController.navigationBarHidden = false;
+    self.navigationItem.title = @"Email";
     
     // lines on top and below email textfield
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, _emailTextField.frame.origin.y, self.view.bounds.size.width, 1)];
