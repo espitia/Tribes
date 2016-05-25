@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "User.h"
 
 @interface PasswordValidationViewController : UIViewController
 
+@property (nonatomic, strong) User * user;
 @end

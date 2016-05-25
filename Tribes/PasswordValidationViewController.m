@@ -7,6 +7,7 @@
 //
 
 #import "PasswordValidationViewController.h"
+#import "UsernameValidationViewController.h"
 #import "SignUpValidation.h"
 #import "SCLAlertView.h"
 
@@ -73,7 +74,9 @@
     
     // if password is valid, continue to next vc (username vc)
     if ([validation isPasswordValid:_passwordTextField.text]) {
-        [self performSegueWithIdentifier:@"continue" sender:nil];
+        
+        self.user.password = _passwordTextField.text;
+        [self performSegueWithIdentifier:@"continue" sender:self.user];
     } else {
         
         [_passwordTextField resignFirstResponder];
@@ -116,6 +119,15 @@
         [signUpButton setFrame:CGRectMake(-self.view.frame.size.width, self.view.frame.size.height - keyboardFrame.size.height - 60, self.view.frame.size.width, 60)];
     }];
     
+}
+
+#pragma mark - Navigation
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"continue"]) {
+        UsernameValidationViewController * vc = (UsernameValidationViewController *)segue.destinationViewController;
+        vc.user = sender;
+    }
 }
 
 #pragma mark - Util
