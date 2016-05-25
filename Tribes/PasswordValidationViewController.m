@@ -75,8 +75,13 @@
     if ([validation isPasswordValid:_passwordTextField.text]) {
         [self performSegueWithIdentifier:@"continue" sender:nil];
     } else {
+        
+        [_passwordTextField resignFirstResponder];
         SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
-        [errorAlert showError:@"Oh oh... 😯" subTitle:@"Looks like there was an error with your password. Remember it should have at least 8 characters, 1 letter and 1 number." closeButtonTitle:@"OK" duration:0.0];
+        [errorAlert addButton:@"OK" actionBlock:^{
+            [_passwordTextField becomeFirstResponder];
+        }];
+        [errorAlert showError:@"Oh oh... 😯" subTitle:@"Passwords are annoying, we know. Until something better comes along, we have to use them. \n\nYour password should have at least 1 letter, 1 number and at least 6 characters long. No crazy @$#! signs. Try again!" closeButtonTitle:nil duration:0.0];
     }
 }
 
