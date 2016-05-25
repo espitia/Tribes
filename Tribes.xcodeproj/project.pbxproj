@@ -19,6 +19,8 @@
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
 		091C37331CF49F3A0020B6BE /* EmailValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */; };
+		091C37361CF4A9B50020B6BE /* PasswordValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */; };
+		091C37391CF4AE930020B6BE /* UsernameValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */; };
 		0923AD0F1CB41BA00022753D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0923AD0E1CB41BA00022753D /* StoreKit.framework */; };
 		0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD111CB41BC00022753D /* PremiumViewController.m */; };
 		0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0923AD121CB41BC00022753D /* PremiumViewController.xib */; };
@@ -105,6 +107,10 @@
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		091C37311CF49F3A0020B6BE /* EmailValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailValidationViewController.h; sourceTree = "<group>"; };
 		091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailValidationViewController.m; sourceTree = "<group>"; };
+		091C37341CF4A9B50020B6BE /* PasswordValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordValidationViewController.h; sourceTree = "<group>"; };
+		091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordValidationViewController.m; sourceTree = "<group>"; };
+		091C37371CF4AE930020B6BE /* UsernameValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsernameValidationViewController.h; sourceTree = "<group>"; };
+		091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsernameValidationViewController.m; sourceTree = "<group>"; };
 		0923AD0E1CB41BA00022753D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0923AD101CB41BC00022753D /* PremiumViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PremiumViewController.h; sourceTree = "<group>"; };
 		0923AD111CB41BC00022753D /* PremiumViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PremiumViewController.m; sourceTree = "<group>"; };
@@ -431,10 +437,14 @@
 		09C658521C46CD6B008C4EC3 /* Signup/onboard */ = {
 			isa = PBXGroup;
 			children = (
-				091C37311CF49F3A0020B6BE /* EmailValidationViewController.h */,
-				091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */,
 				099760511C7D2710008E88A7 /* SignUpOrLoginViewController.h */,
 				099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */,
+				091C37311CF49F3A0020B6BE /* EmailValidationViewController.h */,
+				091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */,
+				091C37341CF4A9B50020B6BE /* PasswordValidationViewController.h */,
+				091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */,
+				091C37371CF4AE930020B6BE /* UsernameValidationViewController.h */,
+				091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */,
 			);
 			name = Signup/onboard;
 			sourceTree = "<group>";
@@ -738,6 +748,7 @@
 				09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */,
 				090C23961CBD9EBF00A52DF6 /* AddManagerTableViewController.m in Sources */,
 				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
+				091C37391CF4AE930020B6BE /* UsernameValidationViewController.m in Sources */,
 				0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
 				099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */,
@@ -747,6 +758,7 @@
 				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */,
+				091C37361CF4A9B50020B6BE /* PasswordValidationViewController.m in Sources */,
 				090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */,
 				0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */,
 				09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */,
