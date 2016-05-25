@@ -395,10 +395,10 @@
             </objects>
             <point key="canvasLocation" x="515.5" y="771.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Username Validation View Controller-->
         <scene sceneID="FGP-aN-dd6">
             <objects>
-                <viewController id="bgi-0h-mu7" sceneMemberID="viewController">
+                <viewController id="bgi-0h-mu7" customClass="UsernameValidationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SNb-2B-Bn7"/>
                         <viewControllerLayoutGuide type="bottom" id="NG5-GN-BEZ"/>
@@ -422,6 +422,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="usernameTextField" destination="AsU-XZ-qTf" id="Csv-CT-682"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTh-f4-tM9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -671,7 +674,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="passwordTextField" destination="lSh-Dr-Lds" id="rYK-CP-GUa"/>
-                        <segue destination="bgi-0h-mu7" kind="show" id="BA6-Mk-w0C"/>
+                        <segue destination="bgi-0h-mu7" kind="show" identifier="continue" id="BA6-Mk-w0C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jrZ-7D-0Th" userLabel="First Responder" sceneMemberID="firstResponder"/>
