@@ -62,5 +62,7 @@ extern int RECEIVED_APPLAUSE_XP;
 @property BOOL loadedInitialTribes;
 @property BOOL weeklyReportActive;
 @property BOOL hasTribesWithMembers;
+@property BOOL signedUpToday;
+@property BOOL pushNotificationsEnabled;
 
 @end

@@ -23,6 +23,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 @synthesize loadedInitialTribes;
 @dynamic weeklyReportActive;
 @dynamic hasTribesWithMembers;
+@dynamic signedUpToday;
+@dynamic pushNotificationsEnabled;
 
 #pragma mark - Parse required methods
 
@@ -581,6 +583,36 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }
     }
     return false;
+}
+
+#pragma mark - User states
+
+-(BOOL)signedUpToday {
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
+    NSDate *today = [cal dateFromComponents:components];
+    components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:self.createdAt];
+    NSDate *otherDate = [cal dateFromComponents:components];
+    
+    return ([today isEqualToDate:otherDate]);
+}
+
+-(BOOL)pushNotificationsEnabled {
+
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    BOOL enabled;
+    
+    // Try to use the newer isRegisteredForRemoteNotifications otherwise use the enabledRemoteNotificationTypes.
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        enabled = [application isRegisteredForRemoteNotifications];
+    } else {
+        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
+        enabled = types & UIRemoteNotificationTypeAlert;
+    }
+    
+    return enabled;
 }
 
 #pragma mark - Hibernation
