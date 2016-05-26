@@ -85,7 +85,7 @@
         [errorAlert addButton:@"OK" actionBlock:^{
             [_passwordTextField becomeFirstResponder];
         }];
-        [errorAlert showError:@"Oh oh... 😯" subTitle:@"Passwords are annoying, we know. Until something better comes along, we have to use them. \n\nYour password should have at least 1 letter, 1 number and at least 6 characters long. No crazy @$#! signs. Try again!" closeButtonTitle:nil duration:0.0];
+        [errorAlert showError:@"Oh oh... 😯" subTitle:@"Passwords are annoying, we agree. Until mind readers come along, we have to use them 🤓 \n\nYour password should have at least 1 letter, 1 number and at least 6 characters long. No crazy @$#! signs. Try again!" closeButtonTitle:nil duration:0.0];
     }
 }
 
