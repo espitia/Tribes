@@ -781,7 +781,6 @@
 				09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */,
 				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
 				09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */,
-				091C373C1CF60AD40020B6BE /* CongratulationsViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
