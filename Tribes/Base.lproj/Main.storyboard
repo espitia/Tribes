@@ -373,6 +373,19 @@
                                     <constraint firstAttribute="width" secondItem="kBd-CQ-GWF" secondAttribute="height" multiplier="4:1" id="piM-v5-57D"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obx-R9-NJe">
+                                <rect key="frame" x="0.0" y="528" width="375" height="70"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="eVq-dU-V6l"/>
+                                </constraints>
+                                <state key="normal" title="LOG IN">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="pcS-nC-IW0" kind="show" id="oKj-dS-iwv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -381,11 +394,14 @@
                             <constraint firstItem="HvN-ta-YaX" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="67" id="LvL-5C-BG6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kBd-CQ-GWF" secondAttribute="trailing" constant="38" id="Mct-xi-Xd2"/>
                             <constraint firstItem="kBd-CQ-GWF" firstAttribute="top" secondItem="HvN-ta-YaX" secondAttribute="bottom" constant="8" id="YZy-K4-mIU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Obx-R9-NJe" secondAttribute="trailing" constant="-20" id="nwQ-jJ-lCR"/>
                             <constraint firstItem="kBd-CQ-GWF" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="37" id="rzd-uS-K3r"/>
+                            <constraint firstItem="Obx-R9-NJe" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="sox-km-ccA"/>
                             <constraint firstItem="HvN-ta-YaX" firstAttribute="centerX" secondItem="DHu-eI-IwJ" secondAttribute="centerX" id="tNh-zg-U6B"/>
                             <constraint firstItem="A3I-dU-qwj" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="toZ-xu-4eI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A3I-dU-qwj" secondAttribute="trailing" constant="-20" id="uby-MQ-LDs"/>
                             <constraint firstItem="HvN-ta-YaX" firstAttribute="top" secondItem="9f7-VF-Xfa" secondAttribute="bottom" constant="115" id="xQ5-qw-h5g"/>
+                            <constraint firstItem="A3I-dU-qwj" firstAttribute="top" secondItem="Obx-R9-NJe" secondAttribute="bottom" constant="-1" id="zhE-fN-DnE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fQj-vo-tqE"/>
@@ -412,7 +428,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your username is your identity on Tribes!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7iQ-yi-Xg0">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Your username is your identity on Tribes!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="7iQ-yi-Xg0">
                                 <rect key="frame" x="20" y="98" width="335" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -420,11 +436,14 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leadingMargin" secondItem="7iQ-yi-Xg0" secondAttribute="leading" id="3O1-yH-Jlx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7iQ-yi-Xg0" secondAttribute="trailing" id="HTN-po-T3q"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="usernameTextField" destination="AsU-XZ-qTf" id="Csv-CT-682"/>
-                        <segue destination="s34-w8-WZT" kind="show" identifier="continueToCongratulations" id="Jcy-LI-ANK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTh-f4-tM9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -507,7 +526,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xi8-gu-im5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1651.5" y="-2160.5"/>
+            <point key="canvasLocation" x="1651.5" y="-2188.5"/>
         </scene>
         <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
@@ -627,14 +646,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your email will be used to identify you." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-6b-cAk">
-                                <rect key="frame" x="20" y="98" width="335" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" layoutMarginsFollowReadableWidth="YES" text="Your email will be used to identify you." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="7Ua-6b-cAk">
+                                <rect key="frame" x="42" y="98" width="292" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="7Ua-6b-cAk" firstAttribute="leading" secondItem="uff-Aj-SYI" secondAttribute="leadingMargin" constant="22" id="lds-7b-dMa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7Ua-6b-cAk" secondAttribute="trailing" constant="21" id="mWV-0V-3EG"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -645,6 +668,60 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GLx-du-2Yb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1022.5" y="771.5"/>
+        </scene>
+        <!--Log In View Controller-->
+        <scene sceneID="0b0-hC-sI1">
+            <objects>
+                <viewController id="pcS-nC-IW0" customClass="LogInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1Uu-H9-YeU"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Ud-mn-s3q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pwc-AK-FQd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v8p-rz-PkW">
+                                <rect key="frame" x="20" y="115" width="335" height="80"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" layoutMarginsFollowReadableWidth="YES" text="Your email will be used to identify you." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="vWx-St-sDa">
+                                <rect key="frame" x="39" y="86" width="292" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FAh-42-BoK">
+                                <rect key="frame" x="-2" y="597" width="375" height="70"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="2Su-Hp-rzF"/>
+                                </constraints>
+                                <state key="normal" title="LOG IN">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logIn:" destination="pcS-nC-IW0" eventType="touchUpInside" id="TnZ-mh-hDh"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4oC-g3-ejl">
+                                <rect key="frame" x="20" y="203" width="335" height="80"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="emailAddress" destination="v8p-rz-PkW" id="VrA-61-bMV"/>
+                        <outlet property="password" destination="4oC-g3-ejl" id="lMS-PP-mJu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dAN-ZP-4w6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1022.5" y="1616.5"/>
         </scene>
         <!--Password Validation View Controller-->
         <scene sceneID="Gxt-Tf-a1f">
@@ -663,7 +740,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You'll use this password to login to Tribes!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEJ-VU-gJd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="You'll use this password to login to Tribes!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="OEJ-VU-gJd">
                                 <rect key="frame" x="20" y="98" width="335" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -671,6 +748,10 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="OEJ-VU-gJd" secondAttribute="trailing" id="BR9-Ie-zm8"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="OEJ-VU-gJd" secondAttribute="leading" id="uWn-QP-o6V"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -688,10 +769,10 @@
         <image name="helper-text" width="400" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Wlf-vK-7ao"/>
-        <segue reference="pmR-Nk-1kI"/>
-        <segue reference="aDo-Yy-kpM"/>
         <segue reference="4jV-l5-Rgk"/>
+        <segue reference="aDo-Yy-kpM"/>
+        <segue reference="pmR-Nk-1kI"/>
+        <segue reference="Q77-gA-6vJ"/>
         <segue reference="pOM-lO-I9W"/>
     </inferredMetricsTieBreakers>
 </document>
