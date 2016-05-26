@@ -63,6 +63,7 @@
     [_usernameTextField becomeFirstResponder];
 }
 
+#pragma mark - Text Field Delegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
@@ -71,6 +72,8 @@
     
     return true;
 }
+
+#pragma mark - Continue Button
 
 -(void)continueToNextVc {
     
