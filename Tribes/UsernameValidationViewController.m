@@ -7,6 +7,7 @@
 //
 
 #import "UsernameValidationViewController.h"
+#import "TribesTableViewController.h"
 #import "SignUpValidation.h"
 #import "SCLAlertView.h"
 #import <Parse/Parse.h>
@@ -81,29 +82,80 @@
     [validation isUsernameValid:_usernameTextField.text withBlock:^(int error) {
         
         if (error == 0) {
-        
-//            // SIGN UP
-//            self.user.username = _usernameTextField.text;
-//            self.user[@"usernameLowerCase"] = [_usernameTextField.text lowercaseString];
-//            self.user[@"emailLowerCase"] = [self.user.email lowercaseString];
-//            
-//            [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-//                
-//                if (!error && succeeded) {
-//                    NSLog(@"YAAAAAZ");
-//                }
-//                
-//            }];
             
-            [self performSegueWithIdentifier:@"continueToCongratulations" sender:nil];
-            
-            
+            [self signUpNewUser];
             
         } else {
             [self showErrorAlertWithErrorCode:error];
         }
         
     }];
+}
+
+#pragma mark - Sign up
+
+-(void)signUpNewUser {
+    
+    // SIGN UP
+    self.user.username = _usernameTextField.text;
+    self.user[@"usernameLowerCase"] = [_usernameTextField.text lowercaseString];
+    self.user[@"emailLowerCase"] = [self.user.email lowercaseString];
+
+    [self.user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+
+        if (!error && succeeded) {
+            
+            
+            // save installation for pushes
+            PFInstallation *installation = [PFInstallation currentInstallation];
+            installation[@"user"] = [PFUser currentUser];
+            [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (succeeded && !error) {
+                    NSLog(@"succesfully created PFInstallation object for user");
+                    
+                    [PFUser becomeInBackground:self.user.sessionToken block:^(PFUser *user, NSError *error) {
+                        if (user && !error) {
+                            
+                            // The current user is now set to user.
+                            // dismiss signup controller
+                            [self.navigationController dismissViewControllerAnimated:true completion:^{
+     
+                        
+                                // reload table view
+                                UIWindow *window = [UIApplication sharedApplication].keyWindow;
+                                UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
+                                TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
+                                
+                                [User currentUser].loadedInitialTribes = true;
+                                [tribesVC.tableView reloadData];
+                                [tribesVC setUp];
+                                [tribesVC UISetUp];
+                                [tribesVC makeItRainConfetti];
+                                [self congratulationsAlert];
+                                
+                                
+                            }];
+                        } else {
+                            NSLog(@"error signing in to user (becomeInBg)");
+                        }
+                    }];
+                } else {
+                    NSLog(@"Error saving installation object (for push notif.)");
+                }
+            }];
+        }
+
+    }];
+}
+
+#pragma mark - Alerts
+
+-(void)congratulationsAlert {
+    
+    SCLAlertView *  congratulationsAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [congratulationsAlert showSuccess:@"Congratulations 🎈" subTitle:@"You are now ready to set up your Tribe and start building those new habits." closeButtonTitle:@"LET'S GO!" duration:0.0];
+    
 }
 
 -(void)showErrorAlertWithErrorCode:(int)error {
