@@ -608,7 +608,9 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(BOOL)shouldAskForNotificationsPermission {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] && ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL));
+    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 &&
+            [currentUser hasTribesWithMembers] &&
+            [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] && ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL));
 }
 -(void)showAlertForWalkthroughVideo {
     // show alert with explanation of why the video
