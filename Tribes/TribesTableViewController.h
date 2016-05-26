@@ -16,5 +16,5 @@
 // public methods to call from signing up navigation stack
 -(void)setUp;
 -(void)UISetUp;
-
+-(void)makeItRainConfetti;
 @end
