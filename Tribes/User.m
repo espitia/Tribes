@@ -22,6 +22,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 @dynamic xp;
 @synthesize loadedInitialTribes;
 @dynamic weeklyReportActive;
+@dynamic hasTribesWithMembers;
 
 #pragma mark - Parse required methods
 
@@ -571,6 +572,15 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [self saveInBackground];
     [tribeToRemoveFrom saveInBackground];
 
+}
+
+-(BOOL)hasTribesWithMembers {
+    for (Tribe * tribe in self.tribes) {
+        if (tribe.tribeMembers.count > 1) {
+            return true;
+        }
+    }
+    return false;
 }
 
 #pragma mark - Hibernation
