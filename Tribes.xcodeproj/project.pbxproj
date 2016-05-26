@@ -328,6 +328,15 @@
 			name = "Sign up";
 			sourceTree = "<group>";
 		};
+		091C37411CF785EA0020B6BE /* Log in */ = {
+			isa = PBXGroup;
+			children = (
+				091C373E1CF747870020B6BE /* LogInViewController.h */,
+				091C373F1CF747870020B6BE /* LogInViewController.m */,
+			);
+			name = "Log in";
+			sourceTree = "<group>";
+		};
 		0923AD151CB41BC50022753D /* Premium */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,10 +462,9 @@
 		09C658521C46CD6B008C4EC3 /* Signup/onboard */ = {
 			isa = PBXGroup;
 			children = (
-				091C373E1CF747870020B6BE /* LogInViewController.h */,
-				091C373F1CF747870020B6BE /* LogInViewController.m */,
 				099760511C7D2710008E88A7 /* SignUpOrLoginViewController.h */,
 				099760521C7D2710008E88A7 /* SignUpOrLoginViewController.m */,
+				091C37411CF785EA0020B6BE /* Log in */,
 				091C373D1CF7476C0020B6BE /* Sign up */,
 			);
 			name = Signup/onboard;

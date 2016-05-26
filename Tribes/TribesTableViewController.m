@@ -67,7 +67,10 @@
                 [self updateProgressBar];
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-                [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error loading your Tribes. Please try again" closeButtonTitle:@"OK" duration:0.0];
+                [alert addButton:@"MAGIC BUTTON" actionBlock:^{
+                    [self refreshTable];
+                }];
+                [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error while loading your Tribes. This shouldn't happen. Ever! So now, let's try to fix it by tapping the magic button below 👇" closeButtonTitle:nil duration:0.0];
             }
             
         }];
@@ -700,19 +703,21 @@ heightForHeaderInSection:(NSInteger)section {
         if (success) {
             
             [currentUser loadTribesWithBlock:^(bool success) {
-                
+                currentUser.loadedInitialTribes = true;
                 [alert hideView];
                 [refreshControl endRefreshing];
                 
                 [self.tableView reloadData];
                 [self updateProgressBar];
 
-
             }];
 
         } else {
+            [refreshControl endRefreshing];
+            [alert hideView];
+
             SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
-            [error showError:@"Oh oh!" subTitle:@"There was an error fetching your tribes. Please make sure your internet connection is working and try again!" closeButtonTitle:@"OK" duration:0.0];
+            [error showError:@"🙄" subTitle:@"There was an error fetching your Tribes. We agree, errors are annoying. Please make sure your internet connection is working and swipe down to reload your Tribes!" closeButtonTitle:@"OK" duration:0.0];
             [refreshControl endRefreshing];
         }
     }];
