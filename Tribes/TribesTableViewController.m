@@ -697,13 +697,17 @@ heightForHeaderInSection:(NSInteger)section {
     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
     [currentUser updateTribesWithBlock:^(bool success) {
-        [alert hideView];
         if (success) {
-            [refreshControl endRefreshing];
             
             [currentUser loadTribesWithBlock:^(bool success) {
+                
+                [alert hideView];
+                [refreshControl endRefreshing];
+                
                 [self.tableView reloadData];
                 [self updateProgressBar];
+
+
             }];
 
         } else {
