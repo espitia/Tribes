@@ -62,18 +62,27 @@
                 
                 if (user && !error) {
                     
+                    
+                    
                     [self dismissViewControllerAnimated:true completion:^{
-                        // reload table view
+                        
+                        // get tribes main table vc
                         UIWindow *window = [UIApplication sharedApplication].keyWindow;
                         UINavigationController *rootViewController = (UINavigationController *)window.rootViewController;
                         TribesTableViewController * tribesVC = rootViewController.viewControllers[0];
-                
+                       
+                        // alert user account was found
+                        SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
+                        [successAlert showSuccess:tribesVC title:@"Found your account 😄" subTitle:@"It should take just a few seconds to load it.. ⏰" closeButtonTitle:nil duration:0.0];
+                        
+                        // load tribes
                         [(User *)user loadTribesWithBlock:^(bool success) {
                             if (success) {
                                 [User currentUser].loadedInitialTribes = true;
                                 [tribesVC.tableView reloadData];
                                 [tribesVC setUp];
                                 [tribesVC UISetUp];
+                                [successAlert hideView];
                             }
                         }];
                     }];
