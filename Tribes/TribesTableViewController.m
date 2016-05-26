@@ -604,13 +604,16 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(BOOL)shouldPlayWalkthroughVideo {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [userDefaults objectForKey:@"playedWalkthroughVideo"] == NULL);
+    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [userDefaults objectForKey:@"playedWalkthroughVideo"] == NULL) &&
+        ([currentUser signedUpToday]);
 }
 -(BOOL)shouldAskForNotificationsPermission {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 &&
             [currentUser hasTribesWithMembers] &&
-            [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] && ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL));
+            [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] &&
+            ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL) &&
+            (![currentUser pushNotificationsEnabled]));
 }
 -(void)showAlertForWalkthroughVideo {
     // show alert with explanation of why the video
