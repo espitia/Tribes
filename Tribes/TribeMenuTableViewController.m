@@ -12,8 +12,11 @@
 #import "HabitsTableViewController.h"
 #import "User.h"
 #import "Habit.h"
+#import "SCLAlertView.h"
 
-@interface TribeMenuTableViewController ()
+@interface TribeMenuTableViewController () {
+    UISwitch * privacySwitch;
+}
 
 @end
 
@@ -36,6 +39,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // rows depend on what is being shown (members/habits)
+    if (_tribe[@"admin"] == [User currentUser]) {
+        return 3;
+    } else {
+        return 2;
+    }
     return 2;
 }
 
@@ -49,10 +57,14 @@
     NSString * title;
     switch (indexPath.row) {
         case 0:
-            title = @"Members 👫";
+            title = @"👫 Members";
             break;
         case 1:
-            title = @"Habits 🏋";
+            title = @"🏋 Habits";
+            break;
+        case 2:
+            title = @"🔐 Private";
+            [self configureCellForPrivacySettingWithCell:cell];
             break;
             
         default:
@@ -80,13 +92,37 @@
         case 1:
             [self performSegueWithIdentifier:@"ShowHabits" sender:_tribe];
             break;
+        case 2:
+            [self showPrivacyExplainerAlert];
+            break;
             
         default:
             break;
     }
 }
 
+#pragma mark - Configure Cell
 
+-(void)configureCellForPrivacySettingWithCell:(UITableViewCell *)cell {
+    
+    privacySwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
+    cell.accessoryView = privacySwitch;
+    
+    privacySwitch.on = (_tribe.privacy) ? true : false;
+    
+    [privacySwitch addTarget:self action:@selector(handlePrivacySwitch:) forControlEvents:UIControlEventValueChanged];
+}
+
+-(void)handlePrivacySwitch:(UISwitch *)sender {
+    UISwitch* switchControl = sender;
+    _tribe.privacy = (switchControl.on) ? true : false;
+    [_tribe saveEventually];
+}
+
+-(void)showPrivacyExplainerAlert {
+    SCLAlertView * explainerAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [explainerAlert showInfo:@"Private 🔐" subTitle:@"Setting your Tribe on Private will allow others to join your Trive only after you admit them. If your Tribe's Private setting is turned off, other members may join without being confirmed first." closeButtonTitle:@"GOT IT" duration:0.0];
+}
 #pragma mark - Segue navigation
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
