@@ -57,7 +57,7 @@
                     detail = @"Start a dynasty";
                     break;
                 case 1:
-                    title = @"Join a Friend's Tribe 👫";
+                    title = @"Join a Tribe 👫";
                     detail = @"Become part of the squad";
                     break;
                     
