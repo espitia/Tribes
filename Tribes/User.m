@@ -374,12 +374,12 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 #pragma mark - Create Tribe
 
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback {
-
+    
     Tribe * newTribe = [[Tribe alloc] init];
     newTribe[@"name"] = name;
     newTribe[@"nameLowerCase"] = [name lowercaseString];
     newTribe[@"admin"] = self;
-    newTribe[@"private"] = @true;
+    newTribe[@"private"] = @YES;
     
     PFRelation * members = [newTribe relationForKey:@"members"];
     [members addObject:self];
