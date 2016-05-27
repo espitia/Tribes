@@ -54,11 +54,9 @@
             switch (indexPath.row) {
                 case 0:
                     title = @"Create a Tribe 🏆";
-                    detail = @"Start a dynasty";
                     break;
                 case 1:
                     title = @"Join a Tribe 👫";
-                    detail = @"Become part of the squad";
                     break;
                     
                 default:
@@ -71,7 +69,6 @@
     }
     
     cell.textLabel.text = title;
-    cell.detailTextLabel.text = detail;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
