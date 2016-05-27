@@ -39,13 +39,18 @@
     PFQuery * query = [PFQuery queryWithClassName:@"Tribe"];
 
     if ([_searchBar.text isEqualToString:@""]) {
-        [query whereKey:@"prime" equalTo:@1];
+        [query whereKey:@"prime" equalTo:@YES];
         return query;
     } else {
         [query whereKey:@"name" containsString:_searchBar.text];
+        [query includeKey:@"admin"];
     }
     
     return query;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 70;
 }
 
 -(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
