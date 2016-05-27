@@ -55,8 +55,16 @@
 
 -(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
     PFTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
-    cell.textLabel.text = [object objectForKey:@"name"];
+    
+    NSString * title;
+    
+    if ([object objectForKey:@"admin"]) {
+        title = [NSString stringWithFormat:@"%@ by %@", [object objectForKey:@"name"],[object objectForKey:@"admin"][@"username"]];
+    } else {
+        title =  [object objectForKey:@"name"];
+    }
+    
+    cell.textLabel.text = title;
     
     return cell;
 }
@@ -67,7 +75,6 @@
     [self loadObjects];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", self.objects);
 }
 
 @end
