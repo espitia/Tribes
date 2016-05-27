@@ -29,10 +29,7 @@
     
     // set current user
     currentUser = [User currentUser];
-    
-    // initialize textfield
-    tribeNameTextField = [[UITextField alloc] init];
-    
+
     // ui touches
     self.navigationItem.title = @"Create a Dynasty";
     
