@@ -281,7 +281,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9y-Qg-ReQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3649.5" y="-2168.5"/>
+            <point key="canvasLocation" x="3725.5" y="-2136.5"/>
         </scene>
         <!--Tribes-->
         <scene sceneID="YNw-0g-xML">
@@ -520,17 +520,47 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <segue destination="fft-A3-MET" kind="show" identifier="createTribe" id="Q77-gA-6vJ"/>
                         <segue destination="BjN-SF-v0K" kind="show" identifier="AddMemberOrHabit" id="J1p-8O-eQi"/>
+                        <segue destination="bLl-0S-6VW" kind="show" identifier="createTribe" id="0c1-rZ-sve"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xi8-gu-im5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1651.5" y="-2188.5"/>
         </scene>
+        <!--Join Tribe Manager Table View Controller-->
+        <scene sceneID="oRs-7W-sRj">
+            <objects>
+                <tableViewController id="bLl-0S-6VW" customClass="JoinTribeManagerTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9TO-oX-x1k">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellIdentifier" id="gRg-4x-VLO">
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gRg-4x-VLO" id="1ME-sw-WZY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="bLl-0S-6VW" id="ByS-BY-MJ9"/>
+                            <outlet property="delegate" destination="bLl-0S-6VW" id="F49-65-kZw"/>
+                        </connections>
+                    </tableView>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7ge-WM-gfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2275.5" y="-2999.5"/>
+        </scene>
         <!--Add Tribe Table View Controller-->
         <scene sceneID="bG7-bX-S7W">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="fft-A3-MET" customClass="AddTribeTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="p02-zY-uVB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -574,9 +604,8 @@
                         <segue destination="eYE-Np-i1v" kind="unwind" identifier="unwindFromAddTribe" unwindAction="unwindFromAddTribe:" id="7h8-mq-IH1"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dfI-ki-lmF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2227.5" y="-2961.5"/>
+            <point key="canvasLocation" x="2853.5" y="-2999.5"/>
         </scene>
         <!--Members Table View Controller-->
         <scene sceneID="yuo-ev-bxK">
@@ -760,10 +789,9 @@
         <image name="helper-text" width="400" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4jV-l5-Rgk"/>
         <segue reference="aDo-Yy-kpM"/>
         <segue reference="pmR-Nk-1kI"/>
-        <segue reference="Q77-gA-6vJ"/>
+        <segue reference="4jV-l5-Rgk"/>
         <segue reference="pOM-lO-I9W"/>
     </inferredMetricsTieBreakers>
 </document>
