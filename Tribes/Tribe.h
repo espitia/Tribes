@@ -33,6 +33,7 @@
 
 // adding to the tribe
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
+-(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 -(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(bool success))callback;
 
 -(void)addTribeMembersToHabits:(NSArray *)membersArray;

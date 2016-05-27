@@ -523,6 +523,24 @@
 
 }
 
+-(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback {
+    __block BOOL success;
+    
+    PFRelation * onHoldMembers = [self relationForKey:@"onHoldMembers"];
+    [onHoldMembers addObject:user];
+    
+    [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        
+        if (error) {
+            success = false;
+            callback(&success);
+        } else {
+            success = true;
+            callback(&success);
+        }
+    }];
+}
+
 -(BOOL)userAlreadyInTribe:(PFUser *)user {
     return ([self.tribeMembers containsObject:user]) ? true : false;
 }
