@@ -31,7 +31,7 @@
     currentUser = [User currentUser];
 
     // ui touches
-    self.navigationItem.title = @"Create a Dynasty";
+    self.navigationItem.title = @"Create a Tribe";
     
     // lines on top and below email textfield
     UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, tribeNameTextField.frame.origin.y, self.view.bounds.size.width, 1)];
