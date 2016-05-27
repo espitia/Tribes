@@ -100,7 +100,7 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "486058304.769589"
+                  timestampString = "486076341.37023"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "61"
@@ -115,7 +115,7 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "486058304.769701"
+                  timestampString = "486076341.370337"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "63"
@@ -148,7 +148,7 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "486058304.770461"
+                  timestampString = "486076341.371097"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "67"
@@ -163,7 +163,7 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "486058304.77057"
+                  timestampString = "486076341.371211"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "67"
@@ -186,6 +186,22 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tribes/FindTribesViewController.m"
+            timestampString = "486076341.293618"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-queryForTable"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
