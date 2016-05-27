@@ -34,11 +34,11 @@
     self.navigationItem.title = @"Create a Dynasty";
     
     // lines on top and below email textfield
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, tribeNameTextField.frame.origin.y - 5, self.view.bounds.size.width, 1)];
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, tribeNameTextField.frame.origin.y, self.view.bounds.size.width, 1)];
     topLineView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:topLineView];
     
-    UIView * bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, tribeNameTextField.frame.origin.y + tribeNameTextField.frame.size.height + 30, self.view.bounds.size.width, 1)];
+    UIView * bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, tribeNameTextField.frame.origin.y + tribeNameTextField.frame.size.height, self.view.bounds.size.width, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:bottomLineView];
 }
@@ -81,9 +81,8 @@
                 
                 if (success) {
                     
+                    [self.navigationController popToRootViewControllerAnimated:true];
                     
-                    // send tribe back to main viewcontroller
-                    [self performSegueWithIdentifier:@"unwindFromAddTribe" sender:self];
                 } else {
                     
                     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
