@@ -100,7 +100,7 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "485983260.001223"
+                  timestampString = "486058304.769589"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "61"
@@ -115,7 +115,7 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "485983260.001977"
+                  timestampString = "486058304.769701"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "63"
@@ -148,11 +148,11 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "485983260.006236"
+                  timestampString = "486058304.770461"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
                   offsetFromSymbolStart = "122">
                </Location>
                <Location
@@ -163,11 +163,11 @@
                   moduleName = "Tribes"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/germanespitia/Documents/Tribes/Tribes/Tribes/LogInViewController.m"
-                  timestampString = "485983260.006679"
+                  timestampString = "486058304.77057"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "65"
-                  endingLineNumber = "65"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
                   offsetFromSymbolStart = "15">
                </Location>
             </Locations>
@@ -179,13 +179,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Tribes/LogInViewController.m"
-            timestampString = "485975602.17565"
+            filePath = "Tribes/AddTribeTableViewController.m"
+            timestampString = "486054854.140167"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "-logIn:"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
