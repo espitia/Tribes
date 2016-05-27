@@ -614,12 +614,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ert-bK-I1p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3001.5" y="-3886.5"/>
+            <point key="canvasLocation" x="3009.5" y="-3870.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--FindA Friends Tribe View Controller-->
         <scene sceneID="oPF-tt-dpl">
             <objects>
-                <tableViewController id="WpF-3A-6uF" sceneMemberID="viewController">
+                <tableViewController id="WpF-3A-6uF" customClass="FindAFriendsTribeViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="xgl-Zz-dzE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -643,7 +643,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QRb-Nj-bEK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3025.5" y="-2975.5"/>
+            <point key="canvasLocation" x="3009.5" y="-2999.5"/>
         </scene>
         <!--Members Table View Controller-->
         <scene sceneID="yuo-ev-bxK">
