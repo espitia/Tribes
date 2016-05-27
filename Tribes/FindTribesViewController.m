@@ -59,9 +59,9 @@
     NSString * title;
     
     if ([object objectForKey:@"admin"]) {
-        title = [NSString stringWithFormat:@"%@ by %@", [object objectForKey:@"name"],[object objectForKey:@"admin"][@"username"]];
+        title = [NSString stringWithFormat:@"⭐ %@ by %@", [object objectForKey:@"name"],[object objectForKey:@"admin"][@"username"]];
     } else {
-        title =  [object objectForKey:@"name"];
+        title =  [NSString stringWithFormat:@"⭐ %@", [object objectForKey:@"name"]];
     }
     
     cell.textLabel.text = title;
