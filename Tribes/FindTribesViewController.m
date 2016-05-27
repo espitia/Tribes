@@ -1,21 +1,21 @@
 //
-//  FindAFriendsTribeViewController.m
+//  FindTribesViewController.m
 //  Tribes
 //
 //  Created by German Espitia on 5/27/16.
 //  Copyright © 2016 German Espitia. All rights reserved.
 //
 
-#import "FindAFriendsTribeViewController.h"
+#import "FindTribesViewController.h"
 #import <Parse/Parse.h>
 #import "User.h"
 
-@interface FindAFriendsTribeViewController () <UISearchBarDelegate>
+@interface FindTribesViewController () <UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end
 
-@implementation FindAFriendsTribeViewController
+@implementation FindTribesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

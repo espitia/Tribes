@@ -1,5 +1,5 @@
 //
-//  FindAFriendsTribeViewController.h
+//  FindTribesViewController.h
 //  Tribes
 //
 //  Created by German Espitia on 5/27/16.
@@ -8,6 +8,6 @@
 
 #import <ParseUI/ParseUI.h>
 
-@interface FindAFriendsTribeViewController : PFQueryTableViewController
+@interface FindTribesViewController : PFQueryTableViewController
 
 @end

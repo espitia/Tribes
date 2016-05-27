@@ -55,7 +55,7 @@
 		09E9C65F1CF8914500B5E87E /* JoinTribeManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E9C65E1CF8914500B5E87E /* JoinTribeManagerTableViewController.m */; };
 		09E9C6621CF8997C00B5E87E /* CreateATribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E9C6611CF8997C00B5E87E /* CreateATribeViewController.m */; };
 		09E9C6691CF8AF1900B5E87E /* libParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E9C6681CF8AF1900B5E87E /* libParse.a */; };
-		09E9C66C1CF8B27700B5E87E /* FindAFriendsTribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E9C66B1CF8B27700B5E87E /* FindAFriendsTribeViewController.m */; };
+		09E9C66C1CF8B27700B5E87E /* FindTribesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E9C66B1CF8B27700B5E87E /* FindTribesViewController.m */; };
 		09F2BF781C40575D008ABDF7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF771C40575D008ABDF7 /* AudioToolbox.framework */; };
 		09F2BF7A1C405765008ABDF7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF791C405765008ABDF7 /* CFNetwork.framework */; };
 		09F2BF7C1C40576D008ABDF7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF7B1C40576D008ABDF7 /* CoreGraphics.framework */; };
@@ -173,8 +173,8 @@
 		09E9C6601CF8997C00B5E87E /* CreateATribeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateATribeViewController.h; sourceTree = "<group>"; };
 		09E9C6611CF8997C00B5E87E /* CreateATribeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateATribeViewController.m; sourceTree = "<group>"; };
 		09E9C6681CF8AF1900B5E87E /* libParse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libParse.a; path = "../../../Library/Developer/Xcode/DerivedData/Tribes-fxjlahrsclfsxifqlbmrttdiicmd/Build/Products/Debug-iphonesimulator/libParse.a"; sourceTree = "<group>"; };
-		09E9C66A1CF8B27700B5E87E /* FindAFriendsTribeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindAFriendsTribeViewController.h; sourceTree = "<group>"; };
-		09E9C66B1CF8B27700B5E87E /* FindAFriendsTribeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindAFriendsTribeViewController.m; sourceTree = "<group>"; };
+		09E9C66A1CF8B27700B5E87E /* FindTribesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindTribesViewController.h; sourceTree = "<group>"; };
+		09E9C66B1CF8B27700B5E87E /* FindTribesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindTribesViewController.m; sourceTree = "<group>"; };
 		09F2BF771C40575D008ABDF7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		09F2BF791C405765008ABDF7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		09F2BF7B1C40576D008ABDF7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -528,8 +528,8 @@
 		09E9C6671CF8AAE900B5E87E /* Find a friend's tribe  */ = {
 			isa = PBXGroup;
 			children = (
-				09E9C66A1CF8B27700B5E87E /* FindAFriendsTribeViewController.h */,
-				09E9C66B1CF8B27700B5E87E /* FindAFriendsTribeViewController.m */,
+				09E9C66A1CF8B27700B5E87E /* FindTribesViewController.h */,
+				09E9C66B1CF8B27700B5E87E /* FindTribesViewController.m */,
 			);
 			name = "Find a friend's tribe ";
 			sourceTree = "<group>";
@@ -835,7 +835,7 @@
 				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
 				09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
-				09E9C66C1CF8B27700B5E87E /* FindAFriendsTribeViewController.m in Sources */,
+				09E9C66C1CF8B27700B5E87E /* FindTribesViewController.m in Sources */,
 				09E9C6621CF8997C00B5E87E /* CreateATribeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
