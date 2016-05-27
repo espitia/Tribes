@@ -21,6 +21,7 @@
 @dynamic nonWatcherHabits;
 @dynamic thisWeeksCompletions;
 @dynamic lastWeeksCompletions;
+@dynamic privacy;
 // tribe members is = as members but since members key is a pfrelation, we create another variable to hold array of members
 @synthesize tribeMembers;
 

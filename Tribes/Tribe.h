@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSMutableArray * tribeMembers;
 @property (nonatomic, strong) NSMutableArray * habits;
 @property (nonatomic, strong) NSMutableArray * nonWatcherHabits;
+@property BOOL privacy;
 
 
 
