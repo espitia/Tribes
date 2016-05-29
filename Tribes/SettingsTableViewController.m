@@ -197,7 +197,7 @@
                 case 2: {
                     MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
                     controller.mailComposeDelegate = self;
-                    [controller setToRecipients:@[@"tribeshq@gmail.com"]];
+                    [controller setToRecipients:@[@"german@usetribes.com"]];
                     [controller setSubject:@"About Tribes.."];
                     [controller setMessageBody:@"Hello there 🖖" isHTML:NO];
                     if (self) [self presentViewController:controller animated:true completion:nil];
