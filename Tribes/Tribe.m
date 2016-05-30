@@ -107,14 +107,24 @@
                 if (success) {
                     NSLog(@"3. successfully loaded all memebers");
                     
-                    [self loadActivitiesWithBlock:^(bool success) {
+                    [self loadOnHoldMembersWithBlock:^(bool success) {
+                       
                         if (success) {
-                            NSLog(@"4. successfully loaded all activities");
-                            callback(true);
+                            NSLog(@"4. successfully loaded all onhold members");
+                            
+                            [self loadActivitiesWithBlock:^(bool success) {
+                                if (success) {
+                                    NSLog(@"5. successfully loaded all activities");
+                                    callback(true);
+                                } else {
+                                    NSLog(@"failed to load activities");
+                                    callback(false);
+                                }
+                            }];
                         } else {
-                            NSLog(@"failed to load activities");
-                            callback(false);
+                            NSLog(@"failed to load on hold members");
                         }
+                        
                     }];
                     
                 } else {
@@ -213,6 +223,64 @@
                     
                 } else {
                     NSLog(@"failed to load members from network");
+                    callback(false);
+                }
+            }];
+        }
+        
+    }];
+    
+}
+
+-(void)loadOnHoldMembersWithBlock:(void(^)(bool success))callback {
+    
+    // first attempt to load members from local datastore
+    PFRelation * membersRelation = [self relationForKey:@"onHoldMembers"];
+    PFQuery * query = [membersRelation query];
+    [query fromLocalDatastore];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        NSLog(@"%@", objects);
+        
+        if (objects && !error && [self allMembersFullyLoaded:objects]) {
+            NSLog(@"succesfully loaded all members from local datastore");
+            
+            // add members to tribe.onHoldMembers
+            [self addTribeOnHoldMembersToTribe:objects];
+            
+            callback(true);
+        } else {
+            
+            NSLog(@"failed to load members from local datastore. will atempt fetching from network");
+            PFRelation * relationToOnHoldMembersToFetchFromNetwork = [self relationForKey:@"onHoldMembers"];
+            PFQuery * query = [relationToOnHoldMembersToFetchFromNetwork query];
+            [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                
+                if (!error && objects && [self allMembersFullyLoaded:objects]) {
+                    NSLog(@"succesfully fetched members from network");
+                    
+                    
+                    [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded && !error) {
+                            
+                            NSLog(@"successfully pinned members");
+                            
+                            // add members to tribe.onHoldMembers
+                            [self addTribeOnHoldMembersToTribe:objects];
+                            
+                            callback(true);
+                        } else {
+                            NSLog(@"failed to pin members");
+                            callback(false);
+                        }
+                    }];
+                    
+                    
+                } else if (objects.count == 0) {
+                    NSLog(@"no on hold members found.");
+                    callback(true);
+                } else {
+                    NSLog(@"failed to load on hold members");
                     callback(false);
                 }
             }];
@@ -335,15 +403,22 @@
                         if (success) {
                             [self updateMembersWithBlock:^(bool success) {
                                 if (success) {
-                                    [self updateActivitiesWithBlock:^(bool success) {
+                                    [self updateOnHoldMembersWithBlock:^(bool success) {
                                         if (success) {
-                                            NSLog(@"successfully updated tribe");
-                                            callback(true);
+                                            [self updateActivitiesWithBlock:^(bool success) {
+                                                if (success) {
+                                                    NSLog(@"successfully updated tribe");
+                                                    callback(true);
+                                                } else {
+                                                    NSLog(@"failed to update activities");
+                                                    callback(false);
+                                                }
+                                            }];
                                         } else {
-                                            NSLog(@"failed to update activities");
-                                            callback(false);
+                                            NSLog(@"failed to update on hold members");
                                         }
                                     }];
+
                                 } else {
                                     NSLog(@"failed to update members");
                                     callback(false);
@@ -423,6 +498,40 @@
                 }
             }];
             
+        } else {
+            NSLog(@"failed to load members from network");
+            callback(false);
+        }
+    }];
+    
+}
+
+-(void)updateOnHoldMembersWithBlock:(void(^)(bool success))callback {
+    PFRelation * relationToOnHoldMembersToFetchFromNetwork = [self relationForKey:@"onHoldMembers"];
+    PFQuery * query = [relationToOnHoldMembersToFetchFromNetwork query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (!error && objects && [self allMembersFullyLoaded:objects]) {
+            NSLog(@"succesfully fetched members from network");
+            
+            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error) {
+                    NSLog(@"successfully pinned members");
+                    
+                    // add members to tribe.onHoldMembers
+                    [self addTribeOnHoldMembersToTribe:objects];
+                    
+                    callback(true);
+                } else {
+                    NSLog(@"failed to pin members");
+                    callback(false);
+                }
+            }];
+            
+        } else if (objects.count == 0) {
+            NSLog(@"no on hold members found when attempt to fetch from network");
+            [self removeTribeOnHoldMembersFromTribe];
+            callback(true);
         } else {
             NSLog(@"failed to load members from network");
             callback(false);
@@ -529,6 +638,10 @@
                                         }];
 
 }
+-(BOOL)userAlreadyInTribe:(PFUser *)user {
+    return ([self.tribeMembers containsObject:user]) ? true : false;
+}
+#pragma mark - Handle On Hold Members
 
 -(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback {
     __block BOOL success;
