@@ -50,7 +50,7 @@
     
     // find pfuser with email
     PFQuery *query = [PFUser query];
-    [query whereKey:@"email" equalTo:_emailAddress.text];
+    [query whereKey:@"emailLowerCase" equalTo:[_emailAddress.text lowercaseString]];
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error){
         if (objects.count > 0 && !error) {
             
