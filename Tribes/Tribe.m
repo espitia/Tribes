@@ -655,6 +655,10 @@
             success = false;
             callback(&success);
         } else {
+            
+            NSString * pushMessage = [NSString stringWithFormat:@"%@ wants to join %@. Tap on your Tribe's menu to accept or decline 👍",user[@"username"],self[@"name"]];
+            [[User currentUser] sendPushFromMemberToMember:self[@"admin"] withMessage:pushMessage habitName:@"" andCategory:@""];
+            
             success = true;
             callback(&success);
         }
