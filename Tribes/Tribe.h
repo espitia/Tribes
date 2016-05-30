@@ -33,8 +33,13 @@
 
 // adding to the tribe
 -(void)addUserToTribe:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
--(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 -(void)addHabitToTribeWithName:(NSString *)name andBlock:(void(^)(bool success))callback;
+
+// on hold users
+-(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
+-(void)confirmOnHoldUser:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;;
+-(void)declineOnHoldUser:(PFUser *)user;
+
 
 -(void)addTribeMembersToHabits:(NSArray *)membersArray;
 -(void)addTribeMembersToTribe:(NSArray *)membersArray;
@@ -43,6 +48,7 @@
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * membersAndActivities;
 @property (nonatomic, strong) NSMutableArray * tribeMembers;
+@property (nonatomic, strong) NSMutableArray * onHoldMembers;
 @property (nonatomic, strong) NSMutableArray * habits;
 @property (nonatomic, strong) NSMutableArray * nonWatcherHabits;
 @property BOOL privacy;

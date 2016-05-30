@@ -24,6 +24,7 @@
 @dynamic privacy;
 // tribe members is = as members but since members key is a pfrelation, we create another variable to hold array of members
 @synthesize tribeMembers;
+@synthesize onHoldMembers;
 
 #pragma mark - Parse required methods
 
@@ -311,6 +312,12 @@
 -(void)addTribeMembersToTribe:(NSArray *)membersArray {
     self.tribeMembers = [NSMutableArray arrayWithArray:membersArray];
 }
+-(void)addTribeOnHoldMembersToTribe:(NSArray *)membersArray {
+    self.onHoldMembers = [NSMutableArray arrayWithArray:membersArray];
+}
+-(void)removeTribeOnHoldMembersFromTribe {
+    [self.onHoldMembers removeAllObjects];
+}
 
 #pragma mark - Updating methods
 
@@ -540,10 +547,40 @@
         }
     }];
 }
+-(void)confirmOnHoldUser:(User *)user withBlock:(void(^)(BOOL * success))callback {
+    // remove from on hold pfrelation
+    PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
+    [onHoldRelationToTribe removeObject:user];
+    [self saveEventually];
 
--(BOOL)userAlreadyInTribe:(PFUser *)user {
-    return ([self.tribeMembers containsObject:user]) ? true : false;
+    
+    __block BOOL confirmedUserComplete;
+    // add to regular member
+    [self addUserToTribe:user withBlock:^(BOOL *success) {
+        
+        if (success) {
+            
+            
+            NSString * pushMessage = [NSString stringWithFormat:@"You've been accepted to %@. Start motivating your Tribe now!", self[@"name"]];
+            // send push to member
+            [[User currentUser] sendPushFromMemberToMember:user withMessage:pushMessage habitName:@"" andCategory:@""];
+            confirmedUserComplete = true;
+            callback(&confirmedUserComplete);
+        } else {
+            confirmedUserComplete = false;
+            callback(&confirmedUserComplete);
+        }
+        
+    }];
 }
+-(void)declineOnHoldUser:(User *)user {
+    // remove from on hold pfrelation
+    // remove from on hold pfrelation
+    PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
+    [onHoldRelationToTribe removeObject:user];
+    [self saveEventually];
+}
+
 
 
 #pragma mark - Checking statuses of membs/activities
