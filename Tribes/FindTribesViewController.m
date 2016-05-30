@@ -41,6 +41,7 @@
 
     if ([_searchBar.text isEqualToString:@""]) {
         [query whereKey:@"prime" equalTo:@YES];
+        [query includeKey:@"admin"];
         return query;
     } else {
         [query whereKey:@"name" containsString:_searchBar.text];
@@ -66,6 +67,8 @@
     }
     
     cell.textLabel.text = title;
+    cell.detailTextLabel.text = @"Join";
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     return cell;
 }
