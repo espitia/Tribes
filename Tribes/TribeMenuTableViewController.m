@@ -121,7 +121,7 @@
 
 -(void)showPrivacyExplainerAlert {
     SCLAlertView * explainerAlert = [[SCLAlertView alloc] initWithNewWindow];
-    [explainerAlert showInfo:@"Private 🔐" subTitle:@"Setting your Tribe on Private will allow others to join your Trive only after you admit them. If your Tribe's Private setting is turned off, other members may join without being confirmed first." closeButtonTitle:@"GOT IT" duration:0.0];
+    [explainerAlert showInfo:@"Private 🔐" subTitle:@"Setting your Tribe on Private will allow others to join your Tribe only after you admit them. If your Tribe's Private setting is turned off, other members may join without being confirmed first." closeButtonTitle:@"GOT IT" duration:0.0];
 }
 #pragma mark - Segue navigation
 
