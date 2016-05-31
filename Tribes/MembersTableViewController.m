@@ -124,7 +124,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSString * confirmMessage = [NSString stringWithFormat:@"Woud you like to accept %@ to %@?", member[@"username"], _tribe[@"name"]];
         
         // show alert
-        [confirmOnHoldMemberAlert showInfo:@"Accept new member?" subTitle:confirmMessage closeButtonTitle:nil duration:0.0];
+        [confirmOnHoldMemberAlert showInfo:@"Accept new member?" subTitle:confirmMessage closeButtonTitle:@"DECIDE LATER" duration:0.0];
         
     }
 }
