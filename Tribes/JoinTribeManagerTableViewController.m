@@ -47,7 +47,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellIdentifier" forIndexPath:indexPath];
     
     NSString * title = @"";
-    NSString * detail = @"";
     
     switch (indexPath.section) {
         case 0:
