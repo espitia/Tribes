@@ -339,12 +339,13 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
 
     __block int counter = 0;
-    __block int totalCount;
+    __block int totalCount = 0;
     for (Tribe * tribe in self.tribes) {
         
         PFRelation * relationToMembers = [tribe relationForKey:@"members"];
         PFQuery * query = [relationToMembers query];
         [query countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+            
             totalCount += number;
             counter++;
             
