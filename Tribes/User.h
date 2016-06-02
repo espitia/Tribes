@@ -26,7 +26,7 @@ extern int RECEIVED_APPLAUSE_XP;
 // UPDATING MEHTODS
 -(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(bool success))callback;
 -(void)updateTribesWithBlock:(void(^)(bool success))callback;
--(void)checkForNewDataWithBlock:(void(^)(bool tribes, bool habits, bool members))callback;
+-(void)checkForNewDataWithBlock:(void(^)(bool newData))callback;
 
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback;
