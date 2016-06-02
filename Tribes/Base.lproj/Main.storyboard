@@ -325,6 +325,8 @@
                         <segue destination="x6J-ww-3zm" kind="show" identifier="showWeeklyReport" id="j3G-CH-Hii"/>
                         <segue destination="hi5-vx-tv4" kind="show" identifier="AddFirstHabit" id="aDo-Yy-kpM"/>
                         <segue destination="lR1-8P-usc" kind="show" identifier="addFriendToTribe" id="pmR-Nk-1kI"/>
+                        <segue destination="bLl-0S-6VW" kind="show" identifier="ShowTribeManager" id="RGa-V2-uvP"/>
+                        <segue destination="vMK-uY-aqW" kind="show" identifier="showMembersTable" id="Wim-HJ-Ed4"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aiv-5d-Uau" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -530,7 +532,7 @@
         <!--Join Tribe Manager Table View Controller-->
         <scene sceneID="oRs-7W-sRj">
             <objects>
-                <tableViewController id="bLl-0S-6VW" customClass="JoinTribeManagerTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="JoinTribeManagerTableViewController" id="bLl-0S-6VW" customClass="JoinTribeManagerTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9TO-oX-x1k">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -859,9 +861,10 @@
         <image name="helper-text" width="400" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mId-He-g9O"/>
-        <segue reference="lAn-yV-AH9"/>
         <segue reference="aDo-Yy-kpM"/>
-        <segue reference="uqv-cf-Bao"/>
+        <segue reference="Wim-HJ-Ed4"/>
+        <segue reference="RGa-V2-uvP"/>
+        <segue reference="mId-He-g9O"/>
+        <segue reference="4jV-l5-Rgk"/>
     </inferredMetricsTieBreakers>
 </document>

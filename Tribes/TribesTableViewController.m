@@ -444,8 +444,9 @@ heightForHeaderInSection:(NSInteger)section {
         // log event
         [Answers logCustomEventWithName:@"Tapped to add first Tribe" customAttributes:@{}];
         [Leanplum track:@"Add first Tribe"];
+
+        [self performSegueWithIdentifier:@"ShowTribeManager" sender:nil];
         
-        [self performSegueWithIdentifier:@"AddTribe" sender:nil];
         return;
     }
     
