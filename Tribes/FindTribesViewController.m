@@ -97,7 +97,7 @@
         [self addToTribe:tribe];
         
     }];
-    [confirmAlert addButton:@"NEVER MIND..." actionBlock:^{
+    [confirmAlert addButton:@"NEVER MIND" actionBlock:^{
         // show keyboard again
         [_searchBar becomeFirstResponder];
     }];
