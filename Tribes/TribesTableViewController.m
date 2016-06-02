@@ -65,6 +65,8 @@
                 currentUser.loadedInitialTribes = true;
                 [self.tableView reloadData];
                 [self updateProgressBar];
+                [self checkForNewData];
+                
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
                 [alert addButton:@"MAGIC BUTTON" actionBlock:^{
@@ -527,7 +529,7 @@ heightForHeaderInSection:(NSInteger)section {
         if (success) {
             [self.tableView reloadData];
             [self updateProgressBar];
-//            [self checkForNewData];
+            [self checkForNewData];
 
         } else {
             NSLog(@"failed to update activities");
@@ -536,46 +538,18 @@ heightForHeaderInSection:(NSInteger)section {
 }
 
 -(void)checkForNewData {
-    
-    [currentUser checkForNewDataWithBlock:^(bool tribes, bool habits, bool members) {
-        
-        NSString * alertTitle;
-        NSString * alertMessage;
-        
-        // if new tibes were found
-        if (tribes) {
-            
-            NSLog(@"new tribes found to be downloaded");
-            alertTitle = @"New Tribes 😎";
-            alertMessage = @"Someone has added you to a new Tribe! Tap OK to update now.";
-        }
-        
-        // new habits were found
-        else if (!tribes && habits) {
-            
-            NSLog(@"new habits found to be downloaded");
-            alertTitle = @"New Habits 😎";
-            alertMessage = @"A member of one of your Tribes added a new habit! Tap OK to update now.";
-            
-        }
-        // new members were found
-        else if (!tribes && !habits && members) {
-            
-            NSLog(@"new members found to be downloaded");
-            alertTitle = @"New Members 😎";
-            alertMessage = @"A new member has been added to one of your Tribes. Tap OK to update now.";
-        }
+    [currentUser checkForNewDataWithBlock:^(bool newData) {
         
         // show alert to download new data
-        if (tribes || habits || members) {
+        if (newData) {
             
             SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
             [newNewAlert addButton:@"OK" actionBlock:^{
-                [currentUser updateTribesWithBlock:^(bool success) {
-                    NSLog(@"updatedTribes");
-                }];
+                
+                [self refreshTable];
+                
             }];
-            [newNewAlert showInfo:alertTitle subTitle:alertMessage closeButtonTitle:nil duration:0.0];
+            [newNewAlert showInfo:@"Data fairy ✨" subTitle:@"We are being told there is new data to be downloaded. That might be a Tribe, a new member or new habits. Or who knows, new cars? Tap below to download!" closeButtonTitle:nil duration:0.0];
         } else {
             NSLog(@"no new data was found to update tribes/habits/members.");
         }
