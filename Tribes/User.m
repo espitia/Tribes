@@ -114,7 +114,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     if (!self.tribes) {
         NSLog(@"no tribes available to update it's activities (updateMemActivitesForAllTribes:)");
-        callback(false);
+        callback(true);
     } else {
         // get obj ids of all activites of all members in all tribes (locally)
         NSMutableArray * objIdsOfActivitiesToUpdate = [[NSMutableArray alloc] init];
