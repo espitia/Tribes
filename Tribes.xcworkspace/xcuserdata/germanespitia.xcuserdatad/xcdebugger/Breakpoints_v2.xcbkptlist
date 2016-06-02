@@ -54,12 +54,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tribes/TribesTableViewController.m"
-            timestampString = "486332184.255567"
+            timestampString = "486574753.307119"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "390"
+            endingLineNumber = "390"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -70,12 +70,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Tribes/TribesTableViewController.m"
-            timestampString = "486564245.526205"
+            timestampString = "486574812.526201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "396"
+            endingLineNumber = "396"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Tribes/TribesTableViewController.m"
+            timestampString = "486574815.370053"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

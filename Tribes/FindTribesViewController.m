@@ -80,6 +80,8 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+    
     [_searchBar resignFirstResponder];
     
     // get tribe
@@ -87,7 +89,7 @@
     
     // ask user to confirm joining tribe
     NSString * tribeNameAndAdmin = [NSString stringWithFormat:@"%@ by %@", tribe[@"name"], tribe[@"admin"][@"username"]];
-    NSString * alertMessage = [NSString stringWithFormat:@"Just to make sure you didn't tap by accident. Are you sure you want to join %@?", tribeNameAndAdmin];
+    NSString * alertMessage = [NSString stringWithFormat:@"Just to make sure you are joining the right Tribe. Are you sure you want to join %@?", tribeNameAndAdmin];
     
     // show alert
     SCLAlertView * confirmAlert = [[SCLAlertView alloc] initWithNewWindow];
