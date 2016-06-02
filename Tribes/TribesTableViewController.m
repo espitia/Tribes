@@ -10,6 +10,7 @@
 #import "Parse.h"
 #import "TribeDetailTableViewController.h"
 #import "TribeMenuTableViewController.h"
+#import "MembersTableViewController.h"
 #import "AddFriendsTableViewController.h"
 #import "Tribe.h"
 #import "Habit.h"
@@ -209,17 +210,25 @@ heightForHeaderInSection:(NSInteger)section {
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0) {
         cell.textLabel.text = @"👆 Tap to add a habit";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
 
     // if tribe has no habits - add call to action to add a friend
-    if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
+    if (tribe.tribeMembers.count == 1 && tribe.onHoldMembers.count == 0 && indexPath.row == 0) {
         cell.textLabel.text = @"👆 Tap to add a friend";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }
+    
+    if (tribe.onHoldMembers.count > 0 && indexPath.row == 0) {
+        cell.textLabel.text = @"👆 You've got pending members!";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
     
     // regular cell when showing call to action to add friend
-    else if (tribe.tribeMembers.count == 1 && indexPath.row != 0) {
+    else if ((tribe.tribeMembers.count == 1 || tribe.onHoldMembers.count > 0) && indexPath.row != 0) {
         NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         [self configureCell:cell forRowAtIndexPath:newIndexPath];
         return cell;
@@ -365,14 +374,17 @@ heightForHeaderInSection:(NSInteger)section {
     }
     
     // if user has no tribe members , send them add friends
-    else if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
+    else if (tribe.tribeMembers.count == 1 && tribe.onHoldMembers.count == 0 && indexPath.row == 0) {
         
         [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
         [Leanplum track:@"Add first friend"];
     }
     
+    else if (tribe.onHoldMembers.count > 0 && indexPath.row == 0) {
+        [self performSegueWithIdentifier:@"showMembersTable" sender:tribe];
+    }
     // if user has no tribe members but has habits, send them to corresponding habits
-    else if (tribe.tribeMembers.count == 1 && indexPath.row != 0) {
+    else if ((tribe.tribeMembers.count == 1 || tribe.onHoldMembers.count > 0) && indexPath.row != 0) {
         
         // log event
         [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
@@ -491,6 +503,10 @@ heightForHeaderInSection:(NSInteger)section {
     } else if ([segue.identifier isEqualToString:@"addFriendToTribe"]) {
         // send to add friend to tribe when tribe has no tribe members other than user,
         AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
+        vc.tribe = sender;
+    } else if ([segue.identifier isEqualToString:@"showMembersTable"]) {
+        // send to add friend to tribe when tribe has no tribe members other than user,
+        MembersTableViewController * vc = (MembersTableViewController *)segue.destinationViewController;
         vc.tribe = sender;
     }
 }
