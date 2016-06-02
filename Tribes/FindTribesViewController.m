@@ -113,7 +113,7 @@
             if (success) {
                 // pop to root view controller
                 SCLAlertView * successAlert  = [[SCLAlertView alloc] initWithNewWindow];
-                NSString * alertMessage = [NSString stringWithFormat:@"You've successfully been added to %@. Since this is a private Tribe, the admin has been notified to confirm. To make the process quicker, tell him to check his Tribe NOW!",tribe[@"name"]];
+                NSString * alertMessage = [NSString stringWithFormat:@"You've successfully been added to %@. Since this is a private Tribe, the admin has been notified to confirm. To make the process quicker, tell him to check the Tribe NOW!",tribe[@"name"]];
                 [successAlert addButton:@"AWESOME" actionBlock:^{
                     [self.navigationController popToRootViewControllerAnimated:true];
                 }];
