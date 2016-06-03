@@ -646,8 +646,13 @@
 -(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback {
     __block BOOL success;
     
+    // add user to tribe on hold relation
     PFRelation * onHoldMembers = [self relationForKey:@"onHoldMembers"];
     [onHoldMembers addObject:user];
+    
+    // add tribe to user's onholdtribes
+    [user addObject:self forKey:@"onHoldTribes"];
+    
     
     [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         
@@ -656,11 +661,22 @@
             callback(&success);
         } else {
             
-            NSString * pushMessage = [NSString stringWithFormat:@"%@ wants to join %@. Tap on your Tribe's menu to accept or decline 👍",user[@"username"],self[@"name"]];
-            [[User currentUser] sendPushFromMemberToMember:self[@"admin"] withMessage:pushMessage habitName:@"" andCategory:@""];
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (succeeded && !error) {
+                    NSString * pushMessage = [NSString stringWithFormat:@"%@ wants to join %@. Tap on your Tribe's menu to accept or decline 👍",user[@"username"],self[@"name"]];
+                    [[User currentUser] sendPushFromMemberToMember:self[@"admin"] withMessage:pushMessage habitName:@"" andCategory:@""];
+                    
+                    success = true;
+                    callback(&success);
+                } else {
+                    success = false;
+                    callback(&success);
+                }
+                
+            }];
             
-            success = true;
-            callback(&success);
+
         }
     }];
 }
