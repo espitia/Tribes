@@ -221,7 +221,7 @@ heightForHeaderInSection:(NSInteger)section {
         return cell;
     }
     
-    if (tribe.onHoldMembers.count > 0 && indexPath.row == 0) {
+    if (tribe.onHoldMembers.count > 0 && indexPath.row == 0 && [currentUser isAdmin:tribe]) {
         cell.textLabel.text = @"👆 You've got pending members!";
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
@@ -380,7 +380,8 @@ heightForHeaderInSection:(NSInteger)section {
         [Leanplum track:@"Add first friend"];
     }
     
-    else if (tribe.onHoldMembers.count > 0 && indexPath.row == 0) {
+    // pending members action
+    else if (tribe.onHoldMembers.count > 0 && indexPath.row == 0 && [currentUser isAdmin:tribe]) {
         [self performSegueWithIdentifier:@"showMembersTable" sender:tribe];
     }
     // if user has no tribe members but has habits, send them to corresponding habits
