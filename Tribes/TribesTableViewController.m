@@ -566,7 +566,7 @@ heightForHeaderInSection:(NSInteger)section {
                 [self refreshTable];
                 
             }];
-            [newNewAlert showInfo:@"Data fairy ✨" subTitle:@"We are being told there is new data to be downloaded. That might be a Tribe, a new member or new habits. Or who knows, new cars? Tap below to download!" closeButtonTitle:nil duration:0.0];
+            [newNewAlert showInfo:@"Data fairy ✨" subTitle:@"We are being told there is new stuff to be downloaded. That might be a Tribe, a new member or new habits. Or who knows, new pixie dust? Tap below to download!" closeButtonTitle:nil duration:0.0];
         } else {
             NSLog(@"no new data was found to update tribes/habits/members.");
         }
