@@ -17,6 +17,7 @@ int XP_FOR_COMPLETED_HABIT = 100;
 int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 @dynamic tribes;
+@dynamic onHoldTribes;
 @dynamic activities;
 @dynamic lvl;
 @dynamic xp;
@@ -227,6 +228,18 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }
     }
     
+}
+/**
+ * Removes tribe from on hold array if found in regular tribes. means user was accepted to new tribe.
+ *
+ **/
+-(void)updateOnHoldTribes {
+    for (Tribe * tribe in self.onHoldTribes) {
+        if ([self.tribes containsObject:tribe]) {
+            [self removeObject:tribe forKey:@"onHoldTribes"];
+            [self saveInBackground];
+        }
+    }
 }
 
 #pragma mark - Checking for new data before reloading all objects unnecessarily
