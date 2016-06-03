@@ -33,6 +33,7 @@ extern int RECEIVED_APPLAUSE_XP;
 
 //on hold tribes
 -(void)updateOnHoldTribes;
+-(BOOL)isAdmin:(Tribe *)tribe;
 
 //removing user from tribe
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;

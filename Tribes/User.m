@@ -242,6 +242,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
 }
 
+-(BOOL)isAdmin:(Tribe *)tribe {
+    return (tribe[@"admin"] == self);
+}
+
 #pragma mark - Checking for new data before reloading all objects unnecessarily
 
 -(void)checkForNewDataWithBlock:(void(^)(bool newData))callback {
