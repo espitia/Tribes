@@ -104,10 +104,10 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // if user has no tribe - add call to action to create/join one
-    if (currentUser.tribes.count == 0)
+    if (currentUser.tribes.count == 0 && currentUser.onHoldTribes.count == 0)
         return 1;
     
-    return currentUser.tribes.count;
+    return currentUser.tribes.count + currentUser.onHoldTribes.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,7 +119,10 @@
     if (!currentUser.tribes || !currentUser.loadedInitialTribes)
         return 0;
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    if (section < currentUser.onHoldTribes.count)
+        return 1;
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
 
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0)
@@ -163,13 +166,20 @@ heightForHeaderInSection:(NSInteger)section {
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
     
     // if user has no tribe - add call to action to create/join one
-    if (currentUser.tribes.count == 0) {
+    if (currentUser.tribes.count == 0 && currentUser.onHoldTribes.count == 0) {
         [titleLabel setText:@"👆 Tap to join a Tribe"];
         [headerView addSubview:titleLabel];
         return headerView;
     }
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    // if user is on hold for a tribe, show "waiting for" and move tribe index
+    else if (section < currentUser.onHoldTribes.count) {
+        [self configureViewForHeaderView:headerView];
+        return headerView;
+    }
+    
+    // tribe from data model
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
     [titleLabel setText:tribe.name];
     
     // create label for 🦁 or 🐑
@@ -204,8 +214,13 @@ heightForHeaderInSection:(NSInteger)section {
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
+    if (indexPath.section < currentUser.onHoldTribes.count) {
+        cell.textLabel.text = @"Tell your Tribe admin to accept you!";
+        return cell;
+    }
+    
     // if user created a tribe but tribe has no habits - call to action to add one
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0) {
@@ -263,7 +278,7 @@ heightForHeaderInSection:(NSInteger)section {
     if (!currentUser.loadedInitialTribes)
         return;
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
 
     
@@ -355,13 +370,32 @@ heightForHeaderInSection:(NSInteger)section {
     [cell.detailTextLabel setText:detailText];
 }
 
+-(void)configureViewForHeaderView:(UIView *)headerView {
+    // set title for tribe
+    UILabel * titleLabel = [[UILabel alloc] init];
+    [titleLabel setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 38)];
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
+    
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:20]];
+    [titleLabel setText:@"Waiting on Tribe confirmation.."];
+    [headerView addSubview:titleLabel];
+    
+    UIActivityIndicatorView * indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [indicator setFrame:CGRectMake(337, 35, 40, 40)];
+    [headerView addSubview:indicator];
+    [indicator startAnimating];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    if (indexPath.section < currentUser.onHoldTribes.count)
+        return;
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     
     // if user has no habits in tribe, send them to add habit
     if ([tribe[@"habits"] count] == 0) {
@@ -456,6 +490,8 @@ heightForHeaderInSection:(NSInteger)section {
         for (Tribe * tribe in currentUser.tribes) {
             if ([label.text isEqualToString:tribe.name]) {
                 [self performSegueWithIdentifier:@"TribeMenu" sender:tribe];
+            } else if ([label.text isEqualToString:@"Waiting on Tribe confirmation.."]) {
+                return;
             }
         }
     }
