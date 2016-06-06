@@ -686,6 +686,15 @@
     [onHoldRelationToTribe removeObject:user];
     [self saveEventually];
 
+    // removes tribe from user's on hold tribes array
+    [PFCloud callFunctionInBackground:@"confirmUserToTribe" withParameters:
+                                     @{@"tribeId":self.objectId,
+                                       @"userId":user.objectId}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                   
+
+                                }];
+    
     
     __block BOOL confirmedUserComplete;
     // add to regular member
@@ -707,7 +716,16 @@
     }];
 }
 -(void)declineOnHoldUser:(User *)user {
-    // remove from on hold pfrelation
+    
+    // removes tribe from user's on hold tribes array
+    [PFCloud callFunctionInBackground:@"confirmUserToTribe" withParameters:
+     @{@"tribeId":self.objectId,
+       @"userId":user.objectId}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                    
+                                    
+                                }];
+    
     // remove from on hold pfrelation
     PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
     [onHoldRelationToTribe removeObject:user];
