@@ -115,12 +115,13 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
+    if (section < currentUser.onHoldTribes.count)
+        return 1;
     
     if (!currentUser.tribes || !currentUser.loadedInitialTribes)
         return 0;
     
-    if (section < currentUser.onHoldTribes.count)
-        return 1;
+
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
 
@@ -583,12 +584,42 @@ heightForHeaderInSection:(NSInteger)section {
         if (success) {
             [self.tableView reloadData];
             [self updateProgressBar];
-            [self checkForNewData];
+            if (currentUser.onHoldTribes.count == 0)
+                [self checkForNewData];
+            
+            // if tribe where i am admin has members on hold, alert
 
         } else {
             NSLog(@"failed to update activities");
         }
     }]; 
+}
+-(void)checkForTribesConfirmationTimer {
+    //NSTimer calling Method B, as long the audio file is playing, every 5 seconds.
+    [NSTimer scheduledTimerWithTimeInterval:15.0f
+                                     target:self selector:@selector(checkForTribesConfirmation:) userInfo:nil repeats:YES];
+}
+- (void)checkForTribesConfirmation:(NSTimer *)timer{
+    
+    [currentUser checkForNewDataWithBlock:^(bool newData) {
+        
+        // show alert to download new data
+        if (newData) {
+            
+            [timer invalidate];
+            
+            SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [newNewAlert addButton:@"OK" actionBlock:^{
+                
+                [self refreshTable];
+                
+            }];
+            [newNewAlert showSuccess:@"Congratulations 🎉" subTitle:@"You've been accepted to a new Tribe. Make your Tribe proud ✊" closeButtonTitle:nil duration:0.0];
+        } else {
+            NSLog(@"no new data was found to update tribes/habits/members.");
+        }
+    }];
+    
 }
 
 -(void)checkForNewData {
