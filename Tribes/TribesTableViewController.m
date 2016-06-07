@@ -110,6 +110,7 @@
         [self askForNotificationsPermission];
     }
     
+    // start timer if user is on hold for a tribe
     if (currentUser.onHoldTribes.count > 0)
         [self checkForTribesConfirmationTimer];
     
