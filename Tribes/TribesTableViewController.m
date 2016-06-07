@@ -11,7 +11,7 @@
 #import "TribeDetailTableViewController.h"
 #import "TribeMenuTableViewController.h"
 #import "MembersTableViewController.h"
-#import "AddFriendsTableViewController.h"
+#import "AddFriendByUsernameTableViewController.h"
 #import "Tribe.h"
 #import "Habit.h"
 #import "MCSwipeTableViewCell.h"
@@ -556,7 +556,7 @@ heightForHeaderInSection:(NSInteger)section {
         vc.tribe = sender;
     } else if ([segue.identifier isEqualToString:@"addFriendToTribe"]) {
         // send to add friend to tribe when tribe has no tribe members other than user,
-        AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
+        AddFriendByUsernameTableViewController * vc = (AddFriendByUsernameTableViewController *)segue.destinationViewController;
         vc.tribe = sender;
     } else if ([segue.identifier isEqualToString:@"showMembersTable"]) {
         // send to add friend to tribe when tribe has no tribe members other than user,
