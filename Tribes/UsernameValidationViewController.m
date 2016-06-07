@@ -78,6 +78,7 @@
 
 -(void)continueToNextVc {
     
+    signUpButton.enabled = false;
     
     [validation isUsernameValid:_usernameTextField.text withBlock:^(int error) {
         
@@ -137,10 +138,12 @@
                                 
                             }];
                         } else {
+                            signUpButton.enabled = true;
                             NSLog(@"error signing in to user (becomeInBg)");
                         }
                     }];
                 } else {
+                    signUpButton.enabled = true;
                     NSLog(@"Error saving installation object (for push notif.)");
                 }
             }];
@@ -179,6 +182,8 @@
         [_usernameTextField becomeFirstResponder];
     }];
     [errorAlert showError:@"Oh oh... 😯" subTitle:errorMessage closeButtonTitle:nil duration:0.0];
+    signUpButton.enabled = true;
+
 }
 #pragma mark - Notifications
 
