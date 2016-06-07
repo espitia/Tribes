@@ -17,7 +17,7 @@
 #import "HelpshiftCore.h"
 #import <Leanplum/Leanplum.h>
 #import <Appsee/Appsee.h>
-
+#import "TribesTableViewController.h"
 
 
 @interface AppDelegate ()
@@ -106,7 +106,8 @@
                                          @"COMPLETION_REPLY",
                                          @"WATCHING_YOU_REPLY",
                                          @"THANK_YOU_FOR_APPLAUSE_REPLY",
-                                         @"HIBERNATION_RESPONSE"];
+                                         @"HIBERNATION_RESPONSE",
+                                         @"NEW_PENDING_MEMBER"];
         
         int item = (int)[possibleCategories indexOfObject:category];
         
@@ -163,6 +164,21 @@
                 [alert addButton:@"No" actionBlock:^{
                 }];
             }
+                break;
+                
+            case 5: {
+                // NEW PENDING MEMBER
+                title = @"NEW MEMBER 👬";
+                [alert addButton:@"GOT IT" actionBlock:^{
+                    [currentUser checkForPendingMemberswithBlock:^(BOOL success) {
+                        UINavigationController * navController = (UINavigationController *)self.window.rootViewController;
+                        TribesTableViewController * vc = (TribesTableViewController *)navController.viewControllers[0];
+                        NSLog(@"%@", vc);
+                        [vc.tableView reloadData];
+                    }];
+                }];
+            }
+                
                 break;
             default:
                 [alert addButton:@"OK" actionBlock:^{
