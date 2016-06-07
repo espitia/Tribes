@@ -16,7 +16,6 @@
 #import "HelpshiftAll.h"
 #import "HelpshiftCore.h"
 #import <Leanplum/Leanplum.h>
-#import <Appsee/Appsee.h>
 #import "TribesTableViewController.h"
 
 
@@ -71,9 +70,7 @@
     
     // Starts a new session and updates the app content from Leanplum.
     [Leanplum start];
-    
-    [Appsee start:@"91b914f3ad4b4a00a651179ac6b2b145"];
-    
+        
     // ui changes
     [self colorNavBar];
     

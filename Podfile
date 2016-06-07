@@ -16,7 +16,6 @@ target 'Tribes' do
     pod 'APAddressBook'
     pod 'Helpshift', '5.5.1'
     pod 'Leanplum-iOS-SDK'
-    pod 'Appsee'
 end
 
 target 'TribesTests' do
