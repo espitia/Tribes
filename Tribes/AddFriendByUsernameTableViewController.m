@@ -42,7 +42,8 @@
         [query whereKey:@"NADA" equalTo:@YES];
         return query;
     } else {
-        [query whereKey:@"name" containsString:_searchBar.text];
+        [query whereKey:@"usernameLowerCase" containsString:[_searchBar.text lowercaseString]];
+        [query includeKey:@"tribes"];
     }
     
     
@@ -56,7 +57,7 @@
 -(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
     PFTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
-    cell.textLabel.text = [object objectForKey:@"name"];
+    cell.textLabel.text = [object objectForKey:@"username"];
     cell.detailTextLabel.text = @"Add";
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
