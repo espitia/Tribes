@@ -107,7 +107,8 @@
                                          @"WATCHING_YOU_REPLY",
                                          @"THANK_YOU_FOR_APPLAUSE_REPLY",
                                          @"HIBERNATION_RESPONSE",
-                                         @"NEW_PENDING_MEMBER"];
+                                         @"NEW_PENDING_MEMBER",
+                                         @"RELOAD"];
         
         int item = (int)[possibleCategories indexOfObject:category];
         
@@ -176,6 +177,17 @@
                         NSLog(@"%@", vc);
                         [vc.tableView reloadData];
                     }];
+                }];
+            }
+                
+                break;
+            case 6: {
+                // ADMIN ADDED MEMBER
+                title = @"NEW TRIBE 👬";
+                [alert addButton:@"AWESOME" actionBlock:^{
+                    UINavigationController * navController = (UINavigationController *)self.window.rootViewController;
+                    TribesTableViewController * vc = (TribesTableViewController *)navController.viewControllers[0];
+                    [vc checkForNewData];
                 }];
             }
                 
