@@ -18,6 +18,7 @@
 		0917EC551C4037D600BE2697 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */; };
 		0917EC601C4037D600BE2697 /* TribesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC5F1C4037D600BE2697 /* TribesTests.m */; };
 		0917EC6B1C4037D600BE2697 /* TribesUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0917EC6A1C4037D600BE2697 /* TribesUITests.m */; };
+		091BD8CE1D064D6000EC74AD /* AddFriendByUsernameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091BD8CD1D064D6000EC74AD /* AddFriendByUsernameTableViewController.m */; };
 		091C37331CF49F3A0020B6BE /* EmailValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */; };
 		091C37361CF4A9B50020B6BE /* PasswordValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37351CF4A9B50020B6BE /* PasswordValidationViewController.m */; };
 		091C37391CF4AE930020B6BE /* UsernameValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 091C37381CF4AE930020B6BE /* UsernameValidationViewController.m */; };
@@ -110,6 +111,8 @@
 		0917EC661C4037D600BE2697 /* TribesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TribesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0917EC6A1C4037D600BE2697 /* TribesUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TribesUITests.m; sourceTree = "<group>"; };
 		0917EC6C1C4037D600BE2697 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		091BD8CC1D064D6000EC74AD /* AddFriendByUsernameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendByUsernameTableViewController.h; sourceTree = "<group>"; };
+		091BD8CD1D064D6000EC74AD /* AddFriendByUsernameTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendByUsernameTableViewController.m; sourceTree = "<group>"; };
 		091C37311CF49F3A0020B6BE /* EmailValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailValidationViewController.h; sourceTree = "<group>"; };
 		091C37321CF49F3A0020B6BE /* EmailValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailValidationViewController.m; sourceTree = "<group>"; };
 		091C37341CF4A9B50020B6BE /* PasswordValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordValidationViewController.h; sourceTree = "<group>"; };
@@ -238,6 +241,8 @@
 				090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */,
 				0993B5191C55385D0008B7E5 /* Creating/Joining Tribes */,
 				09F7DD171CBDA25A00503205 /* AddMember/HabitMenu */,
+				09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */,
+				09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */,
 			);
 			name = "Add manager (Tribes/Membs/Habits)";
 			sourceTree = "<group>";
@@ -510,8 +515,8 @@
 			children = (
 				099BB1FF1C9520E100A734F0 /* MembersTableViewController.h */,
 				099BB2001C9520E100A734F0 /* MembersTableViewController.m */,
-				09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */,
-				09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */,
+				091BD8CC1D064D6000EC74AD /* AddFriendByUsernameTableViewController.h */,
+				091BD8CD1D064D6000EC74AD /* AddFriendByUsernameTableViewController.m */,
 			);
 			name = "Add friends";
 			sourceTree = "<group>";
@@ -808,6 +813,7 @@
 				09E9C65F1CF8914500B5E87E /* JoinTribeManagerTableViewController.m in Sources */,
 				0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
+				091BD8CE1D064D6000EC74AD /* AddFriendByUsernameTableViewController.m in Sources */,
 				099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */,
 				0917EC4A1C4037D600BE2697 /* AppDelegate.m in Sources */,
 				09A4E55C1CAAED9200A82E3F /* HabitReportTableViewCell.m in Sources */,
