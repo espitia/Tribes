@@ -647,8 +647,8 @@
     __block BOOL success;
     
     // add user to tribe on hold relation
-    PFRelation * onHoldMembers = [self relationForKey:@"onHoldMembers"];
-    [onHoldMembers addObject:user];
+    PFRelation * onHoldMembersRelation = [self relationForKey:@"onHoldMembers"];
+    [onHoldMembersRelation addObject:user];
     
     // add tribe to user's onholdtribes
     [user addObject:self forKey:@"onHoldTribes"];
@@ -665,7 +665,7 @@
                 
                 if (succeeded && !error) {
                     NSString * pushMessage = [NSString stringWithFormat:@"%@ wants to join %@. Tap on your Tribe's menu to accept or decline 👍",user[@"username"],self[@"name"]];
-                    [[User currentUser] sendPushFromMemberToMember:self[@"admin"] withMessage:pushMessage habitName:@"" andCategory:@""];
+                    [[User currentUser] sendPushFromMemberToMember:self[@"admin"] withMessage:pushMessage habitName:@"" andCategory:@"NEW_PENDING_MEMBER"];
                     
                     success = true;
                     callback(&success);
@@ -732,6 +732,19 @@
     [self saveEventually];
 }
 
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback {
+    
+    PFRelation * onHoldMembersRelation = [self relationForKey:@"onHoldMembers"];
+    PFQuery * query = [onHoldMembersRelation query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            self.onHoldMembers = [NSMutableArray arrayWithArray:objects];
+            callback(true);
+        } else {
+            callback(false);
+        }
+    }];
+}
 
 
 #pragma mark - Checking statuses of membs/activities

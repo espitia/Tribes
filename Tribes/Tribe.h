@@ -39,6 +39,7 @@
 -(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;
 -(void)confirmOnHoldUser:(PFUser *)user withBlock:(void(^)(BOOL * success))callback;;
 -(void)declineOnHoldUser:(PFUser *)user;
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback;
 
 
 -(void)addTribeMembersToHabits:(NSArray *)membersArray;
