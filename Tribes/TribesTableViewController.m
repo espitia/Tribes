@@ -66,7 +66,18 @@
                 currentUser.loadedInitialTribes = true;
                 [self.tableView reloadData];
                 [self updateProgressBar];
-                [self checkForNewData];
+                [currentUser checkForPendingMemberswithBlock:^(BOOL newPendingMembers) {
+                    if (newPendingMembers)
+                        [self.tableView reloadData];
+                }];
+                
+                // if user is waiting to be accepted, check for new tribes
+                // else check for new data (members, habits, etc)
+                if (currentUser.onHoldTribes.count > 0) {
+                    [self checkForTribesConfirmationTimer];
+                } else {
+                    [self checkForNewData];
+                }
                 
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
@@ -98,6 +109,10 @@
     } else if ([self shouldAskForNotificationsPermission]) {
         [self askForNotificationsPermission];
     }
+    
+    if (currentUser.onHoldTribes.count > 0)
+        [self checkForTribesConfirmationTimer];
+    
 }
 
 #pragma mark - Table view data source
@@ -579,6 +594,13 @@ heightForHeaderInSection:(NSInteger)section {
 
 -(void)handleEnteredForeground {
     
+    // check for pending members if current user is admin of a tribe
+    [currentUser checkForPendingMemberswithBlock:^(BOOL newPendingMembers) {
+        if (newPendingMembers)
+            [self.tableView reloadData];
+    }];
+    
+    
     //  update activities when entering foreground
     [currentUser updateMemberActivitiesForAllTribesWithBlock:^(bool success) {
         if (success) {
@@ -586,9 +608,6 @@ heightForHeaderInSection:(NSInteger)section {
             [self updateProgressBar];
             if (currentUser.onHoldTribes.count == 0)
                 [self checkForNewData];
-            
-            // if tribe where i am admin has members on hold, alert
-
         } else {
             NSLog(@"failed to update activities");
         }
