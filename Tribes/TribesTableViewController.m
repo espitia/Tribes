@@ -615,7 +615,7 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(void)checkForTribesConfirmationTimer {
     //NSTimer calling Method B, as long the audio file is playing, every 5 seconds.
-    [NSTimer scheduledTimerWithTimeInterval:15.0f
+    [NSTimer scheduledTimerWithTimeInterval:5.0f
                                      target:self selector:@selector(checkForTribesConfirmation:) userInfo:nil repeats:YES];
 }
 - (void)checkForTribesConfirmation:(NSTimer *)timer{
