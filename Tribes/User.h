@@ -26,10 +26,15 @@ extern int RECEIVED_APPLAUSE_XP;
 // UPDATING MEHTODS
 -(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(bool success))callback;
 -(void)updateTribesWithBlock:(void(^)(bool success))callback;
--(void)checkForNewDataWithBlock:(void(^)(bool tribes, bool habits, bool members))callback;
+-(void)checkForNewDataWithBlock:(void(^)(bool newData))callback;
 
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback;
+
+//on hold tribes
+-(void)updateOnHoldTribes;
+-(BOOL)isAdmin:(Tribe *)tribe;
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback;
 
 //removing user from tribe
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;
@@ -56,10 +61,14 @@ extern int RECEIVED_APPLAUSE_XP;
 -(void)addReceivedApplauseXp;
 
 @property (nonatomic, strong) NSMutableArray * tribes;
+@property (nonatomic, strong) NSMutableArray * onHoldTribes;
 @property (nonatomic, strong) NSMutableArray * activities;
 @property int lvl;
 @property int xp;
 @property BOOL loadedInitialTribes;
 @property BOOL weeklyReportActive;
+@property BOOL hasTribesWithMembers;
+@property BOOL signedUpToday;
+@property BOOL pushNotificationsEnabled;
 
 @end

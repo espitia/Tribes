@@ -5,6 +5,7 @@
 
 target 'Tribes' do
 	pod 'Parse'
+    pod 'ParseUI'
     pod 'Fabric'
     pod 'Crashlytics'
     pod 'Digits'

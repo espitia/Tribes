@@ -9,6 +9,7 @@
 #import "HabitsTableViewController.h"
 #import "AddHabitTableViewController.h"
 #import "Habit.h"
+#import "User.h"
 
 @interface HabitsTableViewController ()
 
@@ -23,8 +24,11 @@
     self.navigationItem.title = @"Habits 🏋";
     
     // right button to add habit
-    UIBarButtonItem * addHabitButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addHabit)];
-    [self.navigationItem setRightBarButtonItem:addHabitButton];
+    if ((_tribe.privacy == false && [User currentUser] == _tribe[@"admin"]) || _tribe.privacy == true) {
+        UIBarButtonItem * addHabitButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addHabit)];
+        [self.navigationItem setRightBarButtonItem:addHabitButton];
+    }
+
     
     self.tableView.rowHeight = 70;
 }

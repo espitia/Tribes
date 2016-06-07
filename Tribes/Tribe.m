@@ -21,8 +21,10 @@
 @dynamic nonWatcherHabits;
 @dynamic thisWeeksCompletions;
 @dynamic lastWeeksCompletions;
+@dynamic privacy;
 // tribe members is = as members but since members key is a pfrelation, we create another variable to hold array of members
 @synthesize tribeMembers;
+@synthesize onHoldMembers;
 
 #pragma mark - Parse required methods
 
@@ -105,14 +107,24 @@
                 if (success) {
                     NSLog(@"3. successfully loaded all memebers");
                     
-                    [self loadActivitiesWithBlock:^(bool success) {
+                    [self loadOnHoldMembersWithBlock:^(bool success) {
+                       
                         if (success) {
-                            NSLog(@"4. successfully loaded all activities");
-                            callback(true);
+                            NSLog(@"4. successfully loaded all onhold members");
+                            
+                            [self loadActivitiesWithBlock:^(bool success) {
+                                if (success) {
+                                    NSLog(@"5. successfully loaded all activities");
+                                    callback(true);
+                                } else {
+                                    NSLog(@"failed to load activities");
+                                    callback(false);
+                                }
+                            }];
                         } else {
-                            NSLog(@"failed to load activities");
-                            callback(false);
+                            NSLog(@"failed to load on hold members");
                         }
+                        
                     }];
                     
                 } else {
@@ -220,6 +232,64 @@
     
 }
 
+-(void)loadOnHoldMembersWithBlock:(void(^)(bool success))callback {
+    
+    // first attempt to load members from local datastore
+    PFRelation * membersRelation = [self relationForKey:@"onHoldMembers"];
+    PFQuery * query = [membersRelation query];
+    [query fromLocalDatastore];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        NSLog(@"%@", objects);
+        
+        if (objects && !error && [self allMembersFullyLoaded:objects]) {
+            NSLog(@"succesfully loaded all members from local datastore");
+            
+            // add members to tribe.onHoldMembers
+            [self addTribeOnHoldMembersToTribe:objects];
+            
+            callback(true);
+        } else {
+            
+            NSLog(@"failed to load members from local datastore. will atempt fetching from network");
+            PFRelation * relationToOnHoldMembersToFetchFromNetwork = [self relationForKey:@"onHoldMembers"];
+            PFQuery * query = [relationToOnHoldMembersToFetchFromNetwork query];
+            [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+                
+                if (!error && objects && [self allMembersFullyLoaded:objects]) {
+                    NSLog(@"succesfully fetched members from network");
+                    
+                    
+                    [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded && !error) {
+                            
+                            NSLog(@"successfully pinned members");
+                            
+                            // add members to tribe.onHoldMembers
+                            [self addTribeOnHoldMembersToTribe:objects];
+                            
+                            callback(true);
+                        } else {
+                            NSLog(@"failed to pin members");
+                            callback(false);
+                        }
+                    }];
+                    
+                    
+                } else if (objects.count == 0) {
+                    NSLog(@"no on hold members found.");
+                    callback(true);
+                } else {
+                    NSLog(@"failed to load on hold members");
+                    callback(false);
+                }
+            }];
+        }
+        
+    }];
+    
+}
+
 -(void)loadActivitiesWithBlock:(void(^)(bool success))callback {
 
     if (!tribeMembers || tribeMembers.count <= 0) {
@@ -310,6 +380,12 @@
 -(void)addTribeMembersToTribe:(NSArray *)membersArray {
     self.tribeMembers = [NSMutableArray arrayWithArray:membersArray];
 }
+-(void)addTribeOnHoldMembersToTribe:(NSArray *)membersArray {
+    self.onHoldMembers = [NSMutableArray arrayWithArray:membersArray];
+}
+-(void)removeTribeOnHoldMembersFromTribe {
+    [self.onHoldMembers removeAllObjects];
+}
 
 #pragma mark - Updating methods
 
@@ -327,15 +403,22 @@
                         if (success) {
                             [self updateMembersWithBlock:^(bool success) {
                                 if (success) {
-                                    [self updateActivitiesWithBlock:^(bool success) {
+                                    [self updateOnHoldMembersWithBlock:^(bool success) {
                                         if (success) {
-                                            NSLog(@"successfully updated tribe");
-                                            callback(true);
+                                            [self updateActivitiesWithBlock:^(bool success) {
+                                                if (success) {
+                                                    NSLog(@"successfully updated tribe");
+                                                    callback(true);
+                                                } else {
+                                                    NSLog(@"failed to update activities");
+                                                    callback(false);
+                                                }
+                                            }];
                                         } else {
-                                            NSLog(@"failed to update activities");
-                                            callback(false);
+                                            NSLog(@"failed to update on hold members");
                                         }
                                     }];
+
                                 } else {
                                     NSLog(@"failed to update members");
                                     callback(false);
@@ -415,6 +498,40 @@
                 }
             }];
             
+        } else {
+            NSLog(@"failed to load members from network");
+            callback(false);
+        }
+    }];
+    
+}
+
+-(void)updateOnHoldMembersWithBlock:(void(^)(bool success))callback {
+    PFRelation * relationToOnHoldMembersToFetchFromNetwork = [self relationForKey:@"onHoldMembers"];
+    PFQuery * query = [relationToOnHoldMembersToFetchFromNetwork query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        
+        if (!error && objects && [self allMembersFullyLoaded:objects]) {
+            NSLog(@"succesfully fetched members from network");
+            
+            [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error) {
+                    NSLog(@"successfully pinned members");
+                    
+                    // add members to tribe.onHoldMembers
+                    [self addTribeOnHoldMembersToTribe:objects];
+                    
+                    callback(true);
+                } else {
+                    NSLog(@"failed to pin members");
+                    callback(false);
+                }
+            }];
+            
+        } else if (objects.count == 0) {
+            NSLog(@"no on hold members found when attempt to fetch from network");
+            [self removeTribeOnHoldMembersFromTribe];
+            callback(true);
         } else {
             NSLog(@"failed to load members from network");
             callback(false);
@@ -521,9 +638,112 @@
                                         }];
 
 }
-
 -(BOOL)userAlreadyInTribe:(PFUser *)user {
     return ([self.tribeMembers containsObject:user]) ? true : false;
+}
+#pragma mark - Handle On Hold Members
+
+-(void)addUserToTribeOnHold:(PFUser *)user withBlock:(void(^)(BOOL * success))callback {
+    __block BOOL success;
+    
+    // add user to tribe on hold relation
+    PFRelation * onHoldMembersRelation = [self relationForKey:@"onHoldMembers"];
+    [onHoldMembersRelation addObject:user];
+    
+    // add tribe to user's onholdtribes
+    [user addObject:self forKey:@"onHoldTribes"];
+    
+    
+    [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        
+        if (error) {
+            success = false;
+            callback(&success);
+        } else {
+            
+            [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                
+                if (succeeded && !error) {
+                    NSString * pushMessage = [NSString stringWithFormat:@"%@ wants to join %@. Tap on your Tribe's menu to accept or decline 👍",user[@"username"],self[@"name"]];
+                    [[User currentUser] sendPushFromMemberToMember:self[@"admin"] withMessage:pushMessage habitName:@"" andCategory:@"NEW_PENDING_MEMBER"];
+                    
+                    success = true;
+                    callback(&success);
+                } else {
+                    success = false;
+                    callback(&success);
+                }
+                
+            }];
+            
+
+        }
+    }];
+}
+-(void)confirmOnHoldUser:(User *)user withBlock:(void(^)(BOOL * success))callback {
+    // remove from on hold pfrelation
+    PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
+    [onHoldRelationToTribe removeObject:user];
+    [self saveEventually];
+
+    // removes tribe from user's on hold tribes array
+    [PFCloud callFunctionInBackground:@"confirmUserToTribe" withParameters:
+                                     @{@"tribeId":self.objectId,
+                                       @"userId":user.objectId}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                   
+
+                                }];
+    
+    
+    __block BOOL confirmedUserComplete;
+    // add to regular member
+    [self addUserToTribe:user withBlock:^(BOOL *success) {
+        
+        if (success) {
+            
+            
+            NSString * pushMessage = [NSString stringWithFormat:@"You've been accepted to %@. Start motivating your Tribe now!", self[@"name"]];
+            // send push to member
+            [[User currentUser] sendPushFromMemberToMember:user withMessage:pushMessage habitName:@"" andCategory:@""];
+            confirmedUserComplete = true;
+            callback(&confirmedUserComplete);
+        } else {
+            confirmedUserComplete = false;
+            callback(&confirmedUserComplete);
+        }
+        
+    }];
+}
+-(void)declineOnHoldUser:(User *)user {
+    
+    // removes tribe from user's on hold tribes array
+    [PFCloud callFunctionInBackground:@"confirmUserToTribe" withParameters:
+     @{@"tribeId":self.objectId,
+       @"userId":user.objectId}
+                                block:^(id  _Nullable object, NSError * _Nullable error) {
+                                    
+                                    
+                                }];
+    
+    // remove from on hold pfrelation
+    PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
+    [onHoldRelationToTribe removeObject:user];
+    [self saveEventually];
+}
+
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback {
+    
+    PFRelation * onHoldMembersRelation = [self relationForKey:@"onHoldMembers"];
+    PFQuery * query = [onHoldMembersRelation query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        if (objects.count > 0) {
+            self.onHoldMembers = [NSMutableArray arrayWithArray:objects];
+            callback(true);
+        } else {
+            callback(false);
+        }
+    }];
 }
 
 

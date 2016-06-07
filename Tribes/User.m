@@ -17,11 +17,15 @@ int XP_FOR_COMPLETED_HABIT = 100;
 int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 @dynamic tribes;
+@dynamic onHoldTribes;
 @dynamic activities;
 @dynamic lvl;
 @dynamic xp;
 @synthesize loadedInitialTribes;
 @dynamic weeklyReportActive;
+@dynamic hasTribesWithMembers;
+@dynamic signedUpToday;
+@dynamic pushNotificationsEnabled;
 
 #pragma mark - Parse required methods
 
@@ -111,7 +115,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     if (!self.tribes) {
         NSLog(@"no tribes available to update it's activities (updateMemActivitesForAllTribes:)");
-        callback(false);
+        callback(true);
     } else {
         // get obj ids of all activites of all members in all tribes (locally)
         NSMutableArray * objIdsOfActivitiesToUpdate = [[NSMutableArray alloc] init];
@@ -225,26 +229,58 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
     
 }
+/**
+ * Removes tribe from on hold array if found in regular tribes. means user was accepted to new tribe.
+ *
+ **/
+-(void)updateOnHoldTribes {
+    for (Tribe * tribe in self.onHoldTribes) {
+        if ([self.tribes containsObject:tribe]) {
+            [self removeObject:tribe forKey:@"onHoldTribes"];
+            [self saveInBackground];
+        }
+    }
+}
 
+-(BOOL)isAdmin:(Tribe *)tribe {
+    return (tribe[@"admin"] == self);
+}
+
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback {
+    
+    for (Tribe * tribe in self.tribes) {
+        if ([self isAdmin:tribe]) {
+            [tribe checkForPendingMemberswithBlock:^(BOOL success) {
+                if (success) {
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            }];
+        }
+    }
+    
+    
+}
 #pragma mark - Checking for new data before reloading all objects unnecessarily
 
--(void)checkForNewDataWithBlock:(void(^)(bool tribes, bool habits, bool members))callback {
+-(void)checkForNewDataWithBlock:(void(^)(bool newData))callback {
 
     [self checkForNewTribesWithBlock:^(bool available) {
         if (available) {
-            callback(true, true, true);
+            callback(true);
         } else {
             // check for new habits
             [self checkForNewHabitsWithBlock:^(bool available) {
                 if (available) {
-                    callback(false, true, true);
+                    callback(true);
                 } else {
                     // check for new members
                     [self checkForNewMembersWithBlock:^(bool available) {
                         if (available) {
-                            callback(false, false, true);
+                            callback(true);
                         } else {
-                            callback(false, false, false);
+                            callback(false);
                         }
                     }];
                 }
@@ -274,7 +310,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                 callback(true);
             } else {
                 NSLog(@"no new tribes found");
-                NSLog(@"%@", error);
                 callback(false);
             }
             
@@ -311,8 +346,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
                     
                     // check if there are new habits available
                     if (copyOfOldHabits.count != arrayOfNewHabits.count) {
+                        NSLog(@"new habits found");
                         callback(true);
                     } else {
+                        NSLog(@"no new habits found");
                         callback(false);
                     }
                     
@@ -333,34 +370,36 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     for (Tribe * tribe in self.tribes) {
         [oldCopyOfAllMembers addObjectsFromArray:tribe.tribeMembers];
     }
-    
-    // arrays to hold new data and compare old data to
-    NSMutableArray * arrayOfNewMembers = [[NSMutableArray alloc] init];
-    
+
     __block int counter = 0;
+    __block int totalCount = 0;
     for (Tribe * tribe in self.tribes) {
         
         PFRelation * relationToMembers = [tribe relationForKey:@"members"];
         PFQuery * query = [relationToMembers query];
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            if (objects && !error) {
-                counter++;
-                [arrayOfNewMembers addObjectsFromArray:objects];
+        [query countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
+            
+            totalCount += number;
+            counter++;
+            
+            if (number && !error) {
                 if (counter == self.tribes.count) {
                     
                     // check if there are new members
-                    if (arrayOfNewMembers.count != oldCopyOfAllMembers.count) {
+                    if (totalCount != oldCopyOfAllMembers.count) {
+                        NSLog(@"new members found");
                         callback(true);
                     } else {
+                        NSLog(@"no new members found");
                         callback(false);
                     }
                 }
-                
             } else {
                 NSLog(@"error fetching members relation to check if there is new data available.");
                 callback(false);
             }
         }];
+
     
     }
     
@@ -371,9 +410,12 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 #pragma mark - Create Tribe
 
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback {
-
+    
     Tribe * newTribe = [[Tribe alloc] init];
     newTribe[@"name"] = name;
+    newTribe[@"nameLowerCase"] = [name lowercaseString];
+    newTribe[@"admin"] = self;
+    newTribe[@"private"] = @YES;
     
     PFRelation * members = [newTribe relationForKey:@"members"];
     [members addObject:self];
@@ -571,6 +613,45 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [self saveInBackground];
     [tribeToRemoveFrom saveInBackground];
 
+}
+
+-(BOOL)hasTribesWithMembers {
+    for (Tribe * tribe in self.tribes) {
+        if (tribe.tribeMembers.count > 1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+#pragma mark - User states
+
+-(BOOL)signedUpToday {
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:[NSDate date]];
+    NSDate *today = [cal dateFromComponents:components];
+    components = [cal components:(NSCalendarUnitEra | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:self.createdAt];
+    NSDate *otherDate = [cal dateFromComponents:components];
+    
+    return ([today isEqualToDate:otherDate]);
+}
+
+-(BOOL)pushNotificationsEnabled {
+
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    BOOL enabled;
+    
+    // Try to use the newer isRegisteredForRemoteNotifications otherwise use the enabledRemoteNotificationTypes.
+    if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
+    {
+        enabled = [application isRegisteredForRemoteNotifications];
+    } else {
+        UIRemoteNotificationType types = [application enabledRemoteNotificationTypes];
+        enabled = types & UIRemoteNotificationTypeAlert;
+    }
+    
+    return enabled;
 }
 
 #pragma mark - Hibernation

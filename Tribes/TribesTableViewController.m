@@ -10,6 +10,7 @@
 #import "Parse.h"
 #import "TribeDetailTableViewController.h"
 #import "TribeMenuTableViewController.h"
+#import "MembersTableViewController.h"
 #import "AddFriendsTableViewController.h"
 #import "Tribe.h"
 #import "Habit.h"
@@ -36,7 +37,7 @@
     UIRefreshControl * refreshControl;
     YLProgressBar * progressBar;
     KRConfettiView * confettiView;
-    BOOL bannerIsVisible;
+    BOOL checkingForTribesConfirmation;
 }
 
 @end
@@ -55,17 +56,35 @@
     } else {
     
         self.navigationItem.title = @"Loading Tribes..";
+        [self setUp];
+        [self UISetUp];
+        
         [currentUser loadTribesWithBlock:^(bool success) {
             
             if (success) {
                 self.navigationItem.title = @"Tribes";
                 currentUser.loadedInitialTribes = true;
                 [self.tableView reloadData];
-                [self setUp];
-                [self UISetUp];
+                [self updateProgressBar];
+                [currentUser checkForPendingMemberswithBlock:^(BOOL newPendingMembers) {
+                    if (newPendingMembers)
+                        [self.tableView reloadData];
+                }];
+                
+                // if user is waiting to be accepted, check for new tribes
+                // else check for new data (members, habits, etc)
+                if (currentUser.onHoldTribes.count > 0) {
+                    [self checkForTribesConfirmationTimer];
+                } else {
+                    [self checkForNewData];
+                }
+                
             } else {
                 SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-                [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error loading your Tribes. Please try again" closeButtonTitle:@"OK" duration:0.0];
+                [alert addButton:@"MAGIC BUTTON" actionBlock:^{
+                    [self refreshTable];
+                }];
+                [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error while loading your Tribes. This shouldn't happen. Ever! So now, let's try to fix it by tapping the magic button below 👇" closeButtonTitle:nil duration:0.0];
             }
             
         }];
@@ -90,16 +109,20 @@
     } else if ([self shouldAskForNotificationsPermission]) {
         [self askForNotificationsPermission];
     }
+    
+    if (currentUser.onHoldTribes.count > 0)
+        [self checkForTribesConfirmationTimer];
+    
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // if user has no tribe - add call to action to create/join one
-    if (currentUser.tribes.count == 0)
+    if (currentUser.tribes.count == 0 && currentUser.onHoldTribes.count == 0)
         return 1;
     
-    return currentUser.tribes.count;
+    return currentUser.tribes.count + currentUser.onHoldTribes.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -107,11 +130,15 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
+    if (section < currentUser.onHoldTribes.count)
+        return 1;
     
     if (!currentUser.tribes || !currentUser.loadedInitialTribes)
         return 0;
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
 
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0)
@@ -155,13 +182,20 @@ heightForHeaderInSection:(NSInteger)section {
     [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
     
     // if user has no tribe - add call to action to create/join one
-    if (currentUser.tribes.count == 0) {
+    if (currentUser.tribes.count == 0 && currentUser.onHoldTribes.count == 0) {
         [titleLabel setText:@"👆 Tap to join a Tribe"];
         [headerView addSubview:titleLabel];
         return headerView;
     }
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:section];
+    // if user is on hold for a tribe, show "waiting for" and move tribe index
+    else if (section < currentUser.onHoldTribes.count) {
+        [self configureViewForHeaderView:headerView];
+        return headerView;
+    }
+    
+    // tribe from data model
+    Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
     [titleLabel setText:tribe.name];
     
     // create label for 🦁 or 🐑
@@ -196,23 +230,36 @@ heightForHeaderInSection:(NSInteger)section {
         cell.contentView.backgroundColor = [UIColor whiteColor];
     }
     
+    if (indexPath.section < currentUser.onHoldTribes.count) {
+        cell.textLabel.text = @"Tell your Tribe admin to accept you!";
+        return cell;
+    }
+    
     // if user created a tribe but tribe has no habits - call to action to add one
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     
     // if tribe has no habits - add call to action to create a habit
     if ([tribe[@"habits"] count] == 0) {
         cell.textLabel.text = @"👆 Tap to add a habit";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
 
     // if tribe has no habits - add call to action to add a friend
-    if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
+    if (tribe.tribeMembers.count == 1 && tribe.onHoldMembers.count == 0 && indexPath.row == 0) {
         cell.textLabel.text = @"👆 Tap to add a friend";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }
+    
+    if (tribe.onHoldMembers.count > 0 && indexPath.row == 0 && [currentUser isAdmin:tribe]) {
+        cell.textLabel.text = @"👆 You've got pending members!";
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         return cell;
     }
     
     // regular cell when showing call to action to add friend
-    else if (tribe.tribeMembers.count == 1 && indexPath.row != 0) {
+    else if ((tribe.tribeMembers.count == 1 || tribe.onHoldMembers.count > 0) && indexPath.row != 0) {
         NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         [self configureCell:cell forRowAtIndexPath:newIndexPath];
         return cell;
@@ -247,7 +294,7 @@ heightForHeaderInSection:(NSInteger)section {
     if (!currentUser.loadedInitialTribes)
         return;
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
 
     
@@ -339,13 +386,32 @@ heightForHeaderInSection:(NSInteger)section {
     [cell.detailTextLabel setText:detailText];
 }
 
+-(void)configureViewForHeaderView:(UIView *)headerView {
+    // set title for tribe
+    UILabel * titleLabel = [[UILabel alloc] init];
+    [titleLabel setFrame:CGRectMake(16, 34, self.tableView.frame.size.width - 12, 38)];
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:30]];
+    
+    [titleLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:20]];
+    [titleLabel setText:@"Waiting on Tribe confirmation.."];
+    [headerView addSubview:titleLabel];
+    
+    UIActivityIndicatorView * indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [indicator setFrame:CGRectMake(337, 35, 40, 40)];
+    [headerView addSubview:indicator];
+    [indicator startAnimating];
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section];
+    if (indexPath.section < currentUser.onHoldTribes.count)
+        return;
+    
+    Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     
     // if user has no habits in tribe, send them to add habit
     if ([tribe[@"habits"] count] == 0) {
@@ -358,14 +424,18 @@ heightForHeaderInSection:(NSInteger)section {
     }
     
     // if user has no tribe members , send them add friends
-    else if (tribe.tribeMembers.count == 1 && indexPath.row == 0) {
+    else if (tribe.tribeMembers.count == 1 && tribe.onHoldMembers.count == 0 && indexPath.row == 0) {
         
         [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
         [Leanplum track:@"Add first friend"];
     }
     
+    // pending members action
+    else if (tribe.onHoldMembers.count > 0 && indexPath.row == 0 && [currentUser isAdmin:tribe]) {
+        [self performSegueWithIdentifier:@"showMembersTable" sender:tribe];
+    }
     // if user has no tribe members but has habits, send them to corresponding habits
-    else if (tribe.tribeMembers.count == 1 && indexPath.row != 0) {
+    else if ((tribe.tribeMembers.count == 1 || tribe.onHoldMembers.count > 0) && indexPath.row != 0) {
         
         // log event
         [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
@@ -425,8 +495,9 @@ heightForHeaderInSection:(NSInteger)section {
         // log event
         [Answers logCustomEventWithName:@"Tapped to add first Tribe" customAttributes:@{}];
         [Leanplum track:@"Add first Tribe"];
+
+        [self performSegueWithIdentifier:@"ShowTribeManager" sender:nil];
         
-        [self performSegueWithIdentifier:@"AddTribe" sender:nil];
         return;
     }
     
@@ -435,6 +506,8 @@ heightForHeaderInSection:(NSInteger)section {
         for (Tribe * tribe in currentUser.tribes) {
             if ([label.text isEqualToString:tribe.name]) {
                 [self performSegueWithIdentifier:@"TribeMenu" sender:tribe];
+            } else if ([label.text isEqualToString:@"Waiting on Tribe confirmation.."]) {
+                return;
             }
         }
     }
@@ -485,6 +558,10 @@ heightForHeaderInSection:(NSInteger)section {
         // send to add friend to tribe when tribe has no tribe members other than user,
         AddFriendsTableViewController * vc = (AddFriendsTableViewController *)segue.destinationViewController;
         vc.tribe = sender;
+    } else if ([segue.identifier isEqualToString:@"showMembersTable"]) {
+        // send to add friend to tribe when tribe has no tribe members other than user,
+        MembersTableViewController * vc = (MembersTableViewController *)segue.destinationViewController;
+        vc.tribe = sender;
     }
 }
 
@@ -517,60 +594,71 @@ heightForHeaderInSection:(NSInteger)section {
 
 -(void)handleEnteredForeground {
     
+    // check for pending members if current user is admin of a tribe
+    [currentUser checkForPendingMemberswithBlock:^(BOOL newPendingMembers) {
+        if (newPendingMembers)
+            [self.tableView reloadData];
+    }];
+    
+    
     //  update activities when entering foreground
     [currentUser updateMemberActivitiesForAllTribesWithBlock:^(bool success) {
         if (success) {
             [self.tableView reloadData];
             [self updateProgressBar];
-//            [self checkForNewData];
-
+            if (currentUser.onHoldTribes.count == 0 && !checkingForTribesConfirmation)
+                [self checkForNewData];
         } else {
             NSLog(@"failed to update activities");
         }
     }]; 
 }
-
--(void)checkForNewData {
+-(void)checkForTribesConfirmationTimer {
+    //NSTimer calling Method B, as long the audio file is playing, every 5 seconds.
+    [NSTimer scheduledTimerWithTimeInterval:5.0f
+                                     target:self selector:@selector(checkForTribesConfirmation:) userInfo:nil repeats:YES];
+}
+- (void)checkForTribesConfirmation:(NSTimer *)timer{
     
-    [currentUser checkForNewDataWithBlock:^(bool tribes, bool habits, bool members) {
-        
-        NSString * alertTitle;
-        NSString * alertMessage;
-        
-        // if new tibes were found
-        if (tribes) {
-            
-            NSLog(@"new tribes found to be downloaded");
-            alertTitle = @"New Tribes 😎";
-            alertMessage = @"Someone has added you to a new Tribe! Tap OK to update now.";
-        }
-        
-        // new habits were found
-        else if (!tribes && habits) {
-            
-            NSLog(@"new habits found to be downloaded");
-            alertTitle = @"New Habits 😎";
-            alertMessage = @"A member of one of your Tribes added a new habit! Tap OK to update now.";
-            
-        }
-        // new members were found
-        else if (!tribes && !habits && members) {
-            
-            NSLog(@"new members found to be downloaded");
-            alertTitle = @"New Members 😎";
-            alertMessage = @"A new member has been added to one of your Tribes. Tap OK to update now.";
-        }
+    checkingForTribesConfirmation = true;
+
+    [currentUser checkForNewDataWithBlock:^(bool newData) {
         
         // show alert to download new data
-        if (tribes || habits || members) {
+        if (newData) {
+            
+            currentUser.loadedInitialTribes = false;
+            [timer invalidate];
             
             SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
             [newNewAlert addButton:@"OK" actionBlock:^{
-                [currentUser updateTribesWithBlock:^(bool success) {
-                    NSLog(@"updatedTribes");
-                }];
+                
+                checkingForTribesConfirmation = false;
+
+                [self refreshTable];
+                
             }];
-            [newNewAlert showInfo:alertTitle subTitle:alertMessage closeButtonTitle:nil duration:0.0];
+            [newNewAlert showSuccess:@"Congratulations 🎉" subTitle:@"You've been accepted to a new Tribe. Make your Tribe proud ✊" closeButtonTitle:nil duration:0.0];
+        } else {
+            NSLog(@"no new data was found to update tribes/habits/members.");
+        }
+    }];
+    
+}
+
+-(void)checkForNewData {
+    [currentUser checkForNewDataWithBlock:^(bool newData) {
+        
+        // show alert to download new data
+        if (newData) {
+            
+            SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [newNewAlert addButton:@"OK" actionBlock:^{
+                
+                [self refreshTable];
+                
+            }];
+            [newNewAlert showInfo:@"Data fairy ✨" subTitle:@"We are being told there is new stuff to be downloaded. That might be a Tribe, a new member or new habits. Or who knows, new pixie dust? Tap below to download!" closeButtonTitle:nil duration:0.0];
         } else {
             NSLog(@"no new data was found to update tribes/habits/members.");
         }
@@ -602,11 +690,16 @@ heightForHeaderInSection:(NSInteger)section {
 }
 -(BOOL)shouldPlayWalkthroughVideo {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [userDefaults objectForKey:@"playedWalkthroughVideo"] == NULL);
+    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [userDefaults objectForKey:@"playedWalkthroughVideo"] == NULL) &&
+        ([currentUser signedUpToday]);
 }
 -(BOOL)shouldAskForNotificationsPermission {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
-    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 && [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] && ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL));
+    return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 &&
+            [currentUser hasTribesWithMembers] &&
+            [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] &&
+            ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL) &&
+            (![currentUser pushNotificationsEnabled]));
 }
 -(void)showAlertForWalkthroughVideo {
     // show alert with explanation of why the video
@@ -690,14 +783,24 @@ heightForHeaderInSection:(NSInteger)section {
     SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
     [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
     [currentUser updateTribesWithBlock:^(bool success) {
-        [alert hideView];
         if (success) {
-            [refreshControl endRefreshing];
-            [self.tableView reloadData];
-            [self updateProgressBar];
+            
+            [currentUser loadTribesWithBlock:^(bool success) {
+                currentUser.loadedInitialTribes = true;
+                [alert hideView];
+                [refreshControl endRefreshing];
+                
+                [self.tableView reloadData];
+                [self updateProgressBar];
+
+            }];
+
         } else {
+            [refreshControl endRefreshing];
+            [alert hideView];
+
             SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
-            [error showError:@"Oh oh!" subTitle:@"There was an error fetching your tribes. Please make sure your internet connection is working and try again!" closeButtonTitle:@"OK" duration:0.0];
+            [error showError:@"🙄" subTitle:@"There was an error fetching your Tribes. We agree, errors are annoying. Please make sure your internet connection is working and swipe down to reload your Tribes!" closeButtonTitle:@"OK" duration:0.0];
             [refreshControl endRefreshing];
         }
     }];
