@@ -65,7 +65,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     // read regular members
     else {
         User * member = [_tribe.tribeMembers objectAtIndex:indexPath.row - _tribe.onHoldMembers.count];
-        cell.textLabel.text = member[@"username"];
+        if ([member isAdmin:_tribe]) {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ (admin)", member[@"username"]];
+        } else {
+            cell.textLabel.text = member[@"username"];
+        }
+        
         cell.detailTextLabel.text = @"";
     }
     
