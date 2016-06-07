@@ -23,8 +23,11 @@
     self.navigationItem.title = @"Members 👫";
     
     // right button to create Tribe
-    UIBarButtonItem * addMemberButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addMember)];
-    [self.navigationItem setRightBarButtonItem:addMemberButton];
+    if ([[User currentUser] isAdmin:_tribe]) {
+        UIBarButtonItem * addMemberButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addMember)];
+        [self.navigationItem setRightBarButtonItem:addMemberButton];
+    }
+
 }
 
 -(void)viewDidAppear:(BOOL)animated {
