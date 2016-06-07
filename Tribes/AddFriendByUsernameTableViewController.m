@@ -25,6 +25,8 @@
     _searchBar.delegate = self;
     self.pullToRefreshEnabled = false;
     
+    self.navigationItem.title = @"Add a friend";
+    
     // right button to create Tribe
     UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStylePlain target:self action:@selector(inviteFriendsViaText)];
     [self.navigationItem setRightBarButtonItem:rightButton];

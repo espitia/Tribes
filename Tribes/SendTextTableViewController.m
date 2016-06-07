@@ -31,6 +31,8 @@
     
     addressBook = [[APAddressBook alloc] init];
     searchBar.delegate = self;
+    self.navigationItem.title = @"Invite a friend";
+
     
     switch([APAddressBook access])
     {
