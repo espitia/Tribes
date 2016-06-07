@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "User.h"
 #import "SCLAlertView.h"
+#import "SendTextTableViewController.h"
 
 @interface AddFriendByUsernameTableViewController () <UISearchBarDelegate>
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -23,6 +24,21 @@
     // Do any additional setup after loading the view.
     _searchBar.delegate = self;
     self.pullToRefreshEnabled = false;
+    
+    // right button to create Tribe
+    UIBarButtonItem * rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStylePlain target:self action:@selector(inviteFriendsViaText)];
+    [self.navigationItem setRightBarButtonItem:rightButton];
+    
+    // alert to invite via text
+    if (_tribe.tribeMembers.count == 1) {
+        SCLAlertView * inviteFriendsAlert = [[SCLAlertView alloc] initWithNewWindow];
+        [inviteFriendsAlert addButton:@"INVITE" actionBlock:^{
+            [self performSegueWithIdentifier:@"showSendText" sender:_tribe];
+        }];
+        [inviteFriendsAlert showInfo:@"Invite your friends 📲" subTitle:@"Before adding friends, they have to download Tribes first! Make sure to send them a text with an invite 👫" closeButtonTitle:@"MAYBE LATER" duration:0.0];
+    } else {
+        [_searchBar becomeFirstResponder];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,7 +46,8 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewDidAppear:(BOOL)animated {
-    [_searchBar becomeFirstResponder];
+    
+    
 }
 
 #pragma mark - Data source
@@ -128,6 +145,20 @@
     [confirmAlert showInfo:@"CONFIRM" subTitle:message closeButtonTitle:nil duration:0.0];
     
 
+}
+
+#pragma mark - Helper
+
+-(void)inviteFriendsViaText {
+    [self performSegueWithIdentifier:@"showSendText" sender:_tribe];
+}
+
+#pragma mark - Navigation
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"showSendText"]) {
+        SendTextTableViewController * vc = (SendTextTableViewController *)segue.destinationViewController;
+        vc.tribe = _tribe;
+    }
 }
 
 @end
