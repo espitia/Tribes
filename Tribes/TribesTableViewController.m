@@ -37,7 +37,7 @@
     UIRefreshControl * refreshControl;
     YLProgressBar * progressBar;
     KRConfettiView * confettiView;
-    BOOL bannerIsVisible;
+    BOOL checkingForTribesConfirmation;
 }
 
 @end
@@ -606,7 +606,7 @@ heightForHeaderInSection:(NSInteger)section {
         if (success) {
             [self.tableView reloadData];
             [self updateProgressBar];
-            if (currentUser.onHoldTribes.count == 0)
+            if (currentUser.onHoldTribes.count == 0 && !checkingForTribesConfirmation)
                 [self checkForNewData];
         } else {
             NSLog(@"failed to update activities");
@@ -620,16 +620,21 @@ heightForHeaderInSection:(NSInteger)section {
 }
 - (void)checkForTribesConfirmation:(NSTimer *)timer{
     
+    checkingForTribesConfirmation = true;
+
     [currentUser checkForNewDataWithBlock:^(bool newData) {
         
         // show alert to download new data
         if (newData) {
             
+            currentUser.loadedInitialTribes = false;
             [timer invalidate];
             
             SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
             [newNewAlert addButton:@"OK" actionBlock:^{
                 
+                checkingForTribesConfirmation = false;
+
                 [self refreshTable];
                 
             }];
