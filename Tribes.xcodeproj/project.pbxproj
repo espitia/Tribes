@@ -27,6 +27,7 @@
 		0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD111CB41BC00022753D /* PremiumViewController.m */; };
 		0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0923AD121CB41BC00022753D /* PremiumViewController.xib */; };
 		0923AD181CB42B100022753D /* IAPHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0923AD171CB42B100022753D /* IAPHelper.m */; };
+		0948EF6D1D0718E80074BF35 /* SendTextTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0948EF6C1D0718E80074BF35 /* SendTextTableViewController.m */; };
 		0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */; };
 		0957A2491CAD70F100175EE2 /* TribeReportTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */; };
 		0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0965E5811C87F4EE00FFA9C9 /* Habit.m */; };
@@ -127,6 +128,8 @@
 		0923AD121CB41BC00022753D /* PremiumViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PremiumViewController.xib; sourceTree = "<group>"; };
 		0923AD161CB42B100022753D /* IAPHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPHelper.h; sourceTree = "<group>"; };
 		0923AD171CB42B100022753D /* IAPHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPHelper.m; sourceTree = "<group>"; };
+		0948EF6B1D0718E80074BF35 /* SendTextTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendTextTableViewController.h; sourceTree = "<group>"; };
+		0948EF6C1D0718E80074BF35 /* SendTextTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendTextTableViewController.m; sourceTree = "<group>"; };
 		0957A2451CAD70F100175EE2 /* TribeReportTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeReportTableViewCell.h; sourceTree = "<group>"; };
 		0957A2461CAD70F100175EE2 /* TribeReportTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeReportTableViewCell.m; sourceTree = "<group>"; };
 		0957A2471CAD70F100175EE2 /* TribeReportTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TribeReportTableViewCell.xib; sourceTree = "<group>"; };
@@ -517,6 +520,8 @@
 				099BB2001C9520E100A734F0 /* MembersTableViewController.m */,
 				091BD8CC1D064D6000EC74AD /* AddFriendByUsernameTableViewController.h */,
 				091BD8CD1D064D6000EC74AD /* AddFriendByUsernameTableViewController.m */,
+				0948EF6B1D0718E80074BF35 /* SendTextTableViewController.h */,
+				0948EF6C1D0718E80074BF35 /* SendTextTableViewController.m */,
 			);
 			name = "Add friends";
 			sourceTree = "<group>";
@@ -810,6 +815,7 @@
 				090C23961CBD9EBF00A52DF6 /* AddManagerTableViewController.m in Sources */,
 				09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */,
 				091C37391CF4AE930020B6BE /* UsernameValidationViewController.m in Sources */,
+				0948EF6D1D0718E80074BF35 /* SendTextTableViewController.m in Sources */,
 				09E9C65F1CF8914500B5E87E /* JoinTribeManagerTableViewController.m in Sources */,
 				0957A2481CAD70F100175EE2 /* TribeReportTableViewCell.m in Sources */,
 				09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */,
