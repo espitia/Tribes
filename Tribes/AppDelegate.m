@@ -17,6 +17,7 @@
 #import "HelpshiftCore.h"
 #import <Leanplum/Leanplum.h>
 #import "TribesTableViewController.h"
+#import <UXCam/UXCam.h>
 
 
 @interface AppDelegate ()
@@ -70,7 +71,9 @@
     
     // Starts a new session and updates the app content from Leanplum.
     [Leanplum start];
-        
+    
+    [UXCam startWithKey:@"88d0935a20b0ad1"];
+    
     // ui changes
     [self colorNavBar];
     

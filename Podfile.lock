@@ -2,7 +2,6 @@ PODS:
   - APAddressBook (0.2.3):
     - APAddressBook/Core (= 0.2.3)
   - APAddressBook/Core (0.2.3)
-  - Appsee (2.2)
   - Bolts/Tasks (1.7.0)
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
@@ -20,11 +19,11 @@ PODS:
   - SCLAlertView-Objective-C (1.0.2)
   - TwitterCore (2.0.2):
     - Fabric
+  - UXCam (2.5.3)
   - YLProgressBar (3.8.1)
 
 DEPENDENCIES:
   - APAddressBook
-  - Appsee
   - Crashlytics
   - Digits
   - Fabric
@@ -35,11 +34,11 @@ DEPENDENCIES:
   - ParseUI
   - SCLAlertView-Objective-C
   - TwitterCore
+  - UXCam
   - YLProgressBar (~> 3.8.0)
 
 SPEC CHECKSUMS:
   APAddressBook: 2a91bf05999548bea210ec9d1a68073f4dc8bfce
-  Appsee: c95173e65acaab0ffc8a082c70633c9f5f45d5f0
   Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Digits: a5c8ddfed18d5e0496e9b6f459f0bca44de588db
@@ -51,6 +50,7 @@ SPEC CHECKSUMS:
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
   TwitterCore: 0f44d8980a6879d5205dcb4e010d15e643e56fa0
+  UXCam: d56a673dcfe6cdac982b78691c9e10b4c60e9b15
   YLProgressBar: c6699d75d58042377132c9301d3ab8fd0204937d
 
 COCOAPODS: 0.39.0
