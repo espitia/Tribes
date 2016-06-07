@@ -36,15 +36,21 @@
     {
         case APAddressBookAccessUnknown: {
             // Application didn't request address book access yet
-            [addressBook requestAccess:^(BOOL granted, NSError *error)
-            {
-                if (granted) {
-                    [self setUpAddressBook];
-                } else {
-                    NSLog(@"not granted");
-                }
-                // check `granted`
+            
+            SCLAlertView * askForPermissionAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [askForPermissionAlert addButton:@"OK" actionBlock:^{
+                [addressBook requestAccess:^(BOOL granted, NSError *error)
+                 {
+                     if (granted) {
+                         [self setUpAddressBook];
+                     } else {
+                         NSLog(@"not granted");
+                     }
+                     // check `granted`
+                 }];
             }];
+            [askForPermissionAlert showInfo:@"ADDRESS BOOK" subTitle:@"In order to send text invites to your buddies, Tribes needs your holy permission to access your address book. No worries, we never send anything. Only you have the power 🙌" closeButtonTitle:@"MAYBE LATER" duration:0.0];
+
         }
             break;
             
@@ -54,8 +60,11 @@
         }
             break;
             
-        case APAddressBookAccessDenied:
+        case APAddressBookAccessDenied: {
             // Access denied or restricted by privacy settings
+            SCLAlertView * accessDeniedAlert = [[SCLAlertView alloc] initWithNewWindow];
+            [accessDeniedAlert showError:@"Oh oh.. 🙄" subTitle:@"Tribes does not have permission to access your address book. In order to send invites through text, please go to your phone's setting and allow Tribes to access your address book!" closeButtonTitle:@"GOT IT" duration:0.0];
+        }
             break;
     }
 }
