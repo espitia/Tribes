@@ -34,6 +34,7 @@ extern int RECEIVED_APPLAUSE_XP;
 //on hold tribes
 -(void)updateOnHoldTribes;
 -(BOOL)isAdmin:(Tribe *)tribe;
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback;
 
 //removing user from tribe
 -(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;

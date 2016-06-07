@@ -246,6 +246,22 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     return (tribe[@"admin"] == self);
 }
 
+-(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback {
+    
+    for (Tribe * tribe in self.tribes) {
+        if ([self isAdmin:tribe]) {
+            [tribe checkForPendingMemberswithBlock:^(BOOL success) {
+                if (success) {
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            }];
+        }
+    }
+    
+    
+}
 #pragma mark - Checking for new data before reloading all objects unnecessarily
 
 -(void)checkForNewDataWithBlock:(void(^)(bool newData))callback {
