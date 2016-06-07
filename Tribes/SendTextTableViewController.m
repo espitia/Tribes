@@ -15,10 +15,11 @@
 #import <MessageUI/MFMailComposeViewController.h>
 
 @interface SendTextTableViewController () <UINavigationControllerDelegate,MFMessageComposeViewControllerDelegate, UISearchBarDelegate> {
-    NSArray * addressBookContacts;
-    APAddressBook * addressBook;    
+    NSMutableArray * addressBookContacts;
+    NSMutableArray * filteredAddressBookContacts;
+    APAddressBook * addressBook;
     IBOutlet UISearchBar *searchBar;
-    
+    BOOL isFiltered;
 }
 
 @end
@@ -67,7 +68,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return addressBookContacts.count;
+    return (isFiltered) ? filteredAddressBookContacts.count : addressBookContacts.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -75,7 +76,11 @@
     
     APContact * contact;
     
-    if (addressBookContacts.count > 0) {
+    if (isFiltered) {
+        contact = [filteredAddressBookContacts objectAtIndex:indexPath.row];
+        cell.textLabel.text = [self contactName:contact];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    } else {
         contact = [addressBookContacts objectAtIndex:indexPath.row];
         cell.textLabel.text = [self contactName:contact];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -95,7 +100,13 @@
 
 
 -(void)sendUserTextFromIndexPath:(NSIndexPath *)indexPath {
-    APContact * contact = [addressBookContacts objectAtIndex:indexPath.row];
+    
+    APContact * contact;
+    if (isFiltered) {
+        contact = [filteredAddressBookContacts objectAtIndex:indexPath.row];
+    } else {
+        contact = [addressBookContacts objectAtIndex:indexPath.row];
+    }
     NSString * number = [self contactPhones:contact];
     
     MFMessageComposeViewController *controller =
@@ -135,7 +146,7 @@
          if (!error)
          {
              // do something with contacts array
-             addressBookContacts = [NSArray arrayWithArray:contacts];
+             addressBookContacts = [NSMutableArray arrayWithArray:contacts];
              [self.tableView reloadData];
          }
          else
@@ -216,9 +227,31 @@
 #pragma mark - Search Bar Delegate
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-
+    if(searchText.length == 0)
+    {
+        isFiltered = FALSE;
+    }
+    else
+    {
+        isFiltered = true;
+        filteredAddressBookContacts = [[NSMutableArray alloc] init];
+        
+        for (APContact * contact in addressBookContacts)
+        {
+            if ([contact.name.firstName containsString:searchText] ||
+                [contact.name.lastName containsString:searchText]) {
+                [filteredAddressBookContacts addObject:contact];
+            }
+//            NSRange nameRange = [contact.name.firstName rangeOfString:searchText options:NSCaseInsensitiveSearch];
+//            NSRange descriptionRange = [contact.name.lastName rangeOfString:searchText options:NSCaseInsensitiveSearch];
+//            if(nameRange.location != NSNotFound || descriptionRange.location != NSNotFound)
+//            {
+//                [filteredAddressBookContacts addObject:contact];
+//            }
+        }
+    }
+    
+    [self.tableView reloadData];
 }
--(void)filterContactsWithString:(NSString *)string {
 
-}
 @end
