@@ -335,6 +335,11 @@
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
     
+    
+    // set device token
+    PFInstallation *installation = [PFInstallation currentInstallation];
+    [PFPush storeDeviceToken:[installation deviceToken]];
+    [installation saveInBackground];
 }
 
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification withResponseInfo:(NSDictionary *)responseInfo completionHandler:(void (^)())completionHandler {
