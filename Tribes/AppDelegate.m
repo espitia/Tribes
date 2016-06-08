@@ -338,6 +338,7 @@
     
     // set device token
     PFInstallation *installation = [PFInstallation currentInstallation];
+    [installation setObject:[PFUser currentUser] forKey:@"user"];
     [PFPush storeDeviceToken:[installation deviceToken]];
     [installation saveInBackground];
 }
