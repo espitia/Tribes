@@ -517,31 +517,31 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
     
     // message to send
-    NSString * msg =  [NSString stringWithFormat:@"%@: 👉 %@",self[@"name"],habit[@"name"]];
+    NSString * msg =  [NSString stringWithFormat:@"%@: 👉 %@",self[@"username"],habit[@"name"]];
     
     [self sendPushFromMemberToMember:member withMessage:msg habitName:habit[@"name"] andCategory:@"MOTIVATION_REPLY" withBlock:^(BOOL *success) {
         if (success) {
             callback(true);
-            NSLog(@"sent motivation to %@", member[@"name"]);
+            NSLog(@"sent motivation to %@", member[@"username"]);
         } else {
             callback(false);
-            NSLog(@"failed to send motivation to %@", member[@"name"]);
+            NSLog(@"failed to send motivation to %@", member[@"username"]);
         }
     }];
 }
 -(void)notifyOfCompletionToMembersInTribe:(Tribe *)tribe forHabit:(Habit *)habit {
 
     // message to send
-    NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"name"],habit[@"name"]];
+    NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"username"],habit[@"name"]];
     
     for (User * member in tribe.tribeMembers) {
         if (member != self) {
             
             [self sendPushFromMemberToMember:member withMessage:msg habitName:habit[@"name"]andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
                 if (success) {
-                    NSLog(@"sent completion push for %@ to %@",self[@"name"],member[@"name"]);
+                    NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
                 } else {
-                    NSLog(@"failed to send completion push for %@ to %@",self[@"name"],member[@"name"]);
+                    NSLog(@"failed to send completion push for %@ to %@",self[@"username"],member[@"username"]);
                 }
             }];
         }

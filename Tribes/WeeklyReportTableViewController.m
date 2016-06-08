@@ -119,7 +119,7 @@
     User * user = [_tribe userWithMostCompletionsForThisWeekOnNonWatcherHabits];
     cell.recognitionTitle.text = @"Most completions:";
     int thisWeeksCompletions = [user thisWeekCompletionsForNonWatcherHabitsForTribe:_tribe];
-    cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"name"], thisWeeksCompletions];
+    cell.member.text = [NSString stringWithFormat:@"%@: %d completions!", user[@"username"], thisWeeksCompletions];
     cell.emojiReward.text = @"🏅";
 }
 
@@ -178,7 +178,7 @@
         
         User * user = [_tribe.tribeMembers objectAtIndex:indexPath.row - 1];
         // set name
-        cell.username.text = user[@"name"];
+        cell.username.text = user[@"username"];
         
         int lastWeekCompletions = [user lastWeekCompletionsForTribe:_tribe];
         int thisWeeksCompletions = [user thisWeekCompletionsForTribe:_tribe];

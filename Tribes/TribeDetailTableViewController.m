@@ -72,7 +72,7 @@
     User * member = _habit.membersAndActivities[indexPath.row][@"member"];
     Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
     
-    NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"name"]];
+    NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
     cell.textLabel.text = titleLabel;
     
     int completions;
@@ -134,13 +134,13 @@
         } else if (activity.hibernation) {
             
             // let user know
-            message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"name"]];
+            message = [NSString stringWithFormat:@"%@ is hibernating!\n Let it be 😴", member[@"username"]];
             [alert showInfo:@"🐻" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             
         } else if (activity.watcher) {
             
             // let user know
-            message = [NSString stringWithFormat:@"%@ is a watcher!\n Only here to motivate those who are participating in this habit 😎", member[@"name"]];
+            message = [NSString stringWithFormat:@"%@ is a watcher!\n Only here to motivate those who are participating in this habit 😎", member[@"username"]];
             [alert showInfo:@"👀" subTitle:message closeButtonTitle:@"OK" duration:0.0];
             
         }
@@ -192,7 +192,7 @@
         [Answers logCustomEventWithName:@"Sent applause" customAttributes:@{}];
         [Leanplum track:@"Sent applause"];
         
-        NSString * message = [NSString stringWithFormat:@"%@: 👏 (%@)", [User currentUser][@"name"], self.habit[@"name"]];
+        NSString * message = [NSString stringWithFormat:@"%@: 👏 (%@)", [User currentUser][@"username"], self.habit[@"name"]];
         
         NSString * category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
         [[User currentUser] sendPushFromMemberToMember:member withMessage:message habitName:self.habit[@"name"] andCategory:category];

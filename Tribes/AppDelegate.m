@@ -117,12 +117,12 @@
                 // MOTIVATIONAL REPLY
                 title = @"Motivation Received 💪";
                 [alert addButton:@"👌" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"name"], habitName];
+                    messageToSend = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"username"], habitName];
                     categoryToSend = @"WATCHING_YOU_REPLY";
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
                 }];
                 [alert addButton:@"✋" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"name"], habitName];
+                    messageToSend = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"username"], habitName];
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:nil];
                 }];
             }
@@ -131,7 +131,7 @@
                 // COMPLETION REPLY
                 title = @"Squad is up!";
                 [alert addButton:@"👏" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"name"], habitName];
+                    messageToSend = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"username"], habitName];
                     categoryToSend = @"THANK_YOU_FOR_APPLAUSE_REPLY";
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
                 }];
@@ -140,7 +140,7 @@
             case 2: {
                 // WATCHING YOU REPLY
                 title = @"Watch em!";
-                messageToSend = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"name"], habitName];
+                messageToSend = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"username"], habitName];
                 [alert addButton:@"👀" actionBlock:^{
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:categoryToSend];
                 }];
@@ -150,7 +150,7 @@
                 // THANK YOU FOR APPLAUSE REPLY
                 title = @"Great job!";
                 [alert addButton:@"✊" actionBlock:^{
-                    messageToSend = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"name"], habitName];
+                    messageToSend = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"username"], habitName];
                     [self sendPushWithMessage:messageToSend toUserWithObjectId:objectIdOfUserToReplyTo habitName:habitName andCategory:nil];
                 }];
             }
@@ -362,22 +362,22 @@
     [queryForUserToReplyTo getObjectInBackgroundWithId:objectIdOfUserToReplyTo block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         
         if ([identifier isEqualToString:@"ACKNOWLEDGE"]) {
-            message = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"name"], habitName];
+            message = [NSString stringWithFormat:@"%@: 👌 (%@)", currentUser[@"username"], habitName];
             category = @"WATCHING_YOU_REPLY";
             
         } else if ([identifier isEqualToString:@"NOT_DOING_IT"]) {
-            message = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"name"], habitName];
+            message = [NSString stringWithFormat:@"%@: 🖐 (%@)", currentUser[@"username"], habitName];
             
         } else if ([identifier isEqualToString:@"APPLAUD"]) {
-            message = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"name"], habitName];
+            message = [NSString stringWithFormat:@"%@: 👏 (%@)", currentUser[@"username"], habitName];
             category = @"THANK_YOU_FOR_APPLAUSE_REPLY";
         } else if ([identifier isEqualToString:@"WATCHING_YOU"]) {
-            message = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"name"], habitName];
+            message = [NSString stringWithFormat:@"%@: 👀 (%@)", currentUser[@"username"], habitName];
         } else if ([identifier isEqualToString:@"THANK_YOU_FOR_APPLAUSE"]) {
-            message = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"name"], habitName];
+            message = [NSString stringWithFormat:@"%@: ✊ (%@)", currentUser[@"username"], habitName];
             
         } else if ([identifier isEqualToString:@"TEXT_REPLY"]) {
-            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"name"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
+            message = [NSString stringWithFormat:@"%@: %@!", currentUser[@"username"], responseInfo[@"UIUserNotificationActionResponseTypedTextKey"]];
             
         }
         
