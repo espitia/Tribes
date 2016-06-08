@@ -44,7 +44,7 @@
         [query includeKey:@"admin"];
         return query;
     } else {
-        [query whereKey:@"name" containsString:_searchBar.text];
+        [query whereKey:@"nameLowerCase" containsString:[_searchBar.text lowercaseString]];
         [query includeKey:@"admin"];
     }
     
