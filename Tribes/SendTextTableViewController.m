@@ -124,7 +124,7 @@
     [[MFMessageComposeViewController alloc] init];
     
     if([MFMessageComposeViewController canSendText]) {
-        NSString * textMessage = [NSString stringWithFormat:@"Hey! I am trying to get the whole squad on Tribes ✊ It's an app to make sure we get our stuff done 😎 Download it here and join our Tribe %@: http://bit.ly/TribeSquad", _tribe[@"name"]];
+        NSString * textMessage = [NSString stringWithFormat:@"Hey! I am trying to get the whole squad on Tribes ✊ It's an app to make sure we get our stuff done 😎 Download it here and join our Tribe \"%@\": http://bit.ly/TribeSquad", _tribe[@"name"]];
         controller.body = textMessage;
         controller.recipients = [NSArray arrayWithObjects:
                                  number, nil];
