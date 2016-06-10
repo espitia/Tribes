@@ -36,8 +36,8 @@ extern int RECEIVED_APPLAUSE_XP;
 -(BOOL)isAdmin:(Tribe *)tribe;
 -(void)checkForPendingMemberswithBlock:(void(^)(BOOL success))callback;
 
-//removing user from tribe
--(void)removeFromTribe:(Tribe *)tribeToRemoveFrom;
+// user leaving tribe
+-(void)leaveTribe:(Tribe *)tribe;
 
 // handling activities w/ habits
 -(Activity *)activityForHabit:(Habit *)habit;

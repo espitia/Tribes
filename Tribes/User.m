@@ -587,34 +587,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     return nil;
 }
 
-
-
--(void)removeFromTribe:(Tribe *)tribeToRemoveFrom {
-    
-    // remove tribe from user
-    [self removeObject:tribeToRemoveFrom forKey:@"tribes"];
-    
-    // find activity for tribe IN user
-    Activity * activityToRemove;
-    for (Activity * activity in self.activities) {
-        if (activity[@"createdBy"] == self) {
-            activityToRemove = activity;
-        }
-    }
-    
-    // remove activity from user
-    [self removeObject:activityToRemove forKey:@"activities"];
-    
-    // remove user from tribe relation "members"
-    PFRelation * relation = [tribeToRemoveFrom relationForKey:@"members"];
-    [relation removeObject:self];
-    
-    // save changes
-    [self saveInBackground];
-    [tribeToRemoveFrom saveInBackground];
-
-}
-
 -(BOOL)hasTribesWithMembers {
     for (Tribe * tribe in self.tribes) {
         if (tribe.tribeMembers.count > 1) {
@@ -622,6 +594,31 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }
     }
     return false;
+}
+
+-(void)leaveTribe:(Tribe *)tribe {
+    
+    // remove tribe from user
+    [self removeObject:tribe forKey:@"tribes"];
+    
+    // find activity for tribe IN user
+    NSMutableArray * activitiesToRemove = [[NSMutableArray alloc] init];
+    for (Activity * activity in self.activities) {
+        if (activity[@"tribe"] == tribe) {
+            [activitiesToRemove addObject:activity];
+        }
+    }
+    
+    // remove activities from user
+    [self removeObjectsInArray:activitiesToRemove forKey:@"activities"];
+    
+    // remove user from tribe relation "members"
+    PFRelation * relation = [tribe relationForKey:@"members"];
+    [relation removeObject:self];
+    
+    // save changes
+    [self saveInBackground];
+    [tribe saveInBackground];
 }
 
 #pragma mark - User states
