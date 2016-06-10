@@ -7,7 +7,6 @@
 //
 
 #import "TribeDetailTableViewController.h"
-#import "AddFriendsTableViewController.h"
 #import "TribesTableViewController.h"
 #import "User.h"
 #import "HabitSettingsTableViewController.h"

@@ -10,7 +10,6 @@
 #import "Parse.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <DigitsKit/DigitsKit.h>
 #import "User.h"
 #import "SCLAlertView.h"
 #import "HelpshiftAll.h"
@@ -40,8 +39,8 @@
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    // initialize Fabric:Digits
-    [Fabric with:@[[Crashlytics class], [Digits class]]];
+    // initialize Fabric:Crashlytics
+    [Fabric with:@[[Crashlytics class]]];
     
     // Helpshift
     [HelpshiftCore initializeWithProvider:[HelpshiftAll sharedInstance]];

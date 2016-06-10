@@ -53,7 +53,6 @@
 		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
 		09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */; };
 		09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C6585C1C47F188008C4EC3 /* Tribe.m */; };
-		09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */; };
 		09E9C65F1CF8914500B5E87E /* JoinTribeManagerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E9C65E1CF8914500B5E87E /* JoinTribeManagerTableViewController.m */; };
 		09E9C6621CF8997C00B5E87E /* CreateATribeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09E9C6611CF8997C00B5E87E /* CreateATribeViewController.m */; };
 		09E9C6691CF8AF1900B5E87E /* libParse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 09E9C6681CF8AF1900B5E87E /* libParse.a */; };
@@ -68,7 +67,6 @@
 		09F2BF881C405799008ABDF7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF871C405799008ABDF7 /* libz.tbd */; };
 		09F2BF8A1C4057A4008ABDF7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */; };
 		09F2BF8D1C40597B008ABDF7 /* TribesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */; };
-		09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */; };
 		09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -172,8 +170,6 @@
 		09C658571C46CFA2008C4EC3 /* TribeDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeDetailTableViewController.m; sourceTree = "<group>"; };
 		09C6585B1C47F188008C4EC3 /* Tribe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tribe.h; sourceTree = "<group>"; };
 		09C6585C1C47F188008C4EC3 /* Tribe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tribe.m; sourceTree = "<group>"; };
-		09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendsTableViewController.h; sourceTree = "<group>"; };
-		09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendsTableViewController.m; sourceTree = "<group>"; };
 		09E9C65D1CF8914500B5E87E /* JoinTribeManagerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinTribeManagerTableViewController.h; sourceTree = "<group>"; };
 		09E9C65E1CF8914500B5E87E /* JoinTribeManagerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinTribeManagerTableViewController.m; sourceTree = "<group>"; };
 		09E9C6601CF8997C00B5E87E /* CreateATribeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateATribeViewController.h; sourceTree = "<group>"; };
@@ -192,8 +188,6 @@
 		09F2BF891C4057A4008ABDF7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribesTableViewController.h; sourceTree = "<group>"; };
 		09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribesTableViewController.m; sourceTree = "<group>"; };
-		09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTribeTableViewController.h; sourceTree = "<group>"; };
-		09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTribeTableViewController.m; sourceTree = "<group>"; };
 		09F7DD141CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberOrHabitMenuTableViewController.h; sourceTree = "<group>"; };
 		09F7DD151CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberOrHabitMenuTableViewController.m; sourceTree = "<group>"; };
 		A309CDB5F419EAF7FFA3C780 /* Pods-Tribes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tribes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tribes/Pods-Tribes.release.xcconfig"; sourceTree = "<group>"; };
@@ -244,8 +238,6 @@
 				090C23951CBD9EBF00A52DF6 /* AddManagerTableViewController.m */,
 				0993B5191C55385D0008B7E5 /* Creating/Joining Tribes */,
 				09F7DD171CBDA25A00503205 /* AddMember/HabitMenu */,
-				09C6585F1C483A60008C4EC3 /* AddFriendsTableViewController.h */,
-				09C658601C483A60008C4EC3 /* AddFriendsTableViewController.m */,
 			);
 			name = "Add manager (Tribes/Membs/Habits)";
 			sourceTree = "<group>";
@@ -433,8 +425,6 @@
 				09E9C65E1CF8914500B5E87E /* JoinTribeManagerTableViewController.m */,
 				09E9C6631CF89B8400B5E87E /* Create a Tribe */,
 				09E9C6671CF8AAE900B5E87E /* Join a Tribe */,
-				09F2BF8E1C431611008ABDF7 /* AddTribeTableViewController.h */,
-				09F2BF8F1C431611008ABDF7 /* AddTribeTableViewController.m */,
 			);
 			name = "Creating/Joining Tribes";
 			sourceTree = "<group>";
@@ -837,10 +827,8 @@
 				090EDC511C9B5567005D3477 /* SettingsTableViewController.m in Sources */,
 				09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */,
 				091C37331CF49F3A0020B6BE /* EmailValidationViewController.m in Sources */,
-				09F2BF901C431611008ABDF7 /* AddTribeTableViewController.m in Sources */,
 				0965E5821C87F4EE00FFA9C9 /* Habit.m in Sources */,
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
-				09C658611C483A60008C4EC3 /* AddFriendsTableViewController.m in Sources */,
 				099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */,
 				09A4E5571CA9EDED00A82E3F /* RecognitionTableViewCell.m in Sources */,
 				091C37401CF747870020B6BE /* LogInViewController.m in Sources */,

@@ -7,9 +7,9 @@
 //
 
 #import "MembersTableViewController.h"
-#import "AddFriendsTableViewController.h"
 #import "User.h"
 #import "SCLAlertView.h"
+#import "AddFriendByUsernameTableViewController.h"
 @interface MembersTableViewController ()
 
 @end
@@ -145,7 +145,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([segue.identifier isEqualToString:@"AddMember"]) {
         
         // get tribe VC to set the tribe
-        AddFriendsTableViewController * addMemberVC = segue.destinationViewController;
+        AddFriendByUsernameTableViewController * addMemberVC = segue.destinationViewController;
         
         // sender contains habit tapped
         addMemberVC.tribe = sender;

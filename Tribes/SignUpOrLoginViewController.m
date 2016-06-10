@@ -7,7 +7,6 @@
 //
 
 #import "SignUpOrLoginViewController.h"
-#import <DigitsKit/DigitsKit.h>
 #import <Crashlytics/Crashlytics.h>
 #import "Parse.h"
 #import "SCLAlertView.h"
