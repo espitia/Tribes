@@ -40,11 +40,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // rows depend on what is being shown (members/habits)
     if (_tribe[@"admin"] == [User currentUser]) {
-        return 3;
+        return 4;
     } else {
-        return 2;
+        return 3;
     }
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -63,6 +63,9 @@
             title = @"🏋 Habits";
             break;
         case 2:
+            title = @"❌ Leave Tribe";
+            break;
+        case 3:
             title = @"🔐 Private";
             [self configureCellForPrivacySettingWithCell:cell];
             break;
@@ -92,7 +95,10 @@
         case 1:
             [self performSegueWithIdentifier:@"ShowHabits" sender:_tribe];
             break;
-        case 2:
+        case 2:  
+            [self leaveTribe];
+            break;
+        case 3:
             [self showPrivacyExplainerAlert];
             break;
             
@@ -148,5 +154,21 @@
     }
 }
 
+#pragma mark - Helper methods
+
+-(void)leaveTribe {
+    
+    // alert user to confirm leaving tribe
+    SCLAlertView * confirmLeaveTribeAlert = [[SCLAlertView alloc] initWithNewWindow];
+    [confirmLeaveTribeAlert addButton:@"LEAVE" actionBlock:^{
+        
+        // leave tribe
+        [[User currentUser] leaveTribe:_tribe];
+        [self.navigationController popToRootViewControllerAnimated:true];
+    
+    }];
+    NSString * message = [NSString stringWithFormat:@"Are you sure you want to leave %@?",_tribe[@"name"]];
+    [confirmLeaveTribeAlert showInfo:@"Leave Tribe?" subTitle:message closeButtonTitle:@"NEVER MIND" duration:0.0];
+}
 
 @end
