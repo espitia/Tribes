@@ -113,6 +113,36 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }        
     }];
 }
+#pragma mark - Helper methods for loading
+// makes sure all data (tribes, habits and acitvities are fully loaded, not just pointers)
+-(BOOL)dataIsLoaded {
+    
+    // check tribes and tribe habits to see if they are fully loaded
+    if (self.tribes.count > 0) {
+        for (Tribe * tribe in self[@"tribes"]) {
+            if (!tribe.createdAt)
+                return false;
+            for (Habit * habit in tribe[@"habits"]) {
+                if (!habit.createdAt)
+                    return false;
+            }
+        }
+    }
+    for (Activity * activity in self.activities) {
+        if (!activity.createdAt)
+            return false;
+    }
+    
+    return true;
+    
+}
+-(NSArray *)habitsForAllTribes {
+    NSMutableArray * arrayOfHabits = [[NSMutableArray alloc] init];
+    for (Tribe * tribe in self.tribes) {
+        [arrayOfHabits addObjectsFromArray:tribe.habits];
+    }
+    return [NSArray arrayWithArray:arrayOfHabits];
+}
 #pragma mark - Updating methods
 
 -(void)updateMemberDataWithBlock:(void(^)(bool success))callback  {
@@ -129,53 +159,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
--(void)updateTribesWithBlock:(void(^)(bool success))callback {
-    
-    __block int counter = 0;
-    NSLog(@"attempting to update all tribes");
-    
-    if (!self.tribes) {
-        [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-            if (object && !error) {
-                for (Tribe * tribe in self.tribes) {
-                    
-                    [tribe updateTribeWithBlock:^(bool success) {
-                        if (success) {
-                            counter++;
-                            if (counter == self.tribes.count) {
-                                NSLog(@"successfully updated all tribes");
-                                callback(true);
-                            }
-                        } else {
-                            NSLog(@"failed to update tribes");
-                            callback(false);
-                        }
-                    }];
-                }
-            } else {
-                NSLog(@"error fetchign user to grab tribes");
-                callback(false);
-            }
-        }];
-    } else {
-        for (Tribe * tribe in self.tribes) {
-            
-            [tribe updateTribeWithBlock:^(bool success) {
-                if (success) {
-                    counter++;
-                    if (counter == self.tribes.count) {
-                        NSLog(@"successfully updated all tribes");
-                        callback(true);
-                    }
-                } else {
-                    NSLog(@"failed to update tribes");
-                    callback(false);
-                }
-            }];
-        }
-    }
-    
-}
 /**
  * Removes tribe from on hold array if found in regular tribes. means user was accepted to new tribe.
  *
