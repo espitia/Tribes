@@ -17,5 +17,4 @@
 -(void)setUp;
 -(void)UISetUp;
 -(void)makeItRainConfetti;
--(void)checkForNewData;
 @end
