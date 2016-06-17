@@ -317,19 +317,12 @@ heightForHeaderInSection:(NSInteger)section {
     
     // set name of tribe
     [cell.textLabel setText:habit[@"name"]];
-    
-    // set detail text depending on whether all tribe members completed their activity
-    NSString * detailText = ([habit allMembersCompletedActivity]) ? @"🦁" : @"🐑" ;
-    [cell.detailTextLabel setText:detailText];
-
-
 }
 - (void)configureCellForCompletedTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit  {
    
     // set detail text depending on whether all tribe members completed their activity
     NSString * check = @"✅";
-    NSString * detailText = [check stringByAppendingString:cell.detailTextLabel.text];
-    [cell.detailTextLabel setText:detailText];
+    [cell.detailTextLabel setText:check];
     
     // cross out habit if user compelted
     NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
@@ -342,8 +335,7 @@ heightForHeaderInSection:(NSInteger)section {
 
     // set detail text depending on whether all tribe members completed their activity
     NSString * notCompleteX = @"❌";
-    NSString * detailText = [notCompleteX stringByAppendingString:cell.detailTextLabel.text];
-    [cell.detailTextLabel setText:detailText];
+    [cell.detailTextLabel setText:notCompleteX];
     
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
@@ -377,14 +369,13 @@ heightForHeaderInSection:(NSInteger)section {
     
     Activity * activity = [currentUser activityForHabit:habit];
     
-    NSString * stringAddition;
+    NSString * settingString;
     if (activity.hibernation) {
-        stringAddition = @"🐻";
+        settingString = @"🐻";
     } else if (activity.watcher) {
-        stringAddition = @"👀";
+        settingString = @"👀";
     }
-    NSString * detailText = [stringAddition stringByAppendingString:cell.detailTextLabel.text];
-    [cell.detailTextLabel setText:detailText];
+    [cell.detailTextLabel setText:settingString];
 }
 
 -(void)configureViewForHeaderView:(UIView *)headerView {
