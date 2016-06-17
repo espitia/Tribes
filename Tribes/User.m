@@ -40,32 +40,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     [self loadUserWithBlock:^(bool success) {
         if (success) {
-            
-            // load all tribes only if there are tribes available
-            if (self.tribes.count > 0) {
-                
-                __block int counter = 0;
-                // iterate through each tribe to load
-                for (Tribe * tribe in self.tribes) {
-                    
-                    [tribe loadTribeWithBlock:^(bool success) {
-                        if (success) {
-                            counter++;
-                            if (counter == self.tribes.count) {
-                                NSLog(@"successfully loaded all tribes");
-                                callback(true);
-                            }
-                        } else {
-                            NSLog(@"failed to load tribes");
-                            callback(false);
-                        }
-                    }];
-                }
-            } else {
-                NSLog(@"no tribes were found to load. loading user complete.");
-                callback(true);
-            }
-            
+            NSLog(@"successfully loaded user");
+            callback(true);
         } else {
             NSLog(@"failed to load user.");
             callback(false);
@@ -78,36 +54,55 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     
     // fetch from local datastore
     [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        // if no errors were found in object, done
-        if (!error && object && object.createdAt) {
-            NSLog(@"successfully loaded user from local datastore");
-            callback(true);
-        } else {
-            NSLog(@"error fetching user from local datastore .. will attempt to fetch from network.");
-            //if not found in datastore, fetch from network
-            [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                if (object && !error) {
-                    NSLog(@"successfully fetched user frmo network");
-                    // if user is found, pin it to local datastore
-                    [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (succeeded && !error) {
-                            NSLog(@"successfully pinned user to local datastore");
+        if (!error && object) {
+            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error){
+                    NSLog(@"successfully pinned user");
+                    callback(true);
+                } else {
+                    NSLog(@"failed to pin user, will attempt to fetch from network");
+                    // fetch user from network
+                    [self fetchUserFromNetworkWithBlock:^(bool success) {
+                        if (success) {
                             callback(true);
                         } else {
-                            NSLog(@"error pinning user");
                             callback(false);
                         }
                     }];
+                }
+            }];
+        } else {
+            NSLog(@"error fetch user from local datastore, will attempt to fetch from network");
+            // fetch user from network
+            [self fetchUserFromNetworkWithBlock:^(bool success) {
+                if (success) {
+                    callback(true);
                 } else {
-                    NSLog(@"error fetching user object from network");
                     callback(false);
                 }
             }];
-            
         }
     }];
-    
+}
+
+-(void)fetchUserFromNetworkWithBlock:(void(^)(bool success))callback {
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (!error && object) {
+            // pin user
+            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error){
+                    NSLog(@"successfully pinned user");
+                    callback(true);
+                } else {
+                    NSLog(@"failed to pin user");
+                    callback(false);
+                }
+            }];
+        } else {
+            NSLog(@"failed to fetch user from network.");
+            callback(false);
+        }
+    }];
 }
 #pragma mark - Updating methods
 
