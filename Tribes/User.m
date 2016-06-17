@@ -106,75 +106,18 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 #pragma mark - Updating methods
 
--(void)updateMemberActivitiesForAllTribesWithBlock:(void(^)(bool success))callback  {
+-(void)updateMemberDataWithBlock:(void(^)(bool success))callback  {
     
-    if (!self.tribes) {
-        NSLog(@"no tribes available to update it's activities (updateMemActivitesForAllTribes:)");
-        callback(true);
-    } else {
-        // get obj ids of all activites of all members in all tribes (locally)
-        NSMutableArray * objIdsOfActivitiesToUpdate = [[NSMutableArray alloc] init];
-        for (Tribe * tribe in self.tribes) {
-            for (User * member in tribe.tribeMembers) {
-                for (Activity * activity in member.activities) {
-                    if (![objIdsOfActivitiesToUpdate containsObject:activity.objectId]) {
-                        [objIdsOfActivitiesToUpdate addObject:activity.objectId];
-                    }
-                }
-            }
+    [self fetchUserFromNetworkWithBlock:^(bool success) {
+        if (success) {
+            NSLog(@"successfully updated user's tribes and activities");
+            callback(true);
+        } else {
+            NSLog(@"failed to update activities");
+            callback(false);
         }
-        
-        
-        // update those activity objects
-        PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
-        [query whereKey:@"objectId" containedIn:objIdsOfActivitiesToUpdate];
-        NSLog(@"updating all activities of all members in all tribes ...");
-        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-            NSLog(@"successfully fetched from network all activities of all members in all tribes ...");
-            
-            if (!error && objects) {
-                [PFObject pinAllInBackground:objects block:^(BOOL succeeded, NSError * _Nullable error) {
-                    
-                    
-                    if (succeeded && !error) {
-                        
-                        NSLog(@"successfully pinned all activities");
-                        // remove all activities from all members to replace them with new
-                        for (Tribe * tribe in self.tribes) {
-                            for (User * member in tribe.tribeMembers) {
-                                [member.activities removeAllObjects];
-                            }
-                        }
-                        // add new ones to members
-                        for (Activity * activity in objects) {
-                            for (Tribe * tribe in self.tribes) {
-                                for (User * member in tribe.tribeMembers) {
-                                    if (activity[@"createdBy"] == member) {
-                                        if (![member.activities containsObject:activity]) {
-                                            [member.activities addObject:activity];
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        NSLog(@"successfully updated all activities");
-                        callback(true);
-                    
-                        
-                        
-                    } else {
-                        NSLog(@"failed to pin activities while attempting to update them");
-                        callback(false);
-                    }
-                    
-                }];
-            } else {
-                NSLog(@"failed to update activities");
-                callback(false);
-            }
-            
-        }];
-    }
+    }];
+
 }
 
 -(void)updateTribesWithBlock:(void(^)(bool success))callback {
@@ -259,57 +202,20 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 }
 #pragma mark - Checking for new data before reloading all objects unnecessarily
 
--(void)checkForNewDataWithBlock:(void(^)(bool newData))callback {
-
-    [self checkForNewTribesWithBlock:^(bool available) {
-        if (available) {
-            callback(true);
-        } else {
-            // check for new habits
-            [self checkForNewHabitsWithBlock:^(bool available) {
-                if (available) {
-                    callback(true);
-                } else {
-                    // check for new members
-                    [self checkForNewMembersWithBlock:^(bool available) {
-                        if (available) {
-                            callback(true);
-                        } else {
-                            callback(false);
-                        }
-                    }];
-                }
-            }];
-        }
-    }];
-}
 
 -(void)checkForNewTribesWithBlock:(void(^)(bool available))callback {
     
     // get array of all habits user is in to compare to new
     NSMutableArray * copyOfOldTribes = [[NSMutableArray alloc] init];
     [copyOfOldTribes addObjectsFromArray:self.tribes];
-    
-    // arrays to hold new data and compare old data to
-    NSMutableArray * arrayOfNewTribes = [[NSMutableArray alloc] init];
 
-    PFQuery *query = [PFUser query];
-    [query getObjectInBackgroundWithId:self.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
-    
-        if (object && !error) {
-            
-            User * user = (User *)object;
-            [arrayOfNewTribes addObjectsFromArray:user.tribes];
-            if (copyOfOldTribes.count != arrayOfNewTribes.count) {
-                NSLog(@"new tribes found!");
-                callback(true);
-            } else {
-                NSLog(@"no new tribes found");
-                callback(false);
-            }
-            
+    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        NSArray * newTribes = [object objectForKey:@"tribes"];
+        if (newTribes.count != copyOfOldTribes.count) {
+            NSLog(@"found new tribes!");
+            callback(true);
         } else {
-            NSLog(@"error fetching user to check for new tribes");
+            NSLog(@"no new tribes found");
             callback(false);
         }
     }];
