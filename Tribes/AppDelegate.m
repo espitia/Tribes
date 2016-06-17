@@ -170,10 +170,9 @@
                 // NEW PENDING MEMBER
                 title = @"NEW MEMBER 👬";
                 [alert addButton:@"GOT IT" actionBlock:^{
-                    [currentUser checkForPendingMemberswithBlock:^(BOOL success) {
+                    [[User currentUser] fetchUserFromNetworkWithBlock:^(bool success) {
                         UINavigationController * navController = (UINavigationController *)self.window.rootViewController;
                         TribesTableViewController * vc = (TribesTableViewController *)navController.viewControllers[0];
-                        NSLog(@"%@", vc);
                         [vc.tableView reloadData];
                     }];
                 }];
@@ -185,8 +184,10 @@
                 title = @"NEW TRIBE 👬";
                 [alert addButton:@"AWESOME" actionBlock:^{
                     UINavigationController * navController = (UINavigationController *)self.window.rootViewController;
-                    TribesTableViewController * vc = (TribesTableViewController *)navController.viewControllers[0];
-                    [vc checkForNewData];
+                    [[User currentUser] fetchUserFromNetworkWithBlock:^(bool success) {
+                        TribesTableViewController * vc = (TribesTableViewController *)navController.viewControllers[0];
+                        [vc.tableView reloadData];
+                    }];
                 }];
             }
                 
