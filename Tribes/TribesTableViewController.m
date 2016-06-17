@@ -66,6 +66,7 @@
                 currentUser.loadedInitialTribes = true;
                 [self.tableView reloadData];
                 [self updateProgressBar];
+                
                 [currentUser checkForPendingMemberswithBlock:^(BOOL newPendingMembers) {
                     if (newPendingMembers)
                         [self.tableView reloadData];
@@ -75,18 +76,9 @@
                 // else check for new data (members, habits, etc)
                 if (currentUser.onHoldTribes.count > 0) {
                     [self checkForTribesConfirmationTimer];
-                } else {
-                    [self checkForNewData];
                 }
                 
-            } else {
-                SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-                [alert addButton:@"MAGIC BUTTON" actionBlock:^{
-                    [self refreshTable];
-                }];
-                [alert showError:@"Oh oh.. 😬" subTitle:@"There was an error while loading your Tribes. This shouldn't happen. Ever! So now, let's try to fix it by tapping the magic button below 👇" closeButtonTitle:nil duration:0.0];
             }
-            
         }];
     }
     
@@ -198,16 +190,7 @@ heightForHeaderInSection:(NSInteger)section {
     // tribe from data model
     Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
     [titleLabel setText:tribe.name];
-    
-    // create label for 🦁 or 🐑
-    UILabel * lionOrSheepTribe = [[UILabel alloc] init];
-    [lionOrSheepTribe setFrame:CGRectMake(337, 35, 40, 40)];
-    
-    // check if al members completed all habits to set
-    lionOrSheepTribe.text = ([tribe allHabitsAreCompleted]) ? @"🦁" : @"🐑" ;
-    
-    // add labels to header view
-    [headerView addSubview:lionOrSheepTribe];
+
     [headerView addSubview:titleLabel];
     
     return headerView;
@@ -591,19 +574,7 @@ heightForHeaderInSection:(NSInteger)section {
         if (newPendingMembers)
             [self.tableView reloadData];
     }];
-    
-    
-    //  update activities when entering foreground
-    [currentUser updateMemberActivitiesForAllTribesWithBlock:^(bool success) {
-        if (success) {
-            [self.tableView reloadData];
-            [self updateProgressBar];
-            if (currentUser.onHoldTribes.count == 0 && !checkingForTribesConfirmation)
-                [self checkForNewData];
-        } else {
-            NSLog(@"failed to update activities");
-        }
-    }]; 
+
 }
 -(void)checkForTribesConfirmationTimer {
     //NSTimer calling Method B, as long the audio file is playing, every 5 seconds.
@@ -635,28 +606,10 @@ heightForHeaderInSection:(NSInteger)section {
             NSLog(@"no new data was found to update tribes/habits/members.");
         }
     }];
+
     
 }
 
--(void)checkForNewData {
-    [currentUser checkForNewDataWithBlock:^(bool newData) {
-        
-        // show alert to download new data
-        if (newData) {
-            
-            SCLAlertView * newNewAlert = [[SCLAlertView alloc] initWithNewWindow];
-            [newNewAlert addButton:@"OK" actionBlock:^{
-                
-                [self refreshTable];
-                
-            }];
-            [newNewAlert showInfo:@"Data fairy ✨" subTitle:@"We are being told there is new stuff to be downloaded. That might be a Tribe, a new member or new habits. Or who knows, new pixie dust? Tap below to download!" closeButtonTitle:nil duration:0.0];
-        } else {
-            NSLog(@"no new data was found to update tribes/habits/members.");
-        }
-    }];
-    
-}
 // helper method for setting images under swipeable cells
 - (UIView *)viewWithImageName:(NSString *)imageName {
     UIImage *image = [UIImage imageNamed:imageName];
