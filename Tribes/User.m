@@ -53,24 +53,25 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 -(void)loadUserWithBlock:(void(^)(bool success))callback {
     
     // fetch from local datastore
-    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    PFQuery * queryForUser = [PFUser query];
+    [queryForUser includeKey:@"tribes.habits"];
+    [queryForUser includeKey:@"activities"];
+    [queryForUser fromLocalDatastore];
+    [queryForUser getObjectInBackgroundWithId:self.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (!error && object) {
-            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded && !error){
-                    NSLog(@"successfully pinned user");
-                    callback(true);
-                } else {
-                    NSLog(@"failed to pin user, will attempt to fetch from network");
-                    // fetch user from network
-                    [self fetchUserFromNetworkWithBlock:^(bool success) {
-                        if (success) {
-                            callback(true);
-                        } else {
-                            callback(false);
-                        }
-                    }];
-                }
-            }];
+            if ([self dataIsLoaded]) {
+                NSLog(@"successfully fetched user from datastore");
+                callback(true);
+            } else {
+                [self fetchUserFromNetworkWithBlock:^(bool success) {
+                    if (success) {
+                        callback(true);
+                    } else {
+                        callback(false);
+                    }
+                }];
+            }
+            
         } else {
             NSLog(@"error fetch user from local datastore, will attempt to fetch from network");
             // fetch user from network
@@ -85,23 +86,31 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }];
 }
 
+
 -(void)fetchUserFromNetworkWithBlock:(void(^)(bool success))callback {
-    [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    
+    PFQuery * queryForUser = [PFUser query];
+    [queryForUser includeKey:@"tribes.habits"];
+    [queryForUser includeKey:@"activities"];
+    [queryForUser getObjectInBackgroundWithId:self.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        
         if (!error && object) {
-            // pin user
-            [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded && !error){
-                    NSLog(@"successfully pinned user");
+            // pin data
+            NSArray * arrayOfHabitsToPin = [self habitsForAllTribes];
+            NSLog(@"%@", self.tribes[0]);
+            [PFObject pinAllInBackground:@[self, self.tribes, self.activities, arrayOfHabitsToPin] block:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded && !error) {
+                    NSLog(@"succesfully pinned all data");
                     callback(true);
                 } else {
-                    NSLog(@"failed to pin user");
+                    NSLog(@"failed to pin all data");
                     callback(false);
                 }
             }];
         } else {
-            NSLog(@"failed to fetch user from network.");
+            NSLog(@"failed to fetch user from network");
             callback(false);
-        }
+        }        
     }];
 }
 #pragma mark - Updating methods
