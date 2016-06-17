@@ -584,11 +584,10 @@ heightForHeaderInSection:(NSInteger)section {
 - (void)checkForTribesConfirmation:(NSTimer *)timer{
     
     checkingForTribesConfirmation = true;
-
-    [currentUser checkForNewDataWithBlock:^(bool newData) {
-        
+    
+    [currentUser checkForNewTribeshBlock:^(bool newTribes) {
         // show alert to download new data
-        if (newData) {
+        if (newTribes) {
             
             currentUser.loadedInitialTribes = false;
             [timer invalidate];
@@ -597,8 +596,20 @@ heightForHeaderInSection:(NSInteger)section {
             [newNewAlert addButton:@"OK" actionBlock:^{
                 
                 checkingForTribesConfirmation = false;
-
-                [self refreshTable];
+                
+                //show fetchign alert
+                SCLAlertView * fetchingNewTribesAlert = [[SCLAlertView alloc] initWithNewWindow];
+                [fetchingNewTribesAlert showWaiting:@"Fetching Tribes 🏃" subTitle:@"This should just take a few seconds..." closeButtonTitle:nil duration:0.0];
+                
+                // fetch new tribes
+                [currentUser fetchUserFromNetworkWithBlock:^(bool success) {
+                    if (success) {
+                        [fetchingNewTribesAlert hideView];
+                    } else {
+                        SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
+                        [errorAlert showError:@"Oh oh... 🙄" subTitle:@"There was an error fetching your Tribes 😞 Please make sure your internet connection is alive and well. Then, pull to try again!" closeButtonTitle:@"GOT IT" duration:0.0];
+                    }
+                }];
                 
             }];
             [newNewAlert showSuccess:@"Congratulations 🎉" subTitle:@"You've been accepted to a new Tribe. Make your Tribe proud ✊" closeButtonTitle:nil duration:0.0];
