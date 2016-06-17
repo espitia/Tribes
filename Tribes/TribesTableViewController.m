@@ -513,6 +513,7 @@ heightForHeaderInSection:(NSInteger)section {
         
         // sender contains habit tapped
         tribeDetailVC.habit = sender;
+        tribeDetailVC.tribe = sender[@"tribe"];
     } else if ([segue.identifier isEqualToString:@"TribeMenu"]) {
         
         // get tribe menu vc to set tribe
