@@ -736,27 +736,18 @@ heightForHeaderInSection:(NSInteger)section {
     
 }
 -(void)refreshTable {
-    SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
-    [alert showWaiting:@"Fetching Tribes" subTitle:@"🏃💨" closeButtonTitle:nil duration:0.0];
-    [currentUser updateTribesWithBlock:^(bool success) {
+    
+    [currentUser fetchUserFromNetworkWithBlock:^(bool success) {
         if (success) {
-            
-            [currentUser loadTribesWithBlock:^(bool success) {
-                currentUser.loadedInitialTribes = true;
-                [alert hideView];
-                [refreshControl endRefreshing];
-                
-                [self.tableView reloadData];
-                [self updateProgressBar];
-
-            }];
-
+            currentUser.loadedInitialTribes = true;
+            [refreshControl endRefreshing];
+            [self.tableView reloadData];
+            [self updateProgressBar];
         } else {
             [refreshControl endRefreshing];
-            [alert hideView];
-
+            
             SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
-            [error showError:@"🙄" subTitle:@"There was an error fetching your Tribes. We agree, errors are annoying. Please make sure your internet connection is working and swipe down to reload your Tribes!" closeButtonTitle:@"OK" duration:0.0];
+            [error showError:@"🙄" subTitle:@"There was an error fetching data from the internetz. We apologize for that. Check your connection and try again!" closeButtonTitle:@"OK" duration:0.0];
             [refreshControl endRefreshing];
         }
     }];
