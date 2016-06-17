@@ -625,15 +625,7 @@
                                                 callback(&success);
                                             } else {
                                                 success = true;
-                                                // save tribe
-                                                if (user == [User currentUser]) {
-                                                    [user updateTribesWithBlock:^(bool success) {
-                                                        callback(&success);
-                                                    }];
-                                                } else {
-                                                    callback(&success);
-                                                }
-
+                                                callback(&success);
                                             }
                                         }];
 
