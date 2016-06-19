@@ -55,30 +55,43 @@
     return 70;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeMemberCell" forIndexPath:indexPath];
-   
-    (weeklyCompletions) ? [_habit sortMembersAndActivitiesByWeeklyActivityCompletions] : [_habit sortMembersAndActivitiesByTotalActivityCompletions];
 
-    // dictionary with member (PFUser)and acitivty key (Activity object)
-    User * member = _habit.membersAndActivities[indexPath.row][@"member"];
-    Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
-    
-    NSString * titleLabel = [NSString stringWithFormat:@"%@",member[@"username"]];
-    cell.textLabel.text = titleLabel;
-    
-    int completions;
-    NSString * completionsString;
-    
+-(PFQuery *)queryForTable {
+    PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
+    [query whereKey:@"habit" equalTo:_habit];
+    [query includeKey:@"createdBy"];
     if (weeklyCompletions) {
-        completions = activity.weekCompletions;
-        completionsString = [self formatCompletionsStringForActivity:activity andCompletions:completions];
+        [query orderByDescending:@"weeklyCompletions"];
     } else {
-        completions = [activity[@"completions"] intValue];
-        completionsString = [NSString stringWithFormat:@"%d", completions];
+        [query orderByDescending:@"completions"];
     }
     
-    cell.detailTextLabel.text = completionsString;
+    
+    PFRelation * relation = [self.tribe relationForKey:@"members"];
+    PFQuery * membersQuery = [relation query];
+    [query whereKey:@"createdBy" matchesQuery:membersQuery];
+    
+    return query;
+}
+
+- (void)objectsDidLoad:(nullable NSError *)error {
+    [super objectsDidLoad:error];
+}
+
+-(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
+    PFTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    
+    Activity * activity = [self.objects objectAtIndex:indexPath.row];
+    User * user = [activity objectForKey:@"createdBy"];
+    
+    NSString * username = user.username;
+    cell.textLabel.text = username;
+    
+    if (weeklyCompletions) {
+        cell.detailTextLabel.text = [self formatCompletionsStringForActivity:activity andCompletions:activity.weekCompletions];
+    } else {
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", activity[@"completions"]];
+    }
     
     return cell;
 }
@@ -380,12 +393,11 @@
     switch (selectedSegment) {
         case 0:
             weeklyCompletions = true;
-            [self.tableView reloadData];
+            [self loadObjects];
             break;
         case 1:
             weeklyCompletions = false;
-            [self.tableView reloadData];
-
+            [self loadObjects];
             break;
             
         default:

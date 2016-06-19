@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <ParseUI/ParseUI.h>
 #import "Parse.h"
 #import "Habit.h"
+#import "Tribe.h"
 
-@interface TribeDetailTableViewController : UITableViewController
+@interface TribeDetailTableViewController : PFQueryTableViewController
 
 @property (atomic, strong) Habit * habit;
+@property (atomic, strong) Tribe * tribe;
 
 @end
