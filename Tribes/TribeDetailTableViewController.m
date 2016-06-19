@@ -293,7 +293,7 @@
     BOOL completedForDay = ([activity completedForDay]) ? true : false;
 
     // add 🦁 or 🐑 to signify completed for day
-    completionsString = (completedForDay) ? @"🦁" : @"🐑";
+    completionsString = (completedForDay) ? @"✅" : @"❌";
     
     // add completion number
     completionsString = [completionsString stringByAppendingString:[NSString stringWithFormat:@"%d", completions]];
