@@ -214,92 +214,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
--(void)checkForNewHabitsWithBlock:(void(^)(bool available))callback {
-    // get array of all habits user is in to compare to new
-    NSMutableArray * copyOfOldHabits = [[NSMutableArray alloc] init];
-    for (Tribe * tribe in self.tribes) {
-        [copyOfOldHabits addObjectsFromArray:tribe.habits];
-    }
-    
-    // arrays to hold new data and compare old data to
-    NSMutableArray * arrayOfNewHabits = [[NSMutableArray alloc] init];
-    
-    // counter to keep tab on tribes
-    __block int counter = 0;
-    
-    for (Tribe * tribe in self.tribes) {
-        
-        PFQuery * queryForTribe = [PFQuery queryWithClassName:@"Tribe"];
-        [queryForTribe getObjectInBackgroundWithId:tribe.objectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
-            
-            if (object && !error) {
-                counter++;
-                [arrayOfNewHabits addObjectsFromArray:object[@"habits"]];
-                if (counter == self.tribes.count) {
-                    
-                    // check if there are new habits available
-                    if (copyOfOldHabits.count != arrayOfNewHabits.count) {
-                        NSLog(@"new habits found");
-                        callback(true);
-                    } else {
-                        NSLog(@"no new habits found");
-                        callback(false);
-                    }
-                    
-                }
-            } else {
-                NSLog(@"error fetching tribes to check for new data");
-                callback(false);
-            }
-        }];
-    }
-}
-
--(void)checkForNewMembersWithBlock:(void(^)(bool available))callback {
-    
-    // old data to compare new to
-    NSMutableArray * oldCopyOfAllMembers = [[NSMutableArray alloc] init];
-    
-    for (Tribe * tribe in self.tribes) {
-        [oldCopyOfAllMembers addObjectsFromArray:tribe.tribeMembers];
-    }
-
-    __block int counter = 0;
-    __block int totalCount = 0;
-    for (Tribe * tribe in self.tribes) {
-        
-        PFRelation * relationToMembers = [tribe relationForKey:@"members"];
-        PFQuery * query = [relationToMembers query];
-        [query countObjectsInBackgroundWithBlock:^(int number, NSError * _Nullable error) {
-            
-            totalCount += number;
-            counter++;
-            
-            if (number && !error) {
-                if (counter == self.tribes.count) {
-                    
-                    // check if there are new members
-                    if (totalCount != oldCopyOfAllMembers.count) {
-                        NSLog(@"new members found");
-                        callback(true);
-                    } else {
-                        NSLog(@"no new members found");
-                        callback(false);
-                    }
-                }
-            } else {
-                NSLog(@"error fetching members relation to check if there is new data available.");
-                callback(false);
-            }
-        }];
-
-    
-    }
-    
-    
-  
-}
-
 #pragma mark - Create Tribe
 
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback {
@@ -427,18 +341,27 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     // message to send
     NSString * msg =  [NSString stringWithFormat:@"🦁 %@ just completed %@!",self[@"username"],habit[@"name"]];
     
-    for (User * member in tribe.tribeMembers) {
-        if (member != self) {
-            
-            [self sendPushFromMemberToMember:member withMessage:msg habitName:habit[@"name"]andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
-                if (success) {
-                    NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
-                } else {
-                    NSLog(@"failed to send completion push for %@ to %@",self[@"username"],member[@"username"]);
-                }
-            }];
+    PFRelation * relationToMembers = [tribe relationForKey:@"members"];
+    PFQuery * membersQuery = [relationToMembers query];
+    [membersQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        NSArray * members = objects;
+        
+        for (User * member in members) {
+            if (member != self) {
+                
+                [self sendPushFromMemberToMember:member withMessage:msg habitName:habit[@"name"]andCategory:@"COMPLETION_REPLY" withBlock:^(BOOL *success) {
+                    if (success) {
+                        NSLog(@"sent completion push for %@ to %@",self[@"username"],member[@"username"]);
+                    } else {
+                        NSLog(@"failed to send completion push for %@ to %@",self[@"username"],member[@"username"]);
+                    }
+                }];
+            }
         }
-    }
+        
+    }];
+    
+
 }
 
 #pragma mark - Handling tribes/habits
@@ -458,10 +381,10 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
 
     // send push to rest of tribe to notify of completion
-    [self notifyOfCompletionToMembersInTribe:tribe forHabit:habit];
+//    [self notifyOfCompletionToMembersInTribe:tribe forHabit:habit];
 
     // send 100% tribe completed push
-    if ([habit allMembersCompletedActivity])
+//    if ([habit allMembersCompletedActivity])
         [habit sendTribe100PercentCompletedPush];
 
 }
