@@ -50,13 +50,6 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _habit.members.count;
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
@@ -88,16 +81,6 @@
     cell.detailTextLabel.text = completionsString;
     
     return cell;
-}
-
-#pragma mark - Table view delegate
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    // deselect cell
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-
 }
 
 #pragma mark - Touches on cell
