@@ -16,8 +16,9 @@
 #import <Leanplum/Leanplum.h>
 
 @interface TribeDetailTableViewController () {
-    NSMutableArray * membersAndActivities;
+    NSMutableArray * activities;
     BOOL weeklyCompletions;
+    BOOL loadedObjects;
     // ** motivation pushes vars **//
     HYBubbleButton * bubbleGenerator;
     int motivationPushControl;
@@ -60,12 +61,7 @@
     PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
     [query whereKey:@"habit" equalTo:_habit];
     [query includeKey:@"createdBy"];
-    if (weeklyCompletions) {
-        [query orderByDescending:@"weeklyCompletions"];
-    } else {
-        [query orderByDescending:@"completions"];
-    }
-    
+    [query orderByDescending:@"completions"];
     
     PFRelation * relation = [self.tribe relationForKey:@"members"];
     PFQuery * membersQuery = [relation query];
@@ -76,12 +72,16 @@
 
 - (void)objectsDidLoad:(nullable NSError *)error {
     [super objectsDidLoad:error];
-}
-
--(PFTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath object:(PFObject *)object {
-    PFTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
-    Activity * activity = [self.objects objectAtIndex:indexPath.row];
+    loadedObjects = true;
+    activities = [[NSMutableArray alloc] initWithArray:self.objects];
+    [self sortMembersAndActivitiesByWeeklyActivityCompletions];
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    if (!loadedObjects)
+        return cell;
+    Activity * activity = [activities objectAtIndex:indexPath.row];
     User * user = [activity objectForKey:@"createdBy"];
     
     NSString * username = user.username;
@@ -90,10 +90,16 @@
     if (weeklyCompletions) {
         cell.detailTextLabel.text = [self formatCompletionsStringForActivity:activity andCompletions:activity.weekCompletions];
     } else {
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", activity[@"completions"]];
+        if (activity[@"completions"]) {
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", activity[@"completions"]];
+        } else if (!activity[@"completions"]) {
+            cell.detailTextLabel.text = @"0";
+        }
     }
     
     return cell;
+    
+    
 }
 
 #pragma mark - Touches on cell
@@ -393,11 +399,13 @@
     switch (selectedSegment) {
         case 0:
             weeklyCompletions = true;
-            [self loadObjects];
+            [self sortMembersAndActivitiesByWeeklyActivityCompletions];
+            [self.tableView reloadData];
             break;
         case 1:
             weeklyCompletions = false;
-            [self loadObjects];
+            [self sortMembersAndActivitiesByTotalActivityCompletions];
+            [self.tableView reloadData];
             break;
             
         default:
@@ -405,8 +413,67 @@
     }
 }
 
+#pragma mark - Sorting
 
 
+/**
+ * Sorts members and activities array by total completions.
+ */
+-(void)sortMembersAndActivitiesByTotalActivityCompletions {
+    [self sortMembersAndActivitiesBy:@"total"];
+}
+/**
+ * Sorts members and activities array by weekly completions.
+ */
+-(void)sortMembersAndActivitiesByWeeklyActivityCompletions {
+    [self sortMembersAndActivitiesBy:@"weekly"];
+}
+/**
+ * Sorts members and activities array by indicated time frame.
+ *
+ * @param timeFrame time frame to sort by, use key "total" or "weekly"
+ */
+-(void)sortMembersAndActivitiesBy:(NSString *)timeFrame {
+    
+    NSString * sortByKey;
+    
+    if ([timeFrame isEqualToString:@"total"]) {
+        sortByKey = @"completions";
+    } else if ([timeFrame isEqualToString:@"weekly"]) {
+        sortByKey = @"weekCompletions";
+    } else {
+        sortByKey = @"completions"; // default to catch any errors
+    }
+    
+    NSArray * sortedArrayByActivityCompletions = [[NSArray alloc] init];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:sortByKey  ascending:NO];
+    sortedArrayByActivityCompletions = [activities sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    activities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
+    
+    [self moveWatcherAndHibernationToEndOfArray];
+}
 
+-(void)moveWatcherAndHibernationToEndOfArray {
+    
+    // move watchers
+    for (int i = 0; i < activities.count; i++) {
+        Activity * activity = [activities objectAtIndex:i];
+        if (activity.watcher) {
+            [activities removeObjectAtIndex:i];
+            [activities insertObject:activity atIndex:activities.count];
+            [self.tableView reloadData];
+        }
+    }
+    
+    // move hibernation
+    for (int i = 0; i < activities.count; i++) {
+        Activity * activity = [activities objectAtIndex:i];
+        if (activity.hibernation) {
+            [activities removeObjectAtIndex:i];
+            [activities insertObject:activity atIndex:activities.count];
+            [self.tableView reloadData];
+        }
+    }
+}
 
 @end
