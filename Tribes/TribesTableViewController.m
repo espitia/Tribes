@@ -586,9 +586,9 @@ heightForHeaderInSection:(NSInteger)section {
     
     checkingForTribesConfirmation = true;
     
-    [currentUser checkForNewTribesWithBlock:^(bool newTribes) {
+    [currentUser checkForNewTribeshBlock:^(bool newData) {
         // show alert to download new data
-        if (newTribes) {
+        if (newData) {
             
             currentUser.loadedInitialTribes = false;
             [timer invalidate];
