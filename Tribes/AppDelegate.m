@@ -170,7 +170,7 @@
                 // NEW PENDING MEMBER
                 title = @"NEW MEMBER 👬";
                 [alert addButton:@"GOT IT" actionBlock:^{
-                    [[User currentUser] fetchUserFromNetworkWithBlock:^(bool success) {
+                    [[User currentUser] checkForPendingMemberswithBlock:^(BOOL success) {
                         UINavigationController * navController = (UINavigationController *)self.window.rootViewController;
                         TribesTableViewController * vc = (TribesTableViewController *)navController.viewControllers[0];
                         [vc.tableView reloadData];
