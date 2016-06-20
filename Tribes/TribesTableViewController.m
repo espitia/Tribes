@@ -129,7 +129,7 @@
     if (section < currentUser.onHoldTribes.count)
         return 1;
     
-    if (!currentUser.tribes || !currentUser.loadedInitialTribes)
+    if (!currentUser.tribes || !currentUser.loadedInitialTribes || currentUser.tribes.count == 0)
         return 0;
     
 
