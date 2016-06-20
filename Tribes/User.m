@@ -381,11 +381,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
 
     // send push to rest of tribe to notify of completion
-//    [self notifyOfCompletionToMembersInTribe:tribe forHabit:habit];
+    [self notifyOfCompletionToMembersInTribe:tribe forHabit:habit];
 
-    // send 100% tribe completed push
-//    if ([habit allMembersCompletedActivity])
-        [habit sendTribe100PercentCompletedPush];
 
 }
 
@@ -433,8 +430,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [relation removeObject:self];
     
     // save changes
-    [self saveInBackground];
-    [tribe saveInBackground];
+    [self saveEventually];
+    [tribe saveEventually];
 }
 
 #pragma mark - User states
