@@ -123,8 +123,11 @@
     // remove from on hold pfrelation
     PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
     [onHoldRelationToTribe removeObject:user];
+    [self.onHoldMembers removeObject:user];
     [self saveEventually];
 
+    
+    
     // removes tribe from user's on hold tribes array
     [PFCloud callFunctionInBackground:@"confirmUserToTribe" withParameters:
                                      @{@"tribeId":self.objectId,
@@ -168,6 +171,7 @@
     // remove from on hold pfrelation
     PFRelation * onHoldRelationToTribe = [self relationForKey:@"onHoldMembers"];
     [onHoldRelationToTribe removeObject:user];
+    [self.onHoldMembers removeObject:user];
     [self saveEventually];
 }
 
