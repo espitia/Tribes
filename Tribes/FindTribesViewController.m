@@ -138,7 +138,11 @@
                 SCLAlertView * successAlert  = [[SCLAlertView alloc] initWithNewWindow];
                 NSString * alertMessage = [NSString stringWithFormat:@"You've successfully been added to %@. Good luck!",tribe[@"name"]];
                 [successAlert addButton:@"AWESOME" actionBlock:^{
-                    [self.navigationController popToRootViewControllerAnimated:true];
+                    [[User currentUser] fetchUserFromNetworkWithBlock:^(bool success) {
+                        if (success) {
+                            [self.navigationController popToRootViewControllerAnimated:true];
+                        }
+                    }];
                 }];
                 [successAlert showSuccess:@"Success 😃" subTitle:alertMessage closeButtonTitle:nil duration:0.0];
             } else {
