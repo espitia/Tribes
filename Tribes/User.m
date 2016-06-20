@@ -318,11 +318,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         return;
     }
     
-    // if member completed activity already, don't send
-    if ([[member activityForHabit:habit] completedForDay]) {
-        return;
-    }
-    
     // message to send
     NSString * msg =  [NSString stringWithFormat:@"%@: 👉 %@",self[@"username"],habit[@"name"]];
     
