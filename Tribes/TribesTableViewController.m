@@ -544,7 +544,10 @@ heightForHeaderInSection:(NSInteger)section {
                 [currentUser fetchUserFromNetworkWithBlock:^(bool success) {
                     if (success) {
                         [fetchingNewTribesAlert hideView];
+                        currentUser.loadedInitialTribes = true;
+                        [self.tableView reloadData];
                     } else {
+                        [fetchingNewTribesAlert hideView];
                         SCLAlertView * errorAlert = [[SCLAlertView alloc] initWithNewWindow];
                         [errorAlert showError:@"Oh oh... 🙄" subTitle:@"There was an error fetching your Tribes 😞 Please make sure your internet connection is alive and well. Then, pull to try again!" closeButtonTitle:@"GOT IT" duration:0.0];
                     }
