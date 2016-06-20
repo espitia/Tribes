@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <ParseUI/ParseUI.h>
 #import "Tribe.h"
 
-@interface MembersTableViewController : UITableViewController
+@interface MembersTableViewController : PFQueryTableViewController
 @property (nonatomic, strong) Tribe * tribe;
 
 @end

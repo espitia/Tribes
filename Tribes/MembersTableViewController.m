@@ -10,7 +10,9 @@
 #import "User.h"
 #import "SCLAlertView.h"
 #import "AddFriendByUsernameTableViewController.h"
-@interface MembersTableViewController ()
+@interface MembersTableViewController () {
+    BOOL loaded;
+}
 
 @end
 
@@ -38,14 +40,19 @@
     [self performSegueWithIdentifier:@"AddMember" sender:_tribe];
     
 }
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+-(void)objectsDidLoad:(NSError *)error {
+    [super objectsDidLoad:error];
+    loaded = true;
+    [self.tableView reloadData];
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+#pragma mark - Table view data source
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (loaded) {
+        return self.objects.count + _tribe.onHoldMembers.count;
+    } else {
+        return 0;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -53,13 +60,37 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 70;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
-    
+-(PFQuery *)queryForTable {
+    PFRelation * relationToMembers = [_tribe relationForKey:@"members"];
+    PFQuery * query = [relationToMembers query];
+    return query;
+}
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell"];
+    
+    // read users who are on hold first
+    if (indexPath.row < _tribe.onHoldMembers.count) {
+        User * member = [_tribe.onHoldMembers objectAtIndex:indexPath.row];
+        cell.textLabel.text = member[@"username"];
+        cell.detailTextLabel.text = @"👆 Tap to accept or decline";
+        return cell;
+    }
+    // read regular members
+    else {
+        User * member = [self.objects objectAtIndex:indexPath.row - _tribe.onHoldMembers.count];
+        if ([member isAdmin:_tribe]) {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ (admin)", member[@"username"]];
+        } else {
+            cell.textLabel.text = member[@"username"];
+        }
+        cell.detailTextLabel.text = @"";
+    }
+    
     
     return cell;
 }
+
 
 #pragma mark - Table View Delegate
 
