@@ -45,7 +45,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _tribe.tribeMembers.count + _tribe.onHoldMembers.count;
+    return 10;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -56,24 +56,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
     
-    // read users who are on hold first
-    if (indexPath.row < _tribe.onHoldMembers.count) {
-        User * member = [_tribe.onHoldMembers objectAtIndex:indexPath.row];
-        cell.textLabel.text = member[@"username"];
-        cell.detailTextLabel.text = @"👆 Tap to accept or decline";
-    }
-    // read regular members
-    else {
-        User * member = [_tribe.tribeMembers objectAtIndex:indexPath.row - _tribe.onHoldMembers.count];
-        if ([member isAdmin:_tribe]) {
-            cell.textLabel.text = [NSString stringWithFormat:@"%@ (admin)", member[@"username"]];
-        } else {
-            cell.textLabel.text = member[@"username"];
-        }
-        
-        cell.detailTextLabel.text = @"";
-    }
-    
+
     
     return cell;
 }
@@ -96,20 +79,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath {
             [_tribe confirmOnHoldUser:member withBlock:^(BOOL *success) {
                 if (success) {
                     
-                    [_tribe updateTribeWithBlock:^(bool success) {
-                        if (success) {
-                            // hide confirmation alert
-                            [confirmOnHoldMemberAlert hideView];
-                            
-                            // show success alert (friend added)
-                            SCLAlertView * successAlert = [[SCLAlertView alloc ] initWithNewWindow];
-                            NSString * successAlertMessage = [NSString stringWithFormat:@"%@ has been added to %@", member[@"username"], _tribe[@"name"]];
-                            [successAlert addButton:@"AWESOME" actionBlock:^{
-                                [self.navigationController popToRootViewControllerAnimated:true];
-                            }];
-                            [successAlert showSuccess:@"Success 😃" subTitle:successAlertMessage closeButtonTitle:nil duration:0.0];
-                        }
+                    // hide confirmation alert
+                    [confirmOnHoldMemberAlert hideView];
+                    
+                    // show success alert (friend added)
+                    SCLAlertView * successAlert = [[SCLAlertView alloc ] initWithNewWindow];
+                    NSString * successAlertMessage = [NSString stringWithFormat:@"%@ has been added to %@", member[@"username"], _tribe[@"name"]];
+                    [successAlert addButton:@"AWESOME" actionBlock:^{
+                        [self.navigationController popToRootViewControllerAnimated:true];
                     }];
+                    [successAlert showSuccess:@"Success 😃" subTitle:successAlertMessage closeButtonTitle:nil duration:0.0];
        
                 } else {
                     

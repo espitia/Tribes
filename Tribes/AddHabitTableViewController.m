@@ -93,17 +93,10 @@
                 // log event
                 [Answers logCustomEventWithName:@"Added habit" customAttributes:@{@"success":@true}];
                 [Leanplum track:@"Added habit" withParameters:@{@"success":@true}];
-
                 
-                [_tribe updateTribeWithBlock:^(bool success) {
-                    if (success) {
-                        [alert hideView];
-                        [self.navigationController popToRootViewControllerAnimated:true];
-                    } else {
-                        SCLAlertView * errorAddingHabit = [[SCLAlertView alloc] initWithNewWindow];
-                        [errorAddingHabit showError:@"Oh oh!" subTitle:@"There was an error adding the habit. Please try again." closeButtonTitle:@"OK" duration:0.0];
-                    }
-                }];
+                [alert hideView];
+                [self.navigationController popToRootViewControllerAnimated:true];
+
             } else {
                 
                 // log event

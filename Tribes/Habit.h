@@ -14,20 +14,8 @@
 +(NSString *)parseClassName;
 +(void)load;
 
-//loading methods
--(void)loadHabitWithBlock:(void(^)(bool success))callback;
-
--(void)sortMembersAndActivitiesByTotalActivityCompletions;
--(void)sortMembersAndActivitiesByWeeklyActivityCompletions;
--(void)pairMembersAndActivities;
-
 -(BOOL)completedForDay;
--(BOOL)allMembersCompletedActivity;
 
--(void)sendTribe100PercentCompletedPush;
-
-@property (nonatomic, strong) NSMutableArray * members;
-@property (nonatomic, strong) NSMutableArray * membersAndActivities;
 @property (nonatomic, strong) NSMutableArray * completionDates;
 
 

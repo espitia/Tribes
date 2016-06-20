@@ -32,15 +32,15 @@
     [self.navigationItem setRightBarButtonItem:rightButton];
     
     // alert to invite via text
-    if (_tribe.tribeMembers.count == 1) {
-        SCLAlertView * inviteFriendsAlert = [[SCLAlertView alloc] initWithNewWindow];
-        [inviteFriendsAlert addButton:@"INVITE" actionBlock:^{
-            [self performSegueWithIdentifier:@"showSendText" sender:_tribe];
-        }];
-        [inviteFriendsAlert showInfo:@"Invite your friends 📲" subTitle:@"Before adding friends, they have to download Tribes first! Make sure to send them a text with an invite 👫" closeButtonTitle:@"MAYBE LATER" duration:0.0];
-    } else {
-        [_searchBar becomeFirstResponder];
-    }
+//     if (memberCount == 0)
+//    SCLAlertView * inviteFriendsAlert = [[SCLAlertView alloc] initWithNewWindow];
+//        [inviteFriendsAlert addButton:@"INVITE" actionBlock:^{
+//            [self performSegueWithIdentifier:@"showSendText" sender:_tribe];
+//        }];
+//        [inviteFriendsAlert showInfo:@"Invite your friends 📲" subTitle:@"Before adding friends, they have to download Tribes first! Make sure to send them a text with an invite 👫" closeButtonTitle:@"MAYBE LATER" duration:0.0];
+    
+    
+    [_searchBar becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,19 +106,17 @@
             [_tribe addUserToTribe:user withBlock:^(BOOL *success) {
                 if (success) {
                     
-                    [_tribe updateTribeWithBlock:^(bool success) {
-                        if (success) {
-                            SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
-                            [successAlert addButton:@"AWESOME" actionBlock:^{
-                                [self.navigationController popToRootViewControllerAnimated:true];
-                            }];
-                            [successAlert showSuccess:@"Success 😄" subTitle:@"You've successfully added your buddy!" closeButtonTitle:nil duration:0.0];
-                            
-                            // send push to newly added member
-                            NSString * message = [NSString stringWithFormat:@"%@ added you to %@!",[User currentUser][@"username"],_tribe[@"name"]];
-                            [[User currentUser] sendPushFromMemberToMember:user withMessage:message habitName:@"" andCategory:@"RELOAD"];
-                        }
+
+                    SCLAlertView * successAlert = [[SCLAlertView alloc] initWithNewWindow];
+                    [successAlert addButton:@"AWESOME" actionBlock:^{
+                        [self.navigationController popToRootViewControllerAnimated:true];
                     }];
+                    [successAlert showSuccess:@"Success 😄" subTitle:@"You've successfully added your buddy!" closeButtonTitle:nil duration:0.0];
+                    
+                    // send push to newly added member
+                    NSString * message = [NSString stringWithFormat:@"%@ added you to %@!",[User currentUser][@"username"],_tribe[@"name"]];
+                    [[User currentUser] sendPushFromMemberToMember:user withMessage:message habitName:@"" andCategory:@"RELOAD"];
+                
                 
                 } else {
                     SCLAlertView * errorAddingUserAlert = [[SCLAlertView alloc] initWithNewWindow];

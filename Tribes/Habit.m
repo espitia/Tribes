@@ -11,9 +11,7 @@
 
 @implementation Habit
 
-@synthesize members;
 @synthesize completionDates;
-@synthesize membersAndActivities;
 
 #pragma mark - Parse required methods
 
@@ -24,51 +22,8 @@
 + (void)load {
     [self registerSubclass];
 }
-
-#pragma mark - Loading Methods
-
--(void)loadHabitWithBlock:(void(^)(bool success))callback {
-    
-    // attempt to load from local datastore
-    [self fetchFromLocalDatastoreInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        if (!error && object && object.createdAt) {
-            NSLog(@"succesfully fetched habit from local datastore");
-            callback(true);
-        } else {
-            NSLog(@"habit not found in local datastore. will attempt to fetch from network");
-            [self fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-                if (object && !error && object.createdAt) {
-                    NSLog(@"successfully fetched habit from network");
-                    [self pinInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        if (succeeded && !error) {
-                            NSLog(@"successfully pinned habit");
-                            callback(true);
-                        } else {
-                            NSLog(@"failed to pin habit");
-                            callback(false);
-                        }
-                    }];
-                } else {
-                    NSLog(@"failed to fetch habit from network");
-                    callback(false);
-                }
-            }];
-        }
-    }];
-}
-
 #pragma mark - Push notifications to Tribe members
 
--(void)sendTribe100PercentCompletedPush {
-    NSString * message = [NSString stringWithFormat:@"%@ 💯 - All tribe members completed the activity ✊", self[@"name"]];
-    [self sendPushToAllMembersWithMessage:message andCategory:nil];
-}
-
--(void)sendPushToAllMembersWithMessage:(NSString *)message andCategory:(NSString *)category {
-    for (User * user in self.members) {
-        [self sendPushToMember:user WithMessage:message andCategory:category];
-    }
-}
 
 /**
  * Send push to a member in tribe with category for push notification replys.
@@ -101,97 +56,7 @@
                                     
                                 }];
 }
-
-
-#pragma mark - Sorting members by activity
--(void)pairMembersAndActivities {
-    [self pairMembersAndActivitiesWithBlock:^{}];
-}
-
--(void)pairMembersAndActivitiesWithBlock:(void (^)(void))callback {
-    
-    NSMutableArray * holderArray = [NSMutableArray array];
-    
-    for (User * member in members) {
-
-        Activity * activity = [member activityForHabit:self];
-        
-        // make dictionary
-        NSDictionary * memberAndActivity = @{
-                                             @"member":member,
-                                             @"activity":activity,
-                                             };
-        
-        
-        // add to 'master array'
-        [holderArray addObject:memberAndActivity];
-        
-        if (holderArray.count == self.members.count) {
-            self.membersAndActivities = [NSMutableArray arrayWithArray:holderArray];
-            callback();
-        }
-    }
-    
-    
-}
-
-/**
- * Sorts members and activities array by total completions.
- */
--(void)sortMembersAndActivitiesByTotalActivityCompletions {
-    [self pairMembersAndActivitiesWithBlock:^{
-        [self sortMembersAndActivitiesBy:@"total"];
-    }];
-}
-/**
- * Sorts members and activities array by weekly completions.
- */
--(void)sortMembersAndActivitiesByWeeklyActivityCompletions {
-    [self pairMembersAndActivitiesWithBlock:^{
-        [self sortMembersAndActivitiesBy:@"weekly"];
-    }];
-}
-
-/**
- * Sorts members and activities array by indicated time frame.
- *
- * @param timeFrame time frame to sort by, use key "total" or "weekly"
- */
--(void)sortMembersAndActivitiesBy:(NSString *)timeFrame {
-    
-    NSString * sortByKey;
-    
-    if ([timeFrame isEqualToString:@"total"]) {
-        sortByKey = @"activity.completions";
-    } else if ([timeFrame isEqualToString:@"weekly"]) {
-        sortByKey = @"activity.weekCompletions";
-    } else {
-        sortByKey = @"activity.completions"; // default to catch any errors
-    }
-    
-    NSArray * sortedArrayByActivityCompletions = [[NSArray alloc] init];
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:sortByKey  ascending:NO];
-    sortedArrayByActivityCompletions = [self.membersAndActivities sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
-    self.membersAndActivities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
-}
-
 #pragma mark - State
-
-
--(BOOL)allMembersCompletedActivity {
-    for (int i = 0; i < self.members.count; i++) {
-        Activity * activity = [self.members[i] activityForHabit:self];
-        if (![activity completedForDay]) {
-            if (!activity.hibernation) {
-                if (!activity.watcher) {
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
-}
-
 
 -(BOOL)completedForDay {
     

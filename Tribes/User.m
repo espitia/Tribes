@@ -395,14 +395,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     return nil;
 }
 
--(BOOL)hasTribesWithMembers {
-    for (Tribe * tribe in self.tribes) {
-        if (tribe.tribeMembers.count > 1) {
-            return true;
-        }
-    }
-    return false;
-}
 
 -(void)leaveTribe:(Tribe *)tribe {
     
@@ -481,40 +473,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
     return false;
 }
--(int)thisWeekCompletionsForNonWatcherHabitsForTribe:(Tribe *)tribe {
-    
-    NSMutableArray * arrayOfNonWatcherHabits = [[NSMutableArray alloc] init];
-    arrayOfNonWatcherHabits = [tribe nonWatcherHabits];
-    
-    int totalWeeklyCompletions = 0;
-    for (Activity * activity in self.activities) {
-        if (activity[@"tribe"] == tribe && [arrayOfNonWatcherHabits containsObject:activity[@"habit"]]) {
-            totalWeeklyCompletions = totalWeeklyCompletions + activity.weekCompletions;
-        }
-    }
-    return totalWeeklyCompletions;
-}
-
--(int)thisWeekCompletionsForTribe:(Tribe *)tribe {
-    int totalWeeklyCompletions = 0;
-    for (Activity * activity in self.activities) {
-        if (activity[@"tribe"] == tribe) {
-            totalWeeklyCompletions = totalWeeklyCompletions + activity.weekCompletions;
-        }
-    }
-    return totalWeeklyCompletions;
-}
-
--(int)lastWeekCompletionsForTribe:(Tribe *)tribe {
-    int totalWeeklyCompletions = 0;
-    for (Activity * activity in self.activities) {
-        if (activity[@"tribe"] == tribe) {
-            totalWeeklyCompletions = totalWeeklyCompletions + activity.lastWeekCompletions;
-        }
-    }
-    return totalWeeklyCompletions;
-}
-
 
 #pragma mark - Levels and XP
 
