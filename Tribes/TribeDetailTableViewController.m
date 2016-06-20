@@ -117,7 +117,6 @@
         User * member = [activities objectAtIndex:indexPath.row][@"createdBy"];
         User * currentUser = [User currentUser];
         Activity * activity = [activities objectAtIndex:indexPath.row];
-        NSLog(@"%@", member);
 
         // init alert vars
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
