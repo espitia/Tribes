@@ -26,7 +26,7 @@ extern int RECEIVED_APPLAUSE_XP;
 // UPDATING MEHTODS
 -(void)updateMemberDataWithBlock:(void(^)(bool success))callback;
 -(void)fetchUserFromNetworkWithBlock:(void(^)(bool success))callback;
--(void)checkForNewTribeshBlock:(void(^)(bool newData))callback;
+-(void)checkForNewTribesWithBlock:(void(^)(bool available))callback;
 
 
 // create a tribe
@@ -42,11 +42,6 @@ extern int RECEIVED_APPLAUSE_XP;
 
 // handling activities w/ habits
 -(Activity *)activityForHabit:(Habit *)habit;
-
-//stats for reports
--(int)lastWeekCompletionsForTribe:(Tribe *)tribe;
--(int)thisWeekCompletionsForTribe:(Tribe *)tribe;
--(int)thisWeekCompletionsForNonWatcherHabitsForTribe:(Tribe *)tribe;
 
 // handling activities
 -(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe;

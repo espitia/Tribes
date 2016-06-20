@@ -97,7 +97,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         if (!error && object) {
             // pin data
             NSArray * arrayOfHabitsToPin = [self habitsForAllTribes];
-            NSLog(@"%@", self.tribes[0]);
+            
             [PFObject pinAllInBackground:@[self, self.tribes, self.activities, arrayOfHabitsToPin] block:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded && !error) {
                     NSLog(@"succesfully pinned all data");
