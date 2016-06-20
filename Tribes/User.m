@@ -236,6 +236,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     newTribe[@"nameLowerCase"] = [name lowercaseString];
     newTribe[@"admin"] = self;
     newTribe[@"privacy"] = @YES;
+    newTribe[@"membersCount"] = @1;
     
     PFRelation * members = [newTribe relationForKey:@"members"];
     [members addObject:self];
@@ -428,6 +429,9 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     // remove user from tribe relation "members"
     PFRelation * relation = [tribe relationForKey:@"members"];
     [relation removeObject:self];
+    
+    // update member count
+    [tribe incrementKey:@"membersCount" byAmount:@-1];
     
     // save changes
     [self saveEventually];

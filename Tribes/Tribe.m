@@ -55,6 +55,8 @@
                                                 success = false;
                                                 callback(&success);
                                             } else {
+                                                [self incrementKey:@"membersCount"];
+                                                [self saveEventually];
                                                 success = true;
                                                 callback(&success);
                                             }
