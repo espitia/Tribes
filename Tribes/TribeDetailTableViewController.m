@@ -114,10 +114,11 @@
     if (indexPath) {
         
         // init necessary variables
-        User * member = _habit.membersAndActivities[indexPath.row][@"member"];
+        User * member = [activities objectAtIndex:indexPath.row][@"createdBy"];
         User * currentUser = [User currentUser];
-        Activity * activity = _habit.membersAndActivities[indexPath.row][@"activity"];
-        
+        Activity * activity = [activities objectAtIndex:indexPath.row];
+        NSLog(@"%@", member);
+
         // init alert vars
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
         NSString * message;
