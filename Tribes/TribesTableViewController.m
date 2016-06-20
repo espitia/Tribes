@@ -28,6 +28,7 @@
 #import "AddHabitTableViewController.h"
 #import <Leanplum/Leanplum.h>
 #import "AppDelegate.h"
+#import "CustomCellEngine.h"
 
 
 @import AVFoundation;
@@ -87,6 +88,8 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     
+
+    
     // security check
     if (!currentUser)
         currentUser = [User currentUser];
@@ -133,19 +136,9 @@
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:section - currentUser.onHoldTribes.count];
 
-    // if tribe has no habits - add call to action to create a habit
-    if ([tribe[@"habits"] count] == 0)
-        return 1;
-    
-    // if tirbe has no members - add call to action to add a friend
-    if (tribe.tribeMembers.count == 1)
-        return [tribe[@"habits"] count] + 1;
+    CustomCellEngine * cc = [[CustomCellEngine alloc] initWithTribe:tribe];
+    return [cc numberOfRowsForTribe];
 
-    if (currentUser.weeklyReportActive) {
-        return [tribe[@"habits"] count] + 1;
-    } else {
-        return [tribe[@"habits"] count];
-    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView
@@ -222,56 +215,17 @@ heightForHeaderInSection:(NSInteger)section {
     // if user created a tribe but tribe has no habits - call to action to add one
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
     
-    // if tribe has no habits - add call to action to create a habit
-    if ([tribe[@"habits"] count] == 0) {
-        cell.textLabel.text = @"👆 Tap to add a habit";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return cell;
-    }
-
-    // if tribe has no habits - add call to action to add a friend
-    if (tribe.tribeMembers.count == 1 && tribe.onHoldMembers.count == 0 && indexPath.row == 0) {
-        cell.textLabel.text = @"👆 Tap to add a friend";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return cell;
-    }
-    
-    if (tribe.onHoldMembers.count > 0 && indexPath.row == 0 && [currentUser isAdmin:tribe]) {
-        cell.textLabel.text = @"👆 You've got pending members!";
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        return cell;
-    }
-    
-    // regular cell when showing call to action to add friend
-    else if ((tribe.tribeMembers.count == 1 || tribe.onHoldMembers.count > 0) && indexPath.row != 0) {
-        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        [self configureCell:cell forRowAtIndexPath:newIndexPath];
-        return cell;
-    }
-    
-    // enable weekly reports on monday and configure indexpath to correctly user data source
-    else if (currentUser.weeklyReportActive && indexPath.row == 0) {
-        [self configureWeeklyReportCell:cell forRowAtIndexPath:indexPath];
-        return cell;
-    }
-    // regular cells for when weekly report is on (modify indexpath)
-    else if (currentUser.weeklyReportActive && indexPath.row != 0) {
-        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        [self configureCell:cell forRowAtIndexPath:newIndexPath];
-        return cell;
-    }
-    // regular day
-    else {
-        [self configureCell:cell forRowAtIndexPath:indexPath];
+    CustomCellEngine * cc = [[CustomCellEngine alloc] initWithTribe:tribe];
+    if ([cc indexPathIsForCustomCell:indexPath]) {
+        return [cc customCellForRowAtIndexPath:indexPath];
+    } else {
+        [self configureCell:cell forRowAtIndexPath:[cc indexPathForRegularCellWithIndexPath:indexPath]];
     }
     return cell;
 }
 
 #pragma mark - Configure Cell
-- (void)configureWeeklyReportCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.textLabel.text = @"Weekly report 📈";
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-}
+
 - (void)configureCell:(MCSwipeTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     // makes sure tribe objects have been loaded
@@ -335,12 +289,10 @@ heightForHeaderInSection:(NSInteger)section {
         [self updateProgressBar];
         [self playSound:@"completion-sound" :@".mp3"];
         // modify indexpath to accomadte for weekly report cell
-        if (currentUser.weeklyReportActive) {
-            NSIndexPath * weeklyReportIndexPath = [NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section];
-            [self.tableView reloadRowsAtIndexPaths:@[weeklyReportIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        } else {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
+        
+        CustomCellEngine * cc = [[CustomCellEngine alloc] initWithTribe:tribe];
+        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row + ([cc numberOfCustomRowsForTribe]) inSection:indexPath.section];
+        [self.tableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     }];
 }
@@ -387,79 +339,65 @@ heightForHeaderInSection:(NSInteger)section {
         return;
     
     Tribe * tribe = [currentUser.tribes objectAtIndex:indexPath.section - currentUser.onHoldTribes.count];
-    
-    // if user has no habits in tribe, send them to add habit
-    if ([tribe[@"habits"] count] == 0) {
-        
-        // log event
-        [Answers logCustomEventWithName:@"Tapped to create first habit" customAttributes:@{}];
-        [Leanplum track:@"Add first habit"];
-        
-        [self performSegueWithIdentifier:@"AddFirstHabit" sender:tribe];
-    }
-    
-    // if user has no tribe members , send them add friends
-    else if (tribe.tribeMembers.count == 1 && tribe.onHoldMembers.count == 0 && indexPath.row == 0) {
-        
-        [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
-        [Leanplum track:@"Add first friend"];
-    }
-    
-    // pending members action
-    else if (tribe.onHoldMembers.count > 0 && indexPath.row == 0 && [currentUser isAdmin:tribe]) {
-        [self performSegueWithIdentifier:@"showMembersTable" sender:tribe];
-    }
-    // if user has no tribe members but has habits, send them to corresponding habits
-    else if ((tribe.tribeMembers.count == 1 || tribe.onHoldMembers.count > 0) && indexPath.row != 0) {
-        
-        // log event
-        [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
-        [Leanplum track:@"Tapped on habit"];
-        
-        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        Habit * habit = [tribe[@"habits"] objectAtIndex:newIndexPath.row];
-        [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
-    }
-    // enable weekly reports on Monday and configure indexpath to correctly user data source
-    else if (currentUser.weeklyReportActive && indexPath.row == 0) {
-        
-        IAPHelper * helper = [[IAPHelper alloc] init];
-        if ([helper userIsPremium]) {
+
+    CustomCellEngine * cc = [[CustomCellEngine alloc] initWithTribe:tribe];
+
+    switch ([cc typeOfCellAtIndexPath:indexPath]) {
             
-            [self performSegueWithIdentifier:@"showWeeklyReport" sender:tribe];
-        
-        } else {
             
-            // show alert to upgrade to premium
-            SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
-            [premiumFeatureAlert addButton:@"MORE INFO" actionBlock:^{
-                // show premium vc
-                PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
-                [self presentViewController:premiumVC animated:true completion:nil];
-            }];
-            [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"MAYBE LATER" duration:0.0];
+        case TypeWeeklyReportCell: {
+            
+            IAPHelper * helper = [[IAPHelper alloc] init];
+            if ([helper userIsPremium]) {
+                
+                [self performSegueWithIdentifier:@"showWeeklyReport" sender:tribe];
+                
+            } else {
+                
+                // show alert to upgrade to premium
+                SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
+                [premiumFeatureAlert addButton:@"MORE INFO" actionBlock:^{
+                    // show premium vc
+                    PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
+                    [self presentViewController:premiumVC animated:true completion:nil];
+                }];
+                [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"MAYBE LATER" duration:0.0];
+            }
         }
-
+            break;
+            
+        case TypeAddFriendCell: {
+            [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
+            [Leanplum track:@"Add first friend"];
+        }
+            break;
+            
+        case TypeAddHabitCell: {
+            // log event
+            [Answers logCustomEventWithName:@"Tapped to create first habit" customAttributes:@{}];
+            [Leanplum track:@"Add first habit"];
+            [self performSegueWithIdentifier:@"AddFirstHabit" sender:tribe];
+        }
+            break;
+            
+        case TypePendingMemberCell: {
+            [self performSegueWithIdentifier:@"showMembersTable" sender:tribe];
+        }
+            break;
+            
+        case TypeRegularCell: {
+            // log event
+            [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
+            [Leanplum track:@"Tapped on habit"];
+            Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row - ([cc numberOfCustomRowsForTribe])];
+            [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
+        }
+            break;
+            
+        default:
+            break;
     }
-    // REPORT DAYS (MONDAY) BUT NOT TAPPING REPORT (tapping a habit instead)
-    else if (currentUser.weeklyReportActive && indexPath.row != 0) {
-        
-        NSIndexPath * newIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        Habit * habit = [tribe[@"habits"] objectAtIndex:newIndexPath.row];
-        [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
-        
-    }
-    // REGULAR DAYS
-    else {
 
-        // log event
-        [Answers logCustomEventWithName:@"Tapped on habit" customAttributes:@{}];
-        [Leanplum track:@"Tapped on habit"];
-
-        
-        Habit * habit = [tribe[@"habits"] objectAtIndex:indexPath.row];
-        [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
-    }
 }
 
 -(void)sectionHeaderTap:(UITapGestureRecognizer *)tap {
