@@ -52,6 +52,7 @@
 @property (nonatomic, strong) NSMutableArray * onHoldMembers;
 @property (nonatomic, strong) NSMutableArray * habits;
 @property (nonatomic, strong) NSMutableArray * nonWatcherHabits;
+@property (nonatomic, strong) NSNumber * membersCount;
 @property BOOL privacy;
 
 

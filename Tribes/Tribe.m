@@ -25,6 +25,7 @@
 // tribe members is = as members but since members key is a pfrelation, we create another variable to hold array of members
 @synthesize tribeMembers;
 @synthesize onHoldMembers;
+@dynamic membersCount;
 
 #pragma mark - Parse required methods
 
