@@ -29,6 +29,7 @@
 #import <Leanplum/Leanplum.h>
 #import "AppDelegate.h"
 #import "CustomCellEngine.h"
+#import "PNChart.h"
 
 
 @import AVFoundation;
@@ -254,6 +255,27 @@ heightForHeaderInSection:(NSInteger)section {
     
     // set name of tribe
     [cell.textLabel setText:habit[@"name"]];
+    
+    //For Circle Chart
+    
+
+    
+    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 50, 50) total:@100 current:@95 clockwise:true];
+    progressCircle.backgroundColor = [UIColor clearColor];
+    [progressCircle setStrokeColor:PNGreen];
+    [progressCircle setDisplayCountingLabel:false];
+    progressCircle.lineWidth = @1;
+    
+    
+    
+    UIImageView * imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"check"]];
+    imgView.frame = progressCircle.bounds;
+    [progressCircle addSubview:imgView];
+    
+    
+    cell.accessoryView = progressCircle;
+    [progressCircle strokeChart];
+
 }
 - (void)configureCellForCompletedTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit  {
    
@@ -594,7 +616,6 @@ heightForHeaderInSection:(NSInteger)section {
 -(BOOL)shouldAskForNotificationsPermission {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     return (currentUser.tribes.count > 0 && currentUser.activities.count > 0 &&
-            [currentUser hasTribesWithMembers] &&
             [[userDefaults objectForKey:@"playedWalkthroughVideo"]  isEqual: @true] &&
             ([userDefaults objectForKey:@"askedForNotificationsPermission"]  == NULL) &&
             (![currentUser pushNotificationsEnabled]));
