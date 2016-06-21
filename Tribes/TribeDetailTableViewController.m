@@ -16,7 +16,7 @@
 #import <Leanplum/Leanplum.h>
 
 @interface TribeDetailTableViewController () {
-    NSMutableArray * activities;
+    NSMutableArray * membersAndActivities;
     BOOL weeklyCompletions;
     BOOL loadedObjects;
     // ** motivation pushes vars **//
@@ -58,33 +58,47 @@
 
 
 -(PFQuery *)queryForTable {
-    PFQuery * query = [PFQuery queryWithClassName:@"Activity"];
-    [query whereKey:@"habit" equalTo:_habit];
-    [query includeKey:@"createdBy"];
-    [query orderByDescending:@"completions"];
     
-    PFRelation * relation = [self.tribe relationForKey:@"members"];
-    PFQuery * membersQuery = [relation query];
-    [query whereKey:@"createdBy" matchesQuery:membersQuery];
+    // get relation for members from tribe
+    PFRelation * membersRelation = [_tribe relationForKey:@"members"];
+    PFQuery * queryForMembers = [membersRelation query];
+    [queryForMembers includeKey:@"activities"];
+    [queryForMembers includeKey:@"activities.habit"];
     
-    return query;
+    
+    return queryForMembers;
 }
 
 - (void)objectsDidLoad:(nullable NSError *)error {
     [super objectsDidLoad:error];
+
+    membersAndActivities = [[NSMutableArray alloc] init];
     
-    loadedObjects = true;
-    activities = [[NSMutableArray alloc] initWithArray:self.objects];
+    for (User * member in self.objects) {
+        
+        NSDictionary * membAndActivity = @{
+                                           @"member":member,
+                                           @"activity":[self activityForHabit:_habit withActivities:member[@"activities"]]
+                                           };
+        [membersAndActivities addObject:membAndActivity];
+    }
     [self sortMembersAndActivitiesByWeeklyActivityCompletions];
+    loadedObjects = true;
 }
+
+
+
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (!loadedObjects)
         return cell;
-    Activity * activity = [activities objectAtIndex:indexPath.row];
-    User * user = [activity objectForKey:@"createdBy"];
-    
-    NSString * username = user.username;
+
+    User * user = [membersAndActivities objectAtIndex:indexPath.row][@"member"];
+    Activity * activity = [membersAndActivities objectAtIndex:indexPath.row][@"activity"];
+    NSLog(@"%@", user);
+    NSString * username = user[@"username"];
     cell.textLabel.text = username;
     
     if (weeklyCompletions) {
@@ -114,9 +128,8 @@
     if (indexPath) {
         
         // init necessary variables
-        User * member = [activities objectAtIndex:indexPath.row][@"createdBy"];
-        User * currentUser = [User currentUser];
-        Activity * activity = [activities objectAtIndex:indexPath.row];
+        Activity * activity = [membersAndActivities objectAtIndex:indexPath.row][@"activity"];
+        User * member = [membersAndActivities objectAtIndex:indexPath.row][@"member"];        User * currentUser = [User currentUser];
 
         // init alert vars
         SCLAlertView * alert = [[SCLAlertView alloc] initWithNewWindow];
@@ -437,42 +450,57 @@
     NSString * sortByKey;
     
     if ([timeFrame isEqualToString:@"total"]) {
-        sortByKey = @"completions";
+        sortByKey = @"activity.completions";
     } else if ([timeFrame isEqualToString:@"weekly"]) {
-        sortByKey = @"weekCompletions";
+        sortByKey = @"activity.weekCompletions";
     } else {
         sortByKey = @"completions"; // default to catch any errors
     }
     
     NSArray * sortedArrayByActivityCompletions = [[NSArray alloc] init];
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:sortByKey  ascending:NO];
-    sortedArrayByActivityCompletions = [activities sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
-    activities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
-    
+    sortedArrayByActivityCompletions = [membersAndActivities sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    membersAndActivities = [NSMutableArray arrayWithArray:sortedArrayByActivityCompletions];
+
     [self moveWatcherAndHibernationToEndOfArray];
 }
 
 -(void)moveWatcherAndHibernationToEndOfArray {
     
     // move watchers
-    for (int i = 0; i < activities.count; i++) {
-        Activity * activity = [activities objectAtIndex:i];
+    for (int i = 0; i < membersAndActivities.count; i++) {
+        NSDictionary * obj = [membersAndActivities objectAtIndex:i];
+        Activity * activity = obj[@"activity"];
         if (activity.watcher) {
-            [activities removeObjectAtIndex:i];
-            [activities insertObject:activity atIndex:activities.count];
+            [membersAndActivities removeObjectAtIndex:i];
+            [membersAndActivities insertObject:obj atIndex:membersAndActivities.count];
             [self.tableView reloadData];
         }
     }
     
     // move hibernation
-    for (int i = 0; i < activities.count; i++) {
-        Activity * activity = [activities objectAtIndex:i];
+    for (int i = 0; i < membersAndActivities.count; i++) {
+        NSDictionary * obj = [membersAndActivities objectAtIndex:i];
+        Activity * activity = obj[@"activity"];
         if (activity.hibernation) {
-            [activities removeObjectAtIndex:i];
-            [activities insertObject:activity atIndex:activities.count];
+            [membersAndActivities removeObjectAtIndex:i];
+            [membersAndActivities insertObject:obj atIndex:membersAndActivities.count];
             [self.tableView reloadData];
         }
     }
+}
+#pragma mark - Util
+
+-(Activity *)activityForHabit:(Habit *)habit withActivities:(NSArray *)activities {
+    
+    for (Activity * activity in activities) {
+        if (activity[@"habit"]) {
+            if (activity[@"habit"] == habit) {
+                return activity;
+            }
+        }
+    }
+    return nil;
 }
 
 @end
