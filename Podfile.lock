@@ -14,9 +14,12 @@ PODS:
   - ParseUI (1.2.0):
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
+  - PNChart (0.8.9):
+    - UICountingLabel (~> 1.2.0)
   - SCLAlertView-Objective-C (1.0.2)
   - TwitterCore (2.0.2):
     - Fabric
+  - UICountingLabel (1.2.0)
   - UXCam (2.5.3)
   - YLProgressBar (3.8.1)
 
@@ -29,6 +32,7 @@ DEPENDENCIES:
   - MCSwipeTableViewCell (~> 2.1.4)
   - Parse
   - ParseUI
+  - PNChart
   - SCLAlertView-Objective-C
   - TwitterCore
   - UXCam
@@ -44,8 +48,10 @@ SPEC CHECKSUMS:
   MCSwipeTableViewCell: 1b303e16c3a26b1982f3a68386e9b8c5fc8344c3
   Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
+  PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
   TwitterCore: 0f44d8980a6879d5205dcb4e010d15e643e56fa0
+  UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UXCam: d56a673dcfe6cdac982b78691c9e10b4c60e9b15
   YLProgressBar: c6699d75d58042377132c9301d3ab8fd0204937d
 

@@ -16,6 +16,7 @@ target 'Tribes' do
     pod 'Helpshift', '5.5.1'
     pod 'Leanplum-iOS-SDK'
     pod 'UXCam'
+    pod 'PNChart'
 end
 
 target 'TribesTests' do
