@@ -12,6 +12,7 @@
 @implementation Habit
 
 @synthesize completionDates;
+@synthesize completionProgress;
 
 #pragma mark - Parse required methods
 
