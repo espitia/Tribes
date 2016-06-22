@@ -33,7 +33,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     [self registerSubclass];
 }
 
-#pragma mark - Main Loading
+#pragma mark - Main Loading/updating
 
 -(void)loadTribesWithBlock:(void(^)(bool success))callback {
     
@@ -126,6 +126,64 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         }        
     }];
 }
+
+-(void)updateHabitProgressChartsWithBlock:(void(^)(bool success))callback {
+    
+    
+    // loop through all tribes
+    for (int y = 0; y < self.tribes.count; y++) {
+        Tribe * tribe = [self.tribes objectAtIndex:y];
+
+        // fetch members to see their activites and check for completion of habits
+        PFRelation * relationToMembers = [tribe relationForKey:@"members"];
+        PFQuery * query = [relationToMembers query];
+        [query includeKey:@"activities"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+            
+                // loop through all habits of each tribe
+                for (int i = 0; i < tribe.habits.count; i++) {
+                    
+                    Habit * habit = [tribe.habits objectAtIndex:i];
+                    
+                    float progress = 0; // actual progress counter
+                    float watcherAndHibernation = 0; // check for watcher to remove that from denominator
+                    
+                    // loop through members to get their activities and check completions
+                    for (int z = 0; z < objects.count; z++) {
+                        
+                        User * member = [objects objectAtIndex:z];
+                        
+                        // check if completed
+                        if ([[member activityForHabit:habit withActivities:member[@"activities"]] completedForDay]) {
+                            progress++;
+                        }
+                        // check for watcher/hibernation to remove from denominator
+                        if ([member activityForHabit:habit withActivities:member[@"activities"]].watcher ||
+                             [member activityForHabit:habit withActivities:member[@"activities"]].hibernation) {
+                            watcherAndHibernation++;
+                        }
+                        
+                        // if we get to the end of checking activities
+                        if (z == objects.count - 1) {
+                            
+                            // set progress for habit, save and pin to local store
+                            [habit setObject:[NSNumber numberWithFloat:progress/(objects.count - watcherAndHibernation)] forKey:@"completionProgress"];
+                            [habit saveEventually];
+                            [habit pinInBackground];
+                            
+                            // callback when at ze true end (all habits, tribes)
+                            if (y == self.tribes.count - 1 && habit[@"tribe"] == [self.tribes objectAtIndex:y]) {
+                                callback(true);
+                            }
+                        }
+                    }
+                }
+        }];
+
+    }
+    
+}
+
 #pragma mark - Helper methods for loading
 // makes sure all data (tribes, habits and acitvities are fully loaded, not just pointers)
 -(BOOL)dataIsLoaded {
@@ -408,7 +466,17 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     }
     return nil;
 }
-
+-(Activity *)activityForHabit:(Habit *)habit withActivities:(NSArray *)activities {
+    
+    for (Activity * activity in activities) {
+        if (activity[@"habit"]) {
+            if (activity[@"habit"] == habit) {
+                return activity;
+            }
+        }
+    }
+    return nil;
+}
 
 -(void)leaveTribe:(Tribe *)tribe {
     

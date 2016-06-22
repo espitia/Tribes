@@ -27,7 +27,7 @@ extern int RECEIVED_APPLAUSE_XP;
 -(void)updateMemberDataWithBlock:(void(^)(bool success))callback;
 -(void)fetchUserFromNetworkWithBlock:(void(^)(bool success))callback;
 -(void)checkForNewTribesWithBlock:(void(^)(bool available))callback;
-
+-(void)updateHabitProgressChartsWithBlock:(void(^)(bool success))callback;
 
 // create a tribe
 -(void)createNewTribeWithName:(NSString *)name  withBlock:(void(^)(BOOL success))callback;
@@ -40,10 +40,9 @@ extern int RECEIVED_APPLAUSE_XP;
 // user leaving tribe
 -(void)leaveTribe:(Tribe *)tribe;
 
-// handling activities w/ habits
+// handling activities and habits
 -(Activity *)activityForHabit:(Habit *)habit;
-
-// handling activities
+-(Activity *)activityForHabit:(Habit *)habit withActivities:(NSArray *)activities;
 -(void)completeActivityForHabit:(Habit *)habit inTribe:(Tribe *)tribe;
 -(void)removeAllHibernationFromActivities;
 
