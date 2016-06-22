@@ -262,9 +262,10 @@ heightForHeaderInSection:(NSInteger)section {
     // set name of tribe
     [cell.textLabel setText:habit[@"name"]];
     NSNumber * progress = [habit objectForKey:@"completionProgress"];
+    UIColor * extermelyLightGray = [UIColor colorWithRed:230.0/255 green:230.0/255 blue:230.0/255 alpha:1.0];
 
     // circle chart
-    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 45, 45) total:@1 current:progress clockwise:true];
+    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 45, 45) total:@1 current:progress clockwise:true shadow:true shadowColor:extermelyLightGray];
     UIColor * greenColor = [UIColor colorWithRed:55/255
                                            green:208.0/255
                                             blue:63.0/255 alpha:1.0];
@@ -288,7 +289,7 @@ heightForHeaderInSection:(NSInteger)section {
     cell.textLabel.attributedText = attributedString;
 
     // completed signifier inside circle chart
-    UIImageView * imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+    UIImageView * imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     UIImage * img = [UIImage imageNamed:@"green-check"];
     imgView.image = img;
     imgView.center = cell.accessoryView.center;
