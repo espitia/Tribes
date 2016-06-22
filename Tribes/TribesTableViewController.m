@@ -255,9 +255,10 @@ heightForHeaderInSection:(NSInteger)section {
     
     // set name of tribe
     [cell.textLabel setText:habit[@"name"]];
-    
+    NSNumber * progress = [habit objectForKey:@"completionProgress"];
+
     // circle chart
-    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 45, 45) total:@100 current:@45 clockwise:true];
+    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 45, 45) total:@1 current:progress clockwise:true];
     UIColor * greenColor = [UIColor colorWithRed:55/255
                                            green:208.0/255
                                             blue:63.0/255 alpha:1.0];
@@ -741,7 +742,7 @@ heightForHeaderInSection:(NSInteger)section {
 
 }
 
-#pragma mark - Progress Bar
+#pragma mark - Progress Bars
 
 -(void)addProgressBar {
     
