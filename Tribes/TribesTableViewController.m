@@ -335,7 +335,11 @@ heightForHeaderInSection:(NSInteger)section {
     } else if (activity.watcher) {
         settingString = @"👀";
     }
-    [cell.detailTextLabel setText:settingString];
+    UIImageView * imgView = [[UIImageView alloc] initWithImage:[self imageFromText:settingString]];
+    imgView.frame = CGRectMake(0, 0, 20, 20);
+    imgView.center = cell.accessoryView.center;
+    [cell.accessoryView addSubview:imgView];
+    
 }
 
 -(void)configureViewForHeaderView:(UIView *)headerView {
@@ -675,6 +679,23 @@ heightForHeaderInSection:(NSInteger)section {
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:@true forKey:@"askedForNotificationsPermission"];
     [userDefaults synchronize];
+}
+
+-(UIImage *)imageFromText:(NSString *)text
+{
+    UIFont *font = [UIFont systemFontOfSize:20.0];
+    CGSize size = [text sizeWithAttributes:
+                   @{NSFontAttributeName:
+                         [UIFont systemFontOfSize:20.0f]}];
+    if (&UIGraphicsBeginImageContextWithOptions != NULL) {
+        UIGraphicsBeginImageContextWithOptions(size,NO,0.0);
+    }
+    [text drawAtPoint:CGPointMake(0.0, 0.0) withAttributes:[NSDictionary dictionaryWithObject:font
+                                                                                       forKey:NSFontAttributeName]];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 #pragma mark - Method to play sound
