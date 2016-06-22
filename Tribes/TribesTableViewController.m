@@ -80,6 +80,12 @@
                     [self checkForTribesConfirmationTimer];
                 }
                 
+                [currentUser updateHabitProgressChartsWithBlock:^(bool success) {
+                    if (success) {
+                        [self.tableView reloadData];
+                    }
+                }];
+                
             }
         }];
     }
@@ -543,6 +549,12 @@ heightForHeaderInSection:(NSInteger)section {
         if (newPendingMembers)
             [self.tableView reloadData];
     }];
+    
+    [currentUser updateHabitProgressChartsWithBlock:^(bool success) {
+        if (success) {
+            [self.tableView reloadData];
+        }
+    }];
 
 }
 -(void)checkForTribesConfirmationTimer {
@@ -737,6 +749,12 @@ heightForHeaderInSection:(NSInteger)section {
             SCLAlertView * error = [[SCLAlertView alloc] initWithNewWindow];
             [error showError:@"🙄" subTitle:@"There was an error fetching data from the internetz. We apologize for that. Check your connection and try again!" closeButtonTitle:@"OK" duration:0.0];
             [refreshControl endRefreshing];
+        }
+    }];
+    
+    [currentUser updateHabitProgressChartsWithBlock:^(bool success) {
+        if (success) {
+            [self.tableView reloadData];
         }
     }];
 
