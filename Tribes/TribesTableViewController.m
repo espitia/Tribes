@@ -273,15 +273,20 @@ heightForHeaderInSection:(NSInteger)section {
 }
 - (void)configureCellForCompletedTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit  {
    
-    // set detail text depending on whether all tribe members completed their activity
-    NSString * check = @"✅";
-    [cell.detailTextLabel setText:check];
     
     // cross out habit if user compelted
     NSDictionary* attributes = @{NSStrikethroughStyleAttributeName: [NSNumber numberWithInt:NSUnderlineStyleSingle]};
     NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:habit[@"name"] attributes:attributes];
     
     cell.textLabel.attributedText = attributedString;
+
+    // completed signifier inside circle chart
+    UIImageView * imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+    UIImage * img = [UIImage imageNamed:@"green-check"];
+    imgView.image = img;
+    imgView.center = cell.accessoryView.center;
+    [cell.accessoryView addSubview:imgView];
+
 }
 
 - (void)configureCellForUncompleteTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit atIndexPath:(NSIndexPath *)indexPath {
