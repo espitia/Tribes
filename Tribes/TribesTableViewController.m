@@ -290,10 +290,7 @@ heightForHeaderInSection:(NSInteger)section {
 }
 
 - (void)configureCellForUncompleteTribeHabit:(MCSwipeTableViewCell *)cell withTribe:(Tribe *)tribe andHabit:(Habit *)habit atIndexPath:(NSIndexPath *)indexPath {
-
-    // set detail text depending on whether all tribe members completed their activity
-    NSString * notCompleteX = @"❌";
-    [cell.detailTextLabel setText:notCompleteX];
+    
     
     UIView *checkView = [self viewWithImageName:@"check"];
     UIColor *greenColor = [UIColor colorWithRed:85.0 / 255.0 green:213.0 / 255.0 blue:80.0 / 255.0 alpha:1.0];
@@ -316,6 +313,13 @@ heightForHeaderInSection:(NSInteger)section {
         [self.tableView reloadRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     }];
+    
+    // add red-x signifier inside circle chart
+    UIImageView * imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
+    UIImage * img = [UIImage imageNamed:@"red-x"];
+    imgView.image = img;
+    imgView.center = cell.accessoryView.center;
+    [cell.accessoryView addSubview:imgView];
 }
 
 /**
