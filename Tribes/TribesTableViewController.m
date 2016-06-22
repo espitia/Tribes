@@ -256,23 +256,17 @@ heightForHeaderInSection:(NSInteger)section {
     // set name of tribe
     [cell.textLabel setText:habit[@"name"]];
     
-    //For Circle Chart
-    
-
-    
-    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 50, 50) total:@100 current:@95 clockwise:true];
+    // circle chart
+    PNCircleChart * progressCircle = [[PNCircleChart alloc] initWithFrame:CGRectMake(cell.accessoryView.frame.origin.x, cell.accessoryView.frame.origin.y, 45, 45) total:@100 current:@45 clockwise:true];
+    UIColor * greenColor = [UIColor colorWithRed:55/255
+                                           green:208.0/255
+                                            blue:63.0/255 alpha:1.0];
     progressCircle.backgroundColor = [UIColor clearColor];
-    [progressCircle setStrokeColor:PNGreen];
-    [progressCircle setDisplayCountingLabel:false];
+    progressCircle.strokeColor = greenColor;
+    progressCircle.displayCountingLabel = false;
+    progressCircle.displayAnimated = false;
+    progressCircle.countingLabel = nil;
     progressCircle.lineWidth = @1;
-    
-    
-    
-    UIImageView * imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"check"]];
-    imgView.frame = progressCircle.bounds;
-    [progressCircle addSubview:imgView];
-    
-    
     cell.accessoryView = progressCircle;
     [progressCircle strokeChart];
 
