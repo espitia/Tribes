@@ -57,6 +57,15 @@
                                     
                                 }];
 }
+
+#pragma mark - Completion Progress
+
+-(void)updateCompletionProgress {
+    NSNumber * totalMembers = self[@"tribe"][@"membersCount"];
+    float toAdd = 1/[totalMembers floatValue];
+    [self incrementKey:@"completionProgress" byAmount:[NSNumber numberWithFloat:toAdd]];
+    [self saveEventually];
+}
 #pragma mark - State
 
 -(BOOL)completedForDay {

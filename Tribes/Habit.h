@@ -15,6 +15,7 @@
 +(void)load;
 
 -(BOOL)completedForDay;
+-(void)updateCompletionProgress;
 
 @property (nonatomic, strong) NSMutableArray * completionDates;
 @property (nonatomic, strong) NSNumber * completionProgress;
