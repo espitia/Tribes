@@ -22,7 +22,6 @@
 #import "YLProgressBar.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "SCLAlertView.h"
-#import "WeeklyReportTableViewController.h"
 #import "PremiumViewController.h"
 #import "IAPHelper.h"
 #import "AddHabitTableViewController.h"
@@ -381,28 +380,6 @@ heightForHeaderInSection:(NSInteger)section {
 
     switch ([cc typeOfCellAtIndexPath:indexPath]) {
             
-            
-        case TypeWeeklyReportCell: {
-            
-            IAPHelper * helper = [[IAPHelper alloc] init];
-            if ([helper userIsPremium]) {
-                
-                [self performSegueWithIdentifier:@"showWeeklyReport" sender:tribe];
-                
-            } else {
-                
-                // show alert to upgrade to premium
-                SCLAlertView * premiumFeatureAlert = [[SCLAlertView alloc] initWithNewWindow];
-                [premiumFeatureAlert addButton:@"MORE INFO" actionBlock:^{
-                    // show premium vc
-                    PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
-                    [self presentViewController:premiumVC animated:true completion:nil];
-                }];
-                [premiumFeatureAlert showSuccess:@"Premium Feature" subTitle:@"You've discovered a premium feature! Upgrading to Tribes Premium will unlock it." closeButtonTitle:@"MAYBE LATER" duration:0.0];
-            }
-        }
-            break;
-            
         case TypeAddFriendCell: {
             [self performSegueWithIdentifier:@"addFriendToTribe" sender:tribe];
             [Leanplum track:@"Add first friend"];
@@ -496,11 +473,6 @@ heightForHeaderInSection:(NSInteger)section {
         // sender contrains tribe tapped
         tribeMenuVC.tribe = sender;
         
-    } else if ([segue.identifier isEqualToString:@"showWeeklyReport"]) {
-        // get tribe menu vc to set tribe
-        WeeklyReportTableViewController * weeklyReportVC = segue.destinationViewController;
-        // sender contrains tribe tapped
-        weeklyReportVC.tribe = sender;
     } else if ([segue.identifier isEqualToString:@"AddFirstHabit"]) {
         // if tribe has no habits, send to add first habit
         AddHabitTableViewController * vc = (AddHabitTableViewController *)segue.destinationViewController;

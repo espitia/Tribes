@@ -31,7 +31,6 @@
     }
 
     if (tribe.membersCount == 0 ||
-        [User currentUser].weeklyReportActive ||
         (tribe.onHoldMembers.count > 0 && [[User currentUser] isAdmin:tribe])) {
         return tribe.habits.count + 1;
     }
@@ -52,9 +51,6 @@
     }
     if (tribe.onHoldMembers.count > 0 && [[User currentUser] isAdmin:tribe]) {
         return TypePendingMemberCell;
-    }
-    if ([User currentUser].weeklyReportActive) {
-        return TypeWeeklyReportCell;
     }
     
     return TypeRegularCell;
@@ -84,10 +80,6 @@
             cell.textLabel.text = @"👆 You've got pending members!";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
-            break;
-        case TypeWeeklyReportCell:
-            cell.textLabel.text = @"Weekly report 📈";
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
             
         default:

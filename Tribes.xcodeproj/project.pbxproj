@@ -42,7 +42,6 @@
 		099760561C7E1E8B008E88A7 /* SignUpValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 099760551C7E1E8B008E88A7 /* SignUpValidation.m */; };
 		099BB2011C9520E100A734F0 /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2001C9520E100A734F0 /* MembersTableViewController.m */; };
 		099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 099BB2031C9524F300A734F0 /* HabitsTableViewController.m */; };
-		09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */; };
 		09AC31941CDAB4BD00D40BC8 /* Tribes-Intro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */; };
 		09AC31971CDB892700D40BC8 /* cropped tribes tutorial.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */; };
 		09BDD94F1C7E929000061567 /* HYBubbleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 09BDD94E1C7E929000061567 /* HYBubbleButton.m */; };
@@ -148,8 +147,6 @@
 		099BB2001C9520E100A734F0 /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
 		099BB2021C9524F300A734F0 /* HabitsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitsTableViewController.h; sourceTree = "<group>"; };
 		099BB2031C9524F300A734F0 /* HabitsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitsTableViewController.m; sourceTree = "<group>"; };
-		09A4E5501CA9EC0700A82E3F /* WeeklyReportTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTableViewController.h; sourceTree = "<group>"; };
-		09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTableViewController.m; sourceTree = "<group>"; };
 		09AC31931CDAB4BD00D40BC8 /* Tribes-Intro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Tribes-Intro.mp4"; sourceTree = "<group>"; };
 		09AC31951CDB892700D40BC8 /* cropped tribes tutorial.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "cropped tribes tutorial.mp4"; sourceTree = "<group>"; };
 		09BDD94D1C7E929000061567 /* HYBubbleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYBubbleButton.h; sourceTree = "<group>"; };
@@ -417,15 +414,6 @@
 			name = "Creating/Joining Tribes";
 			sourceTree = "<group>";
 		};
-		09A4E5531CA9EC0B00A82E3F /* Weekly Report */ = {
-			isa = PBXGroup;
-			children = (
-				09A4E5501CA9EC0700A82E3F /* WeeklyReportTableViewController.h */,
-				09A4E5511CA9EC0700A82E3F /* WeeklyReportTableViewController.m */,
-			);
-			name = "Weekly Report";
-			sourceTree = "<group>";
-		};
 		09AC318F1CDA32BF00D40BC8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,7 +504,6 @@
 				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
 				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
 				0923AD151CB41BC50022753D /* Premium */,
-				09A4E5531CA9EC0B00A82E3F /* Weekly Report */,
 				090EDC521C9B556C005D3477 /* Settings */,
 				09C658521C46CD6B008C4EC3 /* Signup/onboard */,
 			);
@@ -800,7 +787,6 @@
 				0917EC471C4037D600BE2697 /* main.m in Sources */,
 				099760531C7D2710008E88A7 /* SignUpOrLoginViewController.m in Sources */,
 				091C37401CF747870020B6BE /* LogInViewController.m in Sources */,
-				09A4E5521CA9EC0700A82E3F /* WeeklyReportTableViewController.m in Sources */,
 				09F7DD161CBDA25600503205 /* AddMemberOrHabitMenuTableViewController.m in Sources */,
 				09C6585D1C47F188008C4EC3 /* Tribe.m in Sources */,
 				09E9C66C1CF8B27700B5E87E /* FindTribesViewController.m in Sources */,

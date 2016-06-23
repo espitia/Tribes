@@ -184,7 +184,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymQ-au-FhZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="366.5" y="-1440.5"/>
+            <point key="canvasLocation" x="914.5" y="-1388.5"/>
         </scene>
         <!--Add Member Or Habit Menu Table View Controller-->
         <scene sceneID="Tv5-M9-SJj">
@@ -292,7 +292,6 @@
                     <connections>
                         <segue destination="0NR-7X-qsU" kind="show" identifier="showTribeHabit" id="f46-2A-NoN"/>
                         <segue destination="EcN-nQ-Wco" kind="show" identifier="TribeMenu" id="WJo-lI-QRi"/>
-                        <segue destination="x6J-ww-3zm" kind="show" identifier="showWeeklyReport" id="j3G-CH-Hii"/>
                         <segue destination="hi5-vx-tv4" kind="show" identifier="AddFirstHabit" id="aDo-Yy-kpM"/>
                         <segue destination="bLl-0S-6VW" kind="show" identifier="ShowTribeManager" id="RGa-V2-uvP"/>
                         <segue destination="vMK-uY-aqW" kind="show" identifier="showMembersTable" id="Wim-HJ-Ed4"/>
@@ -437,34 +436,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YSV-2F-rih" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="19.5" y="771.5"/>
-        </scene>
-        <!--Weekly Report Table View Controller-->
-        <scene sceneID="eDW-TZ-Ws3">
-            <objects>
-                <tableViewController id="x6J-ww-3zm" customClass="WeeklyReportTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="haJ-rW-Byv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReportCell" id="LFb-mM-YXF">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LFb-mM-YXF" id="J5d-GB-Ana">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="x6J-ww-3zm" id="ywZ-e4-bpT"/>
-                            <outlet property="delegate" destination="x6J-ww-3zm" id="ffW-oD-pYP"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9UW-B1-USr" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="914.5" y="-1440.5"/>
         </scene>
         <!--Add Manager Table View Controller-->
         <scene sceneID="Tin-5m-gVF">

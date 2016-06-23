@@ -22,7 +22,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 @dynamic lvl;
 @dynamic xp;
 @synthesize loadedInitialTribes;
-@dynamic weeklyReportActive;
 @dynamic hasTribesWithMembers;
 @dynamic signedUpToday;
 @dynamic pushNotificationsEnabled;
@@ -544,20 +543,6 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
         activity.hibernation = false;
         [activity saveEventually];
     }
-}
-
-#pragma mark - Weekly Report
--(BOOL)weeklyReportActive {
-    
-    for (Activity * activity in self.activities) {
-        if (activity.completionDates) {
-            if (activity.completionDates.count > 3) {
-                return true;
-            }
-        }
-
-    }
-    return false;
 }
 
 #pragma mark - Levels and XP

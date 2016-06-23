@@ -61,7 +61,6 @@ extern int RECEIVED_APPLAUSE_XP;
 @property int lvl;
 @property int xp;
 @property BOOL loadedInitialTribes;
-@property BOOL weeklyReportActive;
 @property BOOL hasTribesWithMembers;
 @property BOOL signedUpToday;
 @property BOOL pushNotificationsEnabled;

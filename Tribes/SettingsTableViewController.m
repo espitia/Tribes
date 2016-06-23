@@ -38,23 +38,19 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    switch (section) {
-       case 0: {
-           IAPHelper * helper = [[IAPHelper alloc] init];
-           return ([helper userIsPremium]) ? 2 : 1;
-       }
-        case 1:
-            return 4;
+        case 0:
+            return 3;
             break;
             
         default:
             return 1;
             break;
-       case 2:
+       case 1:
            return 1;
            break;
     }
@@ -71,12 +67,9 @@
     switch (section)
     {
         case 0:
-            sectionName = @"General";
-            break;
-        case 1:
             sectionName = @"Feedback? Lets connect 📢";
             break;
-        case 2:
+        case 1:
             sectionName = @"How to do this or that?";
             break;
         default:
@@ -94,26 +87,6 @@
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row) {
-                case 0: {
-                    if ([iAPHelper userIsPremium]) {
-                        title = [NSString stringWithFormat:@"Subscribed!🏅Expires in %d days", [iAPHelper daysRemainingOnSubscription]];
-                    } else {
-                        title = @"Upgrade ⭐️";
-                    }
-                }
-                    break;
-                    // 2nd row of 1st section only shown if user is premium
-                case 1: {
-                        title = @"Extend your subscription ⭐";
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-        case 1:
-            switch (indexPath.row) {
                 case 0:
                     title = @"Live chat 💬";
                     break;
@@ -123,15 +96,12 @@
                 case 2:
                     title = @"Email 📧";
                     break;
-                case 3:
-                    title = @"Twitter 🐦";
-                    break;
                     
                 default:
                     break;
             }
             break;
-        case 2:
+        case 1:
             switch (indexPath.row) {
                 case 0:
                     title = @"Frquently Asked Questions ❓";
@@ -164,28 +134,6 @@
         case 0:
             switch (indexPath.row) {
                 case 0: {
-                    // if premium, ask to extend, if not, show premium vc
-                    if ([iAPHelper userIsPremium]) {
-                        [self extendPremiumOptions];
-                    } else {
-                        PremiumViewController * premiumVC = [[PremiumViewController alloc] initWithFeature:PremiumWeeklyReport];
-                        [self presentViewController:premiumVC animated:true completion:nil];
-                    }
-                }
-                    break;
-                case 1: {
-                    // if premium, ask to extend, if not, this row is not shown
-                    [self extendPremiumOptions];
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-            break;
-        case 1:
-            switch (indexPath.row) {
-                case 0: {
                     [HelpshiftSupport showConversation:self withOptions:nil];
                 }
                     break;
@@ -203,15 +151,11 @@
                     if (self) [self presentViewController:controller animated:true completion:nil];
                 }
                     break;
-                case 3: {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.twitter.com/tribeshq"]];
-                }
-                    break;
                     
                 default:
                     break;
             }
-        case 2:
+        case 1:
             switch (indexPath.row) {
                 case 0:
                     [HelpshiftSupport showFAQs:self withOptions:nil];
