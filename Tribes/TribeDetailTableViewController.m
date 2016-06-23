@@ -97,7 +97,7 @@
 
     User * user = [membersAndActivities objectAtIndex:indexPath.row][@"member"];
     Activity * activity = [membersAndActivities objectAtIndex:indexPath.row][@"activity"];
-    NSLog(@"%@", user);
+
     NSString * username = user[@"username"];
     cell.textLabel.text = username;
     
