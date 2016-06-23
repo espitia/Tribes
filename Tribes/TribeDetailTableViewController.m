@@ -78,7 +78,7 @@
         
         NSDictionary * membAndActivity = @{
                                            @"member":member,
-                                           @"activity":[self activityForHabit:_habit withActivities:member[@"activities"]]
+                                           @"activity":[member activityForHabit:_habit withActivities:member[@"activities"]]
                                            };
         [membersAndActivities addObject:membAndActivity];
     }
@@ -488,19 +488,6 @@
             [self.tableView reloadData];
         }
     }
-}
-#pragma mark - Util
-
--(Activity *)activityForHabit:(Habit *)habit withActivities:(NSArray *)activities {
-    
-    for (Activity * activity in activities) {
-        if (activity[@"habit"]) {
-            if (activity[@"habit"] == habit) {
-                return activity;
-            }
-        }
-    }
-    return nil;
 }
 
 @end
