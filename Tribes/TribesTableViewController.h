@@ -17,4 +17,5 @@
 -(void)setUp;
 -(void)UISetUp;
 -(void)makeItRainConfetti;
+-(void)askForNotificationsPermission;
 @end

@@ -82,6 +82,7 @@
                                 [tribesVC.tableView reloadData];
                                 [tribesVC setUp];
                                 [tribesVC UISetUp];
+                                [tribesVC askForNotificationsPermission];
                                 [successAlert hideView];
                             }
                         }];
