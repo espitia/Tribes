@@ -44,7 +44,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    switch (section) {
         case 0:
-            return 3;
+            return 2;
             break;
             
         default:
@@ -91,9 +91,6 @@
                     title = @"Live chat 💬";
                     break;
                 case 1:
-                    title = @"Snapchat 👻";
-                    break;
-                case 2:
                     title = @"Email 📧";
                     break;
                     
@@ -137,12 +134,8 @@
                     [HelpshiftSupport showConversation:self withOptions:nil];
                 }
                     break;
-                case 1: {
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"https://www.snapchat.com/add/tribeshq"]];
-                }
-                    break;
                     
-                case 2: {
+                case 1: {
                     MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
                     controller.mailComposeDelegate = self;
                     [controller setToRecipients:@[@"german@usetribes.com"]];
