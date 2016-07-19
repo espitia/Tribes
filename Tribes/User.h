@@ -22,6 +22,7 @@ extern int RECEIVED_APPLAUSE_XP;
 
 // LOADING METHODS
 -(void)loadTribesWithBlock:(void(^)(bool success))callback;
+-(void)fetchUserFromNetworkWithBlock:(void(^)(bool success))callback;
 
 // UPDATING MEHTODS
 -(void)updateMemberDataWithBlock:(void(^)(bool success))callback;

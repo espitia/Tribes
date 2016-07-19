@@ -77,7 +77,14 @@
                                     if (error) {
                                         callback(false);
                                     } else {
-                                        callback(true);
+                                        
+                                        [[User currentUser] fetchUserFromNetworkWithBlock:^(bool success) {
+                                            if (success) {
+                                                callback(true);
+                                            } else {
+                                                callback(false);
+                                            }
+                                        }];
                                     }
                                 }];
     
