@@ -35,7 +35,7 @@
         return tribe.habits.count + 1;
     }
 
-    return tribe.habits.count;
+    return tribe.habits.count + 1;
 }
 
 
@@ -53,7 +53,7 @@
         return TypePendingMemberCell;
     }
     
-    return TypeRegularCell;
+    return TypeChatCell;
 }
 
 -(BOOL)indexPathIsForCustomCell:(NSIndexPath *)indexPath {
@@ -78,6 +78,11 @@
             break;
         case TypePendingMemberCell:
             cell.textLabel.text = @"👆 You've got pending members!";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            return cell;
+            break;
+        case TypeChatCell:
+            cell.textLabel.text = @"Tribe Chat 💬";
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
             break;

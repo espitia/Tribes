@@ -15,6 +15,7 @@ typedef enum {
     TypeAddHabitCell = 0,
     TypeAddFriendCell = 1,
     TypePendingMemberCell = 2,
+    TypeChatCell = 3,
     TypeRegularCell = 4
 } TypeOfCustomCell;
 
