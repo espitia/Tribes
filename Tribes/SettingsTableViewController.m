@@ -38,7 +38,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -46,11 +46,13 @@
         case 0:
             return 2;
             break;
-            
-        default:
-            return 1;
-            break;
        case 1:
+           return 1;
+           break;
+       case 2:
+           return 1;
+           break;
+       default:
            return 1;
            break;
     }
@@ -71,6 +73,9 @@
             break;
         case 1:
             sectionName = @"How to do this or that?";
+            break;
+        case 2:
+            sectionName = @"About";
             break;
         default:
             sectionName = @"";
@@ -102,6 +107,16 @@
             switch (indexPath.row) {
                 case 0:
                     title = @"Frquently Asked Questions ❓";
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            switch (indexPath.row) {
+                case 0:
+                    title = @"By espitia 👦🏽";
                     break;
                     
                 default:
@@ -152,6 +167,16 @@
             switch (indexPath.row) {
                 case 0:
                     [HelpshiftSupport showFAQs:self withOptions:nil];
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case 2:
+            switch (indexPath.row) {
+                case 0:
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://twitter.com/espitia7"]];
                     break;
                     
                 default:
