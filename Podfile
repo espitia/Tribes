@@ -17,6 +17,7 @@ target 'Tribes' do
     pod 'Leanplum-iOS-SDK'
     pod 'UXCam'
     pod 'PNChart'
+    pod 'SendBirdSDK'
 end
 
 target 'TribesTests' do

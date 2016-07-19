@@ -17,6 +17,7 @@ PODS:
   - PNChart (0.8.9):
     - UICountingLabel (~> 1.2.0)
   - SCLAlertView-Objective-C (1.0.2)
+  - SendBirdSDK (2.2.13)
   - TwitterCore (2.0.2):
     - Fabric
   - UICountingLabel (1.2.0)
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - ParseUI
   - PNChart
   - SCLAlertView-Objective-C
+  - SendBirdSDK
   - TwitterCore
   - UXCam
   - YLProgressBar (~> 3.8.0)
@@ -50,6 +52,7 @@ SPEC CHECKSUMS:
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   PNChart: 84774d225c2126ded6c93d4dbe6ae98c3a73c2d2
   SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
+  SendBirdSDK: 1b9e2abee26d2c54a577d58b1cca5de0aeba7cd7
   TwitterCore: 0f44d8980a6879d5205dcb4e010d15e643e56fa0
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UXCam: d56a673dcfe6cdac982b78691c9e10b4c60e9b15
