@@ -407,6 +407,12 @@ heightForHeaderInSection:(NSInteger)section {
             [self performSegueWithIdentifier:@"showTribeHabit" sender:habit];
         }
             break;
+        case TypeChatCell: {
+            // log event
+        }
+            break;
+            
+
             
         default:
             break;
