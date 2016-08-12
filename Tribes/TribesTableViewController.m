@@ -29,6 +29,8 @@
 #import "AppDelegate.h"
 #import "CustomCellEngine.h"
 #import "PNChart.h"
+#import "Firebase.h"
+#import "ChatViewController.h"
 
 
 @import AVFoundation;
@@ -83,6 +85,26 @@
                     if (success) {
                         [self.tableView reloadData];
                     }
+                }];
+                [[FIRAuth auth] signInWithEmail:currentUser.email password:@"123456" completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+                    
+                    if (user && !error) {
+                        //logged in
+                        NSLog(@"logged in");
+                    } else {
+                        //error
+                        [[FIRAuth auth] createUserWithEmail:currentUser.email password:@"123456" completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+                            // signed up
+                            
+                            if (user && !error) {
+                                NSLog(@"created account and logged in");
+                                NSLog(@"%@", user);
+                            } else {
+                                NSLog(@"error2: %@", error);
+                            }
+                        }];
+                    }
+                    
                 }];
                 
             }
@@ -409,6 +431,7 @@ heightForHeaderInSection:(NSInteger)section {
             break;
         case TypeChatCell: {
             // log event
+            [self performSegueWithIdentifier:@"showChat" sender:nil];
         }
             break;
             
@@ -491,6 +514,10 @@ heightForHeaderInSection:(NSInteger)section {
         // send to add friend to tribe when tribe has no tribe members other than user,
         MembersTableViewController * vc = (MembersTableViewController *)segue.destinationViewController;
         vc.tribe = sender;
+    } else if ([segue.identifier isEqualToString:@"showChat"]) {
+        ChatViewController * vc = (ChatViewController *)segue.destinationViewController;
+        vc.senderId = currentUser.objectId;
+        vc.senderDisplayName = currentUser.username;
     }
 }
 
