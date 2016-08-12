@@ -17,6 +17,10 @@ target 'Tribes' do
     pod 'Leanplum-iOS-SDK'
     pod 'UXCam'
     pod 'PNChart'
+    pod 'Firebase'
+    pod 'Firebase/Database'
+    pod 'Firebase/Auth'
+    pod 'JSQMessagesViewController'
 end
 
 target 'TribesTests' do

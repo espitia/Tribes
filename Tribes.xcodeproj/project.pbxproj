@@ -33,6 +33,7 @@
 		09688B241C768C2D001B7752 /* KRConfettiView.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B231C768C2D001B7752 /* KRConfettiView.m */; };
 		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
 		09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */; };
+		097A2DBC1D5E286500DD1164 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 097A2DBB1D5E286500DD1164 /* GoogleService-Info.plist */; };
 		09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */; };
 		09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
@@ -131,6 +132,7 @@
 		09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "completion-sound.mp3"; sourceTree = "<group>"; };
 		09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitSettingsTableViewController.h; sourceTree = "<group>"; };
 		09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitSettingsTableViewController.m; sourceTree = "<group>"; };
+		097A2DBB1D5E286500DD1164 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeMenuTableViewController.h; sourceTree = "<group>"; };
 		09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeMenuTableViewController.m; sourceTree = "<group>"; };
 		09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHabitTableViewController.h; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				0917EC511C4037D600BE2697 /* Assets.xcassets */,
 				0917EC531C4037D600BE2697 /* LaunchScreen.storyboard */,
 				0917EC561C4037D600BE2697 /* Info.plist */,
+				097A2DBB1D5E286500DD1164 /* GoogleService-Info.plist */,
 				0917EC451C4037D600BE2697 /* Supporting Files */,
 			);
 			path = Tribes;
@@ -666,6 +669,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09AC31941CDAB4BD00D40BC8 /* Tribes-Intro.mp4 in Resources */,
+				097A2DBC1D5E286500DD1164 /* GoogleService-Info.plist in Resources */,
 				0923AD141CB41BC00022753D /* PremiumViewController.xib in Resources */,
 				090C23931CBC84E300A52DF6 /* PremiumChildViewController.xib in Resources */,
 				09AC31971CDB892700D40BC8 /* cropped tribes tutorial.mp4 in Resources */,

@@ -17,7 +17,7 @@
 #import <Leanplum/Leanplum.h>
 #import "TribesTableViewController.h"
 #import <UXCam/UXCam.h>
-
+#import "FireBase.h"
 
 @interface AppDelegate ()
 
@@ -75,6 +75,9 @@
     
     // ui changes
     [self colorNavBar];
+    
+    //
+    [FIRApp configure];
     
     return YES;
 }
