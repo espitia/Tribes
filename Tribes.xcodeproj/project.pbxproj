@@ -34,6 +34,7 @@
 		09688B2E1C7AB8FB001B7752 /* completion-sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 09688B2D1C7AB8FB001B7752 /* completion-sound.mp3 */; };
 		09688B321C7B7D92001B7752 /* HabitSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */; };
 		097A2DBC1D5E286500DD1164 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 097A2DBB1D5E286500DD1164 /* GoogleService-Info.plist */; };
+		097A2DBF1D5E2FDD00DD1164 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 097A2DBE1D5E2FDD00DD1164 /* ChatViewController.m */; };
 		09850B1E1C8F343400FE9609 /* TribeMenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */; };
 		09850B221C8F8DFF00FE9609 /* AddHabitTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 09850B211C8F8DFF00FE9609 /* AddHabitTableViewController.m */; };
 		098976D81C405693001E14D1 /* libPods-Tribes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 015448C5FC9CB4BF1F612375 /* libPods-Tribes.a */; };
@@ -133,6 +134,8 @@
 		09688B301C7B7D92001B7752 /* HabitSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HabitSettingsTableViewController.h; sourceTree = "<group>"; };
 		09688B311C7B7D92001B7752 /* HabitSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HabitSettingsTableViewController.m; sourceTree = "<group>"; };
 		097A2DBB1D5E286500DD1164 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		097A2DBD1D5E2FDD00DD1164 /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		097A2DBE1D5E2FDD00DD1164 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		09850B1C1C8F343400FE9609 /* TribeMenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TribeMenuTableViewController.h; sourceTree = "<group>"; };
 		09850B1D1C8F343400FE9609 /* TribeMenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TribeMenuTableViewController.m; sourceTree = "<group>"; };
 		09850B201C8F8DFF00FE9609 /* AddHabitTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddHabitTableViewController.h; sourceTree = "<group>"; };
@@ -386,6 +389,15 @@
 			name = "Habit Settings";
 			sourceTree = "<group>";
 		};
+		097A2DC01D5E2FE100DD1164 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				097A2DBD1D5E2FDD00DD1164 /* ChatViewController.h */,
+				097A2DBE1D5E2FDD00DD1164 /* ChatViewController.m */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
 		09850B1F1C8F343E00FE9609 /* Tribe Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -503,6 +515,7 @@
 			children = (
 				09F2BF8B1C40597B008ABDF7 /* TribesTableViewController.h */,
 				09F2BF8C1C40597B008ABDF7 /* TribesTableViewController.m */,
+				097A2DC01D5E2FE100DD1164 /* Chat */,
 				09688B291C77CE9A001B7752 /* Habit Detail VC */,
 				090C23971CBD9EC300A52DF6 /* Add manager (Tribes/Membs/Habits) */,
 				09850B1F1C8F343E00FE9609 /* Tribe Menu */,
@@ -776,6 +789,7 @@
 				0993B5151C550F910008B7E5 /* User.m in Sources */,
 				09C658581C46CFA2008C4EC3 /* TribeDetailTableViewController.m in Sources */,
 				099BB2041C9524F300A734F0 /* HabitsTableViewController.m in Sources */,
+				097A2DBF1D5E2FDD00DD1164 /* ChatViewController.m in Sources */,
 				091C37361CF4A9B50020B6BE /* PasswordValidationViewController.m in Sources */,
 				090C23921CBC84E300A52DF6 /* PremiumChildViewController.m in Sources */,
 				0923AD131CB41BC00022753D /* PremiumViewController.m in Sources */,
