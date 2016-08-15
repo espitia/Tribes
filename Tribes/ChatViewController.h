@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tribe.h"
 #import "JSQMessagesViewController.h"
 
 @interface ChatViewController : JSQMessagesViewController
 
+@property (nonatomic, strong) Tribe * tribe;
 @end
