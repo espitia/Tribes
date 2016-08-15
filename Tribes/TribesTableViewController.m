@@ -431,7 +431,7 @@ heightForHeaderInSection:(NSInteger)section {
             break;
         case TypeChatCell: {
             // log event
-            [self performSegueWithIdentifier:@"showChat" sender:nil];
+            [self performSegueWithIdentifier:@"showChat" sender:tribe];
         }
             break;
             
@@ -518,6 +518,7 @@ heightForHeaderInSection:(NSInteger)section {
         ChatViewController * vc = (ChatViewController *)segue.destinationViewController;
         vc.senderId = currentUser.objectId;
         vc.senderDisplayName = currentUser.username;
+        vc.tribe = sender;
     }
 }
 
