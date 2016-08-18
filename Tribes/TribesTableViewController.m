@@ -86,26 +86,9 @@
                         [self.tableView reloadData];
                     }
                 }];
-                [[FIRAuth auth] signInWithEmail:currentUser.email password:@"123456" completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
-                    
-                    if (user && !error) {
-                        //logged in
-                        NSLog(@"logged in");
-                    } else {
-                        //error
-                        [[FIRAuth auth] createUserWithEmail:currentUser.email password:@"123456" completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
-                            // signed up
-                            
-                            if (user && !error) {
-                                NSLog(@"created account and logged in");
-                                NSLog(@"%@", user);
-                            } else {
-                                NSLog(@"error2: %@", error);
-                            }
-                        }];
-                    }
-                    
-                }];
+                
+                
+                [self loginToFirebase];
                 
             }
         }];
@@ -718,6 +701,30 @@ heightForHeaderInSection:(NSInteger)section {
     return image;
 }
 
+-(void)loginToFirebase {
+    // create firebase account for old users
+    [[FIRAuth auth] signInWithEmail:currentUser.email password:@"123456" completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+        
+        if (error != nil) {
+            
+            [[FIRAuth auth] createUserWithEmail:currentUser.email password:@"123456" completion:^(FIRUser * _Nullable user, NSError * _Nullable error) {
+                // signed up
+                
+                if (user && !error) {
+                    NSLog(@"created account and logged in");
+                    NSLog(@"%@", user);
+                } else {
+                    [self loginToFirebase];
+                }
+            }];
+            
+        } else {
+            // User is logged in
+            NSLog(@"logged into Firebase");
+        }
+    }];
+    
+}
 #pragma mark - Method to play sound
 
 - (void)playSound:(NSString *)fileName :(NSString *)ext {
