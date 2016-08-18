@@ -38,18 +38,21 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    switch (section) {
         case 0:
-            return 2;
+            return 1;
             break;
        case 1:
-           return 1;
+           return 2;
            break;
        case 2:
+           return 1;
+           break;
+       case 3:
            return 1;
            break;
        default:
@@ -69,12 +72,15 @@
     switch (section)
     {
         case 0:
-            sectionName = @"Feedback? Lets connect 📢";
+            sectionName = @"Tribes Premium ⭐️";
             break;
         case 1:
-            sectionName = @"How to do this or that?";
+            sectionName = @"Feedback? Lets connect 📢";
             break;
         case 2:
+            sectionName = @"How to do this or that?";
+            break;
+        case 3:
             sectionName = @"About";
             break;
         default:
@@ -93,6 +99,21 @@
         case 0:
             switch (indexPath.row) {
                 case 0:
+                    iAPHelper = [[IAPHelper alloc] init];
+                    if ([iAPHelper userIsPremium]) {
+                        title = [NSString stringWithFormat:@"Subscribed🏅%d left", [iAPHelper daysRemainingOnSubscription]];
+                    } else {
+                        title = @"Upgrade ⭐️";
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
+            break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
                     title = @"Live chat 💬";
                     break;
                 case 1:
@@ -103,7 +124,7 @@
                     break;
             }
             break;
-        case 1:
+        case 2:
             switch (indexPath.row) {
                 case 0:
                     title = @"Frquently Asked Questions ❓";
@@ -113,7 +134,7 @@
                     break;
             }
             break;
-        case 2:
+        case 3:
             switch (indexPath.row) {
                 case 0:
                     title = @"By espitia 👦🏽";
@@ -146,6 +167,28 @@
         case 0:
             switch (indexPath.row) {
                 case 0: {
+                    // ask to become premium
+                    SCLAlertView * buyPremium = [[SCLAlertView alloc] initWithNewWindow];
+                    [buyPremium addButton:@"Add 1 month for $1.99" actionBlock:^{
+                        [iAPHelper makePremiumPurchaseForMonths:1 WithTableViewController:self andReload:false orDismiss:false];
+                    }];
+                    [buyPremium addButton:@"Add 3 months for $5.99" actionBlock:^{
+                        [iAPHelper makePremiumPurchaseForMonths:3 WithTableViewController:self andReload:false orDismiss:false];
+                    }];
+                    [buyPremium addButton:@"Add 6 months for $9.99" actionBlock:^{
+                        [iAPHelper makePremiumPurchaseForMonths:6 WithTableViewController:self andReload:false orDismiss:false];
+                    }];
+                    [buyPremium showSuccess:@"Upgrade" subTitle:@"Subscribe to Tribes Premium to join our community and start chatting with your Tribe!" closeButtonTitle:@"Maybe later" duration:0.0];
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        break;
+        case 1:
+            switch (indexPath.row) {
+                case 0: {
                     [HelpshiftSupport showConversation:self withOptions:nil];
                 }
                     break;
@@ -163,7 +206,7 @@
                 default:
                     break;
             }
-        case 1:
+        case 2:
             switch (indexPath.row) {
                 case 0:
                     [HelpshiftSupport showFAQs:self withOptions:nil];
@@ -173,7 +216,7 @@
                     break;
             }
             break;
-        case 2:
+        case 3:
             switch (indexPath.row) {
                 case 0:
                     [[UIApplication sharedApplication] openURL:[NSURL URLWithString: @"http://twitter.com/espitia7"]];
