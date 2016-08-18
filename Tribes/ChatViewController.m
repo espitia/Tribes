@@ -14,13 +14,15 @@
 #import "UIColor+JSQMessages.h"
 #import "JSQMessagesBubbleImageFactory.h"
 #import "JSQMessage.h"
+#import "IAPHelper.h"
+#import "User.h"
 
 @interface ChatViewController () {
     NSMutableArray * messages;
     JSQMessagesBubbleImage * outgoingBubbleImageView;
     JSQMessagesBubbleImage * incomingBubbleImageView;
     FIRDatabaseReference * messageRef;
-
+    IAPHelper * iAPHelper;
 }
 @end
 
@@ -47,6 +49,26 @@
     
     //remove accessory (left button)
     self.inputToolbar.contentView.leftBarButtonItem = nil;
+    
+    iAPHelper = [[IAPHelper alloc] init];
+}
+
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    
+    // get days since user was created (to see if free 7 day trial ran out)
+    NSDate * date = [[User currentUser] createdAt];
+    NSTimeInterval timeInt = [date timeIntervalSinceDate:[NSDate date]];
+    int days = timeInt / 60 / 60 / 24;
+    
+    // if user us on free trial or is premium, allow for usage of chat
+    if ((days * -1) < 7 || [iAPHelper userIsPremium]) {
+        return true;
+    } else {
+        return false;
+    }
+
+    
+    return true;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -135,7 +157,6 @@
 }
 
 
-
 #pragma mark - Helper methods
 
 -(void)addMessageWithSenderId:(NSString *)senderId displayName:(NSString *)displayName andText:(NSString*)text {
@@ -151,7 +172,6 @@
     outgoingBubbleImageView = [factory outgoingMessagesBubbleImageWithColor:[UIColor lightGrayColor]];
     incomingBubbleImageView = [factory incomingMessagesBubbleImageWithColor:baseColor];
 }
-
 
 
 @end
