@@ -178,7 +178,7 @@
                     [buyPremium addButton:@"Add 6 months for $9.99" actionBlock:^{
                         [iAPHelper makePremiumPurchaseForMonths:6 WithTableViewController:self andReload:false orDismiss:false];
                     }];
-                    [buyPremium showSuccess:@"Upgrade" subTitle:@"Subscribe to Tribes Premium to join our community and start chatting with your Tribe!" closeButtonTitle:@"Maybe later" duration:0.0];
+                    [buyPremium showSuccess:@"Upgrade" subTitle:@"Subscribe to Tribes Premium to start chatting with your Tribe!c" closeButtonTitle:@"Maybe later" duration:0.0];
                 }
                     break;
                     
