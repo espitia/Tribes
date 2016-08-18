@@ -16,6 +16,7 @@
 #import "JSQMessage.h"
 #import "IAPHelper.h"
 #import "User.h"
+#import "SCLAlertView.h"
 
 @interface ChatViewController () {
     NSMutableArray * messages;
@@ -64,11 +65,21 @@
     if ((days * -1) < 7 || [iAPHelper userIsPremium]) {
         return true;
     } else {
-        return false;
-    }
-
     
-    return true;
+        // ask to become premium
+        SCLAlertView * buyPremium = [[SCLAlertView alloc] initWithNewWindow];
+        [buyPremium addButton:@"Add 1 month for $1.99" actionBlock:^{
+            [iAPHelper makePremiumPurchaseForMonths:1 WithTableViewController:self andReload:false orDismiss:false];
+        }];
+        [buyPremium addButton:@"Add 3 months for $5.99" actionBlock:^{
+            [iAPHelper makePremiumPurchaseForMonths:3 WithTableViewController:self andReload:false orDismiss:false];
+        }];
+        [buyPremium addButton:@"Add 6 months for $9.99" actionBlock:^{
+            [iAPHelper makePremiumPurchaseForMonths:6 WithTableViewController:self andReload:false orDismiss:false];
+        }];
+        [buyPremium showSuccess:@"Upgrade" subTitle:@"Subscribe to Tribes Premium to continue to get access to the Tribe Chat." closeButtonTitle:@"Maybe later" duration:0.0];
+    }
+    return false;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
