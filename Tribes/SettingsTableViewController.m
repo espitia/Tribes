@@ -13,6 +13,7 @@
 #import "PremiumViewController.h"
 #import "HelpshiftSupport.h"
 #import <MessageUI/MFMailComposeViewController.h>
+#import "User.h"
 
 
 @interface SettingsTableViewController () <MFMailComposeViewControllerDelegate> {
@@ -100,8 +101,10 @@
             switch (indexPath.row) {
                 case 0:
                     iAPHelper = [[IAPHelper alloc] init];
-                    if ([iAPHelper userIsPremium]) {
-                        title = [NSString stringWithFormat:@"Subscribed🏅%d left", [iAPHelper daysRemainingOnSubscription]];
+                    if ([[User currentUser] objectForKey:@"unlimitedPremium"]) {
+                        title = @"Lifetime membership 🏅";
+                    } else if ([iAPHelper userIsPremium]) {
+                        title = [NSString stringWithFormat:@"Subscribed: %d days left🏅", [iAPHelper daysRemainingOnSubscription]];
                     } else {
                         title = @"Upgrade ⭐️";
                     }
@@ -167,6 +170,11 @@
         case 0:
             switch (indexPath.row) {
                 case 0: {
+                    
+                    if ([[User currentUser] objectForKey:@"unlimitedPremium"]) {
+                        return;
+                    }
+                    
                     // ask to become premium
                     SCLAlertView * buyPremium = [[SCLAlertView alloc] initWithNewWindow];
                     [buyPremium addButton:@"Add 1 month for $1.99" actionBlock:^{
