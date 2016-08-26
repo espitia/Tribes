@@ -201,7 +201,12 @@
                 break;
         }
         
-        [alert showInfo:title subTitle:messageToDisplay closeButtonTitle:nil duration:0.0];
+        
+        // don't show in-app alert for messages
+        if (![category isEqualToString:@"CHAT_MESSAGE"]) {
+            [alert showInfo:title subTitle:messageToDisplay closeButtonTitle:nil duration:0.0];
+        }
+        
     }
 
 }

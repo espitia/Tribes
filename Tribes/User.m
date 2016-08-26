@@ -350,7 +350,8 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     if (!(category || ([category isEqualToString:@"COMPLETION_REPLY"]) ||
           ([category isEqualToString:@"MOTIVATION_REPLY"]) ||
           ([category isEqualToString:@"WATCHING_YOU_REPLY"]) ||
-          ([category isEqualToString:@"THANK_YOU_FOR_APPLAUSE_REPLY"]))) {
+          ([category isEqualToString:@"THANK_YOU_FOR_APPLAUSE_REPLY"]) ||
+          ([category isEqualToString:@"CHAT_MESSAGE"]))) {
         category = @"";
     }
     
@@ -446,7 +447,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
             if (member != self) {
                 
                 //send push
-                [self sendPushFromMemberToMember:member withMessage:msg habitName:@"" andCategory:@""];
+                [self sendPushFromMemberToMember:member withMessage:msg habitName:@"" andCategory:@"CHAT_MESSAGE"];
             }
         }
         
