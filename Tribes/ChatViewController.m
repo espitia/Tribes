@@ -155,7 +155,7 @@
     [self finishSendingMessage];
     
     //send push to all tribe members
-    [[User currentUser] sendPushToMembersOfTribe:_tribe withText:text];
+    [[User currentUser] sendChatMessageToMembersOfTribe:_tribe withText:text];
     
 }
 -(void)observeMessages {
