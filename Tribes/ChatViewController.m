@@ -142,6 +142,8 @@
 
 -(void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text senderId:(NSString *)senderId senderDisplayName:(NSString *)senderDisplayName date:(NSDate *)date {
     
+    
+    // build message item and send
     FIRDatabaseReference * itemRef = [messageRef childByAutoId];
     id messageItem = @{
                        @"text" : text,
@@ -151,6 +153,9 @@
                        };
     [itemRef setValue:messageItem];
     [self finishSendingMessage];
+    
+    //send push to all tribe members
+    [[User currentUser] sendPushToMembersOfTribe:_tribe withText:text];
     
 }
 -(void)observeMessages {
