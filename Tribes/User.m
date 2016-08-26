@@ -430,7 +430,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
--(void)sendPushToMembersOfTribe:(Tribe *)tribe withText:(NSString *)text {
+-(void)sendChatMessageToMembersOfTribe:(Tribe *)tribe withText:(NSString *)text {
     
     //message to send
     NSString * msg =  [NSString stringWithFormat:@"%@ @ %@: %@", self.username, tribe[@"name"], text];
