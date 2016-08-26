@@ -430,6 +430,30 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
 
 }
 
+-(void)sendPushToMembersOfTribe:(Tribe *)tribe withText:(NSString *)text {
+    
+    //message to send
+    NSString * msg =  [NSString stringWithFormat:@"%@ @ %@: %@", self.username, tribe[@"name"], text];
+    
+    // get each member from tribe
+    PFRelation * relationToMembers = [tribe relationForKey:@"members"];
+    PFQuery * membersQuery = [relationToMembers query];
+    [membersQuery findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+        NSArray * members = objects;
+        
+        // flip through each member
+        for (User * member in members) {
+            if (member != self) {
+                
+                //send push
+                [self sendPushFromMemberToMember:member withMessage:msg habitName:@"" andCategory:@""];
+            }
+        }
+        
+    }];
+}
+
+
 #pragma mark - Handling tribes/habits
 
 

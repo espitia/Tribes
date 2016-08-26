@@ -51,6 +51,7 @@ extern int RECEIVED_APPLAUSE_XP;
 -(void)sendMotivationToMember:(User *)member inTribe:(Tribe *)tribe forHabit:(Habit *)habit withBlock:(void (^)(BOOL))callback;
 -(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg habitName:(NSString *)habitName andCategory:(NSString *)category withBlock:(void (^)(BOOL * success))callback;
 -(void)sendPushFromMemberToMember:(User *)member withMessage:(NSString *)msg habitName:(NSString *)habitName andCategory:(NSString *)category;
+-(void)sendPushToMembersOfTribe:(Tribe *)tribe withText:(NSString *)text;
 
 // dealing with xp and levels
 -(void)addXp:(int)xpToAdd;
