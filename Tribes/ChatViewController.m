@@ -62,7 +62,7 @@
     int days = timeInt / 60 / 60 / 24;
     
     // if user us on free trial or is premium, allow for usage of chat
-    if ((days * -1) < 7 || [iAPHelper userIsPremium] || [[User currentUser] objectForKey:@"unlimitedPremium"]) {
+    if ((days * -1) < 7 || [iAPHelper userIsPremium] || [[[User currentUser] objectForKey:@"unlimitedPremium"]  isEqual: @1]) {
         return true;
     } else {
     

@@ -101,7 +101,10 @@
             switch (indexPath.row) {
                 case 0:
                     iAPHelper = [[IAPHelper alloc] init];
-                    if ([[User currentUser] objectForKey:@"unlimitedPremium"]) {
+                    
+                    NSLog(@"%@",[[User currentUser] objectForKey:@"unlimitedPremium"]);
+                    
+                    if ([[[User currentUser] objectForKey:@"unlimitedPremium"]  isEqual: @1]) {
                         title = @"Lifetime membership 🏅";
                     } else if ([iAPHelper userIsPremium]) {
                         title = [NSString stringWithFormat:@"Subscribed: %d days left🏅", [iAPHelper daysRemainingOnSubscription]];
@@ -171,7 +174,7 @@
             switch (indexPath.row) {
                 case 0: {
                     
-                    if ([[User currentUser] objectForKey:@"unlimitedPremium"]) {
+                    if ([[[User currentUser] objectForKey:@"unlimitedPremium"]  isEqual: @1]) {
                         return;
                     }
                     
