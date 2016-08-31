@@ -292,7 +292,7 @@ int XP_FOR_RECEIVED_APPLAUSE = 10;
     newTribe[@"name"] = name;
     newTribe[@"nameLowerCase"] = [name lowercaseString];
     newTribe[@"admin"] = self;
-    newTribe[@"privacy"] = @YES;
+    newTribe[@"privacy"] = @NO;
     newTribe[@"membersCount"] = @1;
     
     PFRelation * members = [newTribe relationForKey:@"members"];
