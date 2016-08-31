@@ -340,10 +340,19 @@
                                     <segue destination="pcS-nC-IW0" kind="show" id="bhF-Nh-t2l"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tribes-logo" translatesAutoresizingMaskIntoConstraints="NO" id="Nsr-yZ-4FB">
+                                <rect key="frame" x="137" y="284" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="MTs-RV-6n1"/>
+                                    <constraint firstAttribute="width" constant="100" id="stS-6G-PGS"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QcZ-i1-ek7" firstAttribute="top" secondItem="A3I-dU-qwj" secondAttribute="bottom" id="6ZD-Dd-QuC"/>
+                            <constraint firstItem="Nsr-yZ-4FB" firstAttribute="centerX" secondItem="DHu-eI-IwJ" secondAttribute="centerX" id="PVq-Go-1lJ"/>
+                            <constraint firstItem="Nsr-yZ-4FB" firstAttribute="centerY" secondItem="DHu-eI-IwJ" secondAttribute="centerY" id="j66-ah-8CG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Obx-R9-NJe" secondAttribute="trailing" constant="-20" id="nwQ-jJ-lCR"/>
                             <constraint firstItem="Obx-R9-NJe" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="sox-km-ccA"/>
                             <constraint firstItem="A3I-dU-qwj" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="toZ-xu-4eI"/>
@@ -882,6 +891,9 @@
             <point key="canvasLocation" x="1560.5" y="771.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tribes-logo" width="400" height="400"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4jV-l5-Rgk"/>
         <segue reference="RGa-V2-uvP"/>
