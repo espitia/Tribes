@@ -34,24 +34,4 @@
     self.navigationController.navigationBarHidden = TRUE;
 }
 
-- (IBAction)playIntroVideo:(id)sender {
-
-    
-    // grab a local URL to our video
-    NSURL *videoURL = [[NSBundle mainBundle]URLForResource:@"Tribes-Intro" withExtension:@"mp4"];
-    
-    // create an AVPlayer
-    AVPlayer *player = [AVPlayer playerWithURL:videoURL];
-    
-    // create a player view controller
-    AVPlayerViewController *controller = [[AVPlayerViewController alloc]init];
-    controller.player = player;
-    
-    // present view controller
-    [self presentViewController:controller animated:true completion:nil];
-    [player play];
-    
-    
-}
-
 @end

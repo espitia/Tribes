@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -328,22 +327,6 @@
                                     <segue destination="iDQ-SP-6a7" kind="show" id="b9R-qi-5g1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HvN-ta-YaX">
-                                <rect key="frame" x="87" y="179" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="HvN-ta-YaX" secondAttribute="height" multiplier="1:1" id="mu4-aR-zJg"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="gray-play-button"/>
-                                <connections>
-                                    <action selector="playIntroVideo:" destination="9jy-fd-g2l" eventType="touchUpInside" id="8Ab-gF-FpW"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="helper-text" translatesAutoresizingMaskIntoConstraints="NO" id="kBd-CQ-GWF">
-                                <rect key="frame" x="57" y="387" width="260" height="65"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="kBd-CQ-GWF" secondAttribute="height" multiplier="4:1" id="piM-v5-57D"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Obx-R9-NJe">
                                 <rect key="frame" x="0.0" y="528" width="375" height="70"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -360,18 +343,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="HvN-ta-YaX" secondAttribute="trailing" constant="68" id="0Qk-LA-F3M"/>
                             <constraint firstItem="QcZ-i1-ek7" firstAttribute="top" secondItem="A3I-dU-qwj" secondAttribute="bottom" id="6ZD-Dd-QuC"/>
-                            <constraint firstItem="HvN-ta-YaX" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="67" id="LvL-5C-BG6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="kBd-CQ-GWF" secondAttribute="trailing" constant="38" id="Mct-xi-Xd2"/>
-                            <constraint firstItem="kBd-CQ-GWF" firstAttribute="top" secondItem="HvN-ta-YaX" secondAttribute="bottom" constant="8" id="YZy-K4-mIU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Obx-R9-NJe" secondAttribute="trailing" constant="-20" id="nwQ-jJ-lCR"/>
-                            <constraint firstItem="kBd-CQ-GWF" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="37" id="rzd-uS-K3r"/>
                             <constraint firstItem="Obx-R9-NJe" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="sox-km-ccA"/>
-                            <constraint firstItem="HvN-ta-YaX" firstAttribute="centerX" secondItem="DHu-eI-IwJ" secondAttribute="centerX" id="tNh-zg-U6B"/>
                             <constraint firstItem="A3I-dU-qwj" firstAttribute="leading" secondItem="DHu-eI-IwJ" secondAttribute="leadingMargin" constant="-20" id="toZ-xu-4eI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A3I-dU-qwj" secondAttribute="trailing" constant="-20" id="uby-MQ-LDs"/>
-                            <constraint firstItem="HvN-ta-YaX" firstAttribute="top" secondItem="9f7-VF-Xfa" secondAttribute="bottom" constant="115" id="xQ5-qw-h5g"/>
                             <constraint firstItem="A3I-dU-qwj" firstAttribute="top" secondItem="Obx-R9-NJe" secondAttribute="bottom" constant="-1" id="zhE-fN-DnE"/>
                         </constraints>
                     </view>
@@ -906,10 +882,6 @@
             <point key="canvasLocation" x="1560.5" y="771.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="gray-play-button" width="400" height="400"/>
-        <image name="helper-text" width="400" height="100"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4jV-l5-Rgk"/>
         <segue reference="RGa-V2-uvP"/>
